@@ -1,0 +1,47 @@
+{
+	"pageTitle" : "Tolkvertaler Search",
+	"formLabels" : {
+		"status" : "Status:",
+		"languageTolk" : "Interpreter between",
+		"languageVertaler" : "Translator for",
+		"languageFromTolk" : "and",
+		"languageFromVertaler" : "to",
+		"langSource" : "(brontaal)",
+		"langTarget" : "(doeltaal).",
+		"specialization" : "Specialization",
+		"zipCode" : "Zip Code",
+		"availability" : {
+			"label" : "Availability:",
+			"checkbox" : {
+				"police" : "Police",
+				"om" : "Om",
+				"food" : "Food",
+				"kml" : "KML",
+				"ind" : "IND",
+				"rvs" : "RVS",
+				"concord" : "Concord",
+				"tvcn" : "TVCN",
+				"interpreter" : "Interpreter",
+				"sigv" : "Sigv",
+				"fsl" : "FSL"
+			}
+		},
+		"wbtv" : "WBTV Number",
+		"firstName" : "First name",
+		"lastName" : "Last name",
+		"showAdvanced" : "Show advanced search",
+		"nativeLanguage" : "Native language",
+		"residence" : "Residence",
+		"livingExp" : "Living experience:",
+		"age" : "Age",
+		"gender" : {
+			"label" : "Gender",
+			"male" : "Male",
+			"female" : "Female"
+		},
+		"addButton" : "Add",
+		"removeButton" : "Remove",
+		"searchButton" : "Search",
+		"resetButton" : "Reset"
+	}
+}

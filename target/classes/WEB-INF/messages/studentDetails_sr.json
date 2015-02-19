@@ -1,0 +1,18 @@
+{
+        "text": {
+            "title" : "Prikaz studenata",
+            "introText" : "Spisak studenata registrovanih u sistemu za praćenje lične karijere.",
+            "title":"Podaci o studentima"
+           },
+		"studentsTableLabels" : {
+    		"firstNameLabel":"Ime",
+    		"transcriptNumberLabel":"Broj indeksa",
+    		"lastNameLabel":"Prezime"
+    	   },    
+        "form" : {
+    		"delete":"Izbriši",
+    		"edit":"Izmeni",
+    		"add":"Dodaj novog studenta"
+    	   }      	       
+        
+}

@@ -1,0 +1,64 @@
+{
+	"pageTitle" : "Details",
+	"section" : {
+		"personal" : {
+			"label" : "Personal",
+			"subLabels" : {
+				"wbtv" : "WBTV number:",
+				"initials" : "Initials:",
+				"firstName" : "First name:",
+				"prefixes" : "Prefixes:",
+				"lastName" : "Last name:",
+				"gender" : {
+					"label" : "Gender",
+					"male" : "Male",
+					"female" : "Female"
+				},
+				"titlesBefore" : "Titles before:",
+				"titlesAfter" : "Titles after:",
+				"justice" : "Available for justice:",
+				"dateOfBirth" : "Date of birth:",
+				"municipality" : "Municipality of birth in the Netherlands:",
+				"countryOfBirth" : "Country of birth:",
+				"nationalities" : "Nationalities:",
+				"nativeLanguage" : "Native Language:",
+				"codeOfConduct" : "Code of Conduct:"
+			}
+		},
+		"languages" : {
+			"label" : "Language experience",
+			"tableLabels" : {
+				"skill" : "Skill",
+				"sourceLanguage" : "Source language",
+				"direction" : "Direction",
+				"targetLanguage" : "Target language",
+				"dateSworn" : "Date sworn",
+				"specialization" : "Specialization"
+			}
+		},
+		"address" : {
+			"label" : "Address",
+			"subLabels" : {
+				"street" : "Street:",
+				"streetNumber" : "Number:",
+				"postalCode" : "Postal code:",
+				"city" : "City:",
+				"country" : "Country:",
+				"phoneNumber" : "Phone number:",
+				"cellNumber" : "Cell phone:",
+				"faxNumber" : "Fax number:",
+				"email" : "E-mail:",
+				"website" : "Website:"
+			}
+		},
+		"residential" : {
+			"label" : "Residential experience",
+			"tableLabels" : {
+				"land" : "country",
+				"yearFrom" : "From",
+				"yearTo" : "To"
+			}
+		}
+	},
+	"backLink" : "Back to Results"
+}

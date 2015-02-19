@@ -1,0 +1,199 @@
+<div>
+	<div>
+		<h2>{{resources.text.title}}</h2>
+		<p>{{resources.text.introText}}</p>
+		<div>
+			<ul>
+				<li>{{resources.text.organizationList.RVS}}</li>
+				<li>{{resources.text.organizationList.judiciaryCourts}}</li>
+				<li>{{resources.text.organizationList.prosecution}}</li>
+				<li>{{resources.text.organizationList.immigration}}</li>
+				<li>{{resources.text.organizationList.police}}</li>
+				<li>{{resources.text.organizationList.royalMilitaryPolice}}</li>
+			</ul>		
+		</div>	
+	</div>
+	
+	<form name="form" id="registerUserForm" novalidate class="css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form" ng-submit="submitForm()" ng-model="user">
+	        
+	        <div class="alert-warning" ng-show="fieldErrors.length">
+	        	<div ng-repeat="error in fieldErrors">{{error.message}}</div>
+	        </div>
+	        
+	        <div class="alert-success" ng-show="status == 'success'">
+	        	<span>{{resources.status.success}}</span>
+	        </div>
+	         	
+	        <fieldset>
+	         	
+	         	<h1>{{resources.text.personDetails.title}}</h1>
+	         	<p>{{resources.text.fieldsAreRequired}}</p>
+	         	
+				<!-- Personal details -->	         	
+	         	<h2>{{resources.text.personDetails.header}}</h2>
+	         	
+	        	<!-- Gender -->
+	        	<div class="row rvr_bottom_padding">
+	        		<div class="form-group">
+				        <label class="control-label col4" for="gender">{{resources.text.personDetails.genderLabel}} <span class="required">*</span></label>
+	        			<div class="col7">
+							<input type="radio" name="gender" value="male" ng-model="user.gender" required>
+							<label>{{resources.text.personDetails.genderMaleLabel}}</label>
+							<input type="radio" name="gender" value="female" ng-model="user.gender" required>
+							<label>{{resources.text.personDetails.genderFemaleLabel}}</label>
+							 <div ng-show="form.gender.$dirty && form.gender.$invalid" class="registerUserFieldError" >
+				                 <span ng-show="form.gender.$error.required" class="ng-binding" >{{errorMessages.error.required}}</span>
+			                 </div>	        			
+						</div>
+					</div>
+				</div>
+				
+				<!-- First name -->       
+	        	<div class="row rvr_bottom_padding">
+			        <div class="form-group">
+			        	<label class="registerLabel control-label col4" for="firstName">{{resources.text.personDetails.firstNameLabel}} <span class="required">*</span></label>
+				        <div class="col7">
+				            <input id="firstName" class="form-control" type="text" name="firstName" placeholder="{{resources.text.personDetails.firstNameLabel}}" ng-pattern="patterns.onlyLetters" ng-model="user.firstName" ng-maxlength="50" required>
+				            <div ng-show="form.firstName.$dirty && form.firstName.$invalid" class="registerUserFieldError">
+				                 <span ng-show="form.firstName.$error.required" class="ng-binding">{{errorMessages.error.required}}</span>
+				                 <span ng-show="form.firstName.$error.maxlength" class="ng-binding">{{errorMessages.error.invalidLength}</span>
+				                 <span ng-show="form.firstName.$error.pattern" class="ng-binding">{{errorMessages.error.invalidInput}}</span>
+			                 </div>
+				        </div>
+					</div>
+			    </div>
+			    
+			    <!-- Prefix -->
+			    <div class="row rvr_bottom_padding">
+			        <div class="form-group">
+			        	<label class="control-label col4" for="prefix">{{resources.text.personDetails.prefixLabel}}</label>
+				        <div class="col7">
+				            <input id="prefix" class="form-control" type="text" name="prefix" placeholder="{{resources.text.personDetails.prefixLabel}}" ng-pattern="patterns.onlyLetters" ng-model="user.prefix" ng-maxlength="50">
+				            <div ng-show="form.prefix.$dirty && form.prefix.$invalid" class="registerUserFieldError" >
+				                 <span ng-show="form.prefix.$error.maxlength" class="ng-binding" >{{errorMessages.error.invalidLength}}</span>
+				                 <span ng-show="form.prefix.$error.pattern" class="ng-binding">{{errorMessages.error.invalidInput}}</span>
+			                 </div>
+				        </div>
+					</div>
+			    </div>
+			    
+			    <!-- Last name -->
+			    <div class="row rvr_bottom_padding">
+			        <div class="form-group">
+			        	<label class="control-label col4" for="lastName">{{resources.text.personDetails.lastNameLabel}} <span class="required">*</span></label>
+				        <div class="col7">
+				            <input id="lastName" class="form-control" type="text" name="lastName" placeholder="{{resources.text.personDetails.lastNameLabel}}" ng-pattern="patterns.onlyLetters" ng-model="user.lastName" required  ng-maxlength="50">
+				            <div ng-show="form.lastName.$dirty && form.lastName.$invalid" class="registerUserFieldError" >
+				                 <span ng-show="form.lastName.$error.required" class="ng-binding" >{{errorMessages.error.required}}</span>
+				                 <span ng-show="form.lastName.$error.maxlength" class="ng-binding" >{{errorMessages.error.invalidLength}}</span>
+				                 <span ng-show="form.lastName.$error.pattern" class="ng-binding">{{errorMessages.error.invalidInput}}</span>
+			                 </div>
+				        </div>
+					</div>
+			    </div>
+			   
+			   <!-- Work details -->
+			   <h2>{{resources.text.workDetails.title}}</h2>
+	        	
+	        	<!-- Organization -->
+	        	<div class="row rvr_bottom_padding">
+			        <div class="form-group">
+				        <label class="control-label col4" for="organization">{{resources.text.workDetails.organizationLabel}} <span class="required">*</span></label>
+				        <div class="col7">
+				            <input id="organization" class="form-control" type="text" name="organization" placeholder="{{resources.text.workDetails.organizationLabel}}" ng-model="user.organization" required  ng-maxlength="50">
+				            <div ng-show="form.organization.$dirty && form.organization.$invalid" class="registerUserFieldError" >
+				                 <span ng-show="form.organization.$error.required" class="ng-binding" >{{errorMessages.error.required}}</span>
+				                 <span ng-show="form.organization.$error.maxlength" class="ng-binding" >{{errorMessages.error.invalidLength}}</span>
+			                 </div>
+				        </div>
+				    </div>
+				</div>
+			    
+			    <!-- Organizational role -->    
+	        	<div class="row rvr_bottom_padding">
+			        <div class="form-group">
+				        <label class="control-label col4" for="organizationRole">{{resources.text.workDetails.organizationRoleLabel}} <span class="required">*</span></label>
+				        <div class="col7">
+				            <input id="organizationRole" class="form-control" type="text" name="organizationRole" placeholder="{{resources.text.workDetails.organizationRoleLabel}}" ng-pattern="patterns.onlyLetters" ng-model="user.organizationRole" required  ng-maxlength="50">
+				            <div ng-show="form.organizationRole.$dirty && form.organizationRole.$invalid" class="registerUserFieldError" >
+				                 <span ng-show="form.organizationRole.$error.required" class="ng-binding" >{{errorMessages.error.required}}</span>
+				                 <span ng-show="form.organizationRole.$error.maxlength" class="ng-binding" >{{errorMessages.error.invalidLength}}</span>
+				                 <span ng-show="form.organizationRole.$error.pattern" class="ng-binding">{{errorMessages.error.invalidInput}}</span>
+			                 </div>
+					    </div>
+				    </div>
+				</div>
+				      
+				<!-- Telephone number -->        
+	        	<div class="row rvr_bottom_padding">
+			        <div class="form-group">
+				        <label class="control-label col4" for="telephone">{{resources.text.workDetails.telephoneLabel}} <span class="required">*</span></label>
+				        <div class="col7">
+				            <input id="telephone" class="form-control" type="text" name="telephone" placeholder="{{resources.text.workDetails.telephoneLabel}}" ng-pattern="patterns.onlyNumbers" ng-model="user.telephone" required ng-maxlength="50">
+				            <div ng-show="form.telephone.$dirty && form.telephone.$invalid" class="registerUserFieldError" >
+				                 <span ng-show="form.telephone.$error.maxlength" class="ng-binding" >{{errorMessages.error.invalidPhoneLength}}</span>
+				                 <span ng-show="form.telephone.$error.pattern" class="ng-binding">{{errorMessages.error.invalidInput}}</span>
+				                 <span ng-show="form.telephone.$error.required" class="ng-binding" >{{errorMessages.error.required}}</span>
+			                 </div>
+				        </div>
+				    </div>
+				</div>
+				
+				<!-- Email -->
+				<div class="row rvr_bottom_padding">
+			        <div class="form-group">
+				        <label class="control-label col4" for="email">{{resources.text.workDetails.emailLabel}} <span class="required">*</span></label>
+				        <div class="col7">
+				            <input id="email" class="form-control" type="email" name="email" placeholder="{{resources.text.workDetails.emailLabel}}" ng-model="user.email" required  ng-maxlength="50">
+				            <div ng-show="form.email.$dirty && form.email.$invalid" class="registerUserFieldError" >
+				                 <span ng-show="form.email.$error.required" class="ng-binding" >{{errorMessages.error.required}}</span>
+				                 <span ng-show="form.email.$error.maxlength" class="ng-binding" >{{errorMessages.error.invalidEmailLength}}</span>
+				                 <span ng-show="form.email.$error.email" class="ng-binding" >{{errorMessages.error.invalidInput}}</span>
+			                 </div>
+				        </div>
+					 </div>
+				</div>
+				
+				<!-- Newsletter subscription -->
+				<h2>{{resources.text.newsletterSubscription.title}}</h2>
+				<p>{{resources.text.newsletterSubscription.question}}</p>
+				
+				<div class="form-group last">
+	        		<div class="checkbox">
+				        <label style="line-height: 20px;">
+						    <input ng-model="user.newsletterSubscription" type="checkbox">
+						    {{resources.text.newsletterSubscription.subscribeLabel}} 
+						</label>
+					</div>
+				</div>
+				
+				<div>
+					<ul>
+						<li>{{resources.text.newsletterSubscription.itemList.item1}}</li>
+						<li>{{resources.text.newsletterSubscription.itemList.item2}}</li>
+						<li>{{resources.text.newsletterSubscription.itemList.item3}}</li>
+						<li>{{resources.text.newsletterSubscription.itemList.item4}}</li>
+						<li>{{resources.text.newsletterSubscription.itemList.item5}}</li>
+					</ul>
+				</div>
+				
+				<!-- Terms -->
+				<div class="form-group last">
+	        		<div class="checkbox">
+				        <label style="line-height: 20px;">
+						    <input id="termsAccepted" name="termsAccepted" ng-model="user.termsAccepted" type="checkbox" required>
+						    <span class="required">*</span> {{resources.text.termsLabel}}
+						</label>
+						<div ng-show="form.termsAccepted.$dirty && form.termsAccepted.$invalid" class="registerUserFieldError" >
+				        	<span ng-show="form.termsAccepted.$error.required" class="ng-binding" >{{errorMessages.error.required}}</span>
+			            </div>
+					</div>
+				</div>
+	        
+		    </fieldset>
+
+	        <div class="action">
+		        <button id="submit_button" type="submit" class="btn btn-rvr-reverse pull-right"  ng-disabled="form.$invalid || isUnchanged(user)">{{resources.text.submitLabel}}</button>
+		    </div>
+	</form>
+</div>

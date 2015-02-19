@@ -1,0 +1,195 @@
+<div>
+
+	<form
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+		role="form"
+		ng-submit="saveNewUser()"
+		ng-model="korisnik">
+
+		<div class="modal-header">
+			<h3 class="modal-title">Registrovanje novog korisnika</h3>
+		</div>
+
+		<fieldset>
+			<div class="form-group">
+				<label
+					for="inputUserName"
+					class="col-sm-2 control-label">Korisničko ime</label>
+				<div class="col-sm-4">
+					<input
+						type="userName"
+						class="form-control"
+						id="inputUserName"
+						ng-model="korisnik.userName">
+				</div>
+			</div>
+			<div class="form-group">
+				<label
+					for="inputPassword"
+					class="col-sm-2 control-label">Lozinka</label>
+				<div class="col-sm-4">
+					<input
+						type="password"
+						class="form-control"
+						id="inputPassword"
+						ng-model="korisnik.password">
+				</div>
+			</div>
+			<div class="form-group">
+				<label
+					for="inputEmail"
+					class="col-sm-2 control-label">E-mail adresa</label>
+				<div class="col-sm-4">
+					<input
+						type="lastName"
+						class="form-control"
+						id="inputEmail"
+						ng-model="korisnik.email">
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+
+			<div class="form-group last">
+				<div class="checkbox">
+					<label> <input
+						ng-model="korisnik.isProfessor"
+						type="checkbox"> Profesor
+					</label>
+				</div>
+			</div>
+
+			<div
+				id="isProfessor"
+				ng-show="korisnik.isProfessor">
+
+				<div class="form-group">
+					<label
+						for="inputFirstName"
+						class="col-sm-2 control-label">Ime</label>
+					<div class="col-sm-4">
+						<input
+							type="firstName"
+							class="form-control"
+							id="inputFirstName"
+							ng-model="korisnik.name">
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputLastName"
+						class="col-sm-2 control-label">Prezime</label>
+					<div class="col-sm-4">
+						<input
+							type="lastName"
+							class="form-control"
+							id="inputLastName"
+							ng-model="korisnik.surname">
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputFathersName"
+						class="col-sm-2 control-label">Očevo ime</label>
+					<div class="col-sm-4">
+						<input
+							type="fathersName"
+							class="form-control"
+							id="inputFathersName"
+							ng-model="korisnik.fathersName">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label
+						for="inputBirthDate"
+						class="col-sm-2 control-label">Datum rođenja</label>
+					<div class='col-sm-4'>
+						<div
+							class='input-group date'
+							id='datetimepicker'>
+							<input
+								type='text'
+								class="form-control"
+								id="inputBirthDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="opened"
+								min-date="minDate"
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								date-disabled="disabled(date, mode)"
+								show-button-bar="false"
+								ng-model="korisnik.dateOfBirth"> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="open($event)"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label
+						for="inputBirthPlace"
+						class="col-sm-2 control-label">Mesto rođenja</label>
+					<div class="col-sm-4">
+						<input
+							type="birthPlace"
+							class="form-control"
+							id="inputBirthPlace"
+							ng-model="korisnik.placeOfBirth">
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputBirthCountry"
+						class="col-sm-2 control-label">Zemlja rođenja</label>
+					<div class="col-sm-4">
+						<input
+							type="birthCountry"
+							class="form-control"
+							id="inputBirthCountry"
+							ng-model="korisnik.countryOfBirth">
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputScientificArea"
+						class="col-sm-2 control-label">Naučna oblast</label>
+					<div class="col-sm-4">
+						<input
+							type="scientificArea"
+							class="form-control"
+							id="inputScientificArea"
+							ng-model="korisnik.scientificArea">
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputSpecialScientificArea"
+						class="col-sm-2 control-label">Uža naučna oblast</label>
+					<div class="col-sm-4">
+						<input
+							type="specialScientificArea"
+							class="form-control"
+							id="inputSpecialScientificArea"
+							ng-model="korisnik.specialScientificArea">
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+		<div class="modal-footer action">
+			<button
+				id="submit_button"
+				type="submit"
+				class="btn">Sačuvaj</button>
+			<button
+				id="cancel_button"
+				class="btn"
+				ng-click="cancel()">Zatvori</button>
+		</div>
+	</form>
+
+</div>

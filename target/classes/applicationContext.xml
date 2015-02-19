@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+	default-lazy-init="true">
+	
+	<tx:annotation-driven/>
+	<task:annotation-driven />
+	
+	<context:property-placeholder location="classpath:app.properties"/>
+	<util:properties id="propSource" location="classpath:app.properties" />
+	
+	<import resource="classpath:/spring/spring-security.xml" />
+	<import resource="classpath:/spring/spring-data.xml" />
+	<import resource="classpath:/spring/spring-mvc.xml" />
+	<import resource="classpath:/spring/spring-rest.xml" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		p:basename="messages/messages" />
+
+	<!-- <security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/> -->
+
+	<!-- <security:http pattern="/css/**" security="none"/> -->
+	<!-- <security:http pattern="/error/**" security="none" /> -->
+	<!-- <security:http pattern="/images/**" security="none" /> -->
+	<!-- <security:http pattern="/js/**" security="none" /> -->
+	<!-- <security:http pattern="/index.jsp" security="none" /> -->
+	<!-- <security:http pattern="/login.jsp" security="none" /> -->
+	
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
+		<property name="defaultLocale" value="sr" />
+	</bean>
+	
+	<!-- THYMELEAF: Template Resolver for email templates -->
+	<bean id="emailTemplateResolver" class="org.thymeleaf.templateresolver.ClassLoaderTemplateResolver">
+	    <property name="prefix" value="mail/" />
+	    <property name="templateMode" value="HTML5" />
+	    <property name="characterEncoding" value="UTF-8" />
+	    <property name="order" value="1" />
+	</bean>
+	 
+	<!-- THYMELEAF: Template Engine (Spring4-specific version) -->
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+	    <property name="templateResolvers">
+	        <set>
+	            <ref bean="emailTemplateResolver" />
+	        </set>
+	    </property>
+	</bean>
+	 
+	<!-- THYMELEAF: View Resolver - implementation of Spring's ViewResolver interface -->
+	<!-- (we would not need this if our app was not web)                              -->
+	<bean id="viewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+	    <property name="templateEngine" ref="templateEngine" />
+	    <property name="characterEncoding" value="UTF-8" />
+	</bean>
+	
+</beans>

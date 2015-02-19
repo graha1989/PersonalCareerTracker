@@ -1,0 +1,57 @@
+{
+        "label": [{"1":"2"}],
+        "text": {
+            "title" : "Aanvraagformulier inlogaccount Rbtv",
+            "introText" : "Als u werkzaam bent bij een van de onderstaande organisaties, dan kunt u middels dit formulier een inlogaccount aanvragen waarmee u het Register beëdigde tolken en vertalers kunt raadplegen.",
+            "organizationList" : {
+            		"RVS":"Afdeling bestuursrechtspraak van de Raad van State;",
+            		"judiciaryCourts":"Tot de rechterlijke macht behorende gerechten",
+            		"prosecution":"Openbaar Ministerie;",
+            		"immigration":"Immigratie- en Naturalisatiedienst;",
+            		"police":"Politie;",
+            		"royalMilitaryPolice":"Koninklijke Marechaussee."
+            	},
+            "fieldsAreRequired" : "Velden met een * zijn verplicht",	
+            "personDetails" : {
+            		"title":"Persoonsgegevens",
+            		"header":"Gegevens aanvrager",
+            		"genderLabel":"Geslacht",
+            		"genderMaleLabel":"Man",
+            		"genderFemaleLabel":"Vrouw",
+            		"firstNameLabel":"Voorna(a)m(en)",
+            		"prefixLabel":"Tussenvoegsel",
+            		"lastNameLabel":"Achternaam"
+            	},
+            "workDetails" : {
+            		"title":"Werkgegevens",
+            		"organizationLabel":"Instantie",
+            		"organizationRoleLabel":"Functie",
+            		"telephoneLabel":"Telefoonnummer",
+            		"telephoneFormExample":"e.g. +31(0)235256677",
+            		"emailLabel":"E-mailadres"
+            	},
+            "newsletterSubscription" : {
+            		"title":"E-nieuwsbrief",
+            		"question":"Wilt u de kosteloze E-nieuwsbrief van Bureau Wbtv ontvangen?",
+            		"subscribeLabel":"Ja, ik wil de kosteloze E-nieuwsbrief van Bureau Wbtv ontvangen. ",
+            		"itemList":{
+            				"item1":"de aanvrager is verantwoordelijk voor het gebruik van het wachtwoord;",
+            				"item2":"het wachtwoord wordt uitsluitend toegepast voor het uitvoeren van de afnameplicht in art 28 Wbtv;",
+            				"item3":"de gebruiker zal geheimhouding betrachten ten aanzien van de gegevens in het afnemerregister;",
+            				"item4":"bij misbruik wordt het wachtwoord ingetrokken;",
+            				"item5":"In beginsel vervalt een account na één jaar. De gebruiker ontvangt automatisch een e-mail waarmee de geldigheid van de account met een jaar kan worden verlengd."
+            				
+            			},
+            		"officeAddressLabel":"Kantooradres",
+            		"postalCodeLabel":"Postcode",
+            		"cityLabel":"Woonplaats",
+            		"emailLabel":"E-mailadres"
+            	},
+            "termsLabel": "Ik ga akkoord met bovenstaande voorwaarden.",
+            "submitLabel": "VERSTUREN"			
+           },
+        "status" : {
+        	"success":"Form is successfully submited."
+        	}
+        
+}
