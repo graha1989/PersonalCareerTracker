@@ -1,1 +1,1 @@
-app.controller("AdminHomeController");
+app.controller("HomeController");

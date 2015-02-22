@@ -1,26 +1,17 @@
 package com.pct.domain;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Inheritance;
 
 /**
- * Entity bean za Korisnik(User) table.
+ * Korisnik(User) entity bean.
  * 
  * @author a.grahovac
  *
  */
 @Entity
-@Table(name = "korisnik")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name= "userType")
-@DiscriminatorValue(value = "K")
 public class Korisnik extends AbstractEntity {
 	
 	private static final long serialVersionUID = 753163571345516344L;

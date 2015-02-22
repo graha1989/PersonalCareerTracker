@@ -23,6 +23,7 @@
 	<import resource="classpath:/spring/spring-security.xml" />
 	<import resource="classpath:/spring/spring-data.xml" />
 	<import resource="classpath:/spring/spring-mvc.xml" />
+	<import resource="classpath:/spring/spring-rest.xml" />
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource"
@@ -44,7 +45,7 @@
 
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
-		<property name="defaultLocale" value="en" />
+		<property name="defaultLocale" value="sr" />
 	</bean>
 	
 	<!-- THYMELEAF: Template Resolver for email templates -->

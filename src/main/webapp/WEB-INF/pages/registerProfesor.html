@@ -1,0 +1,120 @@
+<div>
+
+	<form
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+		role="form" ng-submit="saveNewProfesor()" ng-model="profesor">
+
+		<div class="modal-header">
+			<h3 class="modal-title">Registrovanje novog profesora</h3>
+		</div>
+
+		<fieldset>
+			<div class="form-group">
+				<label for="inputUserName" class="col-sm-2 control-label">KorisniÄ�ko
+					ime</label>
+				<div class="col-sm-4">
+					<input type="userName" class="form-control" id="inputUserName"
+						ng-model="profesor.userName">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPassword" class="col-sm-2 control-label">Lozinka</label>
+				<div class="col-sm-4">
+					<input type="password" class="form-control" id="inputPassword"
+						ng-model="profesor.password">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail" class="col-sm-2 control-label">E-mail
+					adresa</label>
+				<div class="col-sm-4">
+					<input type="lastName" class="form-control" id="inputEmail"
+						ng-model="profesor.email">
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<div class="form-group">
+				<label for="inputFirstName" class="col-sm-2 control-label">Ime</label>
+				<div class="col-sm-4">
+					<input type="firstName" class="form-control" id="inputFirstName"
+						ng-model="profesor.name">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputLastName" class="col-sm-2 control-label">Prezime</label>
+				<div class="col-sm-4">
+					<input type="lastName" class="form-control" id="inputLastName"
+						ng-model="profesor.surname">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputFathersName" class="col-sm-2 control-label">OÄ�evo
+					ime</label>
+				<div class="col-sm-4">
+					<input type="fathersName" class="form-control"
+						id="inputFathersName" ng-model="profesor.fathersName">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="inputBirthDate" class="col-sm-2 control-label">Datum
+					roÄ‘enja</label>
+				<div class='col-sm-4'>
+					<div class='input-group date' id='datetimepicker'>
+						<input type='text' class="form-control" id="inputBirthDate"
+							placeholder="DD-MM-GGGG" datepicker-popup="dd-MM-yyyy"
+							is-open="opened" min-date="minDate" max-date="maxDate"
+							datepicker-options="dateOptions"
+							date-disabled="disabled(date, mode)" show-button-bar="false"
+							ng-model="profesor.dateOfBirth"> <span
+							class="input-group-addon"> <span
+							class="glyphicon glyphicon-calendar" ng-click="open($event)"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="inputBirthPlace" class="col-sm-2 control-label">Mesto
+					roÄ‘enja</label>
+				<div class="col-sm-4">
+					<input type="birthPlace" class="form-control" id="inputBirthPlace"
+						ng-model="profesor.placeOfBirth">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputBirthCountry" class="col-sm-2 control-label">Zemlja
+					roÄ‘enja</label>
+				<div class="col-sm-4">
+					<input type="birthCountry" class="form-control"
+						id="inputBirthCountry" ng-model="profesor.countryOfBirth">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputScientificArea" class="col-sm-2 control-label">NauÄ�na
+					oblast</label>
+				<div class="col-sm-4">
+					<input type="scientificArea" class="form-control"
+						id="inputScientificArea" ng-model="profesor.scientificArea">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputSpecialScientificArea"
+					class="col-sm-2 control-label">UÅ¾a nauÄ�na oblast</label>
+				<div class="col-sm-4">
+					<input type="specialScientificArea" class="form-control"
+						id="inputSpecialScientificArea"
+						ng-model="profesor.specialScientificArea">
+				</div>
+			</div>
+		</fieldset>
+
+		<div class="modal-footer action">
+			<button id="submit_button" type="submit" class="btn">Registruj se</button>
+			<button id="cancel_button" class="btn" ng-click="cancel()">Zatvori</button>
+		</div>
+	</form>
+
+</div>

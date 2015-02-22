@@ -25,8 +25,7 @@ import com.pct.validation.StudentNotFoundException;
 @RequestMapping("/showAllStudents")
 public class StudentController {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(StudentController.class);
+	private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
 	@Autowired
 	StudentService studentService;
@@ -46,8 +45,7 @@ public class StudentController {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ResponseEntity<StudentDTO> deleteStudent(
-			@RequestParam(value = RequestMappings.ID, required = true) Long id)
+	public ResponseEntity<StudentDTO> deleteStudent(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws StudentNotFoundException {
 		studentService.deleteStudent(id);
 
@@ -55,11 +53,9 @@ public class StudentController {
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<StudentDTO> persistStudent(
-			@Valid @RequestBody StudentDTO studentDto) {
+	public ResponseEntity<StudentDTO> persistStudent(@Valid @RequestBody StudentDTO studentDto) {
 		studentService.saveStudent(studentDto);
-		logger.debug("Student:" + studentDto.getName() + " "
-				+ studentDto.getSurname() + " successfully saved.");
+		logger.debug("Student:" + studentDto.getName() + " " + studentDto.getSurname() + " successfully saved.");
 
 		return new ResponseEntity<StudentDTO>(HttpStatus.OK);
 	}
