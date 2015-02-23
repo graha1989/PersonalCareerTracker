@@ -33,11 +33,17 @@ public class ProfesorController {
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<ProfesorFormaDTO> persistProfesor(@Valid @RequestBody ProfesorFormaDTO ProfesorFormaDTO) {
-		profesorService.saveProfesor(ProfesorFormaDTO);
-		logger.debug("Profesor:" + ProfesorFormaDTO.getUserName() + " successfully registrated in database.");
-
-		return new ResponseEntity<ProfesorFormaDTO>(HttpStatus.OK);
+	public ResponseEntity<ProfesorFormaDTO> persistProfesor(@Valid @RequestBody ProfesorFormaDTO profesorFormaDTO) {
+		profesorService.saveProfesor(profesorFormaDTO);
+		ProfesorFormaDTO profesor = new ProfesorFormaDTO();
+		try {
+			profesor = profesorService.findProfesorByUserName(profesorFormaDTO.getUserName());
+		} catch (ProfesorNotFoundException e) {
+			e.printStackTrace();
+		}
+		logger.debug("Profesor: " + profesor.getUserName() + " successfully registrated in database.");
+		
+		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "selectedProfesor", method = RequestMethod.GET, produces = "application/json")
