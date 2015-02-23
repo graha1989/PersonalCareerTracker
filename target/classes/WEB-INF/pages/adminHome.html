@@ -3,85 +3,85 @@
 	<div>
 		
 		<div id="personal" class="detail_block">
-			<div class="row custom_padding" ng-click="activePersonal = !activePersonal">
-				<span ng-show="activePersonal" class="glyphicon glyphicon-chevron-down col1"></span>
-				<span ng-show="!activePersonal" class="glyphicon glyphicon-chevron-up col1"></span>
+			<div class="row custom_padding" data-ng-click="activePersonal = !activePersonal">
+				<span data-ng-show="activePersonal" class="glyphicon glyphicon-chevron-down col1"></span>
+				<span data-ng-show="!activePersonal" class="glyphicon glyphicon-chevron-up col1"></span>
 				<h2 class="col6">{{ resources.section.personal.label }}</h2>
 			</div>
-			<div ng-show="!activePersonal">
-				<div class="row" ng-show="details.customerNumber">
+			<div data-ng-show="!activePersonal">
+				<div class="row" data-ng-show="details.customerNumber">
 						<div class="col6">{{ resources.section.personal.subLabels.wbtv }}</div>
 						<div class="col6">{{ details.customerNumber }}</div>
 				</div>
-				<div class="row" ng-show="details.initials">
+				<div class="row" data-ng-show="details.initials">
 						<div class="col6">{{ resources.section.personal.subLabels.initials }}</div>
 						<div class="col6">{{ details.initials }}</div>
 				</div>
-				<div class="row" ng-show="details.firstName">
+				<div class="row" data-ng-show="details.firstName">
 						<div class="col6">{{ resources.section.personal.subLabels.firstName }}</div>
 						<div class="col6">{{ details.firstName }}</div>
 				</div>
-				<div class="row" ng-show="dontShowDataForFieldsThatAreNotImplemented">
+				<div class="row" data-ng-show="dontShowDataForFieldsThatAreNotImplemented">
 						<div class="col6">{{ resources.section.personal.subLabels.prefixes }}</div>
 						<div class="col6">PLACEHOLDER</div>
 				</div>
-				<div class="row" ng-show="details.lastName">
+				<div class="row" data-ng-show="details.lastName">
 						<div class="col6">{{ resources.section.personal.subLabels.lastName }}</div>
 						<div class="col6">{{ details.lastName }}</div>
 				</div>
-				<div class="row" ng-show="details.gender">
+				<div class="row" data-ng-show="details.gender">
 						<div class="col6">{{ resources.section.personal.subLabels.gender.label }}</div>
 						<div class="col6">
-							<span ng-show="details.gender === 1">{{ resources.section.personal.subLabels.gender.male }}</span>
-				  			<span ng-show="details.gender === 0">{{ resources.section.personal.subLabels.gender.female }}</span>
+							<span data-ng-show="details.gender === 1">{{ resources.section.personal.subLabels.gender.male }}</span>
+				  			<span data-ng-show="details.gender === 0">{{ resources.section.personal.subLabels.gender.female }}</span>
 						</div>
 				</div>
-				<div class="row" ng-show="details.titleBefore">
+				<div class="row" data-ng-show="details.titleBefore">
 						<div class="col6">{{ resources.section.personal.subLabels.titlesBefore }}</div>
 						<div class="col6">{{ details.titleBefore }}</div>
 				</div>
-				<div class="row" ng-show="details.titleAfter">
+				<div class="row" data-ng-show="details.titleAfter">
 						<div class="col6">{{ resources.section.personal.subLabels.titlesAfter }}</div>
 						<div class="col6">{{ details.titleAfter }}</div>
 				</div>
-				<div class="row" ng-show="dontShowDataForFieldsThatAreNotImplemented">
+				<div class="row" data-ng-show="dontShowDataForFieldsThatAreNotImplemented">
 						<div class="col6">{{ resources.section.personal.subLabels.justice }}</div>
 						<div class="col6">PLACEHOLDER</div>
 				</div>
-				<div class="row" ng-show="details.tolkVertalerDetails.birthDate">
+				<div class="row" data-ng-show="details.tolkVertalerDetails.birthDate">
 						<div class="col6">{{ resources.section.personal.subLabels.dateOfBirth }}</div>
 						<div class="col6">{{ details.tolkVertalerDetails.birthDate | date:'dd-MMM-yyyy'  }}</div>
 				</div>
-				<div class="row" ng-show="dontShowDataForFieldsThatAreNotImplemented">
+				<div class="row" data-ng-show="dontShowDataForFieldsThatAreNotImplemented">
 						<div class="col6">{{ resources.section.personal.subLabels.municipality }}</div>
 						<div class="col6">PLACEHOLDER</div>
 				</div>
-				<div class="row" ng-show="details.tolkVertalerDetails.birthCountry.name">
+				<div class="row" data-ng-show="details.tolkVertalerDetails.birthCountry.name">
 						<div class="col6">{{ resources.section.personal.subLabels.countryOfBirth }}</div>
 						<div class="col6">{{ details.tolkVertalerDetails.birthCountry.name }}</div>
 				</div>
-				<div class="row" ng-show="details.tolkVertalerDetails.nativeLanguage.name">
+				<div class="row" data-ng-show="details.tolkVertalerDetails.nativeLanguage.name">
 						<div class="col6">{{ resources.section.personal.subLabels.nativeLanguage }}</div>
 						<div class="col6">{{ details.tolkVertalerDetails.nativeLanguage.name }}</div>
 				</div>
-				<div class="row" ng-show="dontShowDataForFieldsThatAreNotImplemented">
+				<div class="row" data-ng-show="dontShowDataForFieldsThatAreNotImplemented">
 						<div class="col6">{{ resources.section.personal.subLabels.nationalities }}</div>
 						<div class="col6">PLACEHOLDER</div>
 				</div>
-				<div class="row" ng-show="dontShowDataForFieldsThatAreNotImplemented">
+				<div class="row" data-ng-show="dontShowDataForFieldsThatAreNotImplemented">
 						<div class="col6">{{ resources.section.personal.subLabels.codeOfConduct }}</div>
 						<div class="col6">PLACEHOLDER</div>
 				</div>
 			</div>
 		</div>
 		
-		<div id="language" class="detail_block" ng-show="details.registrations">
-			<div class="row custom_padding" ng-click="activeLanguage = !activeLanguage">
-				<span ng-show="!activeLanguage" class="glyphicon glyphicon-chevron-down col1"></span>
-				<span ng-show="activeLanguage" class="glyphicon glyphicon-chevron-up col1"></span>
+		<div id="language" class="detail_block" data-ng-show="details.registrations">
+			<div class="row custom_padding" data-ng-click="activeLanguage = !activeLanguage">
+				<span data-ng-show="!activeLanguage" class="glyphicon glyphicon-chevron-down col1"></span>
+				<span data-ng-show="activeLanguage" class="glyphicon glyphicon-chevron-up col1"></span>
 				<h2 class="col6">{{ resources.section.languages.label }}</h2>
 			</div>
-			<table ng-show="activeLanguage" class="table table-condensed table-striped table-hover" cellspacing="0" cellpadding="0">
+			<table data-ng-show="activeLanguage" class="table table-condensed table-striped table-hover" cellspacing="0" cellpadding="0">
 			  <thead>
 			  	<tr>
 				  <th><a href="">{{ resources.section.languages.tableLabels.skill }}</a></th>
@@ -93,7 +93,7 @@
 			  	</tr>
 			  </thead>
 			  <tbody>
-			  	<tr class="ng-scope" ng-repeat="registration in details.registrations">
+			  	<tr class="data-ng-scope" data-ng-repeat="registration in details.registrations">
 			  		<td>{{ registration.status }}</td>
 			  		<td>{{ registration.sourceLanguage.name }}</td>
 			  		<td>{{ registration.direction }}</td>
@@ -106,62 +106,62 @@
 		</div>
 		
 		<div id="address" class="detail_block">
-			<div class="row custom_padding" ng-click="activeAddress = !activeAddress">
-				<span ng-show="!activeAddress" class="glyphicon glyphicon-chevron-down col1"></span>
-				<span ng-show="activeAddress" class="glyphicon glyphicon-chevron-up col1"></span>
+			<div class="row custom_padding" data-ng-click="activeAddress = !activeAddress">
+				<span data-ng-show="!activeAddress" class="glyphicon glyphicon-chevron-down col1"></span>
+				<span data-ng-show="activeAddress" class="glyphicon glyphicon-chevron-up col1"></span>
 				<h2 class="col6">{{ resources.section.address.label }}</h2>
 			</div>
-			<div ng-show="activeAddress">
-				<div class="row" ng-show="details.postAddress.street">
+			<div data-ng-show="activeAddress">
+				<div class="row" data-ng-show="details.postAddress.street">
 						<div class="col6">{{ resources.section.address.subLabels.street }}</div>
 						<div class="col6">{{ details.postAddress.street }}</div>
 				</div>
-				<div class="row" ng-show="details.postAddress.houseNumber">
+				<div class="row" data-ng-show="details.postAddress.houseNumber">
 						<div class="col6">{{ resources.section.address.subLabels.streetNumber }}</div>
 						<div class="col6">{{ details.postAddress.houseNumber }}</div>
 				</div>
-				<div class="row" ng-show="details.postAddress.city.postalCode">
+				<div class="row" data-ng-show="details.postAddress.city.postalCode">
 						<div class="col6">{{ resources.section.address.subLabels.postalCode }}</div>
 						<div class="col6">{{ details.postAddress.city.postalCode }}</div>
 				</div>
-				<div class="row" ng-show="details.postAddress.city.name">
+				<div class="row" data-ng-show="details.postAddress.city.name">
 						<div class="col6">{{ resources.section.address.subLabels.city }}</div>
 						<div class="col6">{{ details.postAddress.city.name }}</div>
 				</div>
-				<div class="row" ng-show="details.postAddress.city.country.name">
+				<div class="row" data-ng-show="details.postAddress.city.country.name">
 						<div class="col6">{{ resources.section.address.subLabels.country }}</div>
 						<div class="col6">{{ details.postAddress.city.country.name }}</div>
 				</div>
-				<div class="row" ng-show="dontShowDataForFieldsThatAreNotImplemented">
+				<div class="row" data-ng-show="dontShowDataForFieldsThatAreNotImplemented">
 						<div class="col6">{{ resources.section.address.subLabels.phoneNumber }}</div>
 						<div class="col6">PLACEHOLDER</div>
 				</div>
-				<div class="row" ng-show="details.tolkVertalerDetails.mobileNumber">
+				<div class="row" data-ng-show="details.tolkVertalerDetails.mobileNumber">
 						<div class="col6">{{ resources.section.address.subLabels.cellNumber }}</div>
 						<div class="col6">{{ details.tolkVertalerDetails.mobileNumber }}</div>
 				</div>
-				<div class="row" ng-show="dontShowDataForFieldsThatAreNotImplemented">
+				<div class="row" data-ng-show="dontShowDataForFieldsThatAreNotImplemented">
 						<div class="col6">{{ resources.section.address.subLabels.faxNumber }}</div>
 						<div class="col6">PLACEHOLDER</div>
 				</div>
-				<div class="row" ng-show="details.tolkVertalerDetails.email">
+				<div class="row" data-ng-show="details.tolkVertalerDetails.email">
 						<div class="col6">{{ resources.section.address.subLabels.email }}</div>
 						<div class="col6"><a href="mailto:{{details.tolkVertalerDetails.email}}">{{details.tolkVertalerDetails.email}}</a></div>
 				</div>
-				<div class="row" ng-show="dontShowDataForFieldsThatAreNotImplemented">
+				<div class="row" data-ng-show="dontShowDataForFieldsThatAreNotImplemented">
 						<div class="col6">{{ resources.section.address.subLabels.website }}</div>
 						<div class="col6"><a href="{{details.tolkVertalerDetails.website}}">PLACEHOLDER</a></div>
 				</div>
 			</div>
 		</div>
 		
-		<div id="experience" class="detail_block" ng-show="details.livingExperiences">
-			<div class="row custom_padding" ng-click="activeExperience = !activeExperience">
-				<span ng-show="!activeExperience" class="glyphicon glyphicon-chevron-down col1"></span>
-				<span ng-show="activeExperience" class="glyphicon glyphicon-chevron-up col1"></span>
+		<div id="experience" class="detail_block" data-ng-show="details.livingExperiences">
+			<div class="row custom_padding" data-ng-click="activeExperience = !activeExperience">
+				<span data-ng-show="!activeExperience" class="glyphicon glyphicon-chevron-down col1"></span>
+				<span data-ng-show="activeExperience" class="glyphicon glyphicon-chevron-up col1"></span>
 				<h2 class="col6">{{ resources.section.residential.label }}</h2>
 			</div>
-			<table ng-show="activeExperience" class="table table-condensed table-striped table-hover" cellspacing="0" cellpadding="0">
+			<table data-ng-show="activeExperience" class="table table-condensed table-striped table-hover" cellspacing="0" cellpadding="0">
 			  <thead>
 			  	<tr>
 				  <th><a href="">{{ resources.section.residential.tableLabels.land }}</a></th>
@@ -171,7 +171,7 @@
 			  	</tr>
 			  </thead>
 			  <tbody>
-			  	<tr class="ng-scope" ng-repeat="livingExp in details.livingExperiences | orderBy:'yearFrom'">
+			  	<tr class="data-ng-scope" data-ng-repeat="livingExp in details.livingExperiences | orderBy:'yearFrom'">
 			  		<td>{{ livingExp.country.name }}</td>
 			  		<td>{{ livingExp.yearFrom }}</td>
 			  		<td>{{ livingExp.yearTo }}</td>
@@ -181,7 +181,7 @@
 		</div>
 		
 		<div class="backLinkContainer">
-			<a ng-click="goBack()">{{ resources.backLink }}</a>
+			<a data-ng-click="goBack()">{{ resources.backLink }}</a>
 		</div>
 		
 	</div>
