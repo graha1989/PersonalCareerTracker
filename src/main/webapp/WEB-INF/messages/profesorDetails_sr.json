@@ -1,0 +1,26 @@
+{
+    "text": {
+        "title" : "Registrovanje novog profesora",
+        "profesorDetailsText" : "Lični podaci o profesoru",
+        "title":"Podaci o profesoru"
+       },
+	"profesorLabels" : {
+		"userNameLabel":"Korisničko ime",
+		"passwordLabel":"Lozinka",
+		"emailLabel":"E-mail adresa",
+		"nameLabel":"Ime",
+		"surnameLabel":"Prezime",
+		"fathersNameLabel":"Očevo ime",
+		"dateOfBirthLabel":"Datum rođenja",
+		"placeOfBirthLabel":"Mesto rođenja",
+		"countryOfBirthLabel":"Zemlja rođenja",
+		"scientificAreaLabel":"Naučna oblast",
+		"specialScientificAreaLabel":"Uža naučna oblast"
+	   },    
+    "form" : {
+		"register":"Registruj se",
+		"close":"Zatvori",
+		"edit":"Izmeni"
+	   }      	       
+        
+}
