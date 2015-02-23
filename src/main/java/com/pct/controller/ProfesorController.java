@@ -41,7 +41,7 @@ public class ProfesorController {
 		} catch (ProfesorNotFoundException e) {
 			e.printStackTrace();
 		}
-		logger.debug("Profesor: " + profesor.getUserName() + " successfully registrated in database.");
+		logger.debug("Profesor: " + profesor.getUserName() + " (ID " + profesor.getId() + ") successfully registrated in database.");
 		
 		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
 	}

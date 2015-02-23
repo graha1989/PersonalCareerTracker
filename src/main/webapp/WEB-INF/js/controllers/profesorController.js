@@ -68,8 +68,8 @@ app.controller("ProfesorController", function($scope, $routeParams, $http,
 			$("html, body").animate({
 				scrollTop : 0
 			}, "slow");
+			$scope.profesor = data;
 			$location.path('/profesorDetails');
-			console.log(data);
 		}).error(function(data, status) {
 			if (angular.isObject(data.fieldErrors)) {
 				$scope.fieldErrors = angular.fromJson(data.fieldErrors);
