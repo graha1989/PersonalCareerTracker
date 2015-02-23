@@ -1,5 +1,5 @@
 app.controller("StudentsController", function($scope, $routeParams, $http,
-		$location, $modal, PctService, $q) {
+		$location, $modal, PctService) {
 
 	$scope.students;
 	$scope.student;
