@@ -8,173 +8,173 @@
 		<div class="modal-header">
 			<h3 class="modal-title">{{ resources.text.profesorDetailsText }}</h3>
 		</div>
-
-		<fieldset>
-			<div class="form-group">
-				<label
-					for="inputUserName"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.userNameLabel }}</label>
-				<div class="col-sm-4">
-					<input
-						type="userName"
-						class="form-control"
-						id="inputUserName"
-						ng-model="profesor.userName"
-						disabled="true">
-				</div>
-			</div>
-			<div class="form-group">
-				<label
-					for="inputPassword"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.passwordLabel }}</label>
-				<div class="col-sm-4">
-					<input
-						type="password"
-						class="form-control"
-						id="inputPassword"
-						ng-model="profesor.password"
-						disabled="true">
-				</div>
-			</div>
-			<div class="form-group">
-				<label
-					for="inputEmail"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.emailLabel }}</label>
-				<div class="col-sm-4">
-					<input
-						type="lastName"
-						class="form-control"
-						id="inputEmail"
-						ng-model="profesor.email"
-						disabled="true">
-				</div>
-			</div>
-		</fieldset>
-
-		<fieldset>
-			<div class="form-group">
-				<label
-					for="inputFirstName"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.nameLabel }}</label>
-				<div class="col-sm-4">
-					<input
-						type="firstName"
-						class="form-control"
-						id="inputFirstName"
-						ng-model="profesor.name"
-						disabled="true">
-				</div>
-			</div>
-			<div class="form-group">
-				<label
-					for="inputLastName"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.surnameLabel }}</label>
-				<div class="col-sm-4">
-					<input
-						type="lastName"
-						class="form-control"
-						id="inputLastName"
-						ng-model="profesor.surname"
-						disabled="true">
-				</div>
-			</div>
-			<div class="form-group">
-				<label
-					for="inputFathersName"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.fathersNameLabel }}</label>
-				<div class="col-sm-4">
-					<input
-						type="fathersName"
-						class="form-control"
-						id="inputFathersName"
-						ng-model="profesor.fathersName"
-						disabled="true">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label
-					for="inputBirthDate"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.dateOfBirthLabel }}</label>
-				<div class='col-sm-4'>
-					<div
-						class='input-group date'
-						id='datetimepicker'>
+		<div class="modal-body">
+			<fieldset>
+				<div class="form-group">
+					<label
+						for="inputUserName"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.userNameLabel }}</label>
+					<div class="col-sm-4">
 						<input
-							type='text'
+							type="userName"
 							class="form-control"
-							id="inputBirthDate"
-							placeholder="DD-MM-GGGG"
-							datepicker-popup="dd-MM-yyyy"
-							is-open="opened"
-							min-date="minDate"
-							max-date="maxDate"
-							datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)"
-							show-button-bar="false"
-							ng-model="profesor.dateOfBirth"> <span class="input-group-addon"> <span
-							class="glyphicon glyphicon-calendar"
-							ng-click="open($event)"
-							disabled="true"></span>
-						</span>
+							id="inputUserName"
+							ng-model="profesor.userName"
+							disabled="true">
 					</div>
 				</div>
-			</div>
+				<div class="form-group">
+					<label
+						for="inputPassword"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.passwordLabel }}</label>
+					<div class="col-sm-4">
+						<input
+							type="password"
+							class="form-control"
+							id="inputPassword"
+							ng-model="profesor.password"
+							disabled="true">
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputEmail"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.emailLabel }}</label>
+					<div class="col-sm-4">
+						<input
+							type="lastName"
+							class="form-control"
+							id="inputEmail"
+							ng-model="profesor.email"
+							disabled="true">
+					</div>
+				</div>
+			</fieldset>
 
-			<div class="form-group">
-				<label
-					for="inputBirthPlace"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.placeOfBirthLabel }}</label>
-				<div class="col-sm-4">
-					<input
-						type="birthPlace"
-						class="form-control"
-						id="inputBirthPlace"
-						ng-model="profesor.placeOfBirth"
-						disabled="true">
+			<fieldset>
+				<div class="form-group">
+					<label
+						for="inputFirstName"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.nameLabel }}</label>
+					<div class="col-sm-4">
+						<input
+							type="firstName"
+							class="form-control"
+							id="inputFirstName"
+							ng-model="profesor.name"
+							disabled="true">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label
-					for="inputBirthCountry"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.countryOfBirthLabel }}</label>
-				<div class="col-sm-4">
-					<input
-						type="birthCountry"
-						class="form-control"
-						id="inputBirthCountry"
-						ng-model="profesor.countryOfBirth"
-						disabled="true">
+				<div class="form-group">
+					<label
+						for="inputLastName"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.surnameLabel }}</label>
+					<div class="col-sm-4">
+						<input
+							type="lastName"
+							class="form-control"
+							id="inputLastName"
+							ng-model="profesor.surname"
+							disabled="true">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label
-					for="inputScientificArea"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.scientificAreaLabel }}</label>
-				<div class="col-sm-4">
-					<input
-						type="scientificArea"
-						class="form-control"
-						id="inputScientificArea"
-						ng-model="profesor.scientificArea"
-						disabled="true">
+				<div class="form-group">
+					<label
+						for="inputFathersName"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.fathersNameLabel }}</label>
+					<div class="col-sm-4">
+						<input
+							type="fathersName"
+							class="form-control"
+							id="inputFathersName"
+							ng-model="profesor.fathersName"
+							disabled="true">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label
-					for="inputSpecialScientificArea"
-					class="col-sm-2 control-label">{{ resources.profesorLabels.specialScientificAreaLabel }}</label>
-				<div class="col-sm-4">
-					<input
-						type="specialScientificArea"
-						class="form-control"
-						id="inputSpecialScientificArea"
-						ng-model="profesor.specialScientificArea"
-						disabled="true">
-				</div>
-			</div>
-		</fieldset>
 
+				<div class="form-group">
+					<label
+						for="inputBirthDate"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.dateOfBirthLabel }}</label>
+					<div class='col-sm-4'>
+						<div
+							class='input-group date'
+							id='datetimepicker'>
+							<input
+								type='text'
+								class="form-control"
+								id="inputBirthDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="opened"
+								min-date="minDate"
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								date-disabled="disabled(date, mode)"
+								show-button-bar="false"
+								ng-model="profesor.dateOfBirth"> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="open($event)"
+								disabled="true"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label
+						for="inputBirthPlace"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.placeOfBirthLabel }}</label>
+					<div class="col-sm-4">
+						<input
+							type="birthPlace"
+							class="form-control"
+							id="inputBirthPlace"
+							ng-model="profesor.placeOfBirth"
+							disabled="true">
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputBirthCountry"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.countryOfBirthLabel }}</label>
+					<div class="col-sm-4">
+						<input
+							type="birthCountry"
+							class="form-control"
+							id="inputBirthCountry"
+							ng-model="profesor.countryOfBirth"
+							disabled="true">
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputScientificArea"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.scientificAreaLabel }}</label>
+					<div class="col-sm-4">
+						<input
+							type="scientificArea"
+							class="form-control"
+							id="inputScientificArea"
+							ng-model="profesor.scientificArea"
+							disabled="true">
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputSpecialScientificArea"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.specialScientificAreaLabel }}</label>
+					<div class="col-sm-4">
+						<input
+							type="specialScientificArea"
+							class="form-control"
+							id="inputSpecialScientificArea"
+							ng-model="profesor.specialScientificArea"
+							disabled="true">
+					</div>
+				</div>
+			</fieldset>
+		</div>
 		<div class="modal-footer action">
 			<button
 				id="submit_button"
