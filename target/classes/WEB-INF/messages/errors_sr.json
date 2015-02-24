@@ -1,9 +1,8 @@
 {
 "error" : {
 		"invalidInput" : "Invalid input.",
-		"invalidLength" : "Min. 2, max. 50 characters.",
-		"invalidPhoneLength" : "Enter 10 digits.",
-		"invalidEmailLength" : "Enter max 50 characters.",
+		"invalidMaxLength" : "Max. 50 characters.",
+		"invalidMinPasswordLength" : "Min. 8 characters.",
 		"onlyNumbers" : "Only numbers.",
 		"required" : "Field is required.",
 		"emptyTable" : "There is no data for given search criteria!"

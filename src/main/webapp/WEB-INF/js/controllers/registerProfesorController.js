@@ -1,14 +1,19 @@
-app.controller("RegisterProfesorController", function($scope, $routeParams, $http,
-		$location, $modal, PctService) {
+app.controller("RegisterProfesorController", function($scope, $routeParams,
+		$http, $location, $modal, PctService) {
 
 	$scope.profesor;
 	$scope.resources = {};
 	$scope.errorMessages = {};
-	
+
+	$scope.patterns = {
+		onlyLetters : /^[a-zA-Z ]*$/,
+		onlyNumbers : /^[0-9 ]*$/
+	};
+
 	$scope.loadResources = function() {
 		var locale = document.getElementById('localeCode');
-		$http.get('messages/profesorDetails_' + locale.value + '.json').success(
-				function(response) {
+		$http.get('messages/profesorDetails_' + locale.value + '.json')
+				.success(function(response) {
 					$scope.resources = angular.fromJson(response);
 				});
 		$http.get('messages/errors_' + locale.value + '.json').success(
@@ -16,7 +21,7 @@ app.controller("RegisterProfesorController", function($scope, $routeParams, $htt
 					$scope.errorMessages = angular.fromJson(response);
 				});
 	};
-	
+
 	/* Date picker functions */
 	$scope.open = function($event) {
 		$event.preventDefault();
@@ -45,7 +50,7 @@ app.controller("RegisterProfesorController", function($scope, $routeParams, $htt
 			$("html, body").animate({
 				scrollTop : 0
 			}, "slow");
-			$location.path('/profesorDetails/id/'+data.id);
+			$location.path('/profesorDetails/id/' + data.id);
 		}).error(function(data, status) {
 			if (angular.isObject(data.fieldErrors)) {
 				$scope.fieldErrors = angular.fromJson(data.fieldErrors);

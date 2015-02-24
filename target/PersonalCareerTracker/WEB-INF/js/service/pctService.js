@@ -12,6 +12,6 @@ app.factory("PctService", function($http){
 		        method: 'DELETE', 
 		        url: 'showAllStudents?id='+id
 		    }).success(callback).error(callback);
-	    },
+	    }
     };       
 });

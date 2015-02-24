@@ -14,49 +14,49 @@ public class ProfesorFormaDTO implements Serializable {
 	private static final long serialVersionUID = -1976948443456869445L;
 
 	@NotEmpty
-	@Length(max = 30)
+	@Length(max = 50)
 	@SafeHtml
 	private String userName;
 
 	@NotEmpty
-	@Length(max = 30)
+	@Length(min = 8, max = 50)
 	@SafeHtml
 	private String password;
 
 	@NotEmpty
-	@Length(max = 30)
+	@Length(max = 50)
 	@SafeHtml
 	private String email;
 
 	private Uloga uloga;
 	
-	@Length(max = 30)
+	@Length(max = 50)
 	@SafeHtml
 	private String name;
 
-	@Length(max = 30)
+	@Length(max = 50)
 	@SafeHtml
 	private String surname;
 
-	@Length(max = 30)
+	@Length(max = 50)
 	@SafeHtml
 	private String fathersName;
 
 	private Date dateOfBirth;
 
-	@Length(max = 30)
+	@Length(max = 50)
 	@SafeHtml
 	private String placeOfBirth;
 
-	@Length(max = 30)
+	@Length(max = 50)
 	@SafeHtml
 	private String countryOfBirth;
 
-	@Length(max = 30)
+	@Length(max = 50)
 	@SafeHtml
 	private String scientificArea;
 
-	@Length(max = 30)
+	@Length(max = 50)
 	@SafeHtml
 	private String specialScientificArea;
 

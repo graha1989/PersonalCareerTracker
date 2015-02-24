@@ -17,10 +17,22 @@
 						class="col-sm-2 control-label">{{ resources.profesorLabels.userNameLabel }}</label>
 					<div class="col-sm-4">
 						<input
-							type="userName"
+							type="text"
 							class="form-control"
 							id="inputUserName"
-							ng-model="profesor.userName"/>
+							name="inputUserName"
+							ng-model="profesor.userName"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputUserName.$dirty && form.inputUserName.$invalid"
+							class="userNameFieldError">
+							<span
+								ng-show="form.inputUserName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputUserName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -32,7 +44,10 @@
 							type="password"
 							class="form-control"
 							id="inputPassword"
-							ng-model="profesor.password"/>
+							ng-model="profesor.password"
+							ng-minlength="8"
+							ng-maxlength="50"
+							required />
 					</div>
 				</div>
 				<div class="form-group">
@@ -44,7 +59,9 @@
 							type="lastName"
 							class="form-control"
 							id="inputEmail"
-							ng-model="profesor.email"/>
+							ng-model="profesor.email"
+							ng-maxlength="50"
+							required />
 					</div>
 				</div>
 			</fieldset>
@@ -59,7 +76,10 @@
 							type="firstName"
 							class="form-control"
 							id="inputFirstName"
-							ng-model="profesor.name"/>
+							ng-model="profesor.name"
+							ng-pattern="patterns.onlyLetters"
+							ng-maxlength="50"
+							required />
 					</div>
 				</div>
 				<div class="form-group">
@@ -71,7 +91,10 @@
 							type="lastName"
 							class="form-control"
 							id="inputLastName"
-							ng-model="profesor.surname"/>
+							ng-model="profesor.surname"
+							ng-pattern="patterns.onlyLetters"
+							ng-maxlength="50"
+							required />
 					</div>
 				</div>
 				<div class="form-group">
@@ -83,7 +106,10 @@
 							type="fathersName"
 							class="form-control"
 							id="inputFathersName"
-							ng-model="profesor.fathersName"/>
+							ng-model="profesor.fathersName"
+							ng-pattern="patterns.onlyLetters"
+							ng-maxlength="50"
+							required />
 					</div>
 				</div>
 
@@ -107,7 +133,8 @@
 								datepicker-options="dateOptions"
 								date-disabled="disabled(date, mode)"
 								show-button-bar="false"
-								ng-model="profesor.dateOfBirth"/> <span class="input-group-addon"> <span
+								ng-model="profesor.dateOfBirth"
+								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="open($event)"></span>
 							</span>
@@ -124,7 +151,10 @@
 							type="birthPlace"
 							class="form-control"
 							id="inputBirthPlace"
-							ng-model="profesor.placeOfBirth"/>
+							ng-model="profesor.placeOfBirth"
+							ng-pattern="patterns.onlyLetters"
+							ng-maxlength="50"
+							required />
 					</div>
 				</div>
 				<div class="form-group">
@@ -136,7 +166,10 @@
 							type="birthCountry"
 							class="form-control"
 							id="inputBirthCountry"
-							ng-model="profesor.countryOfBirth"/>
+							ng-model="profesor.countryOfBirth"
+							ng-pattern="patterns.onlyLetters"
+							ng-maxlength="50"
+							required />
 					</div>
 				</div>
 				<div class="form-group">
@@ -148,7 +181,10 @@
 							type="scientificArea"
 							class="form-control"
 							id="inputScientificArea"
-							ng-model="profesor.scientificArea"/>
+							ng-model="profesor.scientificArea"
+							ng-pattern="patterns.onlyLetters"
+							ng-maxlength="50"
+							required />
 					</div>
 				</div>
 				<div class="form-group">
@@ -160,7 +196,10 @@
 							type="specialScientificArea"
 							class="form-control"
 							id="inputSpecialScientificArea"
-							ng-model="profesor.specialScientificArea"/>
+							ng-model="profesor.specialScientificArea"
+							ng-pattern="patterns.onlyLetters"
+							ng-maxlength="50"
+							required />
 					</div>
 				</div>
 			</fieldset>

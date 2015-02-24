@@ -16,13 +16,13 @@ public class Korisnik extends AbstractEntity {
 	
 	private static final long serialVersionUID = 753163571345516344L;
 
-	@Column(name = "userName", length = 30)
+	@Column(name = "userName", length = 80)
 	private String userName;
 	
-	@Column(name = "password", length = 30)
+	@Column(name = "password", length = 80)
 	private String password;
 	
-	@Column(name = "email", length = 30)
+	@Column(name = "email", length = 80)
 	private String email;
 	
 	@ManyToOne

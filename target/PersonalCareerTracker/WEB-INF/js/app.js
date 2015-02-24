@@ -3,19 +3,19 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
 		$routeProvider
 			.when('/adminHome', {
 				templateUrl: 'pages/adminHome.html',
-				controller: 'AdminHomeController'
+				controller: 'HomeController'
 			})
 			.when('/showAllStudents', {
 				templateUrl: 'pages/showAllStudents.html',
-				controller: 'ShowStudentsController'
+				controller: 'StudentsController'
 			})
-			.when('/registerUser', {
-				templateUrl: 'pages/registerUser.html',
-				controller: 'UserController'
+			.when('/registerProfesor', {
+				templateUrl: 'pages/registerProfesor.html',
+				controller: 'RegisterProfesorController'
 			})
-			.when('/userDetails', {
-				templateUrl: 'pages/userDetails.html',
-				controller: 'UserController'
+			.when('/profesorDetails/id/:id', {
+				templateUrl: 'pages/profesorDetails.html?id=:id',
+				controller: 'ProfesorDetailsController'
 			})
 			.otherwise({
 				redirectTo: '/showAllStudents'

@@ -1,3 +1,0 @@
-INSERT INTO student (name, surname, transcriptNumber) VALUES
-	('Jack', 'Johnson', '151/08'),
-	('Piter', 'Pan', '214m/11');
