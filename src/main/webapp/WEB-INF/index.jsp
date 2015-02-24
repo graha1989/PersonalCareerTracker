@@ -42,7 +42,8 @@
 	<script type="text/javascript" src="<spring:url value='js/app.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/homeController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/studentsController.js' />"></script>
-	<script type="text/javascript" src="<spring:url value='js/controllers/profesorController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/registerProfesorController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/profesorDetailsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/service/pctService.js' />"></script>
 </body>
 </html>

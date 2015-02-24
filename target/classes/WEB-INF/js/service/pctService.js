@@ -1,5 +1,6 @@
 app.factory("PctService", function($http){
 	
+	var profesor = {};
 	return {
 		loadStudents: function(params, callback) {
 			$http.get('showAllStudents/students').success(callback);
@@ -13,5 +14,11 @@ app.factory("PctService", function($http){
 		        url: 'showAllStudents?id='+id
 		    }).success(callback).error(callback);
 	    },
+	    saveProfesorForm: function(form) {
+	    	profesor = form;
+	    },
+	    getProfesorForm: function() {
+	    	return profesor;
+	    }
     };       
 });

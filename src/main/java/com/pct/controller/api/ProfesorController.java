@@ -1,4 +1,4 @@
-package com.pct.controller;
+package com.pct.controller.api;
 
 import javax.validation.Valid;
 
@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.pct.constants.MimeTypes;
 import com.pct.domain.dto.ProfesorFormaDTO;
@@ -19,7 +19,7 @@ import com.pct.service.ProfesorService;
 import com.pct.validation.ProfesorNotFoundException;
 
 @RestController
-@RequestMapping("/registerProfesor")
+@RequestMapping("/api/professor")
 public class ProfesorController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProfesorController.class);
@@ -27,13 +27,8 @@ public class ProfesorController {
 	@Autowired
 	ProfesorService profesorService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView get() {
-		return new ModelAndView("registerProfesor");
-	}
-
-	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<ProfesorFormaDTO> persistProfesor(@Valid @RequestBody ProfesorFormaDTO profesorFormaDTO) {
+	@RequestMapping(value="persistProfessor", method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<ProfesorFormaDTO> persistProfessor(@Valid @RequestBody ProfesorFormaDTO profesorFormaDTO) {
 		profesorService.saveProfesor(profesorFormaDTO);
 		ProfesorFormaDTO profesor = new ProfesorFormaDTO();
 		try {
@@ -46,11 +41,16 @@ public class ProfesorController {
 		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "selectedProfesor", method = RequestMethod.GET, produces = "application/json")
-	public ProfesorFormaDTO showProfesor(String userName) throws ProfesorNotFoundException {
+	@RequestMapping(value="/selectedProfesor", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<ProfesorFormaDTO> showProfesor(String userName) throws ProfesorNotFoundException {
 		ProfesorFormaDTO profesor = profesorService.findProfesorByUserName(userName);
-
-		return profesor;
+		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
 	}
-
+	
+	@RequestMapping(value="loadProfesorDetails", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<ProfesorFormaDTO> getProfessorById(@RequestParam(value = "id", required = true) Long id) throws ProfesorNotFoundException {
+		ProfesorFormaDTO profesor = profesorService.findProfesorById(id);
+		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
+	}
+	
 }
