@@ -22,7 +22,7 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams, $http
 	$scope.open = function($event) {
 		$event.preventDefault();
 		$event.stopPropagation();
-
+		
 		$scope.opened = true;
 	};
 
