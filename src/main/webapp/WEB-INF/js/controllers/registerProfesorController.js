@@ -4,6 +4,7 @@ app.controller("RegisterProfesorController", function($scope, $routeParams,
 	$scope.profesor;
 	$scope.resources = {};
 	$scope.errorMessages = {};
+	$scope.opened = false;
 
 	$scope.patterns = {
 		onlyLetters : /^[a-zA-Z ]*$/,
@@ -29,7 +30,7 @@ app.controller("RegisterProfesorController", function($scope, $routeParams,
 
 		$scope.opened = true;
 	};
-
+	
 	$scope.init = function() {
 		$scope.status = $routeParams.status;
 		$scope.profesor = {};

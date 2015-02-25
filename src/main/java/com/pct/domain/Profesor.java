@@ -19,28 +19,28 @@ public class Profesor extends Korisnik {
 
 	private static final long serialVersionUID = 6438166967413025243L;
 
-	@Column(name = "name", length = 80)
+	@Column(name = "name", length = 50)
 	private String name;
 
-	@Column(name = "surname", length = 80)
+	@Column(name = "surname", length = 50)
 	private String surname;
 
-	@Column(name = "fathersName", length = 80)
+	@Column(name = "fathersName", length = 50)
 	private String fathersName;
 
 	@Column(name = "dateOfBirth")
 	private Date dateOfBirth;
 
-	@Column(name = "placeOfBirth", length = 80)
+	@Column(name = "placeOfBirth", length = 50)
 	private String placeOfBirth;
 
-	@Column(name = "countryOfBirth", length = 80)
+	@Column(name = "countryOfBirth", length = 50)
 	private String countryOfBirth;
 
-	@Column(name = "scientificArea", length = 80)
+	@Column(name = "scientificArea", length = 50)
 	private String scientificArea;
 
-	@Column(name = "specialScientificArea", length = 80)
+	@Column(name = "specialScientificArea", length = 50)
 	private String specialScientificArea;
 
 	public Profesor() {
