@@ -53,6 +53,46 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 	};
 
 	$scope.init();
+	
+	$scope.editProfesor = function(id) {
+		$modal.open({
+			templateUrl : 'editProfesorPopup.html',
+			controller : editProfesorController,
+			resolve : {
+				profesorId : function() {
+					return id;
+				}
+			}
+		});
+	};
+
+});
+
+var editProfesorController = function($scope, $modalInstance, $routeParams,
+		$http, $route, profesorId, PctService) {
+
+	$scope.loadProfesor = function(id) {
+		PctService.loadProfesor(id, function(data) {
+			if (angular.isObject(data)) {
+				$scope.profesor = data;
+				$scope.noResultsFound = false;
+			} else {
+				$scope.noResultsFound = true;
+			}
+		});
+	};
+
+	$scope.init = function() {
+		$scope.loadProfesor(profesorId);
+		$scope.master = angular.copy($scope.profesor);
+		$scope.status = $routeParams.status;
+	};
+
+	$scope.init();
+
+	$scope.isUnchanged = function(profesor) {
+		return angular.equals(profesor, $scope.master);
+	};
 
 	$scope.updateProfesor = function() {
 		$http({
@@ -77,4 +117,8 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 		});
 	};
 
-});
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
+
+};

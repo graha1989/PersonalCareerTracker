@@ -2,6 +2,7 @@
     "text": {
         "title" : "Registrovanje novog profesora",
         "profesorDetailsText" : "Lični podaci o profesoru",
+        "editProfesorText" : "Izmena podataka o profesoru",
         "title":"Podaci o profesoru"
        },
 	"profesorLabels" : {

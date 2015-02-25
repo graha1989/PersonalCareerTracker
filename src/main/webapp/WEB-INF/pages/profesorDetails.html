@@ -1,7 +1,8 @@
 <div>
 
 	<form
-		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+		name="form"
+		class="form-horizontal css-form"
 		role="form"
 		ng-model="profesor">
 
@@ -13,41 +14,12 @@
 				<div class="form-group">
 					<label
 						for="inputUserName"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.userNameLabel }}</label>
-					<div class="col-sm-4">
-						<input
-							type="userName"
-							class="form-control"
-							id="inputUserName"
-							ng-model="profesor.userName"
-							disabled="true" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label
-						for="inputPassword"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.passwordLabel }}</label>
-					<div class="col-sm-4">
-						<input
-							type="password"
-							class="form-control"
-							id="inputPassword"
-							ng-model="profesor.password"
-							disabled="true" />
-					</div>
+						class="col-sm-2 control-label">{{ resources.profesorLabels.userNameLabel }}:</label> <label class="col-sm-4 control-label">{{ profesor.userName }}</label>
 				</div>
 				<div class="form-group">
 					<label
 						for="inputEmail"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.emailLabel }}</label>
-					<div class="col-sm-4">
-						<input
-							type="lastName"
-							class="form-control"
-							id="inputEmail"
-							ng-model="profesor.email"
-							disabled="true" />
-					</div>
+						class="col-sm-2 control-label">{{ resources.profesorLabels.emailLabel }}:</label> <label class="col-sm-4 control-label">{{ profesor.email }}</label>
 				</div>
 			</fieldset>
 
@@ -55,137 +27,53 @@
 				<div class="form-group">
 					<label
 						for="inputFirstName"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.nameLabel }}</label>
-					<div class="col-sm-4">
-						<input
-							type="firstName"
-							class="form-control"
-							id="inputFirstName"
-							ng-model="profesor.name"
-							ng-pattern="patterns.onlyLetters"
-							disabled="true" />
-					</div>
+						class="col-sm-2 control-label">{{ resources.profesorLabels.nameLabel }}:</label> <label class="col-sm-4 control-label">{{ profesor.name }}</label>
 				</div>
 				<div class="form-group">
 					<label
 						for="inputLastName"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.surnameLabel }}</label>
-					<div class="col-sm-4">
-						<input
-							type="lastName"
-							class="form-control"
-							id="inputLastName"
-							ng-model="profesor.surname"
-							ng-pattern="patterns.onlyLetters"
-							disabled="true" />
-					</div>
+						class="col-sm-2 control-label">{{ resources.profesorLabels.surnameLabel }}:</label> <label class="col-sm-4 control-label">{{ profesor.surname }}</label>
 				</div>
 				<div class="form-group">
 					<label
 						for="inputFathersName"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.fathersNameLabel }}</label>
-					<div class="col-sm-4">
-						<input
-							type="fathersName"
-							class="form-control"
-							id="inputFathersName"
-							ng-model="profesor.fathersName"
-							ng-pattern="patterns.onlyLetters"
-							disabled="true" />
-					</div>
+						class="col-sm-2 control-label">{{ resources.profesorLabels.fathersNameLabel }}:</label> <label class="col-sm-4 control-label">{{ profesor.fathersName }}</label>
 				</div>
-
 				<div class="form-group">
 					<label
 						for="inputBirthDate"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.dateOfBirthLabel }}</label>
-					<div class='col-sm-4'>
-						<div
-							class='input-group date'
-							id='datetimepicker'>
-							<input
-								type="text"
-								disabled="true"
-								class="form-control"
-								id="inputBirthDate"
-								placeholder="DD-MM-GGGG"
-								datepicker-popup="dd-MM-yyyy"
-								is-open="opened"
-								min-date="minDate"
-								max-date="maxDate"
-								datepicker-options="dateOptions"
-								date-disabled="disabled(date, mode)"
-								show-button-bar="false"
-								ng-model="profesor.dateOfBirth"/> <span class="input-group-addon"> <span
-								class="glyphicon glyphicon-calendar"></span>
-							</span>
-						</div>
-					</div>
+						class="col-sm-2 control-label">{{ resources.profesorLabels.dateOfBirthLabel }}:</label> <label class="col-sm-4 control-label">{{ profesor.dateOfBirth }}</label>
 				</div>
-
 				<div class="form-group">
 					<label
 						for="inputBirthPlace"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.placeOfBirthLabel }}</label>
-					<div class="col-sm-4">
-						<input
-							type="birthPlace"
-							class="form-control"
-							id="inputBirthPlace"
-							ng-model="profesor.placeOfBirth"
-							ng-pattern="patterns.onlyLetters"
-							disabled="true" />
-					</div>
+						class="col-sm-2 control-label">{{ resources.profesorLabels.placeOfBirthLabel }}:</label> <label class="col-sm-4 control-label">{{ profesor.placeOfBirth }}</label>
 				</div>
 				<div class="form-group">
 					<label
 						for="inputBirthCountry"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.countryOfBirthLabel }}</label>
-					<div class="col-sm-4">
-						<input
-							type="birthCountry"
-							class="form-control"
-							id="inputBirthCountry"
-							ng-model="profesor.countryOfBirth"
-							ng-pattern="patterns.onlyLetters"
-							disabled="true" />
-					</div>
+						class="col-sm-2 control-label">{{ resources.profesorLabels.countryOfBirthLabel }}:</label> <label class="col-sm-4 control-label">{{ profesor.countryOfBirth }}</label>
 				</div>
 				<div class="form-group">
 					<label
 						for="inputScientificArea"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.scientificAreaLabel }}</label>
-					<div class="col-sm-4">
-						<input
-							type="scientificArea"
-							class="form-control"
-							id="inputScientificArea"
-							ng-model="profesor.scientificArea"
-							ng-pattern="patterns.onlyLetters"
-							disabled="true" />
-					</div>
+						class="col-sm-2 control-label">{{ resources.profesorLabels.scientificAreaLabel }}:</label> <label class="col-sm-4 control-label">{{ profesor.scientificArea }}</label>
 				</div>
 				<div class="form-group">
 					<label
 						for="inputSpecialScientificArea"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.specialScientificAreaLabel }}</label>
-					<div class="col-sm-4">
-						<input
-							type="specialScientificArea"
-							class="form-control"
-							id="inputSpecialScientificArea"
-							ng-model="profesor.specialScientificArea"
-							ng-pattern="patterns.onlyLetters"
-							disabled="true" />
-					</div>
+						class="col-sm-2 control-label">{{ resources.profesorLabels.specialScientificAreaLabel }}:</label> <label class="col-sm-4 control-label">{{ profesor.specialScientificArea }}</label>
 				</div>
 			</fieldset>
 		</div>
 		<div class="modal-footer action">
 			<button
 				id="submit_button"
-				type="submit"
-				class="btn">{{ resources.form.edit }}</button>
+				type="edit"
+				class="btn"
+				ng-click="editProfesor(profesor.id)">
+				<span class="glyphicon glyphicon-pencil"></span> {{ resources.form.edit }}
+			</button>
 			<button
 				id="cancel_button"
 				class="btn"
@@ -214,3 +102,55 @@
 	</form>
 
 </div>
+
+<script
+	type="text/ng-template"
+	id="editProfesorPopup.html">
+	<form class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-submit="updateProfesor()" ng-model="profesor">
+		<div class="modal-header">
+    		<h3 class="modal-title">{{ resources.text.editProfesorText }}</h3>
+   	 	</div>
+    	<div class="modal-body">
+    		<div class="form-group">
+					<label
+						for="inputUserName"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.userNameLabel }} <span class="required">*</span></label>
+					<div class="col-sm-4">
+						<input
+							type="text"
+							class="form-control"
+							id="inputUserName"
+							name="inputUserName"
+							ng-model="profesor.userName"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputUserName.$dirty && form.inputUserName.$invalid"
+							class="userNameFieldError">
+							<span
+								ng-show="form.inputUserName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputUserName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+  			<div class="form-group">
+    			<label for="inputFirstName" class="col-sm-4 control-label">Ime</label>
+    			<div class="col-sm-6">
+      				<input type="firstName" class="form-control" id="inputFirstName" ng-model="student.name""/>
+    			</div>
+  			</div>
+			<div class="form-group">
+    			<label for="inputLastName" class="col-sm-4 control-label">Prezime</label>
+    			<div class="col-sm-6">
+      				<input type="lastName" class="form-control" id="inputLastName" ng-model="student.surname""/>
+    			</div>
+  			</div>
+   		</div>
+   		<div class="modal-footer action">
+		 	<button id="submit_button" type="submit" class="btn" ng-disabled="isUnchanged(student)"><span class="glyphicon glyphicon-save"></span> Sačuvaj</button>
+		 	<button id="cancel_button" class="btn" ng-click="cancel()">Zatvori</button>
+  		</div>
+	</form>
+</script>

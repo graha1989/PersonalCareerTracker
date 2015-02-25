@@ -12,6 +12,9 @@ app.factory("PctService", function($http){
 		        method: 'DELETE', 
 		        url: 'showAllStudents?id='+id
 		    }).success(callback).error(callback);
-	    }
+	    },
+	    loadProfesor: function(id, callback) {
+			$http.get('api/professor/loadProfesorDetails?id='+id).success(callback).error(callback);
+		}
     };       
 });

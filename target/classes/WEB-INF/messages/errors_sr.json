@@ -4,6 +4,7 @@
 		"invalidMaxLength" : "Max. 50 characters.",
 		"invalidMinPasswordLength" : "Min. 8 characters.",
 		"onlyNumbers" : "Only numbers.",
+		"onlyLetters" : "Only letters.",
 		"required" : "Field is required.",
 		"emptyTable" : "There is no data for given search criteria!"
 	}
