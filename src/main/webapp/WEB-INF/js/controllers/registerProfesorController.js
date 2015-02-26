@@ -53,6 +53,7 @@ app.controller("RegisterProfesorController", function($scope, $routeParams,
 			}, "slow");
 			$location.path('/profesorDetails/id/' + data.id);
 		}).error(function(data, status) {
+			$scope.error = "Greska!"; 
 			if (angular.isObject(data.fieldErrors)) {
 				$scope.fieldErrors = angular.fromJson(data.fieldErrors);
 			}

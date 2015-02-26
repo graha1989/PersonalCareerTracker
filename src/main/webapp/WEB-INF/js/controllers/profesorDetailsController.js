@@ -6,6 +6,8 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 	$scope.resources = {};
 	$scope.errorMessages = {};
 
+	$scope.editMode = false;
+
 	$scope.patterns = {
 		onlyLetters : /^[a-zA-Z ]*$/,
 		onlyNumbers : /^[0-9 ]*$/
@@ -28,7 +30,7 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 		$event.preventDefault();
 		$event.stopPropagation();
 
-		$scope.opened = true;
+		$scope.opened = $scope.editMode;
 	};
 
 	$scope.loadProfesorDetails = function(id) {
@@ -53,45 +55,9 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 	};
 
 	$scope.init();
-	
+
 	$scope.editProfesor = function(id) {
-		$modal.open({
-			templateUrl : 'editProfesorPopup.html',
-			controller : editProfesorController,
-			resolve : {
-				profesorId : function() {
-					return id;
-				}
-			}
-		});
-	};
-
-});
-
-var editProfesorController = function($scope, $modalInstance, $routeParams,
-		$http, $route, profesorId, PctService) {
-
-	$scope.loadProfesor = function(id) {
-		PctService.loadProfesor(id, function(data) {
-			if (angular.isObject(data)) {
-				$scope.profesor = data;
-				$scope.noResultsFound = false;
-			} else {
-				$scope.noResultsFound = true;
-			}
-		});
-	};
-
-	$scope.init = function() {
-		$scope.loadProfesor(profesorId);
-		$scope.master = angular.copy($scope.profesor);
-		$scope.status = $routeParams.status;
-	};
-
-	$scope.init();
-
-	$scope.isUnchanged = function(profesor) {
-		return angular.equals(profesor, $scope.master);
+		$scope.editMode = true;
 	};
 
 	$scope.updateProfesor = function() {
@@ -106,7 +72,9 @@ var editProfesorController = function($scope, $modalInstance, $routeParams,
 			$("html, body").animate({
 				scrollTop : 0
 			}, "slow");
+			$scope.editMode = false;
 		}).error(function(data, status) {
+			$scope.error = "Greska!";
 			if (angular.isObject(data.fieldErrors)) {
 				$scope.fieldErrors = angular.fromJson(data.fieldErrors);
 			}
@@ -117,8 +85,20 @@ var editProfesorController = function($scope, $modalInstance, $routeParams,
 		});
 	};
 
-	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+	$scope.openBachelorMentoring = function(id) {
+		$location.path('/bachelorMentoring/id/' + id);
 	};
 
-};
+	$scope.openMasterMentoring = function(id) {
+		$location.path('/masterMentoring/id/' + id);
+	};
+
+	$scope.openSpecialisticMentoring = function(id) {
+		$location.path('/specialisticMentoring/id/' + id);
+	};
+
+	$scope.openDoctorMentoring = function(id) {
+		$location.path('/doctorMentoring/id/' + id);
+	};
+
+});

@@ -22,7 +22,7 @@ import com.pct.service.StudentService;
 import com.pct.validation.StudentNotFoundException;
 
 @RestController
-@RequestMapping("/api/showAllStudents")
+@RequestMapping("/api/students")
 public class StudentController {
 
 	private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
@@ -30,18 +30,18 @@ public class StudentController {
 	@Autowired
 	StudentService studentService;
 
-	@RequestMapping(value = "students", method = RequestMethod.GET, produces = "application/json")
-	public List<StudentDTO> showAllStudents() {
+	@RequestMapping(value = "allStudents", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<List<StudentDTO>> showAllStudents() {
 		List<StudentDTO> students = studentService.findAll();
 
-		return students;
+		return new ResponseEntity<List<StudentDTO>>(students, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "selectedStudent", method = RequestMethod.GET, produces = "application/json")
-	public StudentDTO showStudent(Long id) throws StudentNotFoundException {
+	public ResponseEntity<StudentDTO> showStudent(Long id) throws StudentNotFoundException {
 		StudentDTO student = studentService.findStudentById(id);
 
-		return student;
+		return new ResponseEntity<StudentDTO>(student, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)

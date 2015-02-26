@@ -9,10 +9,15 @@
 		"transcriptNumberLabel":"Broj indeksa",
 		"lastNameLabel":"Prezime"
 	   },    
-    "form" : {
+    "buttons" : {
 		"delete":"Izbriši",
 		"edit":"Izmeni",
 		"add":"Dodaj novog studenta"
-	   }      	       
+	   },
+	 "studentLabels": {
+        "firstNameLabel":"Ime",
+		"transcriptNumberLabel":"Broj indeksa",
+		"lastNameLabel":"Prezime"
+    }  	       
         
 }

@@ -11,6 +11,9 @@
 			<h3 class="modal-title">{{ resources.text.title }}</h3>
 		</div>
 		<div class="modal-body">
+			<div ng-show="error" class="glyphicon glyphicon-exclamation-sign">
+				{{error}}
+			</div>
 			<fieldset>
 				<div class="form-group">
 					<label

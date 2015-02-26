@@ -1,8 +1,8 @@
 app.controller("StudentsController", function($scope, $routeParams, $http,
 		$location, $modal, PctService) {
 
-	$scope.students;
-	$scope.student;
+	$scope.students = [];
+	$scope.student = {};
 	$scope.master = {};
 	$scope.noResultsFound = true;
 	$scope.resources = {};
@@ -35,7 +35,9 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
 	};
 
 	$scope.init = function() {
+		$scope.student = {};
 		$scope.students = [];
+		$scope.master = {};
 		$scope.loadStudents();
 		$scope.loadResources();
 	};
@@ -81,6 +83,18 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
 var editStudentController = function($scope, $modalInstance, $routeParams,
 		$http, $route, studentId, PctService) {
 
+	$scope.loadResources = function() {
+		var locale = document.getElementById('localeCode');
+		$http.get('messages/studentDetails_' + locale.value + '.json').success(
+				function(response) {
+					$scope.resources = angular.fromJson(response);
+				});
+		$http.get('messages/errors_' + locale.value + '.json').success(
+				function(response) {
+					$scope.errorMessages = angular.fromJson(response);
+				});
+	};
+
 	$scope.loadSelectedStudent = function(id) {
 		PctService.loadSelectedStudent(id, function(data) {
 			if (angular.isObject(data)) {
@@ -96,18 +110,15 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 		$scope.loadSelectedStudent(studentId);
 		$scope.master = angular.copy($scope.student);
 		$scope.status = $routeParams.status;
+		$scope.loadResources();
 	};
 
 	$scope.init();
 
-	$scope.isUnchanged = function(student) {
-		return angular.equals(student, $scope.master);
-	};
-
 	$scope.saveStudent = function() {
 		$http({
 			method : 'PUT',
-			url : "showAllStudents",
+			url : "api/students",
 			data : $scope.student,
 			headers : {
 				'Content-Type' : 'application/json'
@@ -128,7 +139,11 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 			}, "slow");
 		});
 	};
-
+	
+	$scope.isUnchanged = function(student) {
+		return angular.equals(student, $scope.master);
+	};
+	
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};
@@ -137,10 +152,23 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 
 var createNewStudentController = function($scope, $modalInstance, $routeParams,
 		$http, $route, PctService) {
-
+	
+	$scope.loadResources = function() {
+		var locale = document.getElementById('localeCode');
+		$http.get('messages/studentDetails_' + locale.value + '.json').success(
+				function(response) {
+					$scope.resources = angular.fromJson(response);
+				});
+		$http.get('messages/errors_' + locale.value + '.json').success(
+				function(response) {
+					$scope.errorMessages = angular.fromJson(response);
+				});
+	};
+	
 	$scope.init = function() {
 		$scope.status = $routeParams.status;
 		$scope.student = {};
+		$scope.loadResources();
 	};
 
 	$scope.init();
@@ -148,7 +176,7 @@ var createNewStudentController = function($scope, $modalInstance, $routeParams,
 	$scope.saveNewStudent = function() {
 		$http({
 			method : 'POST',
-			url : "showAllStudents",
+			url : "api/students",
 			data : $scope.student,
 			headers : {
 				'Content-Type' : 'application/json'

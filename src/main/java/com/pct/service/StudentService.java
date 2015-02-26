@@ -12,6 +12,8 @@ public interface StudentService {
 	void deleteStudent(Long id) throws StudentNotFoundException;
 
 	StudentDTO findStudentById(Long id) throws StudentNotFoundException;
+	
+	StudentDTO findStudentByTranscriptNumber(String transcriptNumber) throws StudentNotFoundException;
 
 	void saveStudent(StudentDTO studentDto);
 

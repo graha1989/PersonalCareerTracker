@@ -6,6 +6,6 @@
 		"onlyNumbers" : "Only numbers.",
 		"onlyLetters" : "Only letters.",
 		"required" : "Field is required.",
-		"emptyTable" : "There is no data for given search criteria!"
+		"emptyTable" : "Table is empty."
 	}
 }

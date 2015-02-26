@@ -1,27 +1,35 @@
 {
     "text": {
-        "title" : "Registrovanje novog profesora",
-        "profesorDetailsText" : "Lični podaci o profesoru",
-        "editProfesorText" : "Izmena podataka o profesoru",
-        "title":"Podaci o profesoru"
-       },
-	"profesorLabels" : {
-		"userNameLabel":"Korisničko ime",
-		"passwordLabel":"Lozinka",
-		"emailLabel":"E-mail adresa",
-		"nameLabel":"Ime",
-		"surnameLabel":"Prezime",
-		"fathersNameLabel":"Očevo ime",
-		"dateOfBirthLabel":"Datum rođenja",
-		"placeOfBirthLabel":"Mesto rođenja",
-		"countryOfBirthLabel":"Zemlja rođenja",
-		"scientificAreaLabel":"Naučna oblast",
-		"specialScientificAreaLabel":"Uža naučna oblast"
-	   },    
-    "form" : {
-		"register":"Registruj se",
-		"close":"Zatvori",
-		"edit":"Izmeni"
-	   }      	       
-        
+        "title": "Podaci o profesoru",
+        "profesorDetailsText": "Lični podaci o profesoru",
+        "editProfesorText": "Izmena podataka o profesoru"
+    },
+    "profesorLabels": {
+        "userNameLabel": "Korisničko ime",
+        "passwordLabel": "Lozinka",
+        "emailLabel": "E-mail adresa",
+        "nameLabel": "Ime",
+        "surnameLabel": "Prezime",
+        "fathersNameLabel": "Očevo ime",
+        "dateOfBirthLabel": "Datum rođenja",
+        "placeOfBirthLabel": "Mesto rođenja",
+        "countryOfBirthLabel": "Zemlja rođenja",
+        "scientificAreaLabel": "Naučna oblast",
+        "specialScientificAreaLabel": "Uža naučna oblast"
+    },
+    "form": {
+        "register": "Registruj se",
+        "save": "Sačuvaj",
+        "close": "Zatvori",
+        "edit": "Izmeni"
+    },
+    "buttons": {
+        "mentorButton": "Mentorstva",
+        "mentorSubButtons": {
+            "bachelorButton": "Bachelor teza",
+            "masterButton": "Master teza",
+            "specialisticButton": "Specialistička teza",
+            "doctorButton": "Doktorska teza"
+        }
+    }
 }

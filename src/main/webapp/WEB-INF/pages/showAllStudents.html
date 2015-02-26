@@ -4,44 +4,51 @@
 		name="form"
 		id="showAllStudentsForm"
 		novalidate
-		class="css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
 		ng-model="student">
 
-		<fieldset>
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.title }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
 
-			<h1>{{ resources.text.title }}</h1>
-
-			<table
-				ng-show="students != []"
-				class="table table-condensed table-striped table-hover"
-				cellspacing="0"
-				cellpadding="0">
-				<tbody>
-					<tr class="ng-binding">
-						<td>{{ resources.studentsTableLabels.transcriptNumberLabel }}</td>
-						<td>{{ resources.studentsTableLabels.firstNameLabel }}</td>
-						<td>{{ resources.studentsTableLabels.lastNameLabel }}</td>
-						<td colspan="2"></td>
-					</tr>
-					<tr
-						class="ng-scope"
-						ng-repeat="student in students">
-						<td>{{ student.transcriptNumber }}</td>
-						<td>{{ student.name }}</td>
-						<td>{{ student.surname }}</td>
-						<td class="delete"><a ng-click="deleteStudent(student.id)">{{ resources.form.delete }}</a></td>
-						<td class="edit"><a ng-click="editStudent(student.id)">{{ resources.form.edit }}</a></td>
-					</tr>
-					<tr ng-show="noResultsFound">
-						<td colspan="5">{{ errorMessages.error.emptyTable }}</td>
-					</tr>
-				</tbody>
-			</table>
-			<div align="right">
-				<a ng-click="createNewStudent()">{{ resources.form.add }}</a>
-			</div>
-		</fieldset>
-
+				<table
+					ng-show="students != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr class="ng-binding">
+							<td>{{ resources.studentsTableLabels.transcriptNumberLabel }}</td>
+							<td>{{ resources.studentsTableLabels.firstNameLabel }}</td>
+							<td>{{ resources.studentsTableLabels.lastNameLabel }}</td>
+							<td colspan="2"></td>
+						</tr>
+						<tr
+							class="ng-scope"
+							ng-repeat="student in students">
+							<td>{{ student.transcriptNumber }}</td>
+							<td>{{ student.name }}</td>
+							<td>{{ student.surname }}</td>
+							<td class="delete"><a ng-click="deleteStudent(student.id)"><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.delete }}</a></td>
+							<td class="edit"><a ng-click="editStudent(student.id)"><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.edit }}</a></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td colspan="5">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="addNewButton"
+				class="btn btn-success"
+				ng-click="createNewStudent()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.add }}
+			</button>
+		</div>
 	</form>
 
 </div>
@@ -49,15 +56,15 @@
 <script
 	type="text/ng-template"
 	id="editStudentPopup.html">
-	<form class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-submit="saveStudent()" ng-model="student">
+	<form class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="student">
 		<div class="modal-header">
     		<h3 class="modal-title">Izmena podataka o studentu</h3>
    	 	</div>
     	<div class="modal-body">
     		<div class="form-group">
-    			<label for="inputTranscriptNumber" class="col-sm-4 control-label">Broj indeksa</label>
+    			<label for="inputTranscriptNumber" class="col-sm-4 control-label">{{ resources.studentLabels.transcriptNumberLabel }}</label>
     			<div class="col-sm-6">
-      				<input type="transcriptNumber" class="form-control" id="inputTranscriptNumber" ng-model="student.transcriptNumber"/>
+      				<input type="text" class="form-control" id="inputTranscriptNumber" ng-model="student.transcriptNumber"/>
    		 		</div>
   			</div>
   			<div class="form-group">
@@ -74,7 +81,7 @@
   			</div>
    		</div>
    		<div class="modal-footer action">
-		 	<button id="submit_button" type="submit" class="btn" ng-disabled="isUnchanged(student)">Izmeni</button>
+		 	<button id="submit_button" type="submit" class="btn btn-success" ng-disabled="form.$invalid || isUnchanged(student)" ng-submit="saveStudent()"><span class="glyphicon glyphicon-save"></span> Izmeni</button>
 		 	<button id="cancel_button" class="btn" ng-click="cancel()">Zatvori</button>
   		</div>
 	</form>
@@ -83,7 +90,7 @@
 <script
 	type="text/ng-template"
 	id="createNewStudentPopup.html">
-	<form class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-submit="saveNewStudent()" ng-model="student">
+	<form class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="student">
 		<div class="modal-header">
     		<h3 class="modal-title">Unos novog studenta</h3>
    	 	</div>
@@ -108,7 +115,7 @@
   			</div>
    		</div>
    		<div class="modal-footer action">
-		 	<button id="submit_button" type="submit" class="btn">Dodaj</button>
+		 	<button id="submit_button" type="submit" class="btn btn-success" ng-submit="saveNewStudent()"><span class="glyphicon glyphicon-save"></span> Dodaj</button>
 		 	<button id="cancel_button" class="btn" ng-click="cancel()">Zatvori</button>
   		</div>
 	</form>
