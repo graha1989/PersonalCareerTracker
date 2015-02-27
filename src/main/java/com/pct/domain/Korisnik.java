@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * Korisnik(User) entity bean.
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
  *
  */
 @Entity
+@Table(name = "profesor")
 public class Korisnik extends AbstractEntity {
 	
 	private static final long serialVersionUID = 753163571345516344L;

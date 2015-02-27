@@ -60,8 +60,6 @@ public class ProfesorFormaDTO implements Serializable {
 	@SafeHtml
 	private String specialScientificArea;
 
-	protected Long id;
-
 	public ProfesorFormaDTO() {
 		super();
 	}
@@ -179,14 +177,6 @@ public class ProfesorFormaDTO implements Serializable {
 
 	public void setSpecialScientificArea(String specialScientificArea) {
 		this.specialScientificArea = specialScientificArea;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 }

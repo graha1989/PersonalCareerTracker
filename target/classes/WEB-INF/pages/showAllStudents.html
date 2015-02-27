@@ -83,7 +83,7 @@
 					<span class="required">*</span>
 				</label>
     			<div class="col-sm-6">
-      				<input type="text" class="form-control" id="inputFirstName" name="inputFirstName" ng-model="student.name" ng-maxlength="50" required />
+      				<input type="text" class="form-control" id="inputFirstName" name="inputFirstName" ng-model="student.name" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
 					<div
 						ng-show="form.inputFirstName.$dirty && form.inputFirstName.$invalid"
 						class="firstNameFieldError">
@@ -91,7 +91,9 @@
 							ng-show="form.inputFirstName.$error.required"
 							class="ng-binding">{{ errorMessages.error.required }}</span> <span
 							ng-show="form.inputFirstName.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
+							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+							ng-show="form.inputFirstName.$error.pattern"
+							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span> 
 					</div>
     			</div>
   			</div>
@@ -100,7 +102,7 @@
 					<span class="required">*</span>
 				</label>
     			<div class="col-sm-6">
-      				<input type="text" class="form-control" id="inputLastName" name="inputLastName" ng-model="student.surname" ng-maxlength="50" required />
+      				<input type="text" class="form-control" id="inputLastName" name="inputLastName" ng-model="student.surname" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
 					<div
 						ng-show="form.inputLastName.$dirty && form.inputLastName.$invalid"
 						class="lastNameFieldError">
@@ -108,7 +110,9 @@
 							ng-show="form.inputLastName.$error.required"
 							class="ng-binding">{{ errorMessages.error.required }}</span> <span
 							ng-show="form.inputLastName.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
+							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+							ng-show="form.inputLastName.$error.pattern"
+							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
 					</div>
     			</div>
   			</div>
@@ -150,7 +154,7 @@
 					<span class="required">*</span>
 				</label>
     			<div class="col-sm-6">
-      				<input type="text" class="ng-binding form-control" id="inputFirstName" name="inputFirstName" ng-model="student.name" placeholder="{{ resources.studentPopupLabels.firstNameLabel }}" ng-maxlength="50" required />
+      				<input type="text" class="ng-binding form-control" id="inputFirstName" name="inputFirstName" ng-model="student.name" placeholder="{{ resources.studentPopupLabels.firstNameLabel }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
 					<div
 						ng-show="form.inputFirstName.$dirty && form.inputFirstName.$invalid"
 						class="firstNameFieldError">
@@ -158,7 +162,9 @@
 							ng-show="form.inputFirstName.$error.required"
 							class="ng-binding">{{ errorMessages.error.required }}</span> <span
 							ng-show="form.inputFirstName.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
+							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+							ng-show="form.inputFirstName.$error.pattern"
+							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
 					</div>
     			</div>
   			</div>
@@ -167,7 +173,7 @@
 					<span class="required">*</span>
 				</label>
     			<div class="col-sm-6">
-      				<input type="text" class="ng-binding form-control" id="inputLastName" name="inputLastName" ng-model="student.surname" placeholder="{{ resources.studentPopupLabels.lastNameLabel }}" ng-maxlength="50" required />
+      				<input type="text" class="ng-binding form-control" id="inputLastName" name="inputLastName" ng-model="student.surname" placeholder="{{ resources.studentPopupLabels.lastNameLabel }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
 					<div
 						ng-show="form.inputLastName.$dirty && form.inputLastName.$invalid"
 						class="lastNameFieldError">
@@ -175,7 +181,9 @@
 							ng-show="form.inputLastName.$error.required"
 							class="ng-binding">{{ errorMessages.error.required }}</span> <span
 							ng-show="form.inputLastName.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
+							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+							ng-show="form.inputLastName.$error.pattern"
+							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
 					</div>
     			</div>
   			</div>
