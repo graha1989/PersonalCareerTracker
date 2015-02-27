@@ -38,7 +38,7 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = "selectedStudent", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<StudentDTO> showStudent(Long id) throws StudentNotFoundException {
+	public ResponseEntity<StudentDTO> showStudent(@RequestParam(value = RequestMappings.ID, required = true) Long id) throws StudentNotFoundException {
 		StudentDTO student = studentService.findStudentById(id);
 
 		return new ResponseEntity<StudentDTO>(student, HttpStatus.OK);
@@ -55,9 +55,15 @@ public class StudentController {
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<StudentDTO> persistStudent(@Valid @RequestBody StudentDTO studentDto) {
 		studentService.saveStudent(studentDto);
+		StudentDTO student = new StudentDTO();
+		try {
+			student = studentService.findStudentByTranscriptNumber(studentDto.getTranscriptNumber());
+		} catch (StudentNotFoundException e) {
+			e.printStackTrace();
+		}
 		logger.debug("Student:" + studentDto.getName() + " " + studentDto.getSurname() + " successfully saved.");
 
-		return new ResponseEntity<StudentDTO>(HttpStatus.OK);
+		return new ResponseEntity<StudentDTO>(student, HttpStatus.OK);
 	}
 
 }

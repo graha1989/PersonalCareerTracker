@@ -16,7 +16,7 @@ public class StudentDTO implements Serializable {
 	private static final long serialVersionUID = 7330507151842329181L;
 
 	@NotEmpty
-	@Length(max = 50)
+	@Length(max = 10)
 	@SafeHtml
 	private String transcriptNumber;
 

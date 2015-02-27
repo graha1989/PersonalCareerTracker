@@ -82,4 +82,20 @@ public class StudentServiceImpl implements StudentService {
 		studentRepository.saveAndFlush(student);
 	}
 
+	@Override
+	@Transactional
+	public StudentDTO findStudentByTranscriptNumber(String transcriptNumber) throws StudentNotFoundException {
+		
+		StudentDTO studentDTO;
+
+		if (transcriptNumber == null || studentRepository.findByTranscriptNumber(transcriptNumber) == null) {
+			throw new StudentNotFoundException();
+		} else {
+			Student student = studentRepository.findByTranscriptNumber(transcriptNumber);
+			studentDTO = new StudentDTO(student);
+		}
+
+		return studentDTO;
+	}
+
 }

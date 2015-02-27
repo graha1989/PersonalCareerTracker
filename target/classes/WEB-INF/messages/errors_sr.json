@@ -2,6 +2,7 @@
 "error" : {
 		"invalidInput" : "Invalid input.",
 		"invalidMaxLength" : "Max. 50 characters.",
+		"invalidTranscriptNumberMaxLength" : "Max. 10 characters.",
 		"invalidMinPasswordLength" : "Min. 8 characters.",
 		"onlyNumbers" : "Only numbers.",
 		"onlyLetters" : "Only letters.",

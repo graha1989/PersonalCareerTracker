@@ -13,8 +13,8 @@ public interface StudentService {
 
 	StudentDTO findStudentById(Long id) throws StudentNotFoundException;
 	
-	StudentDTO findStudentByTranscriptNumber(String transcriptNumber) throws StudentNotFoundException;
-
 	void saveStudent(StudentDTO studentDto);
+
+	StudentDTO findStudentByTranscriptNumber(String transcriptNumber) throws StudentNotFoundException;
 
 }

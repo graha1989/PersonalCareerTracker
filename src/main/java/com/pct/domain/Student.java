@@ -19,10 +19,10 @@ public class Student extends AbstractEntity {
 	@Column(name = "transcriptNumber", length = 10)
 	private String transcriptNumber;
 	
-	@Column(name = "name")
+	@Column(name = "name", length = 50)
 	private String name;
 	
-	@Column(name = "surname")
+	@Column(name = "surname", length = 50)
 	private String surname;
 
 	public String getTranscriptNumber() {

@@ -21,20 +21,20 @@ public class ProfesorServiceImpl implements ProfesorService {
 	@Transactional
 	public ProfesorFormaDTO findProfesorByUserName(String userName) throws ProfesorNotFoundException {
 
-		ProfesorFormaDTO ProfesorFormaDTO;
+		ProfesorFormaDTO profesorFormaDTO;
 
 		if (userName == null || profesorRepository.findByUserName(userName) == null) {
 			throw new ProfesorNotFoundException();
 		} else {
 			Profesor profesor = profesorRepository.findByUserName(userName);
-			ProfesorFormaDTO = new ProfesorFormaDTO(profesor.getUserName(), profesor.getPassword(),
+			profesorFormaDTO = new ProfesorFormaDTO(profesor.getUserName(), profesor.getPassword(),
 					profesor.getEmail(), profesor.getUloga(), profesor.getName(), profesor.getSurname(),
 					profesor.getFathersName(), profesor.getDateOfBirth(), profesor.getPlaceOfBirth(),
 					profesor.getCountryOfBirth(), profesor.getScientificArea(), profesor.getSpecialScientificArea(),
 					profesor.getId());
 		}
 
-		return ProfesorFormaDTO;
+		return profesorFormaDTO;
 	}
 
 	@Override

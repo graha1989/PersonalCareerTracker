@@ -8,6 +8,11 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
 	$scope.resources = {};
 	$scope.errorMessages = {};
 
+	$scope.patterns = {
+		onlyLetters : /^[a-zA-Z ]*$/,
+		onlyNumbers : /^[0-9 ]*$/
+	};
+
 	/* Variable used for hiding unimplemented fields */
 	$scope.dontShowDataForFieldsThatAreNotImplemented = false;
 
@@ -99,6 +104,7 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 		PctService.loadSelectedStudent(id, function(data) {
 			if (angular.isObject(data)) {
 				$scope.student = data;
+				$scope.master = angular.copy($scope.student);
 				$scope.noResultsFound = false;
 			} else {
 				$scope.noResultsFound = true;
@@ -108,7 +114,6 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 
 	$scope.init = function() {
 		$scope.loadSelectedStudent(studentId);
-		$scope.master = angular.copy($scope.student);
 		$scope.status = $routeParams.status;
 		$scope.loadResources();
 	};
@@ -139,11 +144,11 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 			}, "slow");
 		});
 	};
-	
+
 	$scope.isUnchanged = function(student) {
 		return angular.equals(student, $scope.master);
 	};
-	
+
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};
@@ -152,7 +157,7 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 
 var createNewStudentController = function($scope, $modalInstance, $routeParams,
 		$http, $route, PctService) {
-	
+
 	$scope.loadResources = function() {
 		var locale = document.getElementById('localeCode');
 		$http.get('messages/studentDetails_' + locale.value + '.json').success(
@@ -164,7 +169,7 @@ var createNewStudentController = function($scope, $modalInstance, $routeParams,
 					$scope.errorMessages = angular.fromJson(response);
 				});
 	};
-	
+
 	$scope.init = function() {
 		$scope.status = $routeParams.status;
 		$scope.student = {};
