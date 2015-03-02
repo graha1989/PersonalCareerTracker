@@ -16,7 +16,8 @@ public class Student extends AbstractEntity {
 
 	private static final long serialVersionUID = 5293157098981693931L;
 	
-	@Column(name = "transcriptNumber", length = 10)
+	
+	@Column(name = "transcriptNumber", unique=true, length = 10)
 	private String transcriptNumber;
 	
 	@Column(name = "name", length = 50)

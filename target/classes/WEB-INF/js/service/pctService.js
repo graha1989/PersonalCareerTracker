@@ -15,6 +15,9 @@ app.factory("PctService", function($http){
 	    },
 	    loadProfesor: function(id, callback) {
 			$http.get('api/professor/loadProfesorDetails?id='+id).success(callback).error(callback);
-		}
+		},
+		loadBachelorThesis: function(id, callback) {
+			$http.get('api/thesis/allBachelorThesis?id='+id).success(callback);
+		},
     };       
 });

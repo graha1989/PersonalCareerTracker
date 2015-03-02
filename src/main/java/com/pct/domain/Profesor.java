@@ -3,20 +3,26 @@ package com.pct.domain;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name= "userType")
-@DiscriminatorValue(value = "P")
-public class Profesor extends Korisnik {
+@Table(name = "professor")
+public class Profesor extends AbstractEntity {
 
 	private static final long serialVersionUID = 6438166967413025243L;
-
+	
+	@Column(name = "userName", nullable = true, length = 50)
+	private String userName;
+	
+	@Column(name = "password", nullable = true, length = 50)
+	private String password;
+	
+	@Column(name = "email", nullable = true, length = 50)
+	private String email;
+	
 	@Column(name = "name", length = 50)
 	private String name;
 
@@ -40,19 +46,22 @@ public class Profesor extends Korisnik {
 
 	@Column(name = "specialScientificArea", length = 50)
 	private String specialScientificArea;
+	
+	@OneToOne
+	@JoinColumn(name = "ulogaId")
+	private Uloga uloga;
 
 	public Profesor() {
 		super();
 	}
-	
-	public Profesor(Korisnik korisnik) {
-		super(korisnik.getUserName(), korisnik.getPassword(), korisnik.getEmail(), korisnik.getUloga());
-	}
 
-	public Profesor(Korisnik korisnik, String name, String surname, String fathersName,
-			Date dateOfBirth, String placeOfBirth, String countryOfBirth,
-			String scientificArea, String specialScientificArea) {
-		this(korisnik);
+	public Profesor(String userName, String password, String email, String name, String surname, String fathersName,
+			Date dateOfBirth, String placeOfBirth, String countryOfBirth, String scientificArea,
+			String specialScientificArea, Uloga uloga) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
 		this.name = name;
 		this.surname = surname;
 		this.fathersName = fathersName;
@@ -61,6 +70,39 @@ public class Profesor extends Korisnik {
 		this.countryOfBirth = countryOfBirth;
 		this.scientificArea = scientificArea;
 		this.specialScientificArea = specialScientificArea;
+		this.uloga = uloga;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Uloga getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(Uloga uloga) {
+		this.uloga = uloga;
 	}
 
 	public String getName() {
