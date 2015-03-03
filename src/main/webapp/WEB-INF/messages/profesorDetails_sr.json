@@ -2,7 +2,9 @@
     "text": {
         "title": "Podaci o profesoru",
         "profesorDetailsText": "Lični podaci o profesoru",
-        "editProfesorText": "Izmena podataka o profesoru"
+        "editProfesorText": "Izmena podataka o profesoru",
+        "bachelorMentoringTitle": "Mentorstva na bachelor tezama",
+        "newThesisPopupTitle":"Unos nove teze"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -17,6 +19,21 @@
         "scientificAreaLabel": "Naučna oblast",
         "specialScientificAreaLabel": "Uža naučna oblast"
     },
+    "thesisPopupLabels": {
+        "title": "Naziv teze",
+        "thesisScientificArea": "Oblast rada",
+        "dateOfGraduation": "Datum odbrane teze",
+        "universityName": "Naziv univerziteta",
+        "student": "Student",
+        "studentName": "Ime",
+        "studentSurname": "Prezime",
+        "commissionMember": "Član komisije",
+        "commissionMemberName": "Ime",
+        "commissionMemberSurname": "Prezime",
+        "commissionPresident": "Predsednik komisije",
+        "commissionPresidentName": "Ime",
+        "commissionPresidentSurname": "Prezime"
+    },
     "form": {
         "register": "Registruj se",
         "save": "Sačuvaj",
@@ -30,6 +47,24 @@
             "masterButton": "Master teza",
             "specialisticButton": "Specialistička teza",
             "doctorButton": "Doktorska teza"
+        },
+        "mentorBachelorThesisButtons": {
+        	"delete":"Izbriši",
+			"edit":"Izmeni",
+			"add":"Dodaj novu tezu",
+			"close":"Zatvori",
+			"selectStudent":"Izaberi studenta",
+			"selectCommissionPresident":"Izaberi predsednika komisije",
+			"selectCommissionMember":"Izaberi člana komisije"
         }
-    }
+    },
+    "bachelorMentoringTableLabels" : {
+		"thesisTitle":"Naziv teze",
+		"thesisStudent":"Student",
+		"thesisCommissionPresident":"Predsednik komisije",
+		"thesisCommissionMember":"Član komisije",
+		"thesisPaperScientificArea":"Oblast rada",
+		"thesisDateOfGraduation":"Datum odbrane teze",
+		"thesisUniversityName":"Univerzitet"
+	   }
 }

@@ -8,7 +8,7 @@
 		ng-model="thesis">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ resources.text.title }}</h3>
+			<h3 class="modal-title">{{ resources.text.bachelorMentoringTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
@@ -18,33 +18,31 @@
 					cellspacing="0"
 					cellpadding="0">
 					<tbody>
-						<tr class="info ng-binding">
-							<td>Naslov rada</td>
-							<td>Ime i prezime studenta</td>
-							<td>Ime i prezime mentora</td>
-							<td>Ime i prezime predsednika komisije</td>
-							<td>Ime i prezime clana komisije</td>
-							<td>Oblast rada</td>
-							<td>Datum odbrane</td>
-							<td>Naziv univerziteta</td>
+						<tr class="info">
+							<td>{{ resources.bachelorMentoringTableLabels.thesisTitle }}</td>
+							<td>{{ resources.bachelorMentoringTableLabels.thesisStudent }}</td>
+							<td>{{ resources.bachelorMentoringTableLabels.thesisCommissionPresident }}</td>
+							<td>{{ resources.bachelorMentoringTableLabels.thesisCommissionMember }}</td>
+							<td>{{ resources.bachelorMentoringTableLabels.thesisPaperScientificArea }}</td>
+							<td>{{ resources.bachelorMentoringTableLabels.thesisDateOfGraduation }}</td>
+							<td>{{ resources.bachelorMentoringTableLabels.thesisUniversityName }}</td>
 							<td colspan="2"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
 							ng-repeat="thesis in allBachelorThesis">
 							<td>{{ thesis.title }}</td>
-							<td>{{ thesis.studentName }} <span type="text"> {{ thesis.studentSurname }}</span></td>
-							<td>{{ thesis.mentorName }} <span type="text"> {{ thesis.mentorSurname }}</span></td>
-							<td>{{ thesis.commissionPesidentName }} <span type="text"> {{ thesis.commissionPesidentSurname }}</span></td>
-							<td>{{ thesis.commissionMemberName }} <span type="text"> {{ thesis.commissionMemberSurname }}</span></td>
+							<td>{{ thesis.studentName }} {{ thesis.studentSurname }}</td>
+							<td>{{ thesis.commissionPesidentName }} {{ thesis.commissionPesidentSurname }}</td>
+							<td>{{ thesis.commissionMemberName }} {{ thesis.commissionMemberSurname }}</td>
 							<td>{{ thesis.paperScientificArea }}</td>
-							<td>{{ thesis.dateOfGraduation }}</td>
+							<td>{{ thesis.dateOfGraduation | date:'dd-MM-yyyy' }}</td>
 							<td>{{ thesis.universityName }}</td>
-							<td class="delete"><a ng-click=""><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.delete }}</a></td>
-							<td class="edit"><a ng-click=""><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.edit }}</a></td>
+							<td class="delete"><a ng-click=""><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.mentorBachelorThesisButtons.delete }}</a></td>
+							<td class="edit"><a ng-click=""><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.mentorBachelorThesisButtons.edit }}</a></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="10">{{ errorMessages.error.emptyTable }}</td>
+							<td colspan="9">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -54,10 +52,189 @@
 			<button
 				id="addNewButton"
 				class="btn btn-success"
-				ng-click="createNewStudent()">
-				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.add }}
+				ng-click="createNewBachelorThesis()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.mentorBachelorThesisButtons.add }}
 			</button>
 		</div>
 	</form>
 
 </div>
+
+<script
+	type="text/ng-template"
+	id="createNewBachelorThesisPopup.html">
+	<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="thesis">
+		<div class="modal-header">
+    		<h3 class="modal-title">{{ resources.text.newThesisPopupTitle }}</h3>
+   	 	</div>
+    	<div class="modal-body">
+    		<div class="form-group">
+    			<label for="inputThesisTitle" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.title }} 
+					<span class="required">*</span>
+				</label>
+    			<div class="col-sm-6">
+      				<input type="text" class="ng-binding form-control" id="inputThesisTitle" name="inputThesisTitle" ng-model="thesis.title" placeholder="{{ resources.thesisPopupLabels.title }}" ng-maxlength="200" required />
+					<div
+						ng-show="form.inputThesisTitle.$dirty && form.inputThesisTitle.$invalid"
+						class="thesisTitleFieldError">
+						<span
+							ng-show="form.inputThesisTitle.$error.required"
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span
+							ng-show="form.inputThesisTitle.$error.maxlength"
+							class="ng-binding">{{ errorMessages.error.invalidThesisTitleMaxLength }}</span>
+					</div>
+   		 		</div>
+  			</div>
+  			<div class="form-group">
+    			<label for="inputStudent" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.student }} 
+					<span class="required">*</span>
+				</label>
+				<div class="col-sm-6">
+					<input type="text" placeholder="{{ resources.thesisPopupLabels.student }}" ng-model="student" typeahead="student.name for student in students | filter:$viewValue | limitTo:8" class="form-control" />
+				</div>
+  			</div>
+			<div class="form-group">
+    			<label for="inputCommissionPesident" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.commissionPresident }} 
+					<span class="required">*</span>
+				</label>
+    			<div class="col-sm-6" id="inputCommissionPesident">
+      				<input type="text" class="ng-binding form-control" id="inputCommissionPesidentName" name="inputCommissionPesidentName" ng-model="thesis.commissionPesidentName" placeholder="{{ resources.thesisPopupLabels.commissionPresidentName }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
+					<div
+						ng-show="form.inputCommissionPesidentName.$dirty && form.inputCommissionPesidentName.$invalid"
+						class="commisionPresidentNameFieldError">
+						<span
+							ng-show="form.inputCommissionPesidentName.$error.required"
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span
+							ng-show="form.inputCommissionPesidentName.$error.maxlength"
+							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+							ng-show="form.inputCommissionPesidentName.$error.pattern"
+							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+					</div>
+					<div class="gap"></div>
+					<input type="text" class="ng-binding form-control" id="inputCommissionPesidentSurname" name="inputCommissionPesidentSurname" ng-model="thesis.commissionPesidentSurname" placeholder="{{ resources.thesisPopupLabels.commissionPresidentSurname }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
+					<div
+						ng-show="form.inputCommissionPesidentSurname.$dirty && form.inputCommissionPesidentSurname.$invalid"
+						class="commisionPresidentSurnameFieldError">
+						<span
+							ng-show="form.inputCommissionPesidentSurname.$error.required"
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span
+							ng-show="form.inputCommissionPesidentSurname.$error.maxlength"
+							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+							ng-show="form.inputCommissionPesidentSurname.$error.pattern"
+							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+					</div>
+					<div class="gap"></div>
+					<button id="selectCommissionPresidentButton" class="btn btn-success" ng-click="selectCommissionPresident()"><span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.mentorBachelorThesisButtons.selectCommissionPresident }}</button>
+    			</div>
+  			</div>
+			<div class="form-group">
+    			<label for="inputCommissionMember" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.commissionMember }} 
+					<span class="required">*</span>
+				</label>
+    			<div class="col-sm-6" id="inputCommissionMember">
+      				<input type="text" class="ng-binding form-control" id="inputCommissionMemberName" name="inputCommissionMemberName" ng-model="thesis.commissionMemberName" placeholder="{{ resources.thesisPopupLabels.commissionMemberName }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
+					<div
+						ng-show="form.inputCommissionPesidentName.$dirty && form.inputCommissionPesidentName.$invalid"
+						class="commisionMemberNameFieldError">
+						<span
+							ng-show="form.inputCommissionMemberName.$error.required"
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span
+							ng-show="form.inputCommissionMemberName.$error.maxlength"
+							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+							ng-show="form.inputCommissionMemberName.$error.pattern"
+							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+					</div>
+					<div class="gap"></div>
+					<input type="text" class="ng-binding form-control" id="inputCommissionMemberSurname" name="inputCommissionMemberSurname" ng-model="thesis.commissionMemberSurname" placeholder="{{ resources.thesisPopupLabels.commissionMemberSurname }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
+					<div
+						ng-show="form.inputCommissionMemberSurname.$dirty && form.inputCommissionMemberSurname.$invalid"
+						class="commisionMemberSurnameFieldError">
+						<span
+							ng-show="form.inputCommissionMemberSurname.$error.required"
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span
+							ng-show="form.inputCommissionMemberSurname.$error.maxlength"
+							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+							ng-show="form.inputCommissionMemberSurname.$error.pattern"
+							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+					</div>
+					<div class="gap"></div>
+					<button id="selectCommissionMemberButton" class="btn btn-success" ng-click="selectCommissionMember()"><span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.mentorBachelorThesisButtons.selectCommissionMember }}</button>
+    			</div>
+  			</div>
+			<div class="form-group">
+    			<label for="inputPaperScientificArea" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.thesisScientificArea }} 
+					<span class="required">*</span>
+				</label>
+    			<div class="col-sm-6">
+      				<input type="text" class="ng-binding form-control" id="inputPaperScientificArea" name="inputPaperScientificArea" ng-model="thesis.paperScientificArea" placeholder="{{ resources.thesisPopupLabels.thesisScientificArea }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
+					<div
+						ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
+						class="paperScientificAreaFieldError">
+						<span
+							ng-show="form.inputPaperScientificArea.$error.required"
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span
+							ng-show="form.inputPaperScientificArea.$error.maxlength"
+							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+							ng-show="form.inputPaperScientificArea.$error.pattern"
+							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+					</div>
+    			</div>
+  			</div>
+			<div class="form-group">
+				<label for="inputDateOfGraduation" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.dateOfGraduation }} 
+					<span class="required">*</span>
+				</label>
+				<div class="col-sm-6">
+					<div
+						class="input-group date"
+						id="datepicker">
+						<input
+							type="text"
+							class="form-control"
+							id="inputDateOfGraduation"
+							name="inputDateOfGraduation"
+							placeholder="DD-MM-GGGG"
+							datepicker-popup="dd-MM-yyyy"
+							is-open="opened"
+							show-button-bar="false"
+							ng-model="thesis.dateOfGraduation"
+							required /> <span class="input-group-addon"> <span
+							class="glyphicon glyphicon-calendar"
+							ng-click="open($event)"></span>
+						</span>
+					</div>
+					<div
+						ng-show="form.inputDateOfGraduation.$dirty && form.inputDateOfGraduation.$invalid"
+						class="dateOfGraduationFieldError">
+						<span
+							ng-show="form.inputDateOfGraduation.$error.required"
+							class="ng-binding">{{ errorMessages.error.required }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+    			<label for="inputUniversityName" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.universityName }} 
+					<span class="required">*</span>
+				</label>
+    			<div class="col-sm-6">
+      				<input type="text" class="ng-binding form-control" id="inputUniversityName" name="inputUniversityName" ng-model="thesis.universityName" placeholder="{{ resources.thesisPopupLabels.universityName }}" ng-pattern="patterns.onlyLetters" ng-maxlength="100" required />
+					<div
+						ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
+						class="universityNameFieldError">
+						<span
+							ng-show="form.inputUniversityName.$error.required"
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span
+							ng-show="form.inputUniversityName.$error.maxlength"
+							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+							ng-show="form.inputUniversityName.$error.pattern"
+							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+					</div>
+    			</div>
+  			</div>
+   		</div>
+   		<div class="modal-footer action">
+		 	<button id="submit_button" type="submit" class="btn btn-success" ng-disabled="form.$invalid" ng-click="saveNewThesis()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.mentorBachelorThesisButtons.add }}</button>
+		 	<button id="cancel_button" class="btn" ng-click="cancel()">{{ resources.buttons.mentorBachelorThesisButtons.close }}</button>
+  		</div>
+	</form>
+</script>

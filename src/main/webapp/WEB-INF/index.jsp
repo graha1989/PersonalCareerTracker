@@ -11,7 +11,9 @@
 <title><spring:message code='project.name' /></title>
 
 <link href="<spring:url value='resources/css/styles.css' />" rel="stylesheet">
-<link href="<spring:url value='resources/css/bootstrap.css' />" rel="stylesheet">
+<link href="<spring:url value='resources/css/bootstrap-theme.css' />" rel="stylesheet">
+<link href="<spring:url value='resources/css/bootstrap.min.css' />" rel="stylesheet">
+<link href="<spring:url value='resources/css/bootstrap-theme.min.css' />" rel="stylesheet">
 <link href="<spring:url value='resources/css/datepicker.css' />" rel="stylesheet">
 <link href="<spring:url value='resources/css/ngDialog.css' />" rel="stylesheet">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
