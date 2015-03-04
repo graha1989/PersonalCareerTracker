@@ -133,5 +133,4 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 	$scope.cancel = function() {
 		$modalInstance.dismiss("cancel");
 	};
-	
-}
+};

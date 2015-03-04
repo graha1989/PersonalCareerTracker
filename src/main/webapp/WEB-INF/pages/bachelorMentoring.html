@@ -85,17 +85,13 @@
 					</div>
    		 		</div>
   			</div>
-
-
-
   			<div class="form-group">
     			<label for="inputStudent" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.student }} 
 					<span class="required">*</span>
 				</label>
 				<div class="col-sm-6">
-					
 					<input type="text" class="ng-binding form-control" id="inputStudent" name="inputStudent" ng-model="thesis.mergedStudentData" typeahead="student for student in getStudents($viewValue) | limitTo:8" placeholder="{{ resources.thesisPopupLabels.student }}" typeahead-loading="loadingStudents" autocomplete="off" />
-    				<i ng-show="loadingStudents" class="glyphicon glyphicon-refresh"></i>
+    				<span ng-show="loadingStudents" class="glyphicon glyphicon-refresh"></span>
 					<div
 						ng-show="form.inputStudent.$dirty && form.inputStudent.$invalid"
 						class="studentFieldError">
@@ -109,76 +105,45 @@
 					</div>
 				</div>
   			</div>
-
-
-
 			<div class="form-group">
     			<label for="inputCommissionPesident" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.commissionPresident }} 
 					<span class="required">*</span>
 				</label>
-    			<div class="col-sm-6" id="inputCommissionPesident">
-      				<input type="text" class="ng-binding form-control" id="inputCommissionPesidentName" name="inputCommissionPesidentName" ng-model="thesis.commissionPesidentName" placeholder="{{ resources.thesisPopupLabels.commissionPresidentName }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
+				<div class="col-sm-6">
+					<input type="text" class="ng-binding form-control" id="inputCommissionPesident" name="inputCommissionPesident" ng-model="thesis.mergedCommissionPresidenData" typeahead="professor for professor in getProfesors($viewValue) | limitTo:8" placeholder="{{ resources.thesisPopupLabels.commissionPresident }}" typeahead-loading="loadingProfessors" autocomplete="off" />
+    				<span ng-show="loadingProfessors" class="glyphicon glyphicon-refresh"></span>
 					<div
-						ng-show="form.inputCommissionPesidentName.$dirty && form.inputCommissionPesidentName.$invalid"
-						class="commisionPresidentNameFieldError">
+						ng-show="form.inputCommissionPesident.$dirty && form.inputCommissionPesident.$invalid"
+						class="commissionPresidenFieldError">
 						<span
-							ng-show="form.inputCommissionPesidentName.$error.required"
+							ng-show="form.inputCommissionPesident.$error.required"
 							class="ng-binding">{{ errorMessages.error.required }}</span> <span
-							ng-show="form.inputCommissionPesidentName.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
-							ng-show="form.inputCommissionPesidentName.$error.pattern"
-							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+							ng-show="form.inputCommissionPesident.$error.maxlength"
+							class="ng-binding">{{ errorMessages.error.invalidThesisTitleMaxLength }}</span> <span 
+							ng-show="form.inputCommissionPesident.$error.studentInvalid" 
+							class="ng-binding">{{errorMessages.error.emptyTable}}</span>
 					</div>
-					<div class="gap"></div>
-					<input type="text" class="ng-binding form-control" id="inputCommissionPesidentSurname" name="inputCommissionPesidentSurname" ng-model="thesis.commissionPesidentSurname" placeholder="{{ resources.thesisPopupLabels.commissionPresidentSurname }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
-					<div
-						ng-show="form.inputCommissionPesidentSurname.$dirty && form.inputCommissionPesidentSurname.$invalid"
-						class="commisionPresidentSurnameFieldError">
-						<span
-							ng-show="form.inputCommissionPesidentSurname.$error.required"
-							class="ng-binding">{{ errorMessages.error.required }}</span> <span
-							ng-show="form.inputCommissionPesidentSurname.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
-							ng-show="form.inputCommissionPesidentSurname.$error.pattern"
-							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
-					</div>
-					<div class="gap"></div>
-					<button id="selectCommissionPresidentButton" class="btn btn-success" ng-click="selectCommissionPresident()"><span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.mentorBachelorThesisButtons.selectCommissionPresident }}</button>
-    			</div>
+				</div>
   			</div>
 			<div class="form-group">
     			<label for="inputCommissionMember" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.commissionMember }} 
 					<span class="required">*</span>
 				</label>
-    			<div class="col-sm-6" id="inputCommissionMember">
-      				<input type="text" class="ng-binding form-control" id="inputCommissionMemberName" name="inputCommissionMemberName" ng-model="thesis.commissionMemberName" placeholder="{{ resources.thesisPopupLabels.commissionMemberName }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
+				<div class="col-sm-6">
+					<input type="text" class="ng-binding form-control" id="inputCommissionMember" name="inputCommissionMember" ng-model="thesis.mergedCommissionMemberData" typeahead="professor for professor in getProfesors($viewValue) | limitTo:8" placeholder="{{ resources.thesisPopupLabels.commissionMember }}" typeahead-loading="loadingProfessors" autocomplete="off" />
+    				<span ng-show="loadingProfessors" class="glyphicon glyphicon-refresh"></span>
 					<div
-						ng-show="form.inputCommissionPesidentName.$dirty && form.inputCommissionPesidentName.$invalid"
-						class="commisionMemberNameFieldError">
+						ng-show="form.inputCommissionMember.$dirty && form.inputCommissionMember.$invalid"
+						class="commissionPresidenFieldError">
 						<span
-							ng-show="form.inputCommissionMemberName.$error.required"
+							ng-show="form.inputCommissionMember.$error.required"
 							class="ng-binding">{{ errorMessages.error.required }}</span> <span
-							ng-show="form.inputCommissionMemberName.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
-							ng-show="form.inputCommissionMemberName.$error.pattern"
-							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+							ng-show="form.inputCommissionMember.$error.maxlength"
+							class="ng-binding">{{ errorMessages.error.invalidThesisTitleMaxLength }}</span> <span 
+							ng-show="form.inputCommissionMember.$error.studentInvalid" 
+							class="ng-binding">{{errorMessages.error.emptyTable}}</span>
 					</div>
-					<div class="gap"></div>
-					<input type="text" class="ng-binding form-control" id="inputCommissionMemberSurname" name="inputCommissionMemberSurname" ng-model="thesis.commissionMemberSurname" placeholder="{{ resources.thesisPopupLabels.commissionMemberSurname }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
-					<div
-						ng-show="form.inputCommissionMemberSurname.$dirty && form.inputCommissionMemberSurname.$invalid"
-						class="commisionMemberSurnameFieldError">
-						<span
-							ng-show="form.inputCommissionMemberSurname.$error.required"
-							class="ng-binding">{{ errorMessages.error.required }}</span> <span
-							ng-show="form.inputCommissionMemberSurname.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
-							ng-show="form.inputCommissionMemberSurname.$error.pattern"
-							class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
-					</div>
-					<div class="gap"></div>
-					<button id="selectCommissionMemberButton" class="btn btn-success" ng-click="selectCommissionMember()"><span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.mentorBachelorThesisButtons.selectCommissionMember }}</button>
-    			</div>
+				</div>
   			</div>
 			<div class="form-group">
     			<label for="inputPaperScientificArea" class="col-sm-4 control-label">{{ resources.thesisPopupLabels.thesisScientificArea }} 
