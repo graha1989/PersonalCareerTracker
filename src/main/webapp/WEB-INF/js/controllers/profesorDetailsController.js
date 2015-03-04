@@ -47,7 +47,7 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 		}).error(function(data, status) {
 		});
 	};
-
+	
 	$scope.init = function() {
 		$scope.id = $routeParams.id;
 		$scope.profesor = $scope.loadProfesorDetails($scope.id);

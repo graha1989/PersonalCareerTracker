@@ -17,4 +17,6 @@ public interface StudentService {
 
 	StudentDTO findStudentByTranscriptNumber(String transcriptNumber) throws StudentNotFoundException;
 
+	List<StudentDTO> findByNameStartsWith(String value) throws StudentNotFoundException;
+
 }

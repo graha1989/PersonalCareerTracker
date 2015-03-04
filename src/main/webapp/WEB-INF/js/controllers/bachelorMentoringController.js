@@ -60,10 +60,9 @@ app.controller("BachelorMentoringController", function($scope, $routeParams,
 var createNewThesisController = function($scope, $modalInstance, $routeParams,
 		$http, $route, PctService) {
 
-	$scope.status;
+	$scope.status = {};
 	$scope.thesis;
-	$scope.student;
-	$scope.students;
+	$scope.resources = {};
 
 	$scope.patterns = {
 		onlyLetters : /^[a-zA-Z ]*$/,
@@ -82,27 +81,29 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 				});
 	};
 
-	$scope.loadStudents = function() {
-		PctService.loadStudents($routeParams, function(data) {
-			if (angular.isObject(data)) {
-				$scope.students = data;
-				$scope.noResultsFound = false;
-			} else {
-				$scope.noResultsFound = true;
-			}
-		});
-	};
-
 	$scope.init = function() {
 		$scope.status = $routeParams.status;
 		$scope.thesis = {};
-		$scope.student = {};
-		$scope.students = [];
-		$scope.loadStudents();
 		$scope.loadResources();
 	};
 
 	$scope.init();
+	
+	$scope.getStudents = function(val) {
+		var inputLabel = this.form.inputStudent;
+		inputLabel.$setValidity("studentInvalid", true);
+		return PctService.findStudentStartsWith(val).then(function(response) {
+			var students = [];
+			for (var i = 0; i < response.length; i++) {
+				students.push(response[i].transcriptNumber + " " + response[i].name + " " + response[i].surname);
+				inputLabel.$setValidity("studentInvalid", true);
+			}
+			if (val.length >= 3) {
+				inputLabel.$setValidity("studentInvalid", false);
+			}
+			return students;
+		});
+	};
 
 	$scope.saveNewThesis = function() {
 		$http({
@@ -130,7 +131,7 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 	};
 
 	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+		$modalInstance.dismiss("cancel");
 	};
-
+	
 }

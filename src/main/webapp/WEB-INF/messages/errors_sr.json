@@ -8,6 +8,6 @@
 		"onlyNumbers" : "Only numbers.",
 		"onlyLetters" : "Only letters.",
 		"required" : "Field is required.",
-		"emptyTable" : "Table is empty."
+		"emptyTable" : "No data."
 	}
 }

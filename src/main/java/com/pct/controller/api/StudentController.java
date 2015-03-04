@@ -1,5 +1,6 @@
 package com.pct.controller.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -64,6 +65,17 @@ public class StudentController {
 		logger.debug("Student:" + studentDto.getName() + " " + studentDto.getSurname() + " successfully saved.");
 
 		return new ResponseEntity<StudentDTO>(student, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "findStudentStartsWith", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<List<StudentDTO>> findStudentStartsWith(@RequestParam(value = "value", required = true) String value) throws StudentNotFoundException {
+		
+		List<StudentDTO> students = new ArrayList<StudentDTO>();
+		if (value.length() >= 3) {
+			students = studentService.findByNameStartsWith(value);
+		}
+
+		return new ResponseEntity<List<StudentDTO>>(students, HttpStatus.OK);
 	}
 
 }

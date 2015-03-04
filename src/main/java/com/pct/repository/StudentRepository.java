@@ -1,5 +1,7 @@
 package com.pct.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,7 +27,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 	 * @return list of students
 	 */
 	@Query("SELECT s FROM Student s WHERE s.name LIKE %:name%")
-	Page<Student> findByNameLike(@Param("name") String name, Pageable page);
+	List<Student> findByNameLike(@Param("name") String name);
 	
 	/**
 	 * Retrieves list of students with matching surname.
@@ -45,5 +47,15 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 	 */
 	@Query("SELECT s FROM Student s WHERE s.name LIKE %:name% AND s.surname LIKE %:surname%")
 	Page<Student> findByNameLikeAndSurnameLike(@Param("name") String name, @Param("surname") String surname, Pageable page);
+	
+	/**
+	 * Retrieves list of students with partially matching name or surname or transcriptNumber.
+	 * 
+	 * @param name
+	 * @param surname
+	 * @return list of students
+	 */
+	@Query("SELECT s FROM Student s WHERE s.transcriptNumber LIKE %:data% OR s.name LIKE %:data% OR s.surname LIKE %:data%")
+	List<Student> findByTranscriptNumberLikeOrNameLikeOrSurnameLike(@Param("data") String data);
 	
 }

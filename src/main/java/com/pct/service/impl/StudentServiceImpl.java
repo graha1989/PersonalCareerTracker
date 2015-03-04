@@ -98,4 +98,19 @@ public class StudentServiceImpl implements StudentService {
 		return studentDTO;
 	}
 
+	@Override
+	@Transactional
+	public List<StudentDTO> findByNameStartsWith(String value) throws StudentNotFoundException {
+		
+		List<StudentDTO> studentsDTOList = new ArrayList<StudentDTO>();
+
+		List<Student> studentsList = studentRepository.findByTranscriptNumberLikeOrNameLikeOrSurnameLike(value);
+		for (Student s : studentsList) {
+			StudentDTO studentDTO = new StudentDTO(s);
+			studentDTO.setId(s.getId());
+			studentsDTOList.add(studentDTO);
+		}
+		return studentsDTOList;
+	}
+
 }

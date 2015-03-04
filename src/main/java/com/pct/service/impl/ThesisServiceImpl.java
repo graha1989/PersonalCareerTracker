@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.Thesis;
+import com.pct.domain.ThesisType;
 import com.pct.domain.dto.ThesisDto;
 import com.pct.repository.ThesisRepository;
+import com.pct.repository.ThesisTypeRepository;
 import com.pct.service.ThesisService;
 
 @Service
@@ -17,6 +19,9 @@ public class ThesisServiceImpl implements ThesisService {
 
 	@Autowired
 	private ThesisRepository thesisRepository;
+	
+	@Autowired
+	private ThesisTypeRepository thesisTypeRepository;
 
 	@Override
 	@Transactional
@@ -35,6 +40,15 @@ public class ThesisServiceImpl implements ThesisService {
 			thesisDtoList.add(thesisDto);
 		}
 		return thesisDtoList;
+	}
+
+	@Override
+	@Transactional
+	public List<ThesisType> findAllThesisType() {
+
+		List<ThesisType> thesisTypesList = new ArrayList<ThesisType>();
+		thesisTypesList = thesisTypeRepository.findAll();
+		return thesisTypesList;
 	}
 
 }

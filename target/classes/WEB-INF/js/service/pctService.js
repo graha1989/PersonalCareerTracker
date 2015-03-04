@@ -1,4 +1,4 @@
-app.factory("PctService", function($http){
+app.factory("PctService", ["$http", "$q", function($http, $q){
 	
 	return {
 		loadStudents: function(params, callback) {
@@ -19,5 +19,21 @@ app.factory("PctService", function($http){
 		loadBachelorThesis: function(id, callback) {
 			$http.get('api/thesis/allBachelorThesis?id='+id).success(callback);
 		},
+		loadThesisTypes: function(params, callback) {
+			$http.get('api/thesis/allThesisTypes').success(callback);
+		},
+		findStudentStartsWith : function(value) {
+			var deferred = $q.defer();
+			$http.get("api/students/findStudentStartsWith", {
+				params : {
+					value : value
+				}
+			}).success(function(response) {
+				deferred.resolve(response);
+			}).error(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		}
     };       
-});
+}]);

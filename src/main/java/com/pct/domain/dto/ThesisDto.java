@@ -32,6 +32,11 @@ public class ThesisDto implements Serializable {
 	private String studentSurname;
 	
 	@NotEmpty
+	@Length(max = 152)
+	@SafeHtml
+	private String mergedStudentData = studentTranscriptNumber + " " + studentName + " " + studentSurname;
+	
+	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	private String mentorName;
