@@ -90,16 +90,14 @@
 					<span class="required">*</span>
 				</label>
 				<div class="col-sm-6">
-					<input type="text" class="ng-binding form-control" id="inputStudent" name="inputStudent" ng-model="thesis.mergedStudentData" typeahead="student for student in getStudents($viewValue) | limitTo:8" placeholder="{{ resources.thesisPopupLabels.student }}" typeahead-loading="loadingStudents" autocomplete="off" />
+					<input type="text" class="ng-binding form-control" id="inputStudent" name="inputStudent" ng-model="thesis.mergedStudentData" typeahead="student as student.transcriptNumber + ' ' + student.name + ' ' + student.surname for student in getStudents($viewValue) | limitTo:8" placeholder="{{ resources.thesisPopupLabels.student }}" typeahead-loading="loadingStudents" autocomplete="off" />
     				<span ng-show="loadingStudents" class="glyphicon glyphicon-refresh"></span>
 					<div
 						ng-show="form.inputStudent.$dirty && form.inputStudent.$invalid"
 						class="studentFieldError">
 						<span
 							ng-show="form.inputStudent.$error.required"
-							class="ng-binding">{{ errorMessages.error.required }}</span> <span
-							ng-show="form.inputStudent.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidThesisTitleMaxLength }}</span> <span 
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span 
 							ng-show="form.inputStudent.$error.studentInvalid" 
 							class="ng-binding">{{errorMessages.error.emptyTable}}</span>
 					</div>
@@ -110,17 +108,15 @@
 					<span class="required">*</span>
 				</label>
 				<div class="col-sm-6">
-					<input type="text" class="ng-binding form-control" id="inputCommissionPesident" name="inputCommissionPesident" ng-model="thesis.mergedCommissionPresidenData" typeahead="professor for professor in getProfesors($viewValue) | limitTo:8" placeholder="{{ resources.thesisPopupLabels.commissionPresident }}" typeahead-loading="loadingProfessors" autocomplete="off" />
-    				<span ng-show="loadingProfessors" class="glyphicon glyphicon-refresh"></span>
+					<input type="text" class="ng-binding form-control" id="inputCommissionPesident" name="inputCommissionPesident" ng-model="thesis.mergedCommissionPresidenData" typeahead="professor as professor.name + ' ' + professor.surname for professor in getCommissionPresident($viewValue) | limitTo:8" placeholder="{{ resources.thesisPopupLabels.commissionPresident }}" typeahead-loading="loadingCommisionPesident" autocomplete="off" />
+    				<span ng-show="loadingCommisionPesident" class="glyphicon glyphicon-refresh"></span>
 					<div
 						ng-show="form.inputCommissionPesident.$dirty && form.inputCommissionPesident.$invalid"
 						class="commissionPresidenFieldError">
 						<span
 							ng-show="form.inputCommissionPesident.$error.required"
-							class="ng-binding">{{ errorMessages.error.required }}</span> <span
-							ng-show="form.inputCommissionPesident.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidThesisTitleMaxLength }}</span> <span 
-							ng-show="form.inputCommissionPesident.$error.studentInvalid" 
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span 
+							ng-show="form.inputCommissionPesident.$error.commissionPresidentInvalid" 
 							class="ng-binding">{{errorMessages.error.emptyTable}}</span>
 					</div>
 				</div>
@@ -130,17 +126,15 @@
 					<span class="required">*</span>
 				</label>
 				<div class="col-sm-6">
-					<input type="text" class="ng-binding form-control" id="inputCommissionMember" name="inputCommissionMember" ng-model="thesis.mergedCommissionMemberData" typeahead="professor for professor in getProfesors($viewValue) | limitTo:8" placeholder="{{ resources.thesisPopupLabels.commissionMember }}" typeahead-loading="loadingProfessors" autocomplete="off" />
-    				<span ng-show="loadingProfessors" class="glyphicon glyphicon-refresh"></span>
+					<input type="text" class="ng-binding form-control" id="inputCommissionMember" name="inputCommissionMember" ng-model="thesis.mergedCommissionMemberData" typeahead="professor as professor.name + ' ' + professor.surname for professor in getCommissionMember($viewValue) | limitTo:8" placeholder="{{ resources.thesisPopupLabels.commissionMember }}" typeahead-loading="loadingCommissionMember" autocomplete="off" />
+    				<span ng-show="loadingCommissionMember" class="glyphicon glyphicon-refresh"></span>
 					<div
 						ng-show="form.inputCommissionMember.$dirty && form.inputCommissionMember.$invalid"
-						class="commissionPresidenFieldError">
+						class="commissionMemberFieldError">
 						<span
 							ng-show="form.inputCommissionMember.$error.required"
-							class="ng-binding">{{ errorMessages.error.required }}</span> <span
-							ng-show="form.inputCommissionMember.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidThesisTitleMaxLength }}</span> <span 
-							ng-show="form.inputCommissionMember.$error.studentInvalid" 
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span 
+							ng-show="form.inputCommissionMember.$error.commissionMemberInvalid" 
 							class="ng-binding">{{errorMessages.error.emptyTable}}</span>
 					</div>
 				</div>

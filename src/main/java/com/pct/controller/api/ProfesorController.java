@@ -1,5 +1,8 @@
 package com.pct.controller.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -23,11 +26,11 @@ import com.pct.validation.ProfesorNotFoundException;
 public class ProfesorController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProfesorController.class);
-	
+
 	@Autowired
 	ProfesorService profesorService;
 
-	@RequestMapping(value="persistProfessor", method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = "persistProfessor", method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProfesorFormaDTO> persistProfessor(@Valid @RequestBody ProfesorFormaDTO profesorFormaDTO) {
 		profesorService.saveProfesor(profesorFormaDTO);
 		ProfesorFormaDTO profesor = new ProfesorFormaDTO();
@@ -36,21 +39,37 @@ public class ProfesorController {
 		} catch (ProfesorNotFoundException e) {
 			e.printStackTrace();
 		}
-		logger.debug("Profesor: " + profesor.getUserName() + " (ID " + profesor.getId() + ") successfully registrated in database.");
-		
+		logger.debug("Profesor: " + profesor.getUserName() + " (ID " + profesor.getId()
+				+ ") successfully registrated in database.");
+
 		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/selectedProfesor", method = RequestMethod.GET, produces = "application/json")
+
+	@RequestMapping(value = "/selectedProfesor", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<ProfesorFormaDTO> showProfesor(String userName) throws ProfesorNotFoundException {
 		ProfesorFormaDTO profesor = profesorService.findProfesorByUserName(userName);
 		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="loadProfesorDetails", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<ProfesorFormaDTO> getProfessorById(@RequestParam(value = "id", required = true) Long id) throws ProfesorNotFoundException {
+
+	@RequestMapping(value = "loadProfesorDetails", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<ProfesorFormaDTO> getProfessorById(@RequestParam(value = "id", required = true) Long id)
+			throws ProfesorNotFoundException {
 		ProfesorFormaDTO profesor = profesorService.findProfesorById(id);
 		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
 	}
-	
+
+	@RequestMapping(value = "findProfessorStartsWith", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<List<ProfesorFormaDTO>> findProfessorStartsWith(
+			@RequestParam(value = "value", required = true) String value,
+			@RequestParam(value = "idProf", required = false) Long idProf,
+			@RequestParam(value = "idMentor", required = true) Long idMentor) throws ProfesorNotFoundException {
+
+		List<ProfesorFormaDTO> professors = new ArrayList<ProfesorFormaDTO>();
+		if (value.length() >= 3) {
+			professors = profesorService.findProfessorsStartsWith(value, idProf, idMentor);
+		}
+
+		return new ResponseEntity<List<ProfesorFormaDTO>>(professors, HttpStatus.OK);
+	}
+
 }

@@ -63,12 +63,15 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 	$scope.status = {};
 	$scope.thesis;
 	$scope.resources = {};
+	$scope.commissionPresident = {};
+	$scope.commissionMember = {};
 
 	$scope.patterns = {
 		onlyLetters : /^[a-zA-Z ]*$/,
 		onlyNumbers : /^[0-9 ]*$/
 	};
-
+	
+	/* Load resources from .json properties file */
 	$scope.loadResources = function() {
 		var locale = document.getElementById('localeCode');
 		$http.get('messages/profesorDetails_' + locale.value + '.json')
@@ -79,6 +82,14 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 				function(response) {
 					$scope.errorMessages = angular.fromJson(response);
 				});
+	};
+	
+	/* Date picker functions */
+	$scope.open = function($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
+
+		$scope.opened = true;
 	};
 
 	$scope.init = function() {
@@ -91,17 +102,52 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 	
 	$scope.getStudents = function(val) {
 		var inputLabel = this.form.inputStudent;
+		
 		inputLabel.$setValidity("studentInvalid", true);
 		return PctService.findStudentStartsWith(val).then(function(response) {
 			var students = [];
 			for (var i = 0; i < response.length; i++) {
-				students.push(response[i].transcriptNumber + " " + response[i].name + " " + response[i].surname);
+				students.push(response[i]);
 				inputLabel.$setValidity("studentInvalid", true);
 			}
-			if (val.length >= 3) {
+			if (val.length >= 3 && students.length == 0) {
 				inputLabel.$setValidity("studentInvalid", false);
 			}
 			return students;
+		});
+	};
+	
+	$scope.getCommissionPresident = function(val) {
+		var inputLabel = this.form.inputCommissionPesident;
+		
+		inputLabel.$setValidity("commissionPresidentInvalid", true);
+		return PctService.findProfessorsStartsWith(val, $scope.commissionPresident.id, $routeParams.id).then(function(response) {
+			var professors = [];
+			for (var i = 0; i < response.length; i++) {
+				professors.push(response[i]);
+				inputLabel.$setValidity("commissionPresidentInvalid", true);
+			}
+			if (val.length >= 3 && professors.length == 0) {
+				inputLabel.$setValidity("commissionPresidentInvalid", false);
+			}
+			return professors;
+		});
+	};
+	
+	$scope.getCommissionMember = function(val) {
+		var inputLabel = this.form.inputCommissionMember;
+		
+		inputLabel.$setValidity("commissionMemberInvalid", true);
+		return PctService.findProfessorsStartsWith(val, $scope.commissionMember.id, $routeParams.id).then(function(response) {
+			var professors = [];
+			for (var i = 0; i < response.length; i++) {
+				professors.push(response[i]);
+				inputLabel.$setValidity("commissionMemberInvalid", true);
+			}
+			if (val.length >= 3 && professors.length == 0) {
+				inputLabel.$setValidity("commissionMemberInvalid", false);
+			}
+			return professors;
 		});
 	};
 

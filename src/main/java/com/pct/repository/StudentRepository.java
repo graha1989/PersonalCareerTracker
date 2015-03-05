@@ -51,11 +51,12 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 	/**
 	 * Retrieves list of students with partially matching name or surname or transcriptNumber.
 	 * 
+	 * @param transcriptNumber
 	 * @param name
 	 * @param surname
 	 * @return list of students
 	 */
-	@Query("SELECT s FROM Student s WHERE s.transcriptNumber LIKE %:data% OR s.name LIKE %:data% OR s.surname LIKE %:data%")
+	@Query("SELECT s FROM Student s WHERE concat(s.transcriptNumber, ' ', s.name, ' ', s.surname) LIKE %:data%")
 	List<Student> findByTranscriptNumberLikeOrNameLikeOrSurnameLike(@Param("data") String data);
 	
 }

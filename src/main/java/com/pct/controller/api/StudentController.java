@@ -72,7 +72,7 @@ public class StudentController {
 		
 		List<StudentDTO> students = new ArrayList<StudentDTO>();
 		if (value.length() >= 3) {
-			students = studentService.findByNameStartsWith(value);
+			students = studentService.findStudentsStartsWith(value);
 		}
 
 		return new ResponseEntity<List<StudentDTO>>(students, HttpStatus.OK);

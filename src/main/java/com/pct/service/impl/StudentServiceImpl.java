@@ -100,7 +100,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	@Transactional
-	public List<StudentDTO> findByNameStartsWith(String value) throws StudentNotFoundException {
+	public List<StudentDTO> findStudentsStartsWith(String value) throws StudentNotFoundException {
 		
 		List<StudentDTO> studentsDTOList = new ArrayList<StudentDTO>();
 

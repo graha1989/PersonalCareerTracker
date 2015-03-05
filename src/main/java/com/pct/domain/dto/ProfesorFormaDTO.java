@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
+import com.pct.domain.Profesor;
 import com.pct.domain.Uloga;
 
 public class ProfesorFormaDTO implements Serializable {
@@ -83,6 +84,23 @@ public class ProfesorFormaDTO implements Serializable {
 		this.scientificArea = scientificArea;
 		this.specialScientificArea = specialScientificArea;
 		this.id = id;
+	}
+	
+	public ProfesorFormaDTO(Profesor p) {
+		super();
+		this.userName = p.getUserName();
+		this.password = p.getPassword();
+		this.email = p.getEmail();
+		this.uloga = p.getUloga();
+		this.name = p.getName();
+		this.surname = p.getSurname();
+		this.fathersName = p.getFathersName();
+		this.dateOfBirth = p.getDateOfBirth();
+		this.placeOfBirth = p.getPlaceOfBirth();
+		this.countryOfBirth = p.getCountryOfBirth();
+		this.scientificArea = p.getScientificArea();
+		this.specialScientificArea = p.getSpecialScientificArea();
+		this.id = p.getId();
 	}
 
 	public String getUserName() {

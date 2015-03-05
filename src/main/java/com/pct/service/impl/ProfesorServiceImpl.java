@@ -1,5 +1,8 @@
 package com.pct.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,6 +74,28 @@ public class ProfesorServiceImpl implements ProfesorService {
 
 		profesorRepository.saveAndFlush(profesor);
 
+	}
+
+	@Override
+	@Transactional
+	public List<ProfesorFormaDTO> findProfessorsStartsWith(String value, Long idProf, Long idMentor)
+			throws ProfesorNotFoundException {
+		
+		List<ProfesorFormaDTO> professorsDtoList = new ArrayList<ProfesorFormaDTO>();
+		List<Profesor> professorsList = new ArrayList<Profesor>();
+		
+		if (idProf == null) {
+			professorsList = profesorRepository.findByNameLikeOrSurnameLike(value, idMentor);
+		} else {
+			professorsList = profesorRepository.findByNameLikeOrSurnameLike(value, idProf, idMentor);
+		}
+		for (Profesor p : professorsList) {
+			ProfesorFormaDTO professorDto = new ProfesorFormaDTO(p);
+			professorDto.setId(p.getId());
+			professorsDtoList.add(professorDto);
+		}
+		
+		return professorsDtoList;
 	}
 
 }

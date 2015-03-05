@@ -57,6 +57,11 @@ public class ThesisDto implements Serializable {
 	private String commissionPesidentSurname;
 	
 	@NotEmpty
+	@Length(max = 101)
+	@SafeHtml
+	private String mergedCommissionPresidenData = commissionPesidentName + " " + commissionPesidentSurname;
+	
+	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	private String commissionMemberName;
@@ -65,6 +70,11 @@ public class ThesisDto implements Serializable {
 	@Length(max = 50)
 	@SafeHtml
 	private String commissionMemberSurname;
+	
+	@NotEmpty
+	@Length(max = 101)
+	@SafeHtml
+	private String mergedCommissionMemberData = commissionMemberName + " " + commissionMemberSurname;
 	
 	@NotEmpty
 	@Length(max = 50)
@@ -214,5 +224,29 @@ public class ThesisDto implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getMergedStudentData() {
+		return mergedStudentData;
+	}
+
+	public void setMergedStudentData(String mergedStudentData) {
+		this.mergedStudentData = mergedStudentData;
+	}
+
+	public String getMergedCommissionPresidenData() {
+		return mergedCommissionPresidenData;
+	}
+
+	public void setMergedCommissionPresidenData(String mergedCommissionPresidenData) {
+		this.mergedCommissionPresidenData = mergedCommissionPresidenData;
+	}
+
+	public String getMergedCommissionMemberData() {
+		return mergedCommissionMemberData;
+	}
+
+	public void setMergedCommissionMemberData(String mergedCommissionMemberData) {
+		this.mergedCommissionMemberData = mergedCommissionMemberData;
 	}
 }
