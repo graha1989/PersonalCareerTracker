@@ -10,5 +10,7 @@ public interface ThesisService {
 	List<ThesisDto> findAllBachelorThesis(Long id);
 
 	List<ThesisType> findAllThesisType();
+
+	ThesisDto saveThesis(ThesisDto thesisDto);
 	
 }

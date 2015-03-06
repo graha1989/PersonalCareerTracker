@@ -1,10 +1,11 @@
 app.controller("ProfesorDetailsController", function($scope, $routeParams,
 		$http, $location, $modal, PctService) {
 
-	$scope.profesor;
+	$scope.profesor = {};
 	$scope.id;
 	$scope.resources = {};
 	$scope.errorMessages = {};
+	$scope.thesisTypes = [];
 
 	$scope.editMode = false;
 
@@ -48,9 +49,25 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 		});
 	};
 	
+	$scope.loadThesisTypes = function() {
+		$http({
+			method : 'GET',
+			url : "api/thesis/allThesisTypes",
+			headers : {
+				'Content-Type' : 'application/json'
+			}
+		}).success(function(data, status) {
+			if (angular.isObject(data)) {
+				$scope.thesisTypes = data;
+			}
+		}).error(function(data, status) {
+		});
+	};
+	
 	$scope.init = function() {
 		$scope.id = $routeParams.id;
-		$scope.profesor = $scope.loadProfesorDetails($scope.id);
+		$scope.loadProfesorDetails($scope.id);
+		$scope.loadThesisTypes();
 		$scope.loadResources();
 	};
 

@@ -383,6 +383,14 @@
 				ng-disabled="editMode">
 				<span class="glyphicon glyphicon-list"></span> {{ resources.buttons.mentorButton }} <span class="caret"></span>
 			</button>
+
+			<ul
+				class="dropdown-menu"
+				role="menu">
+				<li ng-repeat="type in thesisTypes"><a id="type.finalPaperTypeName" class="btn">{{ type.finalPaperTypeName }}</a></li>
+			</ul>
+
+			<!-- 
 			<ul
 				class="dropdown-menu"
 				role="menu">
@@ -403,6 +411,7 @@
 					class="btn"
 					ng-click="openDoctorMentoring(profesor.id)">{{ resources.buttons.mentorSubButtons.doctorButton }}</a></li>
 			</ul>
+			 -->
 		</div>
 
 	</form>

@@ -13,6 +13,7 @@ import com.pct.domain.dto.ThesisDto;
 import com.pct.repository.ThesisRepository;
 import com.pct.repository.ThesisTypeRepository;
 import com.pct.service.ThesisService;
+import com.pct.service.ThesisUtil;
 
 @Service
 public class ThesisServiceImpl implements ThesisService {
@@ -31,12 +32,7 @@ public class ThesisServiceImpl implements ThesisService {
 
 		List<Thesis> thesisList = thesisRepository.findAllBachelorThesis(id);
 		for (Thesis t : thesisList) {
-			ThesisDto thesisDto = new ThesisDto(t.getTitle(), t.getStudent().getTranscriptNumber(), t.getStudent()
-					.getName(), t.getStudent().getSurname(), t.getMentor().getName(), t.getMentor().getSurname(), t
-					.getCommissionPesident().getName(), t.getCommissionPesident().getSurname(), t.getCommissionMember()
-					.getName(), t.getCommissionMember().getSurname(), t.getPaperScientificArea(),
-					t.getDateOfGraduation(), t.getUniversityName());
-			thesisDto.setId(t.getId());
+			ThesisDto thesisDto = new ThesisDto(t);
 			thesisDtoList.add(thesisDto);
 		}
 		return thesisDtoList;
@@ -49,6 +45,21 @@ public class ThesisServiceImpl implements ThesisService {
 		List<ThesisType> thesisTypesList = new ArrayList<ThesisType>();
 		thesisTypesList = thesisTypeRepository.findAll();
 		return thesisTypesList;
+	}
+
+	@Override
+	@Transactional
+	public ThesisDto saveThesis(ThesisDto thesisDto) {
+		
+		Thesis thesis = new Thesis();
+
+		if (thesisDto.getId() != null) {
+			thesis = ThesisUtil.createThesisInstanceFromThesisDto(thesisDto);
+		} else {
+			thesis = ThesisUtil.createNewThesisInstanceFromThesisiDto(thesisDto);
+		}
+
+		return new ThesisDto(thesisRepository.save(thesis));
 	}
 
 }

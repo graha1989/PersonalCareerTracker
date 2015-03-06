@@ -26,7 +26,7 @@ app.controller("BachelorMentoringController", function($scope, $routeParams,
 
 	$scope.loadBachelorThesis = function(id) {
 		PctService.loadBachelorThesis(id, function(data) {
-			if (angular.isObject(data)) {
+			if (angular.isObject(data) && data.length > 0) {
 				$scope.allBachelorThesis = data;
 				$scope.noResultsFound = false;
 			} else {
@@ -63,14 +63,16 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 	$scope.status = {};
 	$scope.thesis;
 	$scope.resources = {};
+
 	$scope.commissionPresident = {};
 	$scope.commissionMember = {};
+	$scope.student = {};
 
 	$scope.patterns = {
 		onlyLetters : /^[a-zA-Z ]*$/,
 		onlyNumbers : /^[0-9 ]*$/
 	};
-	
+
 	/* Load resources from .json properties file */
 	$scope.loadResources = function() {
 		var locale = document.getElementById('localeCode');
@@ -83,7 +85,7 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 					$scope.errorMessages = angular.fromJson(response);
 				});
 	};
-	
+
 	/* Date picker functions */
 	$scope.open = function($event) {
 		$event.preventDefault();
@@ -99,10 +101,10 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 	};
 
 	$scope.init();
-	
+
 	$scope.getStudents = function(val) {
 		var inputLabel = this.form.inputStudent;
-		
+
 		inputLabel.$setValidity("studentInvalid", true);
 		return PctService.findStudentStartsWith(val).then(function(response) {
 			var students = [];
@@ -116,46 +118,54 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 			return students;
 		});
 	};
-	
+
 	$scope.getCommissionPresident = function(val) {
 		var inputLabel = this.form.inputCommissionPesident;
-		
+
 		inputLabel.$setValidity("commissionPresidentInvalid", true);
-		return PctService.findProfessorsStartsWith(val, $scope.commissionPresident.id, $routeParams.id).then(function(response) {
-			var professors = [];
-			for (var i = 0; i < response.length; i++) {
-				professors.push(response[i]);
-				inputLabel.$setValidity("commissionPresidentInvalid", true);
-			}
-			if (val.length >= 3 && professors.length == 0) {
-				inputLabel.$setValidity("commissionPresidentInvalid", false);
-			}
-			return professors;
-		});
+		return PctService.findProfessorsStartsWith(val,
+				$scope.commissionMember.id, $routeParams.id).then(
+				function(response) {
+					var professors = [];
+					for (var i = 0; i < response.length; i++) {
+						professors.push(response[i]);
+						inputLabel.$setValidity("commissionPresidentInvalid",
+								true);
+					}
+					if (val.length >= 3 && professors.length == 0) {
+						inputLabel.$setValidity("commissionPresidentInvalid",
+								false);
+					}
+					return professors;
+				});
 	};
-	
+
 	$scope.getCommissionMember = function(val) {
 		var inputLabel = this.form.inputCommissionMember;
-		
+
 		inputLabel.$setValidity("commissionMemberInvalid", true);
-		return PctService.findProfessorsStartsWith(val, $scope.commissionMember.id, $routeParams.id).then(function(response) {
-			var professors = [];
-			for (var i = 0; i < response.length; i++) {
-				professors.push(response[i]);
-				inputLabel.$setValidity("commissionMemberInvalid", true);
-			}
-			if (val.length >= 3 && professors.length == 0) {
-				inputLabel.$setValidity("commissionMemberInvalid", false);
-			}
-			return professors;
-		});
+		return PctService.findProfessorsStartsWith(val,
+				$scope.commissionPresident.id, $routeParams.id).then(
+				function(response) {
+					var professors = [];
+					for (var i = 0; i < response.length; i++) {
+						professors.push(response[i]);
+						inputLabel
+								.$setValidity("commissionMemberInvalid", true);
+					}
+					if (val.length >= 3 && professors.length == 0) {
+						inputLabel.$setValidity("commissionMemberInvalid",
+								false);
+					}
+					return professors;
+				});
 	};
 
 	$scope.saveNewThesis = function() {
 		$http({
 			method : 'POST',
-			url : "api/students",
-			data : $scope.student,
+			url : "api/thesis",
+			data : $scope.thesis,
 			headers : {
 				'Content-Type' : 'application/json'
 			}
@@ -174,6 +184,21 @@ var createNewThesisController = function($scope, $modalInstance, $routeParams,
 				scrollTop : 0
 			}, "slow");
 		});
+	};
+
+	$scope.onSelectStudent = function($item) {
+		$scope.$item = $item;
+		$scope.student = $scope.$item;
+	};
+
+	$scope.onSelectCommissionPresident = function($item) {
+		$scope.$item = $item;
+		$scope.commissionPresident = $scope.$item;
+	};
+
+	$scope.onSelectCommissionMember = function($item) {
+		$scope.$item = $item;
+		$scope.commissionMember = $scope.$item;
 	};
 
 	$scope.cancel = function() {

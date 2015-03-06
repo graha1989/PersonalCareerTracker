@@ -30,7 +30,7 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
 
 	$scope.loadStudents = function() {
 		PctService.loadStudents($routeParams, function(data) {
-			if (angular.isObject(data)) {
+			if (angular.isObject(data) && data.length > 0) {
 				$scope.students = data;
 				$scope.noResultsFound = false;
 			} else {

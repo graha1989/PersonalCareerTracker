@@ -12,31 +12,31 @@ import com.pct.domain.dto.ProfesorFormaDTO;
 public class ProfesorUtil {
 
 	// EDIT Profesor
-	public static Profesor createProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDTO ProfesorFormaDTO) {
+	public static Profesor createProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDTO profesorFormaDTO) {
 
-		Profesor profesor = createNewProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDTO);
-		profesor.setId(ProfesorFormaDTO.getId());
+		Profesor profesor = createNewProfesorInstanceFromProfesorFormaDTO(profesorFormaDTO);
+		profesor.setId(profesorFormaDTO.getId());
 
 		return profesor;
 	}
 
 	// CREATE new Profesor
-	public static Profesor createNewProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDTO ProfesorFormaDTO) {
+	public static Profesor createNewProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDTO profesorFormaDTO) {
 
 		Profesor profesor = new Profesor();
 		
-		profesor.setUserName(ProfesorFormaDTO.getUserName());
-		profesor.setPassword(ProfesorFormaDTO.getPassword());
-		profesor.setEmail(ProfesorFormaDTO.getEmail());
+		profesor.setUserName(profesorFormaDTO.getUserName());
+		profesor.setPassword(profesorFormaDTO.getPassword());
+		profesor.setEmail(profesorFormaDTO.getEmail());
 		
-		profesor.setName(ProfesorFormaDTO.getName());
-		profesor.setSurname(ProfesorFormaDTO.getSurname());
-		profesor.setFathersName(ProfesorFormaDTO.getFathersName());
-		profesor.setDateOfBirth(ProfesorFormaDTO.getDateOfBirth());
-		profesor.setPlaceOfBirth(ProfesorFormaDTO.getPlaceOfBirth());
-		profesor.setCountryOfBirth(ProfesorFormaDTO.getCountryOfBirth());
-		profesor.setScientificArea(ProfesorFormaDTO.getScientificArea());
-		profesor.setSpecialScientificArea(ProfesorFormaDTO.getSpecialScientificArea());
+		profesor.setName(profesorFormaDTO.getName());
+		profesor.setSurname(profesorFormaDTO.getSurname());
+		profesor.setFathersName(profesorFormaDTO.getFathersName());
+		profesor.setDateOfBirth(profesorFormaDTO.getDateOfBirth());
+		profesor.setPlaceOfBirth(profesorFormaDTO.getPlaceOfBirth());
+		profesor.setCountryOfBirth(profesorFormaDTO.getCountryOfBirth());
+		profesor.setScientificArea(profesorFormaDTO.getScientificArea());
+		profesor.setSpecialScientificArea(profesorFormaDTO.getSpecialScientificArea());
 
 		return profesor;
 	}

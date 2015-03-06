@@ -62,14 +62,14 @@ public class ProfesorServiceImpl implements ProfesorService {
 
 	@Override
 	@Transactional
-	public void saveProfesor(ProfesorFormaDTO ProfesorFormaDTO) {
+	public void saveProfesor(ProfesorFormaDTO profesorFormaDTO) {
 
 		Profesor profesor = new Profesor();
 
-		if (ProfesorFormaDTO.getId() != null) {
-			profesor = ProfesorUtil.createProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDTO);
+		if (profesorFormaDTO.getId() != null) {
+			profesor = ProfesorUtil.createProfesorInstanceFromProfesorFormaDTO(profesorFormaDTO);
 		} else {
-			profesor = ProfesorUtil.createNewProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDTO);
+			profesor = ProfesorUtil.createNewProfesorInstanceFromProfesorFormaDTO(profesorFormaDTO);
 		}
 
 		profesorRepository.saveAndFlush(profesor);
