@@ -14,6 +14,8 @@ import com.pct.repository.ThesisRepository;
 import com.pct.repository.ThesisTypeRepository;
 import com.pct.service.ThesisService;
 import com.pct.service.ThesisUtil;
+import com.pct.validation.ThesisNotFoundException;
+import com.pct.validation.ThesisTypeNotFoundException;
 
 @Service
 public class ThesisServiceImpl implements ThesisService {
@@ -26,11 +28,11 @@ public class ThesisServiceImpl implements ThesisService {
 
 	@Override
 	@Transactional
-	public List<ThesisDto> findAllBachelorThesis(Long id) {
+	public List<ThesisDto> findAllThesis(Long mentorId, Long thesisTypeId) {
 
 		List<ThesisDto> thesisDtoList = new ArrayList<ThesisDto>();
 
-		List<Thesis> thesisList = thesisRepository.findAllBachelorThesis(id);
+		List<Thesis> thesisList = thesisRepository.findAllThesis(mentorId, thesisTypeId);
 		for (Thesis t : thesisList) {
 			ThesisDto thesisDto = new ThesisDto(t);
 			thesisDtoList.add(thesisDto);
@@ -60,6 +62,50 @@ public class ThesisServiceImpl implements ThesisService {
 		}
 
 		return new ThesisDto(thesisRepository.save(thesis));
+	}
+
+	@Override
+	@Transactional
+	public ThesisType findThesisTypeById(Long id) throws ThesisTypeNotFoundException {
+		
+		ThesisType thesisType;
+
+		if (id == null || thesisTypeRepository.findOne(id) == null) {
+			throw new ThesisTypeNotFoundException();
+		} else {
+			thesisType = thesisTypeRepository.findOne(id);
+		}
+
+		return thesisType;
+	}
+
+	@Override
+	@Transactional
+	public void deleteThesis(Long id) throws ThesisNotFoundException {
+		
+		if (id == null || thesisRepository.findOne(id) == null) {
+			throw new ThesisNotFoundException();
+		}
+
+		thesisRepository.delete(id);
+		
+	}
+
+	@Override
+	@Transactional
+	public ThesisDto findThesisById(Long id) throws ThesisNotFoundException {
+		
+		ThesisDto thesisDto;
+
+		if (id == null || thesisRepository.findOne(id) == null) {
+			throw new ThesisNotFoundException();
+		} else {
+			Thesis thesis = thesisRepository.findOne(id);
+			thesisDto = new ThesisDto(thesis);
+		}
+
+		return thesisDto;
+		
 	}
 
 }

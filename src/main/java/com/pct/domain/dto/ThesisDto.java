@@ -3,11 +3,16 @@ package com.pct.domain.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
+import com.pct.domain.Profesor;
+import com.pct.domain.Student;
 import com.pct.domain.Thesis;
+import com.pct.domain.ThesisType;
 
 public class ThesisDto implements Serializable {
 
@@ -18,59 +23,18 @@ public class ThesisDto implements Serializable {
 	@SafeHtml
 	private String title;
 
-	@NotEmpty
-	@Length(max = 10)
-	@SafeHtml
-	private String studentTranscriptNumber;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String studentName;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String studentSurname;
-
-	protected Long studentId;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String mentorName;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String mentorSurname;
-
-	protected Long mentorId;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String commissionPesidentName;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String commissionPesidentSurname;
-
-	protected Long commissionPesidentId;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String commissionMemberName;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String commissionMemberSurname;
-
-	protected Long commissionMemberId;
-
+	@NotNull
+	private Student student;
+	
+	@NotNull
+	private Profesor mentor;
+	
+	@NotNull
+	private Profesor commissionPresident;
+	
+	@NotNull
+	private Profesor commissionMember;
+	
 	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
@@ -82,54 +46,39 @@ public class ThesisDto implements Serializable {
 	@Length(max = 100)
 	@SafeHtml
 	private String universityName;
-
+	
+	@NotNull
+	private ThesisType thesisType;
+	
 	protected Long id;
 
 	public ThesisDto() {
 		super();
 	}
 
-	public ThesisDto(String title, String studentTranscriptNumber, String studentName, String studentSurname,
-			Long studentId, String mentorName, String mentorSurname, Long mentorId, String commissionPesidentName,
-			String commissionPesidentSurname, Long commissionPesidentId, String commissionMemberName,
-			String commissionMemberSurname, Long commissionMemberId, String paperScientificArea, Date dateOfGraduation,
-			String universityName, Long id) {
+	public ThesisDto(String title, Student student, Profesor mentor, Profesor commissionPresident,
+			Profesor commissionMember, String paperScientificArea, Date dateOfGraduation, String universityName,
+			ThesisType thesisType, Long id) {
 		super();
 		this.title = title;
-		this.studentTranscriptNumber = studentTranscriptNumber;
-		this.studentName = studentName;
-		this.studentSurname = studentSurname;
-		this.studentId = studentId;
-		this.mentorName = mentorName;
-		this.mentorSurname = mentorSurname;
-		this.mentorId = mentorId;
-		this.commissionPesidentName = commissionPesidentName;
-		this.commissionPesidentSurname = commissionPesidentSurname;
-		this.commissionPesidentId = commissionPesidentId;
-		this.commissionMemberName = commissionMemberName;
-		this.commissionMemberSurname = commissionMemberSurname;
-		this.commissionMemberId = commissionMemberId;
+		this.student = student;
+		this.mentor = mentor;
+		this.commissionPresident = commissionPresident;
+		this.commissionMember = commissionMember;
 		this.paperScientificArea = paperScientificArea;
 		this.dateOfGraduation = dateOfGraduation;
 		this.universityName = universityName;
+		this.thesisType = thesisType;
 		this.id = id;
 	}
 
 	public ThesisDto(Thesis thesis) {
 		this.title = thesis.getTitle();
-		this.studentTranscriptNumber = thesis.getStudent().getTranscriptNumber();
-		this.studentName = thesis.getStudent().getName();
-		this.studentSurname = thesis.getStudent().getSurname();
-		this.studentId = thesis.getStudent().getId();
-		this.mentorName = thesis.getMentor().getName();
-		this.mentorSurname = thesis.getMentor().getSurname();
-		this.mentorId = thesis.getMentor().getId();
-		this.commissionPesidentName = thesis.getCommissionPesident().getName();
-		this.commissionPesidentSurname = thesis.getCommissionPesident().getSurname();
-		this.commissionPesidentId = thesis.getCommissionPesident().getId();
-		this.commissionMemberName = thesis.getCommissionMember().getName();
-		this.commissionMemberSurname = thesis.getCommissionMember().getSurname();
-		this.commissionMemberId = thesis.getCommissionMember().getId();
+		this.student = thesis.getStudent();
+		this.mentor = thesis.getMentor();
+		this.commissionPresident = thesis.getCommissionPresident();
+		this.commissionMember = thesis.getCommissionMember();
+		this.thesisType = thesis.getThesisType();
 		this.paperScientificArea = thesis.getPaperScientificArea();
 		this.dateOfGraduation = thesis.getDateOfGraduation();
 		this.universityName = thesis.getUniversityName();
@@ -144,76 +93,36 @@ public class ThesisDto implements Serializable {
 		this.title = title;
 	}
 
-	public String getStudentTranscriptNumber() {
-		return studentTranscriptNumber;
+	public Student getStudent() {
+		return student;
 	}
 
-	public void setStudentTranscriptNumber(String studentTranscriptNumber) {
-		this.studentTranscriptNumber = studentTranscriptNumber;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
-	public String getStudentName() {
-		return studentName;
+	public Profesor getMentor() {
+		return mentor;
 	}
 
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
+	public void setMentor(Profesor mentor) {
+		this.mentor = mentor;
 	}
 
-	public String getStudentSurname() {
-		return studentSurname;
+	public Profesor getCommissionPresident() {
+		return commissionPresident;
 	}
 
-	public void setStudentSurname(String studentSurname) {
-		this.studentSurname = studentSurname;
+	public void setCommissionPresident(Profesor commissionPresident) {
+		this.commissionPresident = commissionPresident;
 	}
 
-	public String getMentorName() {
-		return mentorName;
+	public Profesor getCommissionMember() {
+		return commissionMember;
 	}
 
-	public void setMentorName(String mentorName) {
-		this.mentorName = mentorName;
-	}
-
-	public String getMentorSurname() {
-		return mentorSurname;
-	}
-
-	public void setMentorSurname(String mentorSurname) {
-		this.mentorSurname = mentorSurname;
-	}
-
-	public String getCommissionPesidentName() {
-		return commissionPesidentName;
-	}
-
-	public void setCommissionPesidentName(String commissionPesidentName) {
-		this.commissionPesidentName = commissionPesidentName;
-	}
-
-	public String getCommissionPesidentSurname() {
-		return commissionPesidentSurname;
-	}
-
-	public void setCommissionPesidentSurname(String commissionPesidentSurname) {
-		this.commissionPesidentSurname = commissionPesidentSurname;
-	}
-
-	public String getCommissionMemberName() {
-		return commissionMemberName;
-	}
-
-	public void setCommissionMemberName(String commissionMemberName) {
-		this.commissionMemberName = commissionMemberName;
-	}
-
-	public String getCommissionMemberSurname() {
-		return commissionMemberSurname;
-	}
-
-	public void setCommissionMemberSurname(String commissionMemberSurname) {
-		this.commissionMemberSurname = commissionMemberSurname;
+	public void setCommissionMember(Profesor commissionMember) {
+		this.commissionMember = commissionMember;
 	}
 
 	public String getPaperScientificArea() {
@@ -240,6 +149,14 @@ public class ThesisDto implements Serializable {
 		this.universityName = universityName;
 	}
 
+	public ThesisType getThesisType() {
+		return thesisType;
+	}
+
+	public void setThesisType(ThesisType thesisType) {
+		this.thesisType = thesisType;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -248,35 +165,4 @@ public class ThesisDto implements Serializable {
 		this.id = id;
 	}
 
-	public Long getStudentId() {
-		return studentId;
-	}
-
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
-	}
-
-	public Long getMentorId() {
-		return mentorId;
-	}
-
-	public void setMentorId(Long mentorId) {
-		this.mentorId = mentorId;
-	}
-
-	public Long getCommissionPesidentId() {
-		return commissionPesidentId;
-	}
-
-	public void setCommissionPesidentId(Long commissionPesidentId) {
-		this.commissionPesidentId = commissionPesidentId;
-	}
-
-	public Long getCommissionMemberId() {
-		return commissionMemberId;
-	}
-
-	public void setCommissionMemberId(Long commissionMemberId) {
-		this.commissionMemberId = commissionMemberId;
-	}
 }

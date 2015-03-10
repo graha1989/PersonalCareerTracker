@@ -17,12 +17,13 @@ import com.pct.domain.Thesis;
 public interface ThesisRepository extends JpaRepository<Thesis, Long> {
 
 	/**
-	 * Retrieves list of Bachelor thesis for professor.
+	 * Retrieves list of thesis for professor and thesis type.
 	 * 
-	 * @param id
+	 * @param mentorId
+	 * @param thesisTypeId
 	 * @return list of bachelor thesis
 	 */
-	@Query("SELECT t FROM Thesis t JOIN t.mentor m JOIN t.thesisType tType WHERE tType.finalPaperTypeName='Bachelor thesis' AND m.id=:id")
-	List<Thesis> findAllBachelorThesis(@Param("id") Long id);
+	@Query("SELECT t FROM Thesis t JOIN t.mentor m JOIN t.thesisType tType WHERE tType.id=:thesisTypeId AND m.id=:mentorId")
+	List<Thesis> findAllThesis(@Param("mentorId") Long mentorId, @Param("thesisTypeId") Long thesisTypeId);
 
 }

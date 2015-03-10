@@ -47,9 +47,9 @@ public class Thesis extends AbstractEntity {
 	private Profesor commissionMember;
 	
 	@OneToOne
-	@JoinColumn(name = "commissionPesidentId")
+	@JoinColumn(name = "commissionPresidentId")
 	@JsonBackReference
-	private Profesor commissionPesident;
+	private Profesor commissionPresident;
 
 	public Thesis() {
 		super();
@@ -91,7 +91,7 @@ public class Thesis extends AbstractEntity {
 		return thesisType;
 	}
 
-	public void setTipZavrsnogRada(ThesisType thesisType) {
+	public void setThesisType(ThesisType thesisType) {
 		this.thesisType = thesisType;
 	}
 
@@ -119,12 +119,12 @@ public class Thesis extends AbstractEntity {
 		this.commissionMember = commissionMember;
 	}
 
-	public Profesor getCommissionPesident() {
-		return commissionPesident;
+	public Profesor getCommissionPresident() {
+		return commissionPresident;
 	}
 
-	public void setCommissionPesident(Profesor commissionPesident) {
-		this.commissionPesident = commissionPesident;
+	public void setCommissionPresident(Profesor commissionPresident) {
+		this.commissionPresident = commissionPresident;
 	}
 	
 }

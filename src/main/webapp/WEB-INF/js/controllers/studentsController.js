@@ -9,7 +9,7 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
 	$scope.errorMessages = {};
 
 	$scope.patterns = {
-		onlyLetters : /^[a-zA-Z ]*$/,
+		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
 		onlyNumbers : /^[0-9 ]*$/
 	};
 
@@ -88,6 +88,11 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
 var editStudentController = function($scope, $modalInstance, $routeParams,
 		$http, $route, studentId, PctService) {
 
+	$scope.patterns = {
+		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
+		onlyNumbers : /^[0-9 ]*$/
+	};
+
 	$scope.loadResources = function() {
 		var locale = document.getElementById('localeCode');
 		$http.get('messages/studentDetails_' + locale.value + '.json').success(
@@ -157,6 +162,11 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 
 var createNewStudentController = function($scope, $modalInstance, $routeParams,
 		$http, $route, PctService) {
+
+	$scope.patterns = {
+		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
+		onlyNumbers : /^[0-9 ]*$/
+	};
 
 	$scope.loadResources = function() {
 		var locale = document.getElementById('localeCode');

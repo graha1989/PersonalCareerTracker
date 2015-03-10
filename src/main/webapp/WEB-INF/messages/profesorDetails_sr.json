@@ -4,7 +4,8 @@
         "profesorDetailsText": "Lični podaci o profesoru",
         "editProfesorText": "Izmena podataka o profesoru",
         "bachelorMentoringTitle": "Mentorstva na bachelor tezama",
-        "newThesisPopupTitle":"Unos nove teze"
+        "newThesisPopupTitle":"Unos nove teze",
+        "editThesisPopupTitle":"Izmena teze"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",

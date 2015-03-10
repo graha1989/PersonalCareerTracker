@@ -5,4 +5,5 @@ encoding//src/main/webapp/WEB-INF/pages/profesorDetails.html=UTF-8
 encoding//src/main/webapp/WEB-INF/pages/registerProfesor.html=UTF-8
 encoding//src/test/java=UTF-8
 encoding//src/test/resources=UTF-8
+encoding//src/test/resources/test_data_insert.sql=UTF-8
 encoding/<project>=UTF-8

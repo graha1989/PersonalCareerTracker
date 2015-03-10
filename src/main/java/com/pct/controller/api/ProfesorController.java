@@ -52,9 +52,13 @@ public class ProfesorController {
 	}
 
 	@RequestMapping(value = "loadProfesorDetails", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<ProfesorFormaDTO> getProfessorById(@RequestParam(value = "id", required = true) Long id)
-			throws ProfesorNotFoundException {
-		ProfesorFormaDTO profesor = profesorService.findProfesorById(id);
+	public ResponseEntity<ProfesorFormaDTO> getProfessorById(@RequestParam(value = "id", required = true) Long id) {
+		ProfesorFormaDTO profesor = new ProfesorFormaDTO();
+		try {
+			profesor = profesorService.findProfesorById(id);
+		} catch (ProfesorNotFoundException e) {
+			e.printStackTrace();
+		}
 		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
 	}
 

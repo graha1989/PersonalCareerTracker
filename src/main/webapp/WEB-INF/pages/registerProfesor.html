@@ -322,7 +322,8 @@
 			<button
 				id="submit_button"
 				type="submit"
-				class="btn btn-success">
+				class="btn btn-success"
+				ng-disabled="form.$invalid">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.form.register }}
 			</button>
 			<button

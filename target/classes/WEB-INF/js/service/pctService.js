@@ -16,12 +16,24 @@ app.factory("PctService", ["$http", "$q", function($http, $q){
 	    loadProfesor : function(id, callback) {
 			$http.get('api/professor/loadProfesorDetails?id='+id).success(callback).error(callback);
 		},
-		loadBachelorThesis : function(id, callback) {
-			$http.get('api/thesis/allBachelorThesis?id='+id).success(callback);
+		loadThesis : function(mentorId, thesisTypeId, callback) {
+			$http.get('api/thesis/allThesis?mentorId='+mentorId+'&thesisTypeId='+thesisTypeId).success(callback);
 		},
 		loadThesisTypes: function(params, callback) {
 			$http.get('api/thesis/allThesisTypes').success(callback);
 		},
+		loadThesisType : function(id, callback) {
+			$http.get('api/thesis/loadThesisTypeDetails?id='+id).success(callback).error(callback);
+		},
+		loadSelectedThesis : function(id, callback) {
+			$http.get('api/thesis/selectedThesis?id='+id).success(callback).error(callback);
+		},
+		deleteThesis : function(id, callback) {
+			$http({
+		        method: 'DELETE', 
+		        url: 'api/thesis?id='+id
+		    }).success(callback).error(callback);
+	    },
 		findStudentStartsWith : function(value) {
 			var deferred = $q.defer();
 			$http.get("api/students/findStudentStartsWith", {

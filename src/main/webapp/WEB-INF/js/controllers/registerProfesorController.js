@@ -7,7 +7,7 @@ app.controller("RegisterProfesorController", function($scope, $routeParams,
 	$scope.opened = false;
 
 	$scope.patterns = {
-		onlyLetters : /^[a-zA-Z ]*$/,
+		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
 		onlyNumbers : /^[0-9 ]*$/
 	};
 

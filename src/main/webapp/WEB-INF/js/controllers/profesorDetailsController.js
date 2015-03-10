@@ -6,11 +6,11 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 	$scope.resources = {};
 	$scope.errorMessages = {};
 	$scope.thesisTypes = [];
-
+	$scope.master = {};
 	$scope.editMode = false;
 
 	$scope.patterns = {
-		onlyLetters : /^[a-zA-Z ]*$/,
+		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
 		onlyNumbers : /^[0-9 ]*$/
 	};
 
@@ -101,21 +101,22 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 			}, "slow");
 		});
 	};
-
-	$scope.openBachelorMentoring = function(id) {
-		$location.path('/bachelorMentoring/id/' + id);
+	
+	$scope.isUnchanged = function(profesor) {
+		profesor.dateOfBirth = new Date(profesor.dateOfBirth).getTime();
+		return angular.equals(profesor, $scope.master);
 	};
 
-	$scope.openMasterMentoring = function(id) {
-		$location.path('/masterMentoring/id/' + id);
-	};
-
-	$scope.openSpecialisticMentoring = function(id) {
-		$location.path('/specialisticMentoring/id/' + id);
-	};
-
-	$scope.openDoctorMentoring = function(id) {
-		$location.path('/doctorMentoring/id/' + id);
+	$scope.openMentoring = function(mentorId, type) {
+		if (type.finalPaperTypeName == 'Bachelor teza') {
+			$location.path('/bachelorMentoring/mentorId/' + mentorId + '/thesisTypeId/' + type.id);
+		} else if (type.finalPaperTypeName == 'Master teza') {
+			$location.path('/masterMentoring/mentorId/' + mentorId + '/thesisTypeId/' + type.id);
+		} else if (type.finalPaperTypeName == 'Specijalistička teza') {
+			$location.path('/specialisticMentoring/mentorId/' + mentorId + '/thesisTypeId/' + type.id);
+		} else {
+			$location.path('/doctorMentoring/mentorId/' + mentorId + '/thesisTypeId/' + type.id);
+		}
 	};
 
 });

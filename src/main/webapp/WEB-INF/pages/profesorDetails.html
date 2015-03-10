@@ -381,37 +381,17 @@
 				data-toggle="dropdown"
 				aria-expanded="false"
 				ng-disabled="editMode">
-				<span class="glyphicon glyphicon-list"></span> {{ resources.buttons.mentorButton }} <span class="caret"></span>
+				{{ resources.buttons.mentorButton }} <span class="caret"></span>
 			</button>
-
 			<ul
 				class="dropdown-menu"
 				role="menu">
-				<li ng-repeat="type in thesisTypes"><a id="type.finalPaperTypeName" class="btn">{{ type.finalPaperTypeName }}</a></li>
+				<li
+					ng-repeat="type in thesisTypes"
+					ng-click="openMentoring(profesor.id, type)"><a
+					id="type.finalPaperTypeName"
+					class="btn">{{ type.finalPaperTypeName }}</a></li>
 			</ul>
-
-			<!-- 
-			<ul
-				class="dropdown-menu"
-				role="menu">
-				<li><a
-					id="bachelorButton"
-					class="btn"
-					ng-click="openBachelorMentoring(profesor.id)">{{ resources.buttons.mentorSubButtons.bachelorButton }}</a></li>
-				<li><a
-					id="masterButton"
-					class="btn"
-					ng-click="openMasterMentoring(profesor.id)">{{ resources.buttons.mentorSubButtons.masterButton }}</a></li>
-				<li><a
-					id="specialisticButton"
-					class="btn"
-					ng-click="openSpecialisticMentoring(profesor.id)">{{ resources.buttons.mentorSubButtons.specialisticButton }}</a></li>
-				<li><a
-					id="doctorButton"
-					class="btn"
-					ng-click="openDoctorMentoring(profesor.id)">{{ resources.buttons.mentorSubButtons.doctorButton }}</a></li>
-			</ul>
-			 -->
 		</div>
 
 	</form>

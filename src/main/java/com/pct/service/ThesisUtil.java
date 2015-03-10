@@ -25,6 +25,16 @@ public class ThesisUtil {
 		
 		Thesis thesis = new Thesis();
 		
+		thesis.setTitle(thesisDto.getTitle());
+		thesis.setPaperScientificArea(thesisDto.getPaperScientificArea());
+		thesis.setDateOfGraduation(thesisDto.getDateOfGraduation());
+		thesis.setUniversityName(thesisDto.getUniversityName());
+		thesis.setThesisType(thesisDto.getThesisType());
+		thesis.setStudent(thesisDto.getStudent());
+		thesis.setMentor(thesisDto.getMentor());
+		thesis.setCommissionPresident(thesisDto.getCommissionPresident());
+		thesis.setCommissionMember(thesisDto.getCommissionMember());
+		
 		return thesis;
 	}
 
