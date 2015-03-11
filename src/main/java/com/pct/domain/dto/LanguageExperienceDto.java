@@ -47,6 +47,7 @@ public class LanguageExperienceDto implements Serializable {
 		this.writing = languageExperience.isWriting();
 		this.reading = languageExperience.isReading();
 		this.pronouncing = languageExperience.isPronouncing();
+		this.id = languageExperience.getId();
 	}
 
 	public Profesor getProfessor() {

@@ -23,7 +23,7 @@ public class LanguageExperience extends AbstractEntity {
 	
 	@OneToOne
 	@JoinColumn(name = "profesorId")
-	private Profesor profesor;
+	private Profesor professor;
 	
 	@OneToOne
 	@JoinColumn(name = "languageId")
@@ -33,13 +33,13 @@ public class LanguageExperience extends AbstractEntity {
 		super();
 	}
 
-	public LanguageExperience(boolean writing, boolean reading, boolean pronouncing, Profesor profesor,
+	public LanguageExperience(boolean writing, boolean reading, boolean pronouncing, Profesor professor,
 			Language language) {
 		super();
 		this.writing = writing;
 		this.reading = reading;
 		this.pronouncing = pronouncing;
-		this.profesor = profesor;
+		this.professor = professor;
 		this.language = language;
 	}
 
@@ -68,11 +68,11 @@ public class LanguageExperience extends AbstractEntity {
 	}
 
 	public Profesor getProfesor() {
-		return profesor;
+		return professor;
 	}
 
-	public void setProfesor(Profesor profesor) {
-		this.profesor = profesor;
+	public void setProfesor(Profesor professor) {
+		this.professor = professor;
 	}
 
 	public Language getLanguage() {

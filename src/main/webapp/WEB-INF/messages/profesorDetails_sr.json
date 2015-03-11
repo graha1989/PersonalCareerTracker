@@ -5,7 +5,8 @@
         "editProfesorText": "Izmena podataka o profesoru",
         "bachelorMentoringTitle": "Mentorstva na bachelor tezama",
         "newThesisPopupTitle":"Unos nove teze",
-        "editThesisPopupTitle":"Izmena teze"
+        "editThesisPopupTitle":"Izmena teze",
+        "languageExperienceTitle":"Znanje jezika"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -53,10 +54,15 @@
         	"delete":"Izbriši",
 			"edit":"Izmeni",
 			"add":"Dodaj novu tezu",
+			"close":"Zatvori"
+        },
+        "languageButton": "Znanje jezika",
+        "languageExperienceButtons": {
+        	"delete":"Izbriši",
+			"edit":"Izmeni",
+			"add":"Dodaj novi jezik",
 			"close":"Zatvori",
-			"selectStudent":"Izaberi studenta",
-			"selectCommissionPresident":"Izaberi predsednika komisije",
-			"selectCommissionMember":"Izaberi člana komisije"
+			"save":"Sačuvaj"
         }
     },
     "bachelorMentoringTableLabels" : {
@@ -67,5 +73,11 @@
 		"thesisPaperScientificArea":"Oblast rada",
 		"thesisDateOfGraduation":"Datum odbrane teze",
 		"thesisUniversityName":"Univerzitet"
+	   },
+	"languageExperienceTableLabels" : {
+		"language":"Jezik",
+		"writing":"Piše",
+		"reading":"Čita",
+		"pronouncing":"Govori"
 	   }
 }

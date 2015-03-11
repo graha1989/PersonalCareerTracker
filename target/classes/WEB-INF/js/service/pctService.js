@@ -61,6 +61,19 @@ app.factory("PctService", ["$http", "$q", function($http, $q){
 				deferred.reject(response);
 			});
 			return deferred.promise;
-		}
+		},
+		loadLanguages : function(mentorId) {
+			var deferred = $q.defer();
+			$http.get("api/languages/allLanguages", {
+				params : {
+					mentorId : mentorId
+				}
+			}).success(function(response) {
+				deferred.resolve(response);
+			}).error(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		},
     };       
 }]);

@@ -118,5 +118,9 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 			$location.path('/doctorMentoring/mentorId/' + mentorId + '/thesisTypeId/' + type.id);
 		}
 	};
+	
+	$scope.openLanguageExperience = function(mentorId) {
+		$location.path('/languageExperience/mentorId/' + mentorId);
+	};
 
 });

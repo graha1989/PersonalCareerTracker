@@ -393,7 +393,13 @@
 					class="btn">{{ type.finalPaperTypeName }}</a></li>
 			</ul>
 		</div>
-
+		<div>
+			<button
+				type="button"
+				class="btn btn-default"
+				ng-disabled="editMode"
+				ng-click="openLanguageExperience(profesor.id)">{{ resources.buttons.languageButton }}</button>
+		</div>
 	</form>
 
 </div>
