@@ -2,9 +2,11 @@ package com.pct.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Column;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "language_experience")
@@ -21,12 +23,14 @@ public class LanguageExperience extends AbstractEntity {
 	@Column(name = "pronouncing")
 	private boolean pronouncing;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "profesorId")
+	@JsonBackReference
 	private Profesor professor;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "languageId")
+	@JsonBackReference
 	private Language language;
 	
 	public LanguageExperience() {

@@ -29,7 +29,7 @@
 						<tr
 							class="active ng-scope"
 							ng-repeat="language in languages">
-							<td>{{ language.language.name }}</td>
+							<td>{{ language.languageName }}</td>
 							<td><span
 								class="glyphicon glyphicon-check"
 								ng-show="language.writing && !editMode[$index]"></span> <span
@@ -61,7 +61,37 @@
 								ng-show="editMode[$index]"
 								ng-click="editLanguageExperience(language, $index)"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.languageExperienceButtons.save }}</a></td>
 						</tr>
-						<tr ng-show="noResultsFound">
+						<tr
+							class="active ng-scope"
+							ng-show="addNewRow">
+							<td><input
+								type="text"
+								class="ng-binding form-control"
+								id="inputLanguage"
+								name="inputLanguage"
+								ng-model="language.name"
+								ng-options="language.name for language in getLanguages()"
+								required />
+								<div
+									ng-show="form.inputLanguage.$dirty && form.inputLanguage.$invalid"
+									class="languageFieldError">
+									<span
+										ng-show="form.inputLanguage.$error.required"
+										class="ng-binding">{{ errorMessages.error.required }}</span>
+								</div></td>
+							<td><input
+								type="checkbox"
+								ng-model="language.writing"></input></td>
+							<td><input
+								type="checkbox"
+								ng-model="language.reading"></input></td>
+							<td><input
+								type="checkbox"
+								ng-model="language.pronouncing"></input></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr ng-show="noResultsFound && !addNewRow">
 							<td colspan="6">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
@@ -72,8 +102,16 @@
 			<button
 				id="addNewButton"
 				class="btn btn-success"
+				ng-show="!addNewRow"
 				ng-click="addNewLanguage()">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.languageExperienceButtons.add }}
+			</button>
+			<button
+				id="saveNewButton"
+				class="btn btn-success"
+				ng-show="addNewRow"
+				ng-click="saveNewLanguage()">
+				<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.languageExperienceButtons.save }}
 			</button>
 		</div>
 	</form>

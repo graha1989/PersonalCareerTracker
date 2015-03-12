@@ -25,8 +25,8 @@ public class LanguageExperienceUtil {
 
 		LanguageExperience languageExperience = new LanguageExperience();
 
-		languageExperience.setLanguage(languageExperienceDto.getLanguage());
-		languageExperience.setProfesor(languageExperienceDto.getProfessor());
+		/*languageExperience.setLanguage(languageExperienceDto.getLanguage());
+		languageExperience.setProfesor(languageExperienceDto.getProfessor());*/
 		languageExperience.setReading(languageExperienceDto.isReading());
 		languageExperience.setWriting(languageExperienceDto.isWriting());
 		languageExperience.setPronouncing(languageExperienceDto.isPronouncing());

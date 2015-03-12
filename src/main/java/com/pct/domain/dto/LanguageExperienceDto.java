@@ -2,22 +2,21 @@ package com.pct.domain.dto;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
-
-import com.pct.domain.Language;
 import com.pct.domain.LanguageExperience;
-import com.pct.domain.Profesor;
 
 public class LanguageExperienceDto implements Serializable {
 
 	private static final long serialVersionUID = 7826480051632774426L;
 
-	@NotNull
-	private Profesor professor;
+//	@NotNull
+//	private Profesor professor;
+	private Long profesorId;
 
-	@NotNull
-	private Language language;
+//	@NotNull
+//	private Language language;
 
+	private String languageName;
+	
 	private boolean writing;
 
 	private boolean reading;
@@ -30,11 +29,11 @@ public class LanguageExperienceDto implements Serializable {
 		super();
 	}
 
-	public LanguageExperienceDto(Profesor professor, Language language, boolean writing, boolean reading,
+	public LanguageExperienceDto(Long professorId, String languageName, boolean writing, boolean reading,
 			boolean pronouncing, Long id) {
 		super();
-		this.professor = professor;
-		this.language = language;
+		this.profesorId = professorId;
+		this.languageName = languageName;
 		this.writing = writing;
 		this.reading = reading;
 		this.pronouncing = pronouncing;
@@ -42,32 +41,49 @@ public class LanguageExperienceDto implements Serializable {
 	}
 
 	public LanguageExperienceDto(LanguageExperience languageExperience) {
-		this.professor = languageExperience.getProfesor();
-		this.language = languageExperience.getLanguage();
+		this.profesorId = languageExperience.getProfesor().getId();
+		this.languageName = languageExperience.getLanguage().getName();
 		this.writing = languageExperience.isWriting();
 		this.reading = languageExperience.isReading();
 		this.pronouncing = languageExperience.isPronouncing();
 		this.id = languageExperience.getId();
 	}
-
-	public Profesor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Profesor professor) {
-		this.professor = professor;
-	}
-
-	public Language getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(Language language) {
-		this.language = language;
-	}
+//
+//	public Profesor getProfessor() {
+//		return professor;
+//	}
+//
+//	public void setProfessor(Profesor professor) {
+//		this.professor = professor;
+//	}
+//
+//	public Language getLanguage() {
+//		return language;
+//	}
+//
+//	public void setLanguage(Language language) {
+//		this.language = language;
+//	}
+	
 
 	public boolean isWriting() {
 		return writing;
+	}
+
+	public Long getProfesorId() {
+		return profesorId;
+	}
+
+	public void setProfesorId(Long profesorId) {
+		this.profesorId = profesorId;
+	}
+
+	public String getLanguageName() {
+		return languageName;
+	}
+
+	public void setLanguageName(String languageName) {
+		this.languageName = languageName;
 	}
 
 	public void setWriting(boolean writing) {

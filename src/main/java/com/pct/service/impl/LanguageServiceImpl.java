@@ -30,12 +30,16 @@ public class LanguageServiceImpl implements LanguageService {
 	public List<LanguageExperienceDto> findAllLanguageExperiences(Long mentorId) {
 
 		List<LanguageExperienceDto> languageDtoList = new ArrayList<LanguageExperienceDto>();
-
-		List<LanguageExperience> languageList = languageRepository.findAllLanguages(mentorId);
-		for (LanguageExperience l : languageList) {
-			LanguageExperienceDto languageDto = new LanguageExperienceDto(l);
-			languageDtoList.add(languageDto);
+		try {
+			List<LanguageExperience> languageList = languageRepository.findAllLanguages(mentorId);
+			for (LanguageExperience l : languageList) {
+				LanguageExperienceDto languageDto = new LanguageExperienceDto(l);
+				languageDtoList.add(languageDto);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
+		
 		return languageDtoList;
 
 	}

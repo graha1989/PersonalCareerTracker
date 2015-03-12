@@ -1,10 +1,14 @@
 package com.pct.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -47,6 +51,9 @@ public class Profesor extends AbstractEntity {
 	@Column(name = "specialScientificArea", length = 50)
 	private String specialScientificArea;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+	private Set<LanguageExperience> languageExperiences;
+	
 	@OneToOne
 	@JoinColumn(name = "ulogaId")
 	private Uloga uloga;
@@ -71,6 +78,7 @@ public class Profesor extends AbstractEntity {
 		this.scientificArea = scientificArea;
 		this.specialScientificArea = specialScientificArea;
 		this.uloga = uloga;
+		this.languageExperiences = new HashSet<LanguageExperience>();
 	}
 	
 	public String getUserName() {
@@ -167,6 +175,25 @@ public class Profesor extends AbstractEntity {
 
 	public void setSpecialScientificArea(String specialScientificArea) {
 		this.specialScientificArea = specialScientificArea;
+	}
+	
+	public void setLanguageExperiences(Set<LanguageExperience> languageExperiences) {
+		
+		this.languageExperiences.clear();
+
+		if (languageExperiences != null) {
+			this.languageExperiences.addAll(languageExperiences);
+		}
+	}
+	
+	public Set<LanguageExperience> getLanguageExperiences() {
+		return languageExperiences;
+	}
+
+	public void addLanguageExperience(LanguageExperience languageExperiences) {
+		if (languageExperiences != null) {
+			this.languageExperiences.add(languageExperiences);
+		}
 	}
 
 }

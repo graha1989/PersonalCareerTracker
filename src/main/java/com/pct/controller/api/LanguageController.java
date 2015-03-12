@@ -44,7 +44,7 @@ public class LanguageController {
 		LanguageExperienceDto language = new LanguageExperienceDto();
 		language = languageService.saveLanguageExperience(languageExperienceDto);
 
-		logger.debug("Language experience for:" + language.getLanguage().getName() + " language successfully saved.");
+		logger.debug("Language experience for:" + language.getLanguageName() + " language successfully saved.");
 
 		return new ResponseEntity<LanguageExperienceDto>(language, HttpStatus.OK);
 	}

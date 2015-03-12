@@ -9,6 +9,7 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
 	$scope.errorMessages = {};
 
 	$scope.editMode = [];
+	$scope.addNewRow = false;
 
 	$scope.patterns = {
 		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -84,6 +85,10 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
 				scrollTop : 0
 			}, "slow");
 		});
+	};
+	
+	$scope.addNewLanguage = function() {
+		$scope.addNewRow = true;
 	};
 
 });
