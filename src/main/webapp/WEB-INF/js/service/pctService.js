@@ -64,9 +64,22 @@ app.factory("PctService", ["$http", "$q", function($http, $q){
 		},
 		loadLanguages : function(mentorId) {
 			var deferred = $q.defer();
-			$http.get("api/languages/allLanguages", {
+			$http.get("api/languages/allProfessorLanguages", {
 				params : {
 					mentorId : mentorId
+				}
+			}).success(function(response) {
+				deferred.resolve(response);
+			}).error(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		},
+		loadAllLanguages : function(languageExperienceIdsList) {
+			var deferred = $q.defer();
+			$http.get("api/languages/allLanguages", {
+				params : {
+					languageExperienceIdsList : languageExperienceIdsList 
 				}
 			}).success(function(response) {
 				deferred.resolve(response);

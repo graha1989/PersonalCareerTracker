@@ -78,6 +78,7 @@
 		"language":"Jezik",
 		"writing":"Piše",
 		"reading":"Čita",
-		"pronouncing":"Govori"
+		"pronouncing":"Govori",
+		"selectLanguage":"Izaberite jezik"
 	   }
 }

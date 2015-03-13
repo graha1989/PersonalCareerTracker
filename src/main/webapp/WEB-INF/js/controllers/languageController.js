@@ -2,7 +2,12 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
 		$route, PctService) {
 
 	$scope.languages = [];
+	$scope.allLanguages = [];
+	$scope.languageExperienceIdsList = [];
 	$scope.language = {};
+	$scope.language.languageId = {};
+	$scope.language.professorId = {};
+	$scope.language.languageName = {};
 	$scope.master = {};
 	$scope.noResultsFound = true;
 	$scope.resources = {};
@@ -87,8 +92,56 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
 		});
 	};
 	
+	$scope.saveNewLanguageExperience = function() {
+		$http({
+			method : 'POST',
+			url : "api/languages",
+			data : $scope.language,
+			headers : {
+				'Content-Type' : 'application/json'
+			}
+		}).success(function(data, status) {
+			$("html, body").animate({
+				scrollTop : 0
+			}, "slow");
+			$route.reload();
+		}).error(function(data, status) {
+			$scope.error = "Greska!"; 
+			if (angular.isObject(data.fieldErrors)) {
+				$scope.fieldErrors = angular.fromJson(data.fieldErrors);
+			}
+			$scope.status = status;
+			$("html, body").animate({
+				scrollTop : 0
+			}, "slow");
+		});
+	};
+	
+	$scope.getLanguagesIds = function(selectedLanguages) {
+		var languagesIdsArray = [];
+		for (var i = 0; i < selectedLanguages.length; i++) {
+			languagesIdsArray.push(selectedLanguages[i].languageId);
+		} 
+		return languagesIdsArray;
+	};
+
 	$scope.addNewLanguage = function() {
 		$scope.addNewRow = true;
+		$scope.getLanguages();
+	};
+
+	$scope.getLanguages = function() {
+		if ($scope.addNewRow) {
+			$scope.languageExperienceIdsList = $scope.getLanguagesIds($scope.languages);
+			return PctService.loadAllLanguages($scope.languageExperienceIdsList).then(function(data) {
+				if (angular.isObject(data) && data.length > 0) {
+					$scope.allLanguages = data;
+					$scope.noResultsFound = false;
+				} else {
+					$scope.noResultsFound = true;
+				}
+			});
+		}
 	};
 
 });

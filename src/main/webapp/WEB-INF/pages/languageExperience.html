@@ -64,29 +64,31 @@
 						<tr
 							class="active ng-scope"
 							ng-show="addNewRow">
-							<td><input
-								type="text"
+							<td><select
 								class="ng-binding form-control"
-								id="inputLanguage"
-								name="inputLanguage"
-								ng-model="language.name"
-								ng-options="language.name for language in getLanguages()"
-								required />
+								id="inputLanguageName"
+								name="inputLanguageName"
+								ng-model="language.languageName"
+								ng-options="language.languageName as language.languageName for language in allLanguages"
+								required><option value="">{{ resources.languageExperienceTableLabels.selectLanguage }}</option></select>
 								<div
-									ng-show="form.inputLanguage.$dirty && form.inputLanguage.$invalid"
-									class="languageFieldError">
+									ng-show="form.inputLanguageName.$dirty && form.inputLanguageName.$invalid"
+									class="languagenameFieldError">
 									<span
-										ng-show="form.inputLanguage.$error.required"
+										ng-show="form.inputLanguageName.$error.required"
 										class="ng-binding">{{ errorMessages.error.required }}</span>
 								</div></td>
 							<td><input
 								type="checkbox"
+								ng-checked="false"
 								ng-model="language.writing"></input></td>
 							<td><input
 								type="checkbox"
+								ng-checked="false"
 								ng-model="language.reading"></input></td>
 							<td><input
 								type="checkbox"
+								ng-checked="false"
 								ng-model="language.pronouncing"></input></td>
 							<td></td>
 							<td></td>
@@ -110,7 +112,7 @@
 				id="saveNewButton"
 				class="btn btn-success"
 				ng-show="addNewRow"
-				ng-click="saveNewLanguage()">
+				ng-click="saveNewLanguageExperience()">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.languageExperienceButtons.save }}
 			</button>
 		</div>
