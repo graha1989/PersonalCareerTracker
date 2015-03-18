@@ -12,64 +12,76 @@
 		</div>
 		<div class="modal-body">
 			<fieldset>
-
 				<table
-					ng-show="languages != []"
+					ng-show="professorLanguages != []"
 					class="table table-condensed table-striped table-hover"
 					cellspacing="0"
 					cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
-							<td>{{ resources.languageExperienceTableLabels.language }}</td>
-							<td>{{ resources.languageExperienceTableLabels.writing }}</td>
-							<td>{{ resources.languageExperienceTableLabels.reading }}</td>
-							<td>{{ resources.languageExperienceTableLabels.pronouncing }}</td>
-							<td colspan="2"></td>
+							<td><div class="col-sm-7">{{ resources.languageExperienceTableLabels.language }}</div></td>
+							<td><div class="col-sm-1">{{ resources.languageExperienceTableLabels.writing }}</div></td>
+							<td><div class="col-sm-1">{{ resources.languageExperienceTableLabels.reading }}</div></td>
+							<td><div class="col-sm-1">{{ resources.languageExperienceTableLabels.pronouncing }}</div></td>
+							<td colspan="2"><div class="col-sm-2" /></td>
 						</tr>
 						<tr
 							class="active ng-scope"
-							ng-repeat="language in languages">
-							<td>{{ language.languageName }}</td>
-							<td><span
+							ng-repeat="language in professorLanguages">
+							<td><div class="col-sm-7">{{ language.languageName }}</div></td>
+							<td><div class="col-sm-1"><span
 								class="glyphicon glyphicon-check"
 								ng-show="language.writing && !editMode[$index]"></span> <span
 								class="glyphicon glyphicon-unchecked"
 								ng-show="!language.writing && !editMode[$index]"></span> <input
 								type="checkbox"
 								ng-model="language.writing"
-								ng-show="editMode[$index]"></input></td>
-							<td><span
+								ng-show="editMode[$index]"></input></div></td>
+							<td><div class="col-sm-1"><span
 								class="glyphicon glyphicon-check"
 								ng-show="language.reading && !editMode[$index]"></span> <span
 								class="glyphicon glyphicon-unchecked"
 								ng-show="!language.reading && !editMode[$index]"></span> <input
 								type="checkbox"
 								ng-model="language.reading"
-								ng-show="editMode[$index]"></input></td>
-							<td><span
+								ng-show="editMode[$index]"></input></div></td>
+							<td><div class="col-sm-1"><span
 								class="glyphicon glyphicon-check"
 								ng-show="language.pronouncing && !editMode[$index]"></span> <span
 								class="glyphicon glyphicon-unchecked"
 								ng-show="!language.pronouncing && !editMode[$index]"></span> <input
 								type="checkbox"
 								ng-model="language.pronouncing"
-								ng-show="editMode[$index]"></input></td>
-							<td class="delete"><a ng-click=""><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.languageExperienceButtons.delete }}</a></td>
-							<td class="edit"><a
-								ng-show="!editMode[$index]"
-								ng-click="makeEditable($index)"><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.languageExperienceButtons.edit }}</a> <a
-								ng-show="editMode[$index]"
-								ng-click="editLanguageExperience(language, $index)"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.languageExperienceButtons.save }}</a></td>
+								ng-show="editMode[$index]"></input></div></td>
+							<td class="delete"><div class="col-sm-1"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteLanguageExperience(language.id)"
+									ng-disabled="addNewRow">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.languageExperienceButtons.delete }}
+								</button></div></td>
+							<td class="edit"><div class="col-sm-1"><button
+									class="btn btn-link btn-xs"
+									ng-show="!editMode[$index]"
+									ng-click="makeEditable($index)"
+									ng-disabled="addNewRow">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.languageExperienceButtons.edit }}
+								</button>
+								<button
+									class="btn btn-link btn-xs"
+									ng-show="editMode[$index]"
+									ng-click="editLanguageExperience(language, $index)">
+									<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.languageExperienceButtons.save }}
+								</button></div></td>
 						</tr>
 						<tr
-							class="active ng-scope"
+							class="active"
 							ng-show="addNewRow">
-							<td><select
+							<td><div class="col-sm-7"><select
 								class="ng-binding form-control"
 								id="inputLanguageName"
 								name="inputLanguageName"
-								ng-model="language.languageName"
-								ng-options="language.languageName as language.languageName for language in allLanguages"
+								ng-model="selectedLanguage"
+								ng-options="language as language.languageName for language in allLanguages"
 								required><option value="">{{ resources.languageExperienceTableLabels.selectLanguage }}</option></select>
 								<div
 									ng-show="form.inputLanguageName.$dirty && form.inputLanguageName.$invalid"
@@ -77,24 +89,23 @@
 									<span
 										ng-show="form.inputLanguageName.$error.required"
 										class="ng-binding">{{ errorMessages.error.required }}</span>
-								</div></td>
-							<td><input
+								</div></div></td>
+							<td><div class="col-sm-1"><input
 								type="checkbox"
 								ng-checked="false"
-								ng-model="language.writing"></input></td>
-							<td><input
+								ng-model="language.writing"></input></div></td>
+							<td><div class="col-sm-1"><input
 								type="checkbox"
 								ng-checked="false"
-								ng-model="language.reading"></input></td>
-							<td><input
+								ng-model="language.reading"></input></div></td>
+							<td><div class="col-sm-1"><input
 								type="checkbox"
 								ng-checked="false"
-								ng-model="language.pronouncing"></input></td>
-							<td></td>
-							<td></td>
+								ng-model="language.pronouncing"></input></div></td>
+							<td colspan="2"><div class="col-sm-2" /></td>
 						</tr>
 						<tr ng-show="noResultsFound && !addNewRow">
-							<td colspan="6">{{ errorMessages.error.emptyTable }}</td>
+							<td colspan="6"><div class="col-sm-12">{{ errorMessages.error.emptyTable }}</div></td>
 						</tr>
 					</tbody>
 				</table>
@@ -103,15 +114,23 @@
 		<div class="modal-footer action">
 			<button
 				id="addNewButton"
-				class="btn btn-success"
+				class="btn btn-success btn-sm"
 				ng-show="!addNewRow"
 				ng-click="addNewLanguage()">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.languageExperienceButtons.add }}
 			</button>
 			<button
-				id="saveNewButton"
-				class="btn btn-success"
+				id="cancelAddingNew"
+				class="btn btn-sm"
 				ng-show="addNewRow"
+				ng-click="cancelAddingNew()">
+				<span class="glyphicon glyphicon-remove"></span> {{ resources.buttons.languageExperienceButtons.cancel }}
+			</button>
+			<button
+				id="saveNewButton"
+				class="btn btn-success btn-sm"
+				ng-show="addNewRow"
+				ng-disabled="isNewLanguageSelected() || !(language.writing || language.reading || language.pronouncing)"
 				ng-click="saveNewLanguageExperience()">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.languageExperienceButtons.save }}
 			</button>

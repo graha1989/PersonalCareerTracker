@@ -7,13 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pct.domain.Profesor;
+import com.pct.domain.Student;
 import com.pct.domain.Thesis;
 import com.pct.domain.ThesisType;
 import com.pct.domain.dto.ThesisDto;
+import com.pct.repository.ProfesorRepository;
+import com.pct.repository.StudentRepository;
 import com.pct.repository.ThesisRepository;
 import com.pct.repository.ThesisTypeRepository;
 import com.pct.service.ThesisService;
 import com.pct.service.ThesisUtil;
+import com.pct.validation.ProfesorNotFoundException;
+import com.pct.validation.StudentNotFoundException;
 import com.pct.validation.ThesisNotFoundException;
 import com.pct.validation.ThesisTypeNotFoundException;
 
@@ -25,6 +31,12 @@ public class ThesisServiceImpl implements ThesisService {
 	
 	@Autowired
 	private ThesisTypeRepository thesisTypeRepository;
+	
+	@Autowired
+	private ProfesorRepository professorRepository;
+	
+	@Autowired
+	private StudentRepository studentRepository;
 
 	@Override
 	@Transactional
@@ -51,16 +63,51 @@ public class ThesisServiceImpl implements ThesisService {
 
 	@Override
 	@Transactional
-	public ThesisDto saveThesis(ThesisDto thesisDto) {
+	public ThesisDto saveThesis(ThesisDto thesisDto) throws StudentNotFoundException, ProfesorNotFoundException, ThesisTypeNotFoundException {
 		
 		Thesis thesis = new Thesis();
-
-		if (thesisDto.getId() != null) {
-			thesis = ThesisUtil.createThesisInstanceFromThesisDto(thesisDto);
+		Student student = new Student();
+		Profesor mentor = new Profesor();
+		Profesor commissionPresident = new Profesor();
+		Profesor commissionMember = new Profesor();
+		ThesisType thesisType = new ThesisType();
+		
+		if (thesisDto.getStudentId() == null || studentRepository.findOne(thesisDto.getStudentId()) == null) {
+			throw new StudentNotFoundException();
 		} else {
-			thesis = ThesisUtil.createNewThesisInstanceFromThesisiDto(thesisDto);
+			student = studentRepository.findOne(thesisDto.getStudentId());
 		}
-
+		
+		if (thesisDto.getMentorId() == null || professorRepository.findOne(thesisDto.getMentorId()) == null) {
+			throw new ProfesorNotFoundException();
+		} else {
+			mentor = professorRepository.findOne(thesisDto.getMentorId());
+		}
+		
+		if (thesisDto.getCommissionPresidentId() == null || professorRepository.findOne(thesisDto.getCommissionPresidentId()) == null) {
+			throw new ProfesorNotFoundException();
+		} else {
+			commissionPresident = professorRepository.findOne(thesisDto.getCommissionPresidentId());
+		}
+		
+		if (thesisDto.getCommissionMemberId() == null || professorRepository.findOne(thesisDto.getCommissionMemberId()) == null) {
+			throw new ProfesorNotFoundException();
+		} else {
+			commissionMember = professorRepository.findOne(thesisDto.getCommissionMemberId());
+		}
+		
+		if (thesisDto.getThesisTypeId() == null || thesisTypeRepository.findOne(thesisDto.getThesisTypeId()) == null) {
+			throw new ThesisTypeNotFoundException();
+		} else {
+			thesisType = thesisTypeRepository.findOne(thesisDto.getThesisTypeId());
+		}
+		
+		if (thesisDto.getId() != null) {
+			thesis = ThesisUtil.createThesisInstanceFromThesisDto(thesisDto, student, mentor, commissionPresident, commissionMember, thesisType);
+		} else {
+			thesis = ThesisUtil.createNewThesisInstanceFromThesisiDto(thesisDto, student, mentor, commissionPresident, commissionMember, thesisType);
+		}
+		
 		return new ThesisDto(thesisRepository.save(thesis));
 	}
 

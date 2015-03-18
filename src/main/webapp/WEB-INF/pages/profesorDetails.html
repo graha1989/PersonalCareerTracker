@@ -354,7 +354,7 @@
 			<button
 				id="edit_button"
 				type="edit"
-				class="btn btn-success"
+				class="btn btn-success btn-sm"
 				ng-show="!editMode"
 				ng-click="editProfesor(profesor.id)">
 				<span class="glyphicon glyphicon-pencil"></span> {{ resources.form.edit }}
@@ -362,14 +362,14 @@
 			<button
 				id="submit_button"
 				type="submit"
-				class="btn btn-success"
+				class="btn btn-success btn-sm"
 				ng-show="editMode"
 				ng-click="updateProfesor()">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.form.save }}
 			</button>
 			<button
 				id="cancel_button"
-				class="btn"
+				class="btn btn-sm"
 				ng-click="cancel()">{{ resources.form.close }}</button>
 		</div>
 
@@ -377,7 +377,7 @@
 		<div class="btn-group">
 			<button
 				type="button"
-				class="btn btn-default dropdown-toggle"
+				class="btn btn-default dropdown-toggle btn-sm"
 				data-toggle="dropdown"
 				aria-expanded="false"
 				ng-disabled="editMode">
@@ -390,13 +390,15 @@
 					ng-repeat="type in thesisTypes"
 					ng-click="openMentoring(profesor.id, type)"><a
 					id="type.finalPaperTypeName"
-					class="btn">{{ type.finalPaperTypeName }}</a></li>
+					class="btn btn-sm">{{ type.finalPaperTypeName }}</a></li>
 			</ul>
 		</div>
+		
+		<!-- Languages -->
 		<div>
 			<button
 				type="button"
-				class="btn btn-default"
+				class="btn btn-default btn-sm"
 				ng-disabled="editMode"
 				ng-click="openLanguageExperience(profesor.id)">{{ resources.buttons.languageButton }}</button>
 		</div>

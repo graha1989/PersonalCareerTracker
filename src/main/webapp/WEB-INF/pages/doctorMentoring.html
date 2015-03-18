@@ -2,7 +2,7 @@
 
 	<form
 		name="form"
-		id="bachelorMentoringForm"
+		id="doctorMentoringForm"
 		novalidate
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
 		ng-model="thesis">
@@ -13,7 +13,7 @@
 		<div class="modal-body">
 			<fieldset>
 				<table
-					ng-show="allBachelorThesis != []"
+					ng-show="allDoctorThesis != []"
 					class="table table-condensed table-striped table-hover"
 					cellspacing="0"
 					cellpadding="0">
@@ -30,7 +30,7 @@
 						</tr>
 						<tr
 							class="active ng-scope"
-							ng-repeat="thesis in allBachelorThesis">
+							ng-repeat="thesis in allDoctorThesis">
 							<td>{{ thesis.title }}</td>
 							<td>{{ thesis.studentName }} {{ thesis.studentSurname }}</td>
 							<td>{{ thesis.commissionPresidentName }} {{ thesis.commissionPresidentSurname }}</td>
@@ -38,8 +38,16 @@
 							<td>{{ thesis.paperScientificArea }}</td>
 							<td>{{ thesis.dateOfGraduation | date:'dd-MM-yyyy' }}</td>
 							<td>{{ thesis.universityName }}</td>
-							<td class="delete"><button class="btn btn-link btn-xs" ng-click="deleteThesis(thesis.id)"><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.mentorThesisButtons.delete }}</button></td>
-							<td class="edit"><button class="btn btn-link btn-xs" ng-click="editThesis(thesis.id)"><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.mentorThesisButtons.edit }}</button></td>
+							<td class="delete"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteThesis(thesis.id)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.mentorThesisButtons.delete }}
+								</button></td>
+							<td class="edit"><button
+									class="btn btn-link btn-xs"
+									ng-click="editThesis(thesis.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.mentorThesisButtons.edit }}
+								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
 							<td colspan="9">{{ errorMessages.error.emptyTable }}</td>
@@ -52,7 +60,7 @@
 			<button
 				id="addNewButton"
 				class="btn btn-success btn-sm"
-				ng-click="createNewBachelorThesis()">
+				ng-click="createNewDoctorThesis()">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.mentorThesisButtons.add }}
 			</button>
 		</div>
@@ -62,7 +70,7 @@
 
 <script
 	type="text/ng-template"
-	id="editBachelorThesisPopup.html">
+	id="editDoctorThesisPopup.html">
 	<form
 		name="form"
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
@@ -108,7 +116,7 @@
 						class="ng-binding form-control"
 						id="inputStudent"
 						name="inputStudent"
-						ng-model="selectedStudent"
+						ng-model="student"
 						typeahead="student as student.transcriptNumber + ' ' + student.name + ' ' + student.surname for student in getStudents($viewValue) | limitTo:8"
 						typeahead-loading="loadingStudents"
 						autocomplete="off"
@@ -137,7 +145,7 @@
 						class="ng-binding form-control"
 						id="inputCommissionPresident"
 						name="inputCommissionPresident"
-						ng-model="selectedCommissionPresident"
+						ng-model="commissionPresident"
 						typeahead="commissionPresident as commissionPresident.name + ' ' + commissionPresident.surname for commissionPresident in getCommissionPresident($viewValue) | limitTo:8"
 						typeahead-loading="loadingCommisionPresident"
 						autocomplete="off"
@@ -166,7 +174,7 @@
 						class="ng-binding form-control"
 						id="inputCommissionMember"
 						name="inputCommissionMember"
-						ng-model="selectedCommissionMember"
+						ng-model="commissionMember"
 						typeahead="commissionMember as commissionMember.name + ' ' + commissionMember.surname for commissionMember in getCommissionMember($viewValue) | limitTo:8"
 						typeahead-loading="loadingCommissionMember"
 						autocomplete="off"
@@ -293,7 +301,7 @@
 
 <script
 	type="text/ng-template"
-	id="createNewBachelorThesisPopup.html">
+	id="createNewDoctorThesisPopup.html">
 	<form
 		name="form"
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
@@ -340,7 +348,7 @@
 						class="ng-binding form-control"
 						id="inputStudent"
 						name="inputStudent"
-						ng-model="$parent.selectedStudent"
+						ng-model="student"
 						typeahead="student as student.transcriptNumber + ' ' + student.name + ' ' + student.surname for student in getStudents($viewValue) | limitTo:8"
 						placeholder="{{ resources.thesisPopupLabels.student }}"
 						typeahead-loading="loadingStudents"
@@ -370,7 +378,7 @@
 						class="ng-binding form-control"
 						id="inputCommissionPresident"
 						name="inputCommissionPresident"
-						ng-model="$parent.selectedCommissionPresident"
+						ng-model="commissionPresident"
 						typeahead="commissionPresident as commissionPresident.name + ' ' + commissionPresident.surname for commissionPresident in getCommissionPresident($viewValue) | limitTo:8"
 						placeholder="{{ resources.thesisPopupLabels.commissionPresident }}"
 						typeahead-loading="loadingCommisionPresident"
@@ -400,7 +408,7 @@
 						class="ng-binding form-control"
 						id="inputCommissionMember"
 						name="inputCommissionMember"
-						ng-model="$parent.selectedCommissionMember"
+						ng-model="commissionMember"
 						typeahead="commissionMember as commissionMember.name + ' ' + commissionMember.surname for commissionMember in getCommissionMember($viewValue) | limitTo:8"
 						placeholder="{{ resources.thesisPopupLabels.commissionMember }}"
 						typeahead-loading="loadingCommissionMember"

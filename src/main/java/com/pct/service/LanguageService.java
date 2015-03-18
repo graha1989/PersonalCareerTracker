@@ -5,6 +5,7 @@ import java.util.List;
 import com.pct.domain.Language;
 import com.pct.domain.dto.LanguageDto;
 import com.pct.domain.dto.LanguageExperienceDto;
+import com.pct.validation.LanguageExperienceNotFoundException;
 import com.pct.validation.LanguageNotFoundException;
 import com.pct.validation.ProfesorNotFoundException;
 
@@ -17,5 +18,7 @@ public interface LanguageService {
 	Language findLanguageById(Long id) throws LanguageNotFoundException;
 
 	List<LanguageDto> findAllNotListedLanguages(List<Long> languageExperienceIdsList) throws LanguageNotFoundException;
+	
+	void deleteLanguageExperience(Long id) throws LanguageExperienceNotFoundException;
 	
 }

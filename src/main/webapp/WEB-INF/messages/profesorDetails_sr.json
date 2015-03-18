@@ -4,6 +4,9 @@
         "profesorDetailsText": "Lični podaci o profesoru",
         "editProfesorText": "Izmena podataka o profesoru",
         "bachelorMentoringTitle": "Mentorstva na bachelor tezama",
+        "masterMentoringTitle": "Mentorstva na master tezama",
+        "specialisticMentoringTitle": "Mentorstva na specialističkim tezama",
+        "doctorMentoringTitle": "Mentorstva na doktorskim tezama",
         "newThesisPopupTitle":"Unos nove teze",
         "editThesisPopupTitle":"Izmena teze",
         "languageExperienceTitle":"Znanje jezika"
@@ -50,7 +53,7 @@
             "specialisticButton": "Specialistička teza",
             "doctorButton": "Doktorska teza"
         },
-        "mentorBachelorThesisButtons": {
+        "mentorThesisButtons": {
         	"delete":"Izbriši",
 			"edit":"Izmeni",
 			"add":"Dodaj novu tezu",
@@ -62,10 +65,11 @@
 			"edit":"Izmeni",
 			"add":"Dodaj novi jezik",
 			"close":"Zatvori",
-			"save":"Sačuvaj"
+			"save":"Sačuvaj",
+			"cancel":"Odustani"
         }
     },
-    "bachelorMentoringTableLabels" : {
+    "mentoringTableLabels" : {
 		"thesisTitle":"Naziv teze",
 		"thesisStudent":"Student",
 		"thesisCommissionPresident":"Predsednik komisije",

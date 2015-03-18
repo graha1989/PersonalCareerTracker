@@ -22,6 +22,7 @@ import com.pct.domain.Language;
 import com.pct.domain.dto.LanguageDto;
 import com.pct.domain.dto.LanguageExperienceDto;
 import com.pct.service.LanguageService;
+import com.pct.validation.LanguageExperienceNotFoundException;
 import com.pct.validation.LanguageNotFoundException;
 import com.pct.validation.ProfesorNotFoundException;
 
@@ -76,6 +77,14 @@ public class LanguageController {
 		Language language = languageService.findLanguageById(id);
 
 		return new ResponseEntity<Language>(language, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE)
+	public ResponseEntity<LanguageExperienceDto> deleteLanguageExperience(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws LanguageExperienceNotFoundException {
+		languageService.deleteLanguageExperience(id);
+
+		return new ResponseEntity<LanguageExperienceDto>(HttpStatus.OK);
 	}
 	
 }

@@ -2,22 +2,27 @@ package com.pct.domain.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.SafeHtml;
+
 import com.pct.domain.LanguageExperience;
 
 public class LanguageExperienceDto implements Serializable {
 
 	private static final long serialVersionUID = 7826480051632774426L;
-
+	
 	protected Long professorId;
-
+	
 	protected Long languageId;
-
+	
+	@NotEmpty
+	@SafeHtml
 	private String languageName;
 	
 	private boolean writing;
-
+	
 	private boolean reading;
-
+	
 	private boolean pronouncing;
 
 	protected Long id;
@@ -48,11 +53,11 @@ public class LanguageExperienceDto implements Serializable {
 		this.id = languageExperience.getId();
 	}
 	
-	public Long getProfesorId() {
+	public Long getProfessorId() {
 		return professorId;
 	}
 
-	public void setProfesorId(Long professorId) {
+	public void setProfessorId(Long professorId) {
 		this.professorId = professorId;
 	}
 	

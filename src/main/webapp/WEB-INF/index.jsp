@@ -41,12 +41,16 @@
 	<script type="text/javascript" src="<spring:url value='js/lib/bootstrap.min.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/lib/bootstrap-datepicker.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/lib/ngDialog.min.js' />"></script>
+	
 	<script type="text/javascript" src="<spring:url value='js/app.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/homeController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/studentsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/registerProfesorController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/profesorDetailsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/bachelorMentoringController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/masterMentoringController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/specialisticMentoringController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/doctorMentoringController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/languageController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/service/pctService.js' />"></script>
 </body>

@@ -2,6 +2,7 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-.dropdown-menu > li > a {
-             text-align:left;
-   }
+
+.dropdown-menu>li>a {
+	text-align: left;
+}

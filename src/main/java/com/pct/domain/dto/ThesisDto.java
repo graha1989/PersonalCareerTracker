@@ -3,16 +3,14 @@ package com.pct.domain.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import com.pct.domain.Profesor;
-import com.pct.domain.Student;
+import com.pct.constants.RegexPatterns;
 import com.pct.domain.Thesis;
-import com.pct.domain.ThesisType;
 
 public class ThesisDto implements Serializable {
 
@@ -23,23 +21,60 @@ public class ThesisDto implements Serializable {
 	@SafeHtml
 	private String title;
 
-	@NotNull
-	private Student student;
+	protected Long studentId;
 	
-	@NotNull
-	private Profesor mentor;
+	@NotEmpty
+	@Length(max = 10)
+	@SafeHtml
+	private String studentTranscriptNumber;
 	
-	@NotNull
-	private Profesor commissionPresident;
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
+	private String studentName;
 	
-	@NotNull
-	private Profesor commissionMember;
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
+	private String studentSurname;
+	
+	protected Long commissionPresidentId;
+	
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
+	private String commissionPresidentName;
+	
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
+	private String commissionPresidentSurname;
+	
+	protected Long commissionMemberId;
+	
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
+	private String commissionMemberName;
+	
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
+	private String commissionMemberSurname;
 	
 	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	private String paperScientificArea;
-
+	
+	protected Long mentorId;
+	
 	private Date dateOfGraduation;
 
 	@NotEmpty
@@ -47,41 +82,58 @@ public class ThesisDto implements Serializable {
 	@SafeHtml
 	private String universityName;
 	
-	@NotNull
-	private ThesisType thesisType;
+	protected Long thesisTypeId;
 	
 	protected Long id;
 
 	public ThesisDto() {
 		super();
 	}
-
-	public ThesisDto(String title, Student student, Profesor mentor, Profesor commissionPresident,
-			Profesor commissionMember, String paperScientificArea, Date dateOfGraduation, String universityName,
-			ThesisType thesisType, Long id) {
+	
+	public ThesisDto(String title, Long studentId, String studentTranscriptNumber, String studentName,
+			String studentSurname, Long commissionPresidentId, String commissionPresidentName,
+			String commissionPresidentSurname, Long commissionMemberId, String commissionMemberName,
+			String commissionMemberSurname, String paperScientificArea, Long mentorId, Date dateOfGraduation,
+			String universityName, Long thesisTypeId, Long id) {
 		super();
 		this.title = title;
-		this.student = student;
-		this.mentor = mentor;
-		this.commissionPresident = commissionPresident;
-		this.commissionMember = commissionMember;
+		this.studentId = studentId;
+		this.studentTranscriptNumber = studentTranscriptNumber;
+		this.studentName = studentName;
+		this.studentSurname = studentSurname;
+		this.commissionPresidentId = commissionPresidentId;
+		this.commissionPresidentName = commissionPresidentName;
+		this.commissionPresidentSurname = commissionPresidentSurname;
+		this.commissionMemberId = commissionMemberId;
+		this.commissionMemberName = commissionMemberName;
+		this.commissionMemberSurname = commissionMemberSurname;
 		this.paperScientificArea = paperScientificArea;
+		this.mentorId = mentorId;
 		this.dateOfGraduation = dateOfGraduation;
 		this.universityName = universityName;
-		this.thesisType = thesisType;
+		this.thesisTypeId = thesisTypeId;
 		this.id = id;
 	}
 
+
+
 	public ThesisDto(Thesis thesis) {
 		this.title = thesis.getTitle();
-		this.student = thesis.getStudent();
-		this.mentor = thesis.getMentor();
-		this.commissionPresident = thesis.getCommissionPresident();
-		this.commissionMember = thesis.getCommissionMember();
-		this.thesisType = thesis.getThesisType();
+		this.studentId = thesis.getStudent().getId();
+		this.studentTranscriptNumber = thesis.getStudent().getTranscriptNumber();
+		this.studentName = thesis.getStudent().getName();
+		this.studentSurname = thesis.getStudent().getSurname();
+		this.commissionPresidentId = thesis.getCommissionPresident().getId();
+		this.commissionPresidentName = thesis.getCommissionPresident().getName();
+		this.commissionPresidentSurname = thesis.getCommissionPresident().getSurname();
+		this.commissionMemberId = thesis.getCommissionMember().getId();
+		this.commissionMemberName = thesis.getCommissionMember().getName();
+		this.commissionMemberSurname = thesis.getCommissionMember().getSurname();
 		this.paperScientificArea = thesis.getPaperScientificArea();
+		this.mentorId = thesis.getMentor().getId();
 		this.dateOfGraduation = thesis.getDateOfGraduation();
 		this.universityName = thesis.getUniversityName();
+		this.thesisTypeId = thesis.getThesisType().getId();
 		this.id = thesis.getId();
 	}
 
@@ -93,36 +145,84 @@ public class ThesisDto implements Serializable {
 		this.title = title;
 	}
 
-	public Student getStudent() {
-		return student;
+	public String getStudentTranscriptNumber() {
+		return studentTranscriptNumber;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setStudentTranscriptNumber(String studentTranscriptNumber) {
+		this.studentTranscriptNumber = studentTranscriptNumber;
 	}
 
-	public Profesor getMentor() {
-		return mentor;
+	public Long getStudentId() {
+		return studentId;
 	}
 
-	public void setMentor(Profesor mentor) {
-		this.mentor = mentor;
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
 	}
 
-	public Profesor getCommissionPresident() {
-		return commissionPresident;
+	public String getStudentName() {
+		return studentName;
 	}
 
-	public void setCommissionPresident(Profesor commissionPresident) {
-		this.commissionPresident = commissionPresident;
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
 
-	public Profesor getCommissionMember() {
-		return commissionMember;
+	public String getStudentSurname() {
+		return studentSurname;
 	}
 
-	public void setCommissionMember(Profesor commissionMember) {
-		this.commissionMember = commissionMember;
+	public void setStudentSurname(String studentSurname) {
+		this.studentSurname = studentSurname;
+	}
+
+	public Long getCommissionPresidentId() {
+		return commissionPresidentId;
+	}
+
+	public void setCommissionPresidentId(Long commissionPresidentId) {
+		this.commissionPresidentId = commissionPresidentId;
+	}
+
+	public String getCommissionPresidentName() {
+		return commissionPresidentName;
+	}
+
+	public void setCommissionPresidentName(String commissionPresidentName) {
+		this.commissionPresidentName = commissionPresidentName;
+	}
+
+	public String getCommissionPresidentSurname() {
+		return commissionPresidentSurname;
+	}
+
+	public void setCommissionPresidentSurname(String commissionPresidentSurname) {
+		this.commissionPresidentSurname = commissionPresidentSurname;
+	}
+
+	public Long getCommissionMemberId() {
+		return commissionMemberId;
+	}
+
+	public void setCommissionMemberId(Long commissionMemberId) {
+		this.commissionMemberId = commissionMemberId;
+	}
+
+	public String getCommissionMemberName() {
+		return commissionMemberName;
+	}
+
+	public void setCommissionMemberName(String commissionMemberName) {
+		this.commissionMemberName = commissionMemberName;
+	}
+
+	public String getCommissionMemberSurname() {
+		return commissionMemberSurname;
+	}
+
+	public void setCommissionMemberSurname(String commissionMemberSurname) {
+		this.commissionMemberSurname = commissionMemberSurname;
 	}
 
 	public String getPaperScientificArea() {
@@ -131,6 +231,14 @@ public class ThesisDto implements Serializable {
 
 	public void setPaperScientificArea(String paperScientificArea) {
 		this.paperScientificArea = paperScientificArea;
+	}
+
+	public Long getMentorId() {
+		return mentorId;
+	}
+
+	public void setMentorId(Long mentorId) {
+		this.mentorId = mentorId;
 	}
 
 	public Date getDateOfGraduation() {
@@ -149,12 +257,12 @@ public class ThesisDto implements Serializable {
 		this.universityName = universityName;
 	}
 
-	public ThesisType getThesisType() {
-		return thesisType;
+	public Long getThesisTypeId() {
+		return thesisTypeId;
 	}
 
-	public void setThesisType(ThesisType thesisType) {
-		this.thesisType = thesisType;
+	public void setThesisTypeId(Long thesisTypeId) {
+		this.thesisTypeId = thesisTypeId;
 	}
 
 	public Long getId() {
@@ -164,5 +272,5 @@ public class ThesisDto implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 }

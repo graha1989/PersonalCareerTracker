@@ -88,5 +88,11 @@ app.factory("PctService", ["$http", "$q", function($http, $q){
 			});
 			return deferred.promise;
 		},
+		deleteLanguageExperience : function(id, callback) {
+			$http({
+		        method: 'DELETE', 
+		        url: 'api/languages?id='+id
+		    }).success(callback).error(callback);
+	    },
     };       
 }]);

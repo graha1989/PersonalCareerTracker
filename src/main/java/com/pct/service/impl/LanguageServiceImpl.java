@@ -17,6 +17,7 @@ import com.pct.repository.LanguageRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.service.LanguageExperienceUtil;
 import com.pct.service.LanguageService;
+import com.pct.validation.LanguageExperienceNotFoundException;
 import com.pct.validation.LanguageNotFoundException;
 import com.pct.validation.ProfesorNotFoundException;
 
@@ -67,11 +68,11 @@ public class LanguageServiceImpl implements LanguageService {
 			language = languageRepo.findOne(languageExperienceDto.getLanguageId());
 		}
 
-		if (languageExperienceDto.getProfesorId() == null
-				|| professorRepository.findOne(languageExperienceDto.getProfesorId()) == null) {
+		if (languageExperienceDto.getProfessorId() == null
+				|| professorRepository.findOne(languageExperienceDto.getProfessorId()) == null) {
 			throw new ProfesorNotFoundException();
 		} else {
-			professor = professorRepository.findOne(languageExperienceDto.getProfesorId());
+			professor = professorRepository.findOne(languageExperienceDto.getProfessorId());
 		}
 
 		if (languageExperienceDto.getId() != null) {
@@ -116,6 +117,18 @@ public class LanguageServiceImpl implements LanguageService {
 		}
 		return languageDtoList;
 
+	}
+
+	@Override
+	@Transactional
+	public void deleteLanguageExperience(Long id) throws LanguageExperienceNotFoundException {
+		
+		if (id == null || languageRepository.findOne(id) == null) {
+			throw new LanguageExperienceNotFoundException();
+		}
+
+		languageRepository.delete(id);
+		
 	}
 
 }

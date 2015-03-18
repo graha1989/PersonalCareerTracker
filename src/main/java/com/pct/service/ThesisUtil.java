@@ -1,6 +1,9 @@
 package com.pct.service;
 
+import com.pct.domain.Profesor;
+import com.pct.domain.Student;
 import com.pct.domain.Thesis;
+import com.pct.domain.ThesisType;
 import com.pct.domain.dto.ThesisDto;
 
 /**
@@ -12,16 +15,16 @@ import com.pct.domain.dto.ThesisDto;
 public class ThesisUtil {
 	
 	// EDIT Thesis
-	public static Thesis createThesisInstanceFromThesisDto(ThesisDto thesisDto) {
+	public static Thesis createThesisInstanceFromThesisDto(ThesisDto thesisDto, Student student, Profesor mentor, Profesor commissionPresident, Profesor commissionMember, ThesisType thesisType) {
 		
-		Thesis thesis = createNewThesisInstanceFromThesisiDto(thesisDto);
+		Thesis thesis = createNewThesisInstanceFromThesisiDto(thesisDto, student, commissionMember, commissionMember, commissionMember, thesisType);
 		thesis.setId(thesisDto.getId());
 
 		return thesis;
 	}
 	
 	// CREATE new Thesis
-	public static Thesis createNewThesisInstanceFromThesisiDto(ThesisDto thesisDto) {
+	public static Thesis createNewThesisInstanceFromThesisiDto(ThesisDto thesisDto, Student student, Profesor mentor, Profesor commissionPresident, Profesor commissionMember, ThesisType thesisType) {
 		
 		Thesis thesis = new Thesis();
 		
@@ -29,11 +32,11 @@ public class ThesisUtil {
 		thesis.setPaperScientificArea(thesisDto.getPaperScientificArea());
 		thesis.setDateOfGraduation(thesisDto.getDateOfGraduation());
 		thesis.setUniversityName(thesisDto.getUniversityName());
-		thesis.setThesisType(thesisDto.getThesisType());
-		thesis.setStudent(thesisDto.getStudent());
-		thesis.setMentor(thesisDto.getMentor());
-		thesis.setCommissionPresident(thesisDto.getCommissionPresident());
-		thesis.setCommissionMember(thesisDto.getCommissionMember());
+		thesis.setThesisType(thesisType);
+		thesis.setStudent(student);
+		thesis.setMentor(mentor);
+		thesis.setCommissionPresident(commissionPresident);
+		thesis.setCommissionMember(commissionMember);
 		
 		return thesis;
 	}

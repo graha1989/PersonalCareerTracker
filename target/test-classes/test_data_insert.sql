@@ -43,6 +43,11 @@ INSERT INTO professor (userName, password, email, name, surname, fathersName, da
 	('user9', 'user99999', 'user9@email.com', 'Bojana', 'Bratić', 'Ivan', '1980-04-30 00:00:00', 'Kikinda', 'Srbija', 'Hemija', 'Organska hemija'),
 	('user1357', 'UserUser', 'user1357@email.com', 'Gordana', 'Grčić', 'Milan', '1982-11-30 00:00:00', 'Mostar', 'Bosna i Hercegovina', 'Geografija', 'Ruralni razvoj'),
 	('admin2', 'admin456', 'admin2@email.com', 'Jova', 'Jović', 'Jovan', '1987-08-18 00:00:00', 'Beograd', 'Srbija', 'Fizika', 'Atomska fizika');
+INSERT INTO thesis (title, paperScientificArea, dateOfGraduation, universityName, finalPaperTypeId, studentId, mentorId, commissionMemberId, commissionPresidentId) VALUES
+	('Bachelor teza 1', 'Informatika', '2014-04-04 00:00:00', 'Univerzitet Novi Sad', '1', '1', '3', '2', '3'),
+	('Master teza 1', 'Informatika', '2012-04-14 00:00:00', 'Univerzitet Niš', '2', '2', '3', '3', '2'),
+	('Specijalistička teza 1', 'Informatika', '2010-11-11 00:00:00', 'Univerzitet Beograd', '3', '7', '3', '4', '5'),
+	('Doktorska teza 1', 'Informatika', '2010-11-11 00:00:00', 'Univerzitet Beograd', '4', '10', '3', '5', '6');
 INSERT INTO language_experience (profesorId, languageId, writing, reading, pronouncing) VALUES
 	('3', '1', '1', '1', '1'),
 	('3', '3', '1', '0', '0'),
