@@ -17,6 +17,26 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
 				templateUrl: 'pages/profesorDetails.html?id=:id',
 				controller: 'ProfesorDetailsController'
 			})
+			.when('/bachelorMentoring/mentorId/:mentorId/thesisTypeId/:thesisTypeId', {
+				templateUrl: 'pages/bachelorMentoring.html?mentorId=:mentorId&thesisTypeId=:thesisTypeId',
+				controller: 'BachelorMentoringController'
+			})
+			.when('/masterMentoring/mentorId/:mentorId/thesisTypeId/:thesisTypeId', {
+				templateUrl: 'pages/masterMentoring.html?mentorId=:mentorId&thesisTypeId=:thesisTypeId',
+				controller: 'MasterMentoringController'
+			})
+			.when('/specialisticMentoring/mentorId/:mentorId/thesisTypeId/:thesisTypeId', {
+				templateUrl: 'pages/specialisticMentoring.html?mentorId=:mentorId&thesisTypeId=:thesisTypeId',
+				controller: 'SpecialisticMentoringController'
+			})
+			.when('/doctorMentoring/mentorId/:mentorId/thesisTypeId/:thesisTypeId', {
+				templateUrl: 'pages/doctorMentoring.html?mentorId=:mentorId&thesisTypeId=:thesisTypeId',
+				controller: 'DoctorMentoringController'
+			})
+			.when('/languageExperience/mentorId/:mentorId', {
+				templateUrl: 'pages/languageExperience.html?mentorId=:mentorId',
+				controller: 'LanguageController'
+			})
 			.otherwise({
 				redirectTo: '/showAllStudents'
 			});
