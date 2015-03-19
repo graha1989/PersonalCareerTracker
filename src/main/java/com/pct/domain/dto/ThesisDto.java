@@ -23,18 +23,15 @@ public class ThesisDto implements Serializable {
 
 	protected Long studentId;
 	
-	@NotEmpty
 	@Length(max = 10)
 	@SafeHtml
 	private String studentTranscriptNumber;
 	
-	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
 	private String studentName;
 	
-	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
@@ -42,13 +39,11 @@ public class ThesisDto implements Serializable {
 	
 	protected Long commissionPresidentId;
 	
-	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
 	private String commissionPresidentName;
 	
-	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
@@ -56,13 +51,11 @@ public class ThesisDto implements Serializable {
 	
 	protected Long commissionMemberId;
 	
-	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
 	private String commissionMemberName;
 	
-	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)

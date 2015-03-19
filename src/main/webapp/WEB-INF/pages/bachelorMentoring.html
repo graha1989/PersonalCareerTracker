@@ -38,8 +38,16 @@
 							<td>{{ thesis.paperScientificArea }}</td>
 							<td>{{ thesis.dateOfGraduation | date:'dd-MM-yyyy' }}</td>
 							<td>{{ thesis.universityName }}</td>
-							<td class="delete"><button class="btn btn-link btn-xs" ng-click="deleteThesis(thesis.id)"><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.mentorThesisButtons.delete }}</button></td>
-							<td class="edit"><button class="btn btn-link btn-xs" ng-click="editThesis(thesis.id)"><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.mentorThesisButtons.edit }}</button></td>
+							<td class="delete"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteThesis(thesis.id)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.mentorThesisButtons.delete }}
+								</button></td>
+							<td class="edit"><button
+									class="btn btn-link btn-xs"
+									ng-click="editThesis(thesis.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.mentorThesisButtons.edit }}
+								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
 							<td colspan="9">{{ errorMessages.error.emptyTable }}</td>
@@ -108,8 +116,9 @@
 						class="ng-binding form-control"
 						id="inputStudent"
 						name="inputStudent"
-						ng-model="selectedStudent"
+						ng-model="$parent.selectedStudent"
 						typeahead="student as student.transcriptNumber + ' ' + student.name + ' ' + student.surname for student in getStudents($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectStudent($parent.selectedStudent)"
 						typeahead-loading="loadingStudents"
 						autocomplete="off"
 						required /> <span
@@ -137,8 +146,9 @@
 						class="ng-binding form-control"
 						id="inputCommissionPresident"
 						name="inputCommissionPresident"
-						ng-model="selectedCommissionPresident"
+						ng-model="$parent.selectedCommissionPresident"
 						typeahead="commissionPresident as commissionPresident.name + ' ' + commissionPresident.surname for commissionPresident in getCommissionPresident($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectCommisionPresident($parent.selectedCommissionPresident)"
 						typeahead-loading="loadingCommisionPresident"
 						autocomplete="off"
 						required /> <span
@@ -166,8 +176,9 @@
 						class="ng-binding form-control"
 						id="inputCommissionMember"
 						name="inputCommissionMember"
-						ng-model="selectedCommissionMember"
+						ng-model="$parent.selectedCommissionMember"
 						typeahead="commissionMember as commissionMember.name + ' ' + commissionMember.surname for commissionMember in getCommissionMember($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectCommisionMember($parent.selectedCommissionMember)"
 						typeahead-loading="loadingCommissionMember"
 						autocomplete="off"
 						required /> <span
@@ -279,7 +290,7 @@
 				id="submit_button"
 				type="submit"
 				class="btn btn-success btn-sm"
-				data-ng-disabled="$parent.form.$invalid || isUnchanged(thesis)"
+				ng-disabled="$parent.form.$invalid || isUnchanged(thesis)"
 				ng-click="saveThesis()">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.mentorThesisButtons.edit }}
 			</button>
@@ -342,6 +353,7 @@
 						name="inputStudent"
 						ng-model="$parent.selectedStudent"
 						typeahead="student as student.transcriptNumber + ' ' + student.name + ' ' + student.surname for student in getStudents($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectStudent()"
 						placeholder="{{ resources.thesisPopupLabels.student }}"
 						typeahead-loading="loadingStudents"
 						autocomplete="off" 
@@ -372,6 +384,7 @@
 						name="inputCommissionPresident"
 						ng-model="$parent.selectedCommissionPresident"
 						typeahead="commissionPresident as commissionPresident.name + ' ' + commissionPresident.surname for commissionPresident in getCommissionPresident($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectCommissionPresident()"
 						placeholder="{{ resources.thesisPopupLabels.commissionPresident }}"
 						typeahead-loading="loadingCommisionPresident"
 						autocomplete="off"
@@ -402,6 +415,7 @@
 						name="inputCommissionMember"
 						ng-model="$parent.selectedCommissionMember"
 						typeahead="commissionMember as commissionMember.name + ' ' + commissionMember.surname for commissionMember in getCommissionMember($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectCommissionMember()"
 						placeholder="{{ resources.thesisPopupLabels.commissionMember }}"
 						typeahead-loading="loadingCommissionMember"
 						autocomplete="off"
@@ -516,7 +530,7 @@
 				id="submit_button"
 				type="submit"
 				class="btn btn-success btn-sm"
-				ng-disabled="form.$invalid"
+				ng-disabled="form.$invalid || !(studentSelected && commissionPresidentSelected && commissionMemberSelected)"
 				ng-click="saveNewThesis()">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.mentorThesisButtons.add }}
 			</button>

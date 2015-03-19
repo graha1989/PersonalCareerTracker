@@ -17,7 +17,7 @@ public class ThesisUtil {
 	// EDIT Thesis
 	public static Thesis createThesisInstanceFromThesisDto(ThesisDto thesisDto, Student student, Profesor mentor, Profesor commissionPresident, Profesor commissionMember, ThesisType thesisType) {
 		
-		Thesis thesis = createNewThesisInstanceFromThesisiDto(thesisDto, student, commissionMember, commissionMember, commissionMember, thesisType);
+		Thesis thesis = createNewThesisInstanceFromThesisiDto(thesisDto, student, mentor, commissionPresident, commissionMember, thesisType);
 		thesis.setId(thesisDto.getId());
 
 		return thesis;

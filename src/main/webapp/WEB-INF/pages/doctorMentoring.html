@@ -116,8 +116,9 @@
 						class="ng-binding form-control"
 						id="inputStudent"
 						name="inputStudent"
-						ng-model="student"
+						ng-model="$parent.selectedStudent"
 						typeahead="student as student.transcriptNumber + ' ' + student.name + ' ' + student.surname for student in getStudents($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectStudent($parent.selectedStudent)"
 						typeahead-loading="loadingStudents"
 						autocomplete="off"
 						required /> <span
@@ -145,8 +146,9 @@
 						class="ng-binding form-control"
 						id="inputCommissionPresident"
 						name="inputCommissionPresident"
-						ng-model="commissionPresident"
+						ng-model="$parent.selectedCommissionPresident"
 						typeahead="commissionPresident as commissionPresident.name + ' ' + commissionPresident.surname for commissionPresident in getCommissionPresident($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectCommisionPresident($parent.selectedCommissionPresident)"
 						typeahead-loading="loadingCommisionPresident"
 						autocomplete="off"
 						required /> <span
@@ -174,8 +176,9 @@
 						class="ng-binding form-control"
 						id="inputCommissionMember"
 						name="inputCommissionMember"
-						ng-model="commissionMember"
+						ng-model="$parent.selectedCommissionMember"
 						typeahead="commissionMember as commissionMember.name + ' ' + commissionMember.surname for commissionMember in getCommissionMember($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectCommisionMember($parent.selectedCommissionMember)"
 						typeahead-loading="loadingCommissionMember"
 						autocomplete="off"
 						required /> <span
@@ -287,7 +290,7 @@
 				id="submit_button"
 				type="submit"
 				class="btn btn-success btn-sm"
-				data-ng-disabled="$parent.form.$invalid || isUnchanged(thesis)"
+				ng-disabled="$parent.form.$invalid || isUnchanged(thesis)"
 				ng-click="saveThesis()">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.mentorThesisButtons.edit }}
 			</button>
@@ -348,8 +351,9 @@
 						class="ng-binding form-control"
 						id="inputStudent"
 						name="inputStudent"
-						ng-model="student"
+						ng-model="$parent.selectedStudent"
 						typeahead="student as student.transcriptNumber + ' ' + student.name + ' ' + student.surname for student in getStudents($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectStudent()"
 						placeholder="{{ resources.thesisPopupLabels.student }}"
 						typeahead-loading="loadingStudents"
 						autocomplete="off" 
@@ -378,8 +382,9 @@
 						class="ng-binding form-control"
 						id="inputCommissionPresident"
 						name="inputCommissionPresident"
-						ng-model="commissionPresident"
+						ng-model="$parent.selectedCommissionPresident"
 						typeahead="commissionPresident as commissionPresident.name + ' ' + commissionPresident.surname for commissionPresident in getCommissionPresident($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectCommissionPresident()"
 						placeholder="{{ resources.thesisPopupLabels.commissionPresident }}"
 						typeahead-loading="loadingCommisionPresident"
 						autocomplete="off"
@@ -408,8 +413,9 @@
 						class="ng-binding form-control"
 						id="inputCommissionMember"
 						name="inputCommissionMember"
-						ng-model="commissionMember"
+						ng-model="$parent.selectedCommissionMember"
 						typeahead="commissionMember as commissionMember.name + ' ' + commissionMember.surname for commissionMember in getCommissionMember($viewValue) | limitTo:8"
+						typeahead-on-select="onSelectCommissionMember()"
 						placeholder="{{ resources.thesisPopupLabels.commissionMember }}"
 						typeahead-loading="loadingCommissionMember"
 						autocomplete="off"
@@ -524,7 +530,7 @@
 				id="submit_button"
 				type="submit"
 				class="btn btn-success btn-sm"
-				ng-disabled="form.$invalid"
+				ng-disabled="form.$invalid || !(studentSelected && commissionPresidentSelected && commissionMemberSelected)"
 				ng-click="saveNewThesis()">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.mentorThesisButtons.add }}
 			</button>

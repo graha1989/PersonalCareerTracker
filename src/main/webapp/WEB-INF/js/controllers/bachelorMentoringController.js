@@ -12,6 +12,7 @@ app.controller("BachelorMentoringController", function($scope, $routeParams,
 		onlyNumbers : /^[0-9 ]*$/
 	};
 
+	/* Load resources from .json properties file */
 	$scope.loadResources = function() {
 		var locale = document.getElementById('localeCode');
 		$http.get('messages/profesorDetails_' + locale.value + '.json')
@@ -86,11 +87,27 @@ var editBachelorThesisController = function($scope, $modalInstance,
 	$scope.thesis = {};
 	$scope.thesis.mentorId;
 	$scope.thesis.thesisTypeId;
+
+	/*
+	 * fields used for detecting if something changed during the edit on the
+	 * popup
+	 */
 	$scope.master = {};
+	$scope.masterSelectedStudent = {};
+	$scope.masterSelectedPresident = {};
+	$scope.masterSelectedMember = {};
 
 	$scope.selectedStudent = {};
 	$scope.selectedCommissionPresident = {};
 	$scope.selectedCommissionMember = {};
+
+	/*
+	 * fields used for detecting if student, commission president and commission
+	 * member are selected
+	 */
+	$scope.studentSelected = false;
+	$scope.commissionPresidentSelected = false;
+	$scope.commissionMemberSelected = false;
 
 	$scope.opened = false;
 
@@ -99,6 +116,7 @@ var editBachelorThesisController = function($scope, $modalInstance,
 		onlyNumbers : /^[0-9 ]*$/
 	};
 
+	/* Load resources from .json properties file */
 	$scope.loadResources = function() {
 		var locale = document.getElementById('localeCode');
 		$http.get('messages/profesorDetails_' + locale.value + '.json')
@@ -123,23 +141,36 @@ var editBachelorThesisController = function($scope, $modalInstance,
 		PctService.loadSelectedThesis(id, function(data) {
 			if (angular.isObject(data)) {
 				$scope.thesis = data;
+
 				$scope.selectedStudent = {
 					id : $scope.thesis.studentId,
 					transcriptNumber : $scope.thesis.studentTranscriptNumber,
 					name : $scope.thesis.studentName,
 					surname : $scope.thesis.studentSurname
 				};
+				$scope.studentSelected = true;
+
 				$scope.selectedCommissionPresident = {
 					id : $scope.thesis.commissionPresidentId,
 					name : $scope.thesis.commissionPresidentName,
 					surname : $scope.thesis.commissionPresidentSurname
 				};
+				$scope.commissionPresidentSelected = true;
+
 				$scope.selectedCommissionMember = {
 					id : $scope.thesis.commissionMemberId,
 					name : $scope.thesis.commissionMemberName,
 					surname : $scope.thesis.commissionMemberSurname
 				};
+				$scope.commissionMemberSelected = true;
+
 				$scope.master = angular.copy($scope.thesis);
+				$scope.masterSelectedStudent = angular
+						.copy($scope.selectedStudent);
+				$scope.masterSelectedPresident = angular
+						.copy($scope.selectedCommissionPresident);
+				$scope.masterSelectedMember = angular
+						.copy($scope.selectedCommissionMember);
 				$scope.noResultsFound = false;
 			} else {
 				$scope.noResultsFound = true;
@@ -156,6 +187,7 @@ var editBachelorThesisController = function($scope, $modalInstance,
 	$scope.init();
 
 	$scope.getStudents = function(val) {
+		$scope.studentSelected = false;
 		var inputLabel = this.form.inputStudent;
 
 		inputLabel.$setValidity("studentInvalid", true);
@@ -173,6 +205,7 @@ var editBachelorThesisController = function($scope, $modalInstance,
 	};
 
 	$scope.getCommissionPresident = function(val) {
+		$scope.commissionPresidentSelected = false;
 		var inputLabel = this.form.inputCommissionPresident;
 
 		inputLabel.$setValidity("commissionPresidentInvalid", true);
@@ -195,6 +228,7 @@ var editBachelorThesisController = function($scope, $modalInstance,
 	};
 
 	$scope.getCommissionMember = function(val) {
+		$scope.commissionMemberSelected = false;
 		var inputLabel = this.form.inputCommissionMember;
 
 		inputLabel.$setValidity("commissionMemberInvalid", true);
@@ -216,12 +250,43 @@ var editBachelorThesisController = function($scope, $modalInstance,
 						});
 	};
 
-	$scope.saveThesis = function() {
-		$scope.thesis.mentorId = $routeParams.mentorId;
-		$scope.thesis.thesisTypeId = $routeParams.thesisTypeId;
+	$scope.refreshStudentData = function() {
 		$scope.thesis.studentId = $scope.selectedStudent.id;
+		$scope.thesis.studentTranscriptNumber = $scope.selectedStudent.transcriptNumber;
+		$scope.thesis.studentName = $scope.selectedStudent.name;
+		$scope.thesis.studentSurname = $scope.selectedStudent.surname;
+	};
+
+	$scope.refreshThesisTypeData = function() {
+		$scope.thesis.thesisTypeId = $routeParams.thesisTypeId;
+	};
+
+	$scope.refreshMentorData = function() {
+		$scope.thesis.mentorId = $routeParams.mentorId;
+	};
+
+	$scope.refreshCommissionPresidentData = function() {
 		$scope.thesis.commissionPresidentId = $scope.selectedCommissionPresident.id;
+		$scope.thesis.commissionPresidentName = $scope.selectedCommissionPresident.name;
+		$scope.thesis.commissionPresidentSurname = $scope.selectedCommissionPresident.surname;
+	};
+
+	$scope.refreshCommissionMemberData = function() {
 		$scope.thesis.commissionMemberId = $scope.selectedCommissionMember.id;
+		$scope.thesis.commissionMemberName = $scope.selectedCommissionMember.name;
+		$scope.thesis.commissionMemberSurname = $scope.selectedCommissionMember.surname;
+	};
+
+	$scope.refreshThesisData = function() {
+		$scope.refreshStudentData();
+		$scope.refreshThesisTypeData();
+		$scope.refreshMentorData();
+		$scope.refreshCommissionPresidentData();
+		$scope.refreshCommissionMemberData();
+	};
+
+	$scope.saveThesis = function() {
+		$scope.refreshThesisData();
 
 		$http({
 			method : 'PUT',
@@ -247,9 +312,49 @@ var editBachelorThesisController = function($scope, $modalInstance,
 		});
 	};
 
+	$scope.onSelectStudent = function(selectedStudent) {
+		$scope.selectedStudent = {
+			id : selectedStudent.id,
+			transcriptNumber : selectedStudent.transcriptNumber,
+			name : selectedStudent.name,
+			surname : selectedStudent.surname
+		};
+		$scope.studentSelected = true;
+	}
+
+	$scope.onSelectCommisionPresident = function(selectedCommissionPresident) {
+		$scope.selectedCommissionPresident = {
+			id : selectedCommissionPresident.id,
+			name : selectedCommissionPresident.name,
+			surname : selectedCommissionPresident.surname
+		};
+		$scope.commissionPresidentSelected = true;
+	}
+
+	$scope.onSelectCommisionMember = function(selectedCommissionMember) {
+		$scope.selectedCommissionMember = {
+			id : selectedCommissionMember.id,
+			name : selectedCommissionMember.name,
+			surname : selectedCommissionMember.surname
+		};
+		$scope.commissionMemberSelected = true;
+	}
+
 	$scope.isUnchanged = function(thesis) {
-		thesis.dateOfGraduation = new Date(thesis.dateOfGraduation).getTime();
-		return angular.equals(thesis, $scope.master);
+		if ($scope.studentSelected && $scope.commissionPresidentSelected
+				&& $scope.commissionMemberSelected) {
+			thesis.dateOfGraduation = new Date(thesis.dateOfGraduation)
+					.getTime();
+			return angular.equals(thesis, $scope.master)
+					&& angular.equals($scope.selectedStudent,
+							$scope.masterSelectedStudent)
+					&& angular.equals($scope.selectedCommissionPresident,
+							$scope.masterSelectedPresident)
+					&& angular.equals($scope.selectedCommissionMember,
+							$scope.masterSelectedMember);
+		} else {
+			return true;
+		}
 	};
 
 	$scope.cancel = function() {
@@ -269,6 +374,14 @@ var createNewBachelorThesisController = function($scope, $modalInstance,
 	$scope.selectedStudent = [];
 	$scope.selectedCommissionPresident = [];
 	$scope.selectedCommissionMember = [];
+
+	/*
+	 * fields used for detecting if student, commission president and commission
+	 * member are selected
+	 */
+	$scope.studentSelected = false;
+	$scope.commissionPresidentSelected = false;
+	$scope.commissionMemberSelected = false;
 
 	$scope.opened = false;
 
@@ -306,6 +419,7 @@ var createNewBachelorThesisController = function($scope, $modalInstance,
 	$scope.init();
 
 	$scope.getStudents = function(val) {
+		$scope.studentSelected = false;
 		var inputLabel = this.form.inputStudent;
 
 		inputLabel.$setValidity("studentInvalid", true);
@@ -323,6 +437,7 @@ var createNewBachelorThesisController = function($scope, $modalInstance,
 	};
 
 	$scope.getCommissionPresident = function(val) {
+		$scope.commissionPresidentSelected = false;
 		var inputLabel = this.form.inputCommissionPresident;
 
 		inputLabel.$setValidity("commissionPresidentInvalid", true);
@@ -345,6 +460,7 @@ var createNewBachelorThesisController = function($scope, $modalInstance,
 	};
 
 	$scope.getCommissionMember = function(val) {
+		$scope.commissionMemberSelected = false;
 		var inputLabel = this.form.inputCommissionMember;
 
 		inputLabel.$setValidity("commissionMemberInvalid", true);
@@ -369,9 +485,9 @@ var createNewBachelorThesisController = function($scope, $modalInstance,
 	$scope.saveNewThesis = function() {
 		$scope.thesis.mentorId = $routeParams.mentorId;
 		$scope.thesis.thesisTypeId = $routeParams.thesisTypeId;
-		$scope.thesis.studentId = $scope.student.id;
-		$scope.thesis.commissionPresidentId = $scope.commissionPresident.id;
-		$scope.thesis.commissionMemberId = $scope.commissionMember.id;
+		$scope.thesis.studentId = $scope.selectedStudent.id;
+		$scope.thesis.commissionPresidentId = $scope.selectedCommissionPresident.id;
+		$scope.thesis.commissionMemberId = $scope.selectedCommissionMember.id;
 
 		$http({
 			method : 'POST',
@@ -396,6 +512,18 @@ var createNewBachelorThesisController = function($scope, $modalInstance,
 			}, "slow");
 		});
 	};
+
+	$scope.onSelectStudent = function() {
+		$scope.studentSelected = true;
+	}
+
+	$scope.onSelectCommissionPresident = function() {
+		$scope.commissionPresidentSelected = true;
+	}
+
+	$scope.onSelectCommissionMember = function() {
+		$scope.commissionMemberSelected = true;
+	}
 
 	$scope.cancel = function() {
 		$modalInstance.dismiss("cancel");
