@@ -43,3 +43,5 @@ Temporary Items
 .apdisk
 /target
 /.settings/
+
+target/m2e-wtp/web-resources/META-INF/maven/PersonalCareerTracker/PersonalCareerTracker/pom.properties
