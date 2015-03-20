@@ -11,7 +11,7 @@ app.controller("DoctorMentoringController", function($scope, $routeParams,
 		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
 		onlyNumbers : /^[0-9 ]*$/
 	};
-	
+
 	/* Load resources from .json properties file */
 	$scope.loadResources = function() {
 		var locale = document.getElementById('localeCode');

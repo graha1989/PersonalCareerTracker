@@ -48,10 +48,11 @@ app
 												for (var i = 0; i < $scope.professorLanguages.length; i++) {
 													$scope.editMode.splice(i,
 															1, false);
-												};
+												}
+												;
 												$scope.noResultsFound = false;
 											} else {
-												$scope.editMode = [0];
+												$scope.editMode = [ 0 ];
 												$scope.noResultsFound = true;
 											}
 										});
