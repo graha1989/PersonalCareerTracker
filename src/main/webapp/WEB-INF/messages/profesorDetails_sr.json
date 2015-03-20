@@ -9,7 +9,8 @@
         "doctorMentoringTitle": "Mentorstva na doktorskim tezama",
         "newThesisPopupTitle":"Unos nove teze",
         "editThesisPopupTitle":"Izmena teze",
-        "languageExperienceTitle":"Znanje jezika"
+        "languageExperienceTitle":"Znanje jezika",
+        "awardsTitle":"Priznanja, nagrade i odlikovanja"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -67,6 +68,14 @@
 			"close":"Zatvori",
 			"save":"Sačuvaj",
 			"cancel":"Odustani"
+        },
+        "awardButtons": {
+        	"delete":"Izbriši",
+			"edit":"Izmeni",
+			"add":"Dodaj novu nagradu",
+			"close":"Zatvori",
+			"save":"Sačuvaj",
+			"cancel":"Odustani"
         }
     },
     "mentoringTableLabels" : {
@@ -84,5 +93,12 @@
 		"reading":"Čita",
 		"pronouncing":"Govori",
 		"selectLanguage":"Izaberite jezik"
+	   },
+	"awardsTableLabels" : {
+		"type":"Tip",
+		"name":"Naziv",
+		"dateOfAward":"Datum dodele",
+		"awardedBy":"Dodeljeno od strane",
+		"field":"Oblast"
 	   }
 }

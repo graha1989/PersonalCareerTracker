@@ -40,7 +40,7 @@
 							<td>{{ thesis.universityName }}</td>
 							<td class="delete"><button
 									class="btn btn-link btn-xs"
-									ng-click="deleteThesis(thesis.id)">
+									ng-click="deleteThesis(thesis.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.mentorThesisButtons.delete }}
 								</button></td>
 							<td class="edit"><button

@@ -1,8 +1,8 @@
 app.controller("BachelorMentoringController", function($scope, $routeParams,
 		$http, $location, $modal, PctService) {
-
-	$scope.thesis = {};
+	
 	$scope.allBachelorThesis = [];
+	$scope.thesis = {};
 	$scope.resources = {};
 	$scope.errorMessages = {};
 	$scope.noResultsFound = true;
@@ -48,12 +48,13 @@ app.controller("BachelorMentoringController", function($scope, $routeParams,
 		window.history.back();
 	};
 
-	$scope.deleteThesis = function(id) {
+	$scope.deleteThesis = function(id, index) {
 		PctService.deleteThesis(id, function(data) {
-			if (angular.isObject(data)) {
+			if (angular.isObject(data) && data.length > 0) {
 				$scope.errorStatus = data.status;
 			} else {
 				$scope.successStatus = "Successfully deleted thesis.";
+				$scope.allBachelorThesis.splice(index, 1);
 				$scope.loadThesis($routeParams.mentorId,
 						$routeParams.thesisTypeId);
 			}

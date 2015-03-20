@@ -55,7 +55,7 @@
 								ng-show="editMode[$index]"></input></div></td>
 							<td class="delete"><div class="col-sm-1"><button
 									class="btn btn-link btn-xs"
-									ng-click="deleteLanguageExperience(language.id)"
+									ng-click="deleteLanguageExperience(language.id, $index)"
 									ng-disabled="addNewRow">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.languageExperienceButtons.delete }}
 								</button></div></td>

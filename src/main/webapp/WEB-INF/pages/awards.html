@@ -1,0 +1,58 @@
+<div>
+
+	<form
+		name="form"
+		id="showAllAwardsForm"
+		novalidate
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		ng-model="award">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.awardsTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+
+				<table
+					ng-show="awards != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr class="info ng-binding">
+							<td>{{ resources.awardsTableLabels.type }}</td>
+							<td>{{ resources.awardsTableLabels.name }}</td>
+							<td>{{ resources.awardsTableLabels.dateOfAward }}</td>
+							<td>{{ resources.awardsTableLabels.awardedBy }}</td>
+							<td>{{ resources.awardsTableLabels.field }}</td>
+							<td colspan="2"></td>
+						</tr>
+						<tr
+							class="active ng-scope"
+							ng-repeat="award in awards">
+							<td>{{ award.awardType }}</td>
+							<td>{{ award.awardName }}</td>
+							<td>{{ award.dateOfAward }}</td>
+							<td>{{ award.awardedBy }}</td>
+							<td>{{ award.awardField }}</td>
+							<td class="delete"><a ng-click="deleteAward(award.id, $index)"><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.delete }}</a></td>
+							<td class="edit"><a ng-click="editAward()"><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.edit }}</a></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td colspan="7">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="addNewButton"
+				class="btn btn-success"
+				ng-click="createNewAward()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.awardButtons.add }}
+			</button>
+		</div>
+	</form>
+
+</div>

@@ -21,6 +21,9 @@ public class Award extends AbstractEntity {
 	@Column(name = "awardName", length = 200)
 	private String awardName;
 	
+	@Column(name = "awardedBy", length = 200)
+	private String awardedBy;
+	
 	@Column(name = "dateOfAward")
 	private Date dateOfAward;
 	
@@ -47,6 +50,14 @@ public class Award extends AbstractEntity {
 
 	public void setAwardName(String awardName) {
 		this.awardName = awardName;
+	}
+
+	public String getAwardedBy() {
+		return awardedBy;
+	}
+
+	public void setAwardedBy(String awardedBy) {
+		this.awardedBy = awardedBy;
 	}
 
 	public Date getDateOfAward() {
@@ -80,5 +91,4 @@ public class Award extends AbstractEntity {
 	public void setAwardField(AwardField awardField) {
 		this.awardField = awardField;
 	}
-	
 }

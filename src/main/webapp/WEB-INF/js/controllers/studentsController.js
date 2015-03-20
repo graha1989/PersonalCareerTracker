@@ -59,6 +59,7 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
 				$scope.errorStatus = data.status;
 			} else {
 				$scope.successStatus = "Successfully deleted student.";
+				$scope.students.splice(index, 1);
 				$scope.loadStudents();
 			}
 		});

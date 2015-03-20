@@ -1,24 +1,13 @@
 app
 		.controller(
-				"LanguageController",
+				"AwardController",
 				function($scope, $routeParams, $http, $route, PctService) {
 
-					$scope.professorLanguages = [];
-					$scope.allLanguages = [];
-					$scope.languageExperienceIdsList = [];
-					$scope.language = {};
-					$scope.language.languageId;
-					$scope.language.professorId = $routeParams.mentorId;
-					$scope.language.languageName;
-					$scope.language.reading = false;
-					$scope.language.writing = false;
-					$scope.language.pronouncing = false;
-					$scope.selectedLanguage = {};
+					$scope.awards = [];
+					$scope.award = {};
 					$scope.noResultsFound = true;
 					$scope.resources = {};
 					$scope.errorMessages = {};
-					$scope.editMode = [];
-					$scope.addNewRow = false;
 
 					$scope.loadResources = function() {
 						var locale = document.getElementById('localeCode');
@@ -128,7 +117,7 @@ app
 								});
 					};
 
-					$scope.deleteLanguageExperience = function(id, index) {
+					$scope.deleteLanguageExperience = function(id) {
 						PctService
 								.deleteLanguageExperience(
 										id,
@@ -137,8 +126,6 @@ app
 												$scope.errorStatus = data.status;
 											} else {
 												$scope.successStatus = "Successfully deleted language experience.";
-												$scope.allLanguages.splice(
-														index, 1);
 												$scope
 														.loadLanguages($routeParams.mentorId);
 											}

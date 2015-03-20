@@ -5,7 +5,7 @@ app.controller("MasterMentoringController", function($scope, $routeParams,
 	$scope.allMasterThesis = [];
 	$scope.resources = {};
 	$scope.errorMessages = {};
-	$scope.noResultsFound = true;
+	$scope.noResultsFound = true; 
 
 	$scope.patterns = {
 		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -48,12 +48,13 @@ app.controller("MasterMentoringController", function($scope, $routeParams,
 		window.history.back();
 	};
 
-	$scope.deleteThesis = function(id) {
+	$scope.deleteThesis = function(id, index) {
 		PctService.deleteThesis(id, function(data) {
-			if (angular.isObject(data)) {
+			if (angular.isObject(data) && data.length > 0) {
 				$scope.errorStatus = data.status;
 			} else {
 				$scope.successStatus = "Successfully deleted thesis.";
+				$scope.allMasterThesis.splice(index, 1);
 				$scope.loadThesis($routeParams.mentorId,
 						$routeParams.thesisTypeId);
 			}
@@ -115,7 +116,7 @@ var editMasterThesisController = function($scope, $modalInstance, $routeParams,
 		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
 		onlyNumbers : /^[0-9 ]*$/
 	};
-	
+
 	/* Load resources from .json properties file */
 	$scope.loadResources = function() {
 		var locale = document.getElementById('localeCode');

@@ -48,12 +48,13 @@ app.controller("SpecialisticMentoringController", function($scope,
 		window.history.back();
 	};
 
-	$scope.deleteThesis = function(id) {
+	$scope.deleteThesis = function(id, index) {
 		PctService.deleteThesis(id, function(data) {
-			if (angular.isObject(data)) {
+			if (angular.isObject(data) && data.length > 0) {
 				$scope.errorStatus = data.status;
 			} else {
 				$scope.successStatus = "Successfully deleted thesis.";
+				$scope.allSpecialisticThesis.splice(index, 1);
 				$scope.loadThesis($routeParams.mentorId,
 						$routeParams.thesisTypeId);
 			}

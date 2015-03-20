@@ -31,7 +31,7 @@
 							<td>{{ student.transcriptNumber }}</td>
 							<td>{{ student.name }}</td>
 							<td>{{ student.surname }}</td>
-							<td class="delete"><a ng-click="deleteStudent(student.id)"><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.delete }}</a></td>
+							<td class="delete"><a ng-click="deleteStudent(student.id, $index)"><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.delete }}</a></td>
 							<td class="edit"><a ng-click="editStudent(student.id)"><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.edit }}</a></td>
 						</tr>
 						<tr ng-show="noResultsFound">
