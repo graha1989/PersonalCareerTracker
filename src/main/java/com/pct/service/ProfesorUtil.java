@@ -1,7 +1,7 @@
 package com.pct.service;
 
 import com.pct.domain.Profesor;
-import com.pct.domain.dto.ProfesorFormaDTO;
+import com.pct.domain.dto.ProfesorFormaDto;
 
 /**
  * User(Profesor) utility class.
@@ -12,31 +12,31 @@ import com.pct.domain.dto.ProfesorFormaDTO;
 public class ProfesorUtil {
 
 	// EDIT Profesor
-	public static Profesor createProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDTO profesorFormaDTO) {
+	public static Profesor createProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDto profesorFormaDto) {
 
-		Profesor profesor = createNewProfesorInstanceFromProfesorFormaDTO(profesorFormaDTO);
-		profesor.setId(profesorFormaDTO.getId());
+		Profesor profesor = createNewProfesorInstanceFromProfesorFormaDTO(profesorFormaDto);
+		profesor.setId(profesorFormaDto.getId());
 
 		return profesor;
 	}
 
 	// CREATE new Profesor
-	public static Profesor createNewProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDTO profesorFormaDTO) {
+	public static Profesor createNewProfesorInstanceFromProfesorFormaDTO(ProfesorFormaDto profesorFormaDto) {
 
 		Profesor profesor = new Profesor();
 		
-		profesor.setUserName(profesorFormaDTO.getUserName());
-		profesor.setPassword(profesorFormaDTO.getPassword());
-		profesor.setEmail(profesorFormaDTO.getEmail());
+		profesor.setUserName(profesorFormaDto.getUserName());
+		profesor.setPassword(profesorFormaDto.getPassword());
+		profesor.setEmail(profesorFormaDto.getEmail());
 		
-		profesor.setName(profesorFormaDTO.getName());
-		profesor.setSurname(profesorFormaDTO.getSurname());
-		profesor.setFathersName(profesorFormaDTO.getFathersName());
-		profesor.setDateOfBirth(profesorFormaDTO.getDateOfBirth());
-		profesor.setPlaceOfBirth(profesorFormaDTO.getPlaceOfBirth());
-		profesor.setCountryOfBirth(profesorFormaDTO.getCountryOfBirth());
-		profesor.setScientificArea(profesorFormaDTO.getScientificArea());
-		profesor.setSpecialScientificArea(profesorFormaDTO.getSpecialScientificArea());
+		profesor.setName(profesorFormaDto.getName());
+		profesor.setSurname(profesorFormaDto.getSurname());
+		profesor.setFathersName(profesorFormaDto.getFathersName());
+		profesor.setDateOfBirth(profesorFormaDto.getDateOfBirth());
+		profesor.setPlaceOfBirth(profesorFormaDto.getPlaceOfBirth());
+		profesor.setCountryOfBirth(profesorFormaDto.getCountryOfBirth());
+		profesor.setScientificArea(profesorFormaDto.getScientificArea());
+		profesor.setSpecialScientificArea(profesorFormaDto.getSpecialScientificArea());
 
 		return profesor;
 	}

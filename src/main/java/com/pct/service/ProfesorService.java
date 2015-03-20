@@ -2,17 +2,17 @@ package com.pct.service;
 
 import java.util.List;
 
-import com.pct.domain.dto.ProfesorFormaDTO;
+import com.pct.domain.dto.ProfesorFormaDto;
 import com.pct.validation.ProfesorNotFoundException;
 
 public interface ProfesorService {
 	
-	ProfesorFormaDTO findProfesorByUserName(String userName) throws ProfesorNotFoundException;
+	ProfesorFormaDto findProfesorByUserName(String userName) throws ProfesorNotFoundException;
 	
-	ProfesorFormaDTO findProfesorById(Long id) throws ProfesorNotFoundException;
+	ProfesorFormaDto findProfesorById(Long id) throws ProfesorNotFoundException;
 
-	void saveProfesor(ProfesorFormaDTO ProfesorFormaDTO);
+	void saveProfesor(ProfesorFormaDto ProfesorFormaDto);
 
-	List<ProfesorFormaDTO> findProfessorsStartsWith(String value, Long idProf, Long idMentor) throws ProfesorNotFoundException;
+	List<ProfesorFormaDto> findProfessorsStartsWith(String value, Long idProf, Long idMentor) throws ProfesorNotFoundException;
 	
 }

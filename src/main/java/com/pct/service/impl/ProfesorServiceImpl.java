@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.Profesor;
-import com.pct.domain.dto.ProfesorFormaDTO;
+import com.pct.domain.dto.ProfesorFormaDto;
 import com.pct.repository.ProfesorRepository;
 import com.pct.service.ProfesorService;
 import com.pct.service.ProfesorUtil;
@@ -22,54 +22,54 @@ public class ProfesorServiceImpl implements ProfesorService {
 
 	@Override
 	@Transactional
-	public ProfesorFormaDTO findProfesorByUserName(String userName) throws ProfesorNotFoundException {
+	public ProfesorFormaDto findProfesorByUserName(String userName) throws ProfesorNotFoundException {
 
-		ProfesorFormaDTO profesorFormaDTO;
+		ProfesorFormaDto profesorFormaDto;
 
 		if (userName == null || profesorRepository.findByUserName(userName) == null) {
 			throw new ProfesorNotFoundException();
 		} else {
 			Profesor profesor = profesorRepository.findByUserName(userName);
-			profesorFormaDTO = new ProfesorFormaDTO(profesor.getUserName(), profesor.getPassword(),
+			profesorFormaDto = new ProfesorFormaDto(profesor.getUserName(), profesor.getPassword(),
 					profesor.getEmail(), profesor.getUloga(), profesor.getName(), profesor.getSurname(),
 					profesor.getFathersName(), profesor.getDateOfBirth(), profesor.getPlaceOfBirth(),
 					profesor.getCountryOfBirth(), profesor.getScientificArea(), profesor.getSpecialScientificArea(),
 					profesor.getId());
 		}
 
-		return profesorFormaDTO;
+		return profesorFormaDto;
 	}
 
 	@Override
 	@Transactional
-	public ProfesorFormaDTO findProfesorById(Long id) throws ProfesorNotFoundException {
+	public ProfesorFormaDto findProfesorById(Long id) throws ProfesorNotFoundException {
 
-		ProfesorFormaDTO ProfesorFormaDTO;
+		ProfesorFormaDto ProfesorFormaDto;
 
 		if (id == null || profesorRepository.findOne(id) == null) {
 			throw new ProfesorNotFoundException();
 		} else {
 			Profesor profesor = profesorRepository.findOne(id);
-			ProfesorFormaDTO = new ProfesorFormaDTO(profesor.getUserName(), profesor.getPassword(),
+			ProfesorFormaDto = new ProfesorFormaDto(profesor.getUserName(), profesor.getPassword(),
 					profesor.getEmail(), profesor.getUloga(), profesor.getName(), profesor.getSurname(),
 					profesor.getFathersName(), profesor.getDateOfBirth(), profesor.getPlaceOfBirth(),
 					profesor.getCountryOfBirth(), profesor.getScientificArea(), profesor.getSpecialScientificArea(),
 					profesor.getId());
 		}
 
-		return ProfesorFormaDTO;
+		return ProfesorFormaDto;
 	}
 
 	@Override
 	@Transactional
-	public void saveProfesor(ProfesorFormaDTO profesorFormaDTO) {
+	public void saveProfesor(ProfesorFormaDto profesorFormaDto) {
 
 		Profesor profesor = new Profesor();
 
-		if (profesorFormaDTO.getId() != null) {
-			profesor = ProfesorUtil.createProfesorInstanceFromProfesorFormaDTO(profesorFormaDTO);
+		if (profesorFormaDto.getId() != null) {
+			profesor = ProfesorUtil.createProfesorInstanceFromProfesorFormaDTO(profesorFormaDto);
 		} else {
-			profesor = ProfesorUtil.createNewProfesorInstanceFromProfesorFormaDTO(profesorFormaDTO);
+			profesor = ProfesorUtil.createNewProfesorInstanceFromProfesorFormaDTO(profesorFormaDto);
 		}
 
 		profesorRepository.saveAndFlush(profesor);
@@ -78,10 +78,10 @@ public class ProfesorServiceImpl implements ProfesorService {
 
 	@Override
 	@Transactional
-	public List<ProfesorFormaDTO> findProfessorsStartsWith(String value, Long idProf, Long idMentor)
+	public List<ProfesorFormaDto> findProfessorsStartsWith(String value, Long idProf, Long idMentor)
 			throws ProfesorNotFoundException {
 		
-		List<ProfesorFormaDTO> professorsDtoList = new ArrayList<ProfesorFormaDTO>();
+		List<ProfesorFormaDto> professorsDtoList = new ArrayList<ProfesorFormaDto>();
 		List<Profesor> professorsList = new ArrayList<Profesor>();
 		
 		if (idProf == null) {
@@ -90,7 +90,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 			professorsList = profesorRepository.findByNameLikeOrSurnameLike(value, idProf, idMentor);
 		}
 		for (Profesor p : professorsList) {
-			ProfesorFormaDTO professorDto = new ProfesorFormaDTO(p);
+			ProfesorFormaDto professorDto = new ProfesorFormaDto(p);
 			professorDto.setId(p.getId());
 			professorsDtoList.add(professorDto);
 		}

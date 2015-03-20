@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
-import com.pct.domain.dto.ProfesorFormaDTO;
+import com.pct.domain.dto.ProfesorFormaDto;
 import com.pct.service.ProfesorService;
 import com.pct.validation.ProfesorNotFoundException;
 
@@ -31,49 +31,49 @@ public class ProfesorController {
 	ProfesorService profesorService;
 
 	@RequestMapping(value = "persistProfessor", method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<ProfesorFormaDTO> persistProfessor(@Valid @RequestBody ProfesorFormaDTO profesorFormaDTO) {
-		profesorService.saveProfesor(profesorFormaDTO);
-		ProfesorFormaDTO profesor = new ProfesorFormaDTO();
+	public ResponseEntity<ProfesorFormaDto> persistProfessor(@Valid @RequestBody ProfesorFormaDto profesorFormaDto) {
+		profesorService.saveProfesor(profesorFormaDto);
+		ProfesorFormaDto profesor = new ProfesorFormaDto();
 		try {
-			profesor = profesorService.findProfesorByUserName(profesorFormaDTO.getUserName());
+			profesor = profesorService.findProfesorByUserName(profesorFormaDto.getUserName());
 		} catch (ProfesorNotFoundException e) {
 			e.printStackTrace();
 		}
 		logger.debug("Profesor: " + profesor.getUserName() + " (ID " + profesor.getId()
 				+ ") successfully registrated in database.");
 
-		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
+		return new ResponseEntity<ProfesorFormaDto>(profesor, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/selectedProfesor", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<ProfesorFormaDTO> showProfesor(String userName) throws ProfesorNotFoundException {
-		ProfesorFormaDTO profesor = profesorService.findProfesorByUserName(userName);
-		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
+	public ResponseEntity<ProfesorFormaDto> showProfesor(String userName) throws ProfesorNotFoundException {
+		ProfesorFormaDto profesor = profesorService.findProfesorByUserName(userName);
+		return new ResponseEntity<ProfesorFormaDto>(profesor, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "loadProfesorDetails", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<ProfesorFormaDTO> getProfessorById(@RequestParam(value = "id", required = true) Long id) {
-		ProfesorFormaDTO profesor = new ProfesorFormaDTO();
+	public ResponseEntity<ProfesorFormaDto> getProfessorById(@RequestParam(value = "id", required = true) Long id) {
+		ProfesorFormaDto profesor = new ProfesorFormaDto();
 		try {
 			profesor = profesorService.findProfesorById(id);
 		} catch (ProfesorNotFoundException e) {
 			e.printStackTrace();
 		}
-		return new ResponseEntity<ProfesorFormaDTO>(profesor, HttpStatus.OK);
+		return new ResponseEntity<ProfesorFormaDto>(profesor, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "findProfessorStartsWith", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<ProfesorFormaDTO>> findProfessorStartsWith(
+	public ResponseEntity<List<ProfesorFormaDto>> findProfessorStartsWith(
 			@RequestParam(value = "value", required = true) String value,
 			@RequestParam(value = "idProf", required = false) Long idProf,
 			@RequestParam(value = "idMentor", required = true) Long idMentor) throws ProfesorNotFoundException {
 
-		List<ProfesorFormaDTO> professors = new ArrayList<ProfesorFormaDTO>();
+		List<ProfesorFormaDto> professors = new ArrayList<ProfesorFormaDto>();
 		if (value.length() >= 3) {
 			professors = profesorService.findProfessorsStartsWith(value, idProf, idMentor);
 		}
 
-		return new ResponseEntity<List<ProfesorFormaDTO>>(professors, HttpStatus.OK);
+		return new ResponseEntity<List<ProfesorFormaDto>>(professors, HttpStatus.OK);
 	}
 
 }
