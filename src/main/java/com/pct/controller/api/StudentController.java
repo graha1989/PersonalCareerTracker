@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
-import com.pct.domain.dto.StudentDTO;
+import com.pct.domain.dto.StudentDto;
 import com.pct.service.StudentService;
 import com.pct.validation.StudentNotFoundException;
 
@@ -32,31 +32,31 @@ public class StudentController {
 	StudentService studentService;
 
 	@RequestMapping(value = "allStudents", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<StudentDTO>> showAllStudents() {
-		List<StudentDTO> students = studentService.findAll();
+	public ResponseEntity<List<StudentDto>> showAllStudents() {
+		List<StudentDto> students = studentService.findAll();
 
-		return new ResponseEntity<List<StudentDTO>>(students, HttpStatus.OK);
+		return new ResponseEntity<List<StudentDto>>(students, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "selectedStudent", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<StudentDTO> showStudent(@RequestParam(value = RequestMappings.ID, required = true) Long id) throws StudentNotFoundException {
-		StudentDTO student = studentService.findStudentById(id);
+	public ResponseEntity<StudentDto> showStudent(@RequestParam(value = RequestMappings.ID, required = true) Long id) throws StudentNotFoundException {
+		StudentDto student = studentService.findStudentById(id);
 
-		return new ResponseEntity<StudentDTO>(student, HttpStatus.OK);
+		return new ResponseEntity<StudentDto>(student, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ResponseEntity<StudentDTO> deleteStudent(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+	public ResponseEntity<StudentDto> deleteStudent(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws StudentNotFoundException {
 		studentService.deleteStudent(id);
 
-		return new ResponseEntity<StudentDTO>(HttpStatus.OK);
+		return new ResponseEntity<StudentDto>(HttpStatus.OK);
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<StudentDTO> persistStudent(@Valid @RequestBody StudentDTO studentDto) {
+	public ResponseEntity<StudentDto> persistStudent(@Valid @RequestBody StudentDto studentDto) {
 		studentService.saveStudent(studentDto);
-		StudentDTO student = new StudentDTO();
+		StudentDto student = new StudentDto();
 		try {
 			student = studentService.findStudentByTranscriptNumber(studentDto.getTranscriptNumber());
 		} catch (StudentNotFoundException e) {
@@ -64,18 +64,18 @@ public class StudentController {
 		}
 		logger.debug("Student:" + studentDto.getName() + " " + studentDto.getSurname() + " successfully saved.");
 
-		return new ResponseEntity<StudentDTO>(student, HttpStatus.OK);
+		return new ResponseEntity<StudentDto>(student, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "findStudentStartsWith", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<StudentDTO>> findStudentStartsWith(@RequestParam(value = "value", required = true) String value) throws StudentNotFoundException {
+	public ResponseEntity<List<StudentDto>> findStudentStartsWith(@RequestParam(value = "value", required = true) String value) throws StudentNotFoundException {
 		
-		List<StudentDTO> students = new ArrayList<StudentDTO>();
+		List<StudentDto> students = new ArrayList<StudentDto>();
 		if (value.length() >= 3) {
 			students = studentService.findStudentsStartsWith(value);
 		}
 
-		return new ResponseEntity<List<StudentDTO>>(students, HttpStatus.OK);
+		return new ResponseEntity<List<StudentDto>>(students, HttpStatus.OK);
 	}
 
 }

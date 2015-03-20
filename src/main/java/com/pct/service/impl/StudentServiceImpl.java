@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.Student;
-import com.pct.domain.dto.StudentDTO;
+import com.pct.domain.dto.StudentDto;
 import com.pct.repository.StudentRepository;
 import com.pct.service.StudentService;
 import com.pct.service.StudentUtil;
@@ -28,33 +28,33 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	@Transactional
-	public List<StudentDTO> findAll() {
+	public List<StudentDto> findAll() {
 
-		List<StudentDTO> studentsDTOList = new ArrayList<StudentDTO>();
+		List<StudentDto> studentsDTOList = new ArrayList<StudentDto>();
 
 		List<Student> studentsList = studentRepository.findAll();
 		for (Student s : studentsList) {
-			StudentDTO studentDTO = new StudentDTO(s);
-			studentDTO.setId(s.getId());
-			studentsDTOList.add(studentDTO);
+			StudentDto studentDto = new StudentDto(s);
+			studentDto.setId(s.getId());
+			studentsDTOList.add(studentDto);
 		}
 		return studentsDTOList;
 	}
 
 	@Override
 	@Transactional
-	public StudentDTO findStudentById(Long id) throws StudentNotFoundException {
+	public StudentDto findStudentById(Long id) throws StudentNotFoundException {
 
-		StudentDTO studentDTO;
+		StudentDto studentDto;
 
 		if (id == null || studentRepository.findOne(id) == null) {
 			throw new StudentNotFoundException();
 		} else {
 			Student student = studentRepository.findOne(id);
-			studentDTO = new StudentDTO(student);
+			studentDto = new StudentDto(student);
 		}
 
-		return studentDTO;
+		return studentDto;
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	@Transactional
-	public void saveStudent(StudentDTO studentDto) {
+	public void saveStudent(StudentDto studentDto) {
 		Student student = null;
 
 		if (studentDto.getId() != null) {
@@ -84,31 +84,31 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	@Transactional
-	public StudentDTO findStudentByTranscriptNumber(String transcriptNumber) throws StudentNotFoundException {
+	public StudentDto findStudentByTranscriptNumber(String transcriptNumber) throws StudentNotFoundException {
 		
-		StudentDTO studentDTO;
+		StudentDto studentDto;
 
 		if (transcriptNumber == null || studentRepository.findByTranscriptNumber(transcriptNumber) == null) {
 			throw new StudentNotFoundException();
 		} else {
 			Student student = studentRepository.findByTranscriptNumber(transcriptNumber);
-			studentDTO = new StudentDTO(student);
+			studentDto = new StudentDto(student);
 		}
 
-		return studentDTO;
+		return studentDto;
 	}
 
 	@Override
 	@Transactional
-	public List<StudentDTO> findStudentsStartsWith(String value) throws StudentNotFoundException {
+	public List<StudentDto> findStudentsStartsWith(String value) throws StudentNotFoundException {
 		
-		List<StudentDTO> studentsDTOList = new ArrayList<StudentDTO>();
+		List<StudentDto> studentsDTOList = new ArrayList<StudentDto>();
 
 		List<Student> studentsList = studentRepository.findByTranscriptNumberLikeOrNameLikeOrSurnameLike(value);
 		for (Student s : studentsList) {
-			StudentDTO studentDTO = new StudentDTO(s);
-			studentDTO.setId(s.getId());
-			studentsDTOList.add(studentDTO);
+			StudentDto studentDto = new StudentDto(s);
+			studentDto.setId(s.getId());
+			studentsDTOList.add(studentDto);
 		}
 		return studentsDTOList;
 	}

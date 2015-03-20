@@ -2,21 +2,21 @@ package com.pct.service;
 
 import java.util.List;
 
-import com.pct.domain.dto.StudentDTO;
+import com.pct.domain.dto.StudentDto;
 import com.pct.validation.StudentNotFoundException;
 
 public interface StudentService {
 
-	List<StudentDTO> findAll();
+	List<StudentDto> findAll();
 
 	void deleteStudent(Long id) throws StudentNotFoundException;
 
-	StudentDTO findStudentById(Long id) throws StudentNotFoundException;
+	StudentDto findStudentById(Long id) throws StudentNotFoundException;
 	
-	void saveStudent(StudentDTO studentDto);
+	void saveStudent(StudentDto studentDto);
 
-	StudentDTO findStudentByTranscriptNumber(String transcriptNumber) throws StudentNotFoundException;
+	StudentDto findStudentByTranscriptNumber(String transcriptNumber) throws StudentNotFoundException;
 
-	List<StudentDTO> findStudentsStartsWith(String value) throws StudentNotFoundException;
+	List<StudentDto> findStudentsStartsWith(String value) throws StudentNotFoundException;
 
 }

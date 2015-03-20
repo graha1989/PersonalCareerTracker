@@ -1,7 +1,7 @@
 package com.pct.service;
 
 import com.pct.domain.Student;
-import com.pct.domain.dto.StudentDTO;
+import com.pct.domain.dto.StudentDto;
 
 /**
  * Student utility class.
@@ -12,30 +12,30 @@ import com.pct.domain.dto.StudentDTO;
 public class StudentUtil {
 
 	/**
-	 * Converts dto from StudentDTO to new {@link Student} instance.
+	 * Converts dto from StudentDto to new {@link Student} instance.
 	 * 
-	 * @param dto StudentDTO
+	 * @param dto StudentDto
 	 * @return student instance
 	 */
-	public static Student createNewStudentInstanceFromStudentDTO(StudentDTO studentDTO) {
+	public static Student createNewStudentInstanceFromStudentDTO(StudentDto studentDto) {
 		Student student = new Student();
 
-		student.setTranscriptNumber(studentDTO.getTranscriptNumber());
-		student.setName(studentDTO.getName());
-		student.setSurname(studentDTO.getSurname());
+		student.setTranscriptNumber(studentDto.getTranscriptNumber());
+		student.setName(studentDto.getName());
+		student.setSurname(studentDto.getSurname());
 
 		return student;
 	}
 
 	/**
-	 * Converts dto from StudentDTO to {@link Student} instance.
+	 * Converts dto from StudentDto to {@link Student} instance.
 	 * 
-	 * @param dto StudentDTO
+	 * @param dto StudentDto
 	 * @return student instance
 	 */
-	public static Student createStudentInstanceFromStudentDTO(StudentDTO studentDTO) {
-		Student student = createNewStudentInstanceFromStudentDTO(studentDTO);
-		student.setId(studentDTO.getId());
+	public static Student createStudentInstanceFromStudentDTO(StudentDto studentDto) {
+		Student student = createNewStudentInstanceFromStudentDTO(studentDto);
+		student.setId(studentDto.getId());
 
 		return student;
 	}

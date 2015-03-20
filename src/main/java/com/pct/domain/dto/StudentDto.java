@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.SafeHtml;
 import com.pct.constants.RegexPatterns;
 import com.pct.domain.Student;
 
-public class StudentDTO implements Serializable {
+public class StudentDto implements Serializable {
 	
 	private static final long serialVersionUID = 7330507151842329181L;
 
@@ -34,11 +34,11 @@ public class StudentDTO implements Serializable {
 	
 	protected Long id;
 	
-	public StudentDTO() {
+	public StudentDto() {
 		// EMPTY CONSTRUCTOR.
 	}
 
-	public StudentDTO(Student student) {
+	public StudentDto(Student student) {
 		this.id = student.getId();
 		this.transcriptNumber = student.getTranscriptNumber();
 		this.name = student.getName();
