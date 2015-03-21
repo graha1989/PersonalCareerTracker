@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "professor")
-public class Profesor extends AbstractEntity {
+public class Professor extends AbstractEntity {
 
 	private static final long serialVersionUID = 6438166967413025243L;
 	
@@ -61,11 +61,11 @@ public class Profesor extends AbstractEntity {
 	@JoinColumn(name = "ulogaId")
 	private Uloga uloga;
 
-	public Profesor() {
+	public Professor() {
 		super();
 	}
 
-	public Profesor(String userName, String password, String email, String name, String surname, String fathersName,
+	public Professor(String userName, String password, String email, String name, String surname, String fathersName,
 			Date dateOfBirth, String placeOfBirth, String countryOfBirth, String scientificArea,
 			String specialScientificArea, Uloga uloga) {
 		super();

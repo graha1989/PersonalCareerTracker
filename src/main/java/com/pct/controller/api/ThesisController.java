@@ -20,7 +20,7 @@ import com.pct.constants.RequestMappings;
 import com.pct.domain.ThesisType;
 import com.pct.domain.dto.ThesisDto;
 import com.pct.service.ThesisService;
-import com.pct.validation.ProfesorNotFoundException;
+import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.StudentNotFoundException;
 import com.pct.validation.ThesisNotFoundException;
 import com.pct.validation.ThesisTypeNotFoundException;
@@ -56,7 +56,7 @@ public class ThesisController {
 		ThesisDto thesis = new ThesisDto();
 		try {
 			thesis = thesisService.saveThesis(thesisDto);
-		} catch (ProfesorNotFoundException e) {
+		} catch (ProfessorNotFoundException e) {
 			e.printStackTrace();
 		} catch (ThesisTypeNotFoundException e) {
 			e.printStackTrace();

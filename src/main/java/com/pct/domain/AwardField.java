@@ -2,9 +2,9 @@ package com.pct.domain;
 
 public enum AwardField {
 	
-	SCIENTIFIC_FIELD("NAUČNA_OBLAST"),
+	SCIENTIFIC_FIELD("Naučna oblast"),
 
-	PEDAGOGICAL_FIELD("PEDAGOŠKA_OBLAST");
+	PEDAGOGICAL_FIELD("Pedagoška oblast");
 
 	private String awardField;
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pct.domain.ThesisType;
 import com.pct.domain.dto.ThesisDto;
-import com.pct.validation.ProfesorNotFoundException;
+import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.StudentNotFoundException;
 import com.pct.validation.ThesisNotFoundException;
 import com.pct.validation.ThesisTypeNotFoundException;
@@ -15,7 +15,7 @@ public interface ThesisService {
 
 	List<ThesisType> findAllThesisType();
 
-	ThesisDto saveThesis(ThesisDto thesisDto) throws ProfesorNotFoundException, ThesisTypeNotFoundException, StudentNotFoundException;
+	ThesisDto saveThesis(ThesisDto thesisDto) throws ProfessorNotFoundException, ThesisTypeNotFoundException, StudentNotFoundException;
 
 	ThesisType findThesisTypeById(Long id) throws ThesisTypeNotFoundException;
 

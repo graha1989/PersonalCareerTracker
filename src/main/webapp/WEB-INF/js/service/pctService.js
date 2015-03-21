@@ -103,5 +103,8 @@ app.factory("PctService", [
             url: 'api/languages?id=' + id
           }).success(callback).error(callback);
         },
+        loadAwards: function(params, callback) {
+          $http.get('api/awards/allAwards').success(callback);
+        },
       };
     }]);

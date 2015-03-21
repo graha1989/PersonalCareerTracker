@@ -39,17 +39,17 @@ public class Thesis extends AbstractEntity {
 	@OneToOne
 	@JoinColumn(name = "mentorId")
 	@JsonBackReference
-	private Profesor mentor;
+	private Professor mentor;
 	
 	@OneToOne
 	@JoinColumn(name = "commissionMemberId")
 	@JsonBackReference
-	private Profesor commissionMember;
+	private Professor commissionMember;
 	
 	@OneToOne
 	@JoinColumn(name = "commissionPresidentId")
 	@JsonBackReference
-	private Profesor commissionPresident;
+	private Professor commissionPresident;
 
 	public Thesis() {
 		super();
@@ -103,27 +103,27 @@ public class Thesis extends AbstractEntity {
 		this.student = student;
 	}
 
-	public Profesor getMentor() {
+	public Professor getMentor() {
 		return mentor;
 	}
 
-	public void setMentor(Profesor mentor) {
+	public void setMentor(Professor mentor) {
 		this.mentor = mentor;
 	}
 
-	public Profesor getCommissionMember() {
+	public Professor getCommissionMember() {
 		return commissionMember;
 	}
 
-	public void setCommissionMember(Profesor commissionMember) {
+	public void setCommissionMember(Professor commissionMember) {
 		this.commissionMember = commissionMember;
 	}
 
-	public Profesor getCommissionPresident() {
+	public Professor getCommissionPresident() {
 		return commissionPresident;
 	}
 
-	public void setCommissionPresident(Profesor commissionPresident) {
+	public void setCommissionPresident(Professor commissionPresident) {
 		this.commissionPresident = commissionPresident;
 	}
 	

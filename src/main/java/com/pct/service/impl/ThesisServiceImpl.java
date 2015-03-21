@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pct.domain.Profesor;
+import com.pct.domain.Professor;
 import com.pct.domain.Student;
 import com.pct.domain.Thesis;
 import com.pct.domain.ThesisType;
@@ -18,7 +18,7 @@ import com.pct.repository.ThesisRepository;
 import com.pct.repository.ThesisTypeRepository;
 import com.pct.service.ThesisService;
 import com.pct.service.ThesisUtil;
-import com.pct.validation.ProfesorNotFoundException;
+import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.StudentNotFoundException;
 import com.pct.validation.ThesisNotFoundException;
 import com.pct.validation.ThesisTypeNotFoundException;
@@ -63,13 +63,13 @@ public class ThesisServiceImpl implements ThesisService {
 
 	@Override
 	@Transactional
-	public ThesisDto saveThesis(ThesisDto thesisDto) throws StudentNotFoundException, ProfesorNotFoundException, ThesisTypeNotFoundException {
+	public ThesisDto saveThesis(ThesisDto thesisDto) throws StudentNotFoundException, ProfessorNotFoundException, ThesisTypeNotFoundException {
 		
 		Thesis thesis = new Thesis();
 		Student student = new Student();
-		Profesor mentor = new Profesor();
-		Profesor commissionPresident = new Profesor();
-		Profesor commissionMember = new Profesor();
+		Professor mentor = new Professor();
+		Professor commissionPresident = new Professor();
+		Professor commissionMember = new Professor();
 		ThesisType thesisType = new ThesisType();
 		
 		if (thesisDto.getStudentId() == null || studentRepository.findOne(thesisDto.getStudentId()) == null) {
@@ -79,19 +79,19 @@ public class ThesisServiceImpl implements ThesisService {
 		}
 		
 		if (thesisDto.getMentorId() == null || professorRepository.findOne(thesisDto.getMentorId()) == null) {
-			throw new ProfesorNotFoundException();
+			throw new ProfessorNotFoundException();
 		} else {
 			mentor = professorRepository.findOne(thesisDto.getMentorId());
 		}
 		
 		if (thesisDto.getCommissionPresidentId() == null || professorRepository.findOne(thesisDto.getCommissionPresidentId()) == null) {
-			throw new ProfesorNotFoundException();
+			throw new ProfessorNotFoundException();
 		} else {
 			commissionPresident = professorRepository.findOne(thesisDto.getCommissionPresidentId());
 		}
 		
 		if (thesisDto.getCommissionMemberId() == null || professorRepository.findOne(thesisDto.getCommissionMemberId()) == null) {
-			throw new ProfesorNotFoundException();
+			throw new ProfessorNotFoundException();
 		} else {
 			commissionMember = professorRepository.findOne(thesisDto.getCommissionMemberId());
 		}

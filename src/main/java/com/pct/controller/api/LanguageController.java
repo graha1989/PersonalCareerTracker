@@ -24,7 +24,7 @@ import com.pct.domain.dto.LanguageExperienceDto;
 import com.pct.service.LanguageService;
 import com.pct.validation.LanguageExperienceNotFoundException;
 import com.pct.validation.LanguageNotFoundException;
-import com.pct.validation.ProfesorNotFoundException;
+import com.pct.validation.ProfessorNotFoundException;
 
 @RestController
 @RequestMapping("/api/languages")
@@ -62,7 +62,7 @@ public class LanguageController {
 			language = languageService.saveLanguageExperience(languageExperienceDto);
 		} catch (LanguageNotFoundException e) {
 			e.printStackTrace();
-		} catch (ProfesorNotFoundException e) {
+		} catch (ProfessorNotFoundException e) {
 			e.printStackTrace();
 		}
 

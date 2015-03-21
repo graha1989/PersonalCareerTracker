@@ -7,90 +7,90 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pct.domain.Profesor;
-import com.pct.domain.dto.ProfesorFormaDto;
+import com.pct.domain.Professor;
+import com.pct.domain.dto.ProfessorDto;
 import com.pct.repository.ProfesorRepository;
-import com.pct.service.ProfesorService;
-import com.pct.service.ProfesorUtil;
-import com.pct.validation.ProfesorNotFoundException;
+import com.pct.service.ProfessorService;
+import com.pct.service.ProfessorUtil;
+import com.pct.validation.ProfessorNotFoundException;
 
 @Service
-public class ProfesorServiceImpl implements ProfesorService {
+public class ProfesorServiceImpl implements ProfessorService {
 
 	@Autowired
 	private ProfesorRepository profesorRepository;
 
 	@Override
 	@Transactional
-	public ProfesorFormaDto findProfesorByUserName(String userName) throws ProfesorNotFoundException {
+	public ProfessorDto findProfesorByUserName(String userName) throws ProfessorNotFoundException {
 
-		ProfesorFormaDto profesorFormaDto;
+		ProfessorDto professorDto;
 
 		if (userName == null || profesorRepository.findByUserName(userName) == null) {
-			throw new ProfesorNotFoundException();
+			throw new ProfessorNotFoundException();
 		} else {
-			Profesor profesor = profesorRepository.findByUserName(userName);
-			profesorFormaDto = new ProfesorFormaDto(profesor.getUserName(), profesor.getPassword(),
-					profesor.getEmail(), profesor.getUloga(), profesor.getName(), profesor.getSurname(),
-					profesor.getFathersName(), profesor.getDateOfBirth(), profesor.getPlaceOfBirth(),
-					profesor.getCountryOfBirth(), profesor.getScientificArea(), profesor.getSpecialScientificArea(),
-					profesor.getId());
+			Professor professor = profesorRepository.findByUserName(userName);
+			professorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(),
+					professor.getEmail(), professor.getUloga(), professor.getName(), professor.getSurname(),
+					professor.getFathersName(), professor.getDateOfBirth(), professor.getPlaceOfBirth(),
+					professor.getCountryOfBirth(), professor.getScientificArea(), professor.getSpecialScientificArea(),
+					professor.getId());
 		}
 
-		return profesorFormaDto;
+		return professorDto;
 	}
 
 	@Override
 	@Transactional
-	public ProfesorFormaDto findProfesorById(Long id) throws ProfesorNotFoundException {
+	public ProfessorDto findProfesorById(Long id) throws ProfessorNotFoundException {
 
-		ProfesorFormaDto ProfesorFormaDto;
+		ProfessorDto ProfessorDto;
 
 		if (id == null || profesorRepository.findOne(id) == null) {
-			throw new ProfesorNotFoundException();
+			throw new ProfessorNotFoundException();
 		} else {
-			Profesor profesor = profesorRepository.findOne(id);
-			ProfesorFormaDto = new ProfesorFormaDto(profesor.getUserName(), profesor.getPassword(),
-					profesor.getEmail(), profesor.getUloga(), profesor.getName(), profesor.getSurname(),
-					profesor.getFathersName(), profesor.getDateOfBirth(), profesor.getPlaceOfBirth(),
-					profesor.getCountryOfBirth(), profesor.getScientificArea(), profesor.getSpecialScientificArea(),
-					profesor.getId());
+			Professor professor = profesorRepository.findOne(id);
+			ProfessorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(),
+					professor.getEmail(), professor.getUloga(), professor.getName(), professor.getSurname(),
+					professor.getFathersName(), professor.getDateOfBirth(), professor.getPlaceOfBirth(),
+					professor.getCountryOfBirth(), professor.getScientificArea(), professor.getSpecialScientificArea(),
+					professor.getId());
 		}
 
-		return ProfesorFormaDto;
+		return ProfessorDto;
 	}
 
 	@Override
 	@Transactional
-	public void saveProfesor(ProfesorFormaDto profesorFormaDto) {
+	public void saveProfesor(ProfessorDto professorDto) {
 
-		Profesor profesor = new Profesor();
+		Professor professor = new Professor();
 
-		if (profesorFormaDto.getId() != null) {
-			profesor = ProfesorUtil.createProfesorInstanceFromProfesorFormaDTO(profesorFormaDto);
+		if (professorDto.getId() != null) {
+			professor = ProfessorUtil.createProfesorInstanceFromProfesorFormaDTO(professorDto);
 		} else {
-			profesor = ProfesorUtil.createNewProfesorInstanceFromProfesorFormaDTO(profesorFormaDto);
+			professor = ProfessorUtil.createNewProfesorInstanceFromProfesorFormaDTO(professorDto);
 		}
 
-		profesorRepository.saveAndFlush(profesor);
+		profesorRepository.saveAndFlush(professor);
 
 	}
 
 	@Override
 	@Transactional
-	public List<ProfesorFormaDto> findProfessorsStartsWith(String value, Long idProf, Long idMentor)
-			throws ProfesorNotFoundException {
+	public List<ProfessorDto> findProfessorsStartsWith(String value, Long idProf, Long idMentor)
+			throws ProfessorNotFoundException {
 		
-		List<ProfesorFormaDto> professorsDtoList = new ArrayList<ProfesorFormaDto>();
-		List<Profesor> professorsList = new ArrayList<Profesor>();
+		List<ProfessorDto> professorsDtoList = new ArrayList<ProfessorDto>();
+		List<Professor> professorsList = new ArrayList<Professor>();
 		
 		if (idProf == null) {
 			professorsList = profesorRepository.findByNameLikeOrSurnameLike(value, idMentor);
 		} else {
 			professorsList = profesorRepository.findByNameLikeOrSurnameLike(value, idProf, idMentor);
 		}
-		for (Profesor p : professorsList) {
-			ProfesorFormaDto professorDto = new ProfesorFormaDto(p);
+		for (Professor p : professorsList) {
+			ProfessorDto professorDto = new ProfessorDto(p);
 			professorDto.setId(p.getId());
 			professorsDtoList.add(professorDto);
 		}

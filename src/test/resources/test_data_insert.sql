@@ -54,3 +54,7 @@ INSERT INTO language_experience (profesorId, languageId, writing, reading, prono
 	('3', '4', '0', '1', '1'),
 	('3', '7', '1', '0', '1'),
 	('3', '15', '0', '0', '1');
+INSERT INTO award (awardName, awardedBy, dateOfAward, professorId, awardType, awardField) VALUES
+	('Mileva Marić Anštajn', 'Univerzitet Novi Sad', '2006-09-15', '3', 'PRIZE', 'SCIENTIFIC_FIELD'),
+	('Mihajlo Pupin', 'Univerzitet Novi Sad', '2008-09-15', '3', 'PRIZE', 'SCIENTIFIC_FIELD'),
+	('Dositej Obradović', 'Univerzitet Novi Sad', '2013-09-15', '3', 'PRIZE', 'PEDAGOGICAL_FIELD');	

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.Language;
 import com.pct.domain.LanguageExperience;
-import com.pct.domain.Profesor;
+import com.pct.domain.Professor;
 import com.pct.domain.dto.LanguageDto;
 import com.pct.domain.dto.LanguageExperienceDto;
 import com.pct.repository.LanguageExperienceRepository;
@@ -19,7 +19,7 @@ import com.pct.service.LanguageExperienceUtil;
 import com.pct.service.LanguageService;
 import com.pct.validation.LanguageExperienceNotFoundException;
 import com.pct.validation.LanguageNotFoundException;
-import com.pct.validation.ProfesorNotFoundException;
+import com.pct.validation.ProfessorNotFoundException;
 
 @Service
 public class LanguageServiceImpl implements LanguageService {
@@ -55,11 +55,11 @@ public class LanguageServiceImpl implements LanguageService {
 	@Override
 	@Transactional
 	public LanguageExperienceDto saveLanguageExperience(LanguageExperienceDto languageExperienceDto)
-			throws LanguageNotFoundException, ProfesorNotFoundException {
+			throws LanguageNotFoundException, ProfessorNotFoundException {
 
 		LanguageExperience languageExperience = new LanguageExperience();
 		Language language = new Language();
-		Profesor professor = new Profesor();
+		Professor professor = new Professor();
 
 		if (languageExperienceDto.getLanguageId() == null
 				|| languageRepo.findOne(languageExperienceDto.getLanguageId()) == null) {
@@ -70,7 +70,7 @@ public class LanguageServiceImpl implements LanguageService {
 
 		if (languageExperienceDto.getProfessorId() == null
 				|| professorRepository.findOne(languageExperienceDto.getProfessorId()) == null) {
-			throw new ProfesorNotFoundException();
+			throw new ProfessorNotFoundException();
 		} else {
 			professor = professorRepository.findOne(languageExperienceDto.getProfessorId());
 		}

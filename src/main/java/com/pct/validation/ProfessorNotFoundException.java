@@ -1,13 +1,13 @@
 package com.pct.validation;
 
-public class ProfesorNotFoundException extends Exception {
+public class ProfessorNotFoundException extends Exception {
 	
 	private static final long serialVersionUID = 5551129679593877195L;
 
 	/**
 	 * Constructor.
 	 */
-	public ProfesorNotFoundException() {
+	public ProfessorNotFoundException() {
 		super();
 	}
 
@@ -16,7 +16,7 @@ public class ProfesorNotFoundException extends Exception {
 	 * 
 	 * @param message
 	 */
-	public ProfesorNotFoundException(String message) {
+	public ProfessorNotFoundException(String message) {
 		super(message);
 	}
 
@@ -25,7 +25,7 @@ public class ProfesorNotFoundException extends Exception {
 	 * 
 	 * @param cause
 	 */
-	public ProfesorNotFoundException(Throwable cause) {
+	public ProfessorNotFoundException(Throwable cause) {
 		super(cause);
 	}
 	

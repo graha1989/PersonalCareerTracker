@@ -7,10 +7,10 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import com.pct.domain.Profesor;
+import com.pct.domain.Professor;
 import com.pct.domain.Uloga;
 
-public class ProfesorFormaDto implements Serializable {
+public class ProfessorDto implements Serializable {
 
 	private static final long serialVersionUID = -1976948443456869445L;
 
@@ -63,11 +63,11 @@ public class ProfesorFormaDto implements Serializable {
 	
 	protected Long id;
 	
-	public ProfesorFormaDto() {
+	public ProfessorDto() {
 		super();
 	}
 
-	public ProfesorFormaDto(String userName, String password, String email, Uloga uloga,
+	public ProfessorDto(String userName, String password, String email, Uloga uloga,
 			String name, String surname, String fathersName, Date dateOfBirth, String placeOfBirth,
 			String countryOfBirth, String scientificArea, String specialScientificArea, Long id) {
 		super();
@@ -86,7 +86,7 @@ public class ProfesorFormaDto implements Serializable {
 		this.id = id;
 	}
 	
-	public ProfesorFormaDto(Profesor p) {
+	public ProfessorDto(Professor p) {
 		super();
 		this.userName = p.getUserName();
 		this.password = p.getPassword();

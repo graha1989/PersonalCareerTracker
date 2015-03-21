@@ -30,7 +30,7 @@ public class Award extends AbstractEntity {
 	@OneToOne
 	@JoinColumn(name = "professorId")
 	@JsonBackReference
-	private Profesor professor;
+	private Professor professor;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "awardType")
@@ -68,11 +68,11 @@ public class Award extends AbstractEntity {
 		this.dateOfAward = dateOfAward;
 	}
 
-	public Profesor getProfessor() {
+	public Professor getProfessor() {
 		return professor;
 	}
 
-	public void setProfessor(Profesor professor) {
+	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
 

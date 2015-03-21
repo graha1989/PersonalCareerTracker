@@ -7,13 +7,13 @@ import com.pct.domain.dto.LanguageDto;
 import com.pct.domain.dto.LanguageExperienceDto;
 import com.pct.validation.LanguageExperienceNotFoundException;
 import com.pct.validation.LanguageNotFoundException;
-import com.pct.validation.ProfesorNotFoundException;
+import com.pct.validation.ProfessorNotFoundException;
 
 public interface LanguageService {
 	
 	List<LanguageExperienceDto> findAllLanguageExperiences(Long mentorId);
 
-	LanguageExperienceDto saveLanguageExperience(LanguageExperienceDto languageExperienceDto) throws LanguageNotFoundException, ProfesorNotFoundException;
+	LanguageExperienceDto saveLanguageExperience(LanguageExperienceDto languageExperienceDto) throws LanguageNotFoundException, ProfessorNotFoundException;
 
 	Language findLanguageById(Long id) throws LanguageNotFoundException;
 

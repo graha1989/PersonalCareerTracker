@@ -2,7 +2,7 @@ package com.pct.service;
 
 import com.pct.domain.Language;
 import com.pct.domain.LanguageExperience;
-import com.pct.domain.Profesor;
+import com.pct.domain.Professor;
 import com.pct.domain.dto.LanguageExperienceDto;
 
 /**
@@ -14,7 +14,7 @@ import com.pct.domain.dto.LanguageExperienceDto;
 public class LanguageExperienceUtil {
 
 	// EDIT LanguageExperience
-	public static LanguageExperience createLanguageExperienceInstanceFromLanguageExperienceDto(LanguageExperienceDto languageExperienceDto, Language language, Profesor professor) {
+	public static LanguageExperience createLanguageExperienceInstanceFromLanguageExperienceDto(LanguageExperienceDto languageExperienceDto, Language language, Professor professor) {
 
 		LanguageExperience languageExperience = createNewLanguageExperienceInstanceFromLanguageExperienceDto(languageExperienceDto, language, professor);
 		languageExperience.setId(languageExperienceDto.getId());
@@ -23,7 +23,7 @@ public class LanguageExperienceUtil {
 	}
 
 	// CREATE new LanguageExperience
-	public static LanguageExperience createNewLanguageExperienceInstanceFromLanguageExperienceDto(LanguageExperienceDto languageExperienceDto, Language language, Profesor professor) {
+	public static LanguageExperience createNewLanguageExperienceInstanceFromLanguageExperienceDto(LanguageExperienceDto languageExperienceDto, Language language, Professor professor) {
 
 		LanguageExperience languageExperience = new LanguageExperience();
 

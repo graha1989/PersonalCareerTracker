@@ -26,7 +26,7 @@ public class LanguageExperience extends AbstractEntity {
 	@ManyToOne
 	@JoinColumn(name = "profesorId")
 	@JsonBackReference
-	private Profesor professor;
+	private Professor professor;
 	
 	@ManyToOne
 	@JoinColumn(name = "languageId")
@@ -37,7 +37,7 @@ public class LanguageExperience extends AbstractEntity {
 		super();
 	}
 
-	public LanguageExperience(boolean writing, boolean reading, boolean pronouncing, Profesor professor,
+	public LanguageExperience(boolean writing, boolean reading, boolean pronouncing, Professor professor,
 			Language language) {
 		super();
 		this.writing = writing;
@@ -71,11 +71,11 @@ public class LanguageExperience extends AbstractEntity {
 		this.pronouncing = pronouncing;
 	}
 
-	public Profesor getProfesor() {
+	public Professor getProfesor() {
 		return professor;
 	}
 
-	public void setProfesor(Profesor professor) {
+	public void setProfesor(Professor professor) {
 		this.professor = professor;
 	}
 

@@ -1,6 +1,6 @@
 package com.pct.service;
 
-import com.pct.domain.Profesor;
+import com.pct.domain.Professor;
 import com.pct.domain.Student;
 import com.pct.domain.Thesis;
 import com.pct.domain.ThesisType;
@@ -15,7 +15,7 @@ import com.pct.domain.dto.ThesisDto;
 public class ThesisUtil {
 	
 	// EDIT Thesis
-	public static Thesis createThesisInstanceFromThesisDto(ThesisDto thesisDto, Student student, Profesor mentor, Profesor commissionPresident, Profesor commissionMember, ThesisType thesisType) {
+	public static Thesis createThesisInstanceFromThesisDto(ThesisDto thesisDto, Student student, Professor mentor, Professor commissionPresident, Professor commissionMember, ThesisType thesisType) {
 		
 		Thesis thesis = createNewThesisInstanceFromThesisiDto(thesisDto, student, mentor, commissionPresident, commissionMember, thesisType);
 		thesis.setId(thesisDto.getId());
@@ -24,7 +24,7 @@ public class ThesisUtil {
 	}
 	
 	// CREATE new Thesis
-	public static Thesis createNewThesisInstanceFromThesisiDto(ThesisDto thesisDto, Student student, Profesor mentor, Profesor commissionPresident, Profesor commissionMember, ThesisType thesisType) {
+	public static Thesis createNewThesisInstanceFromThesisiDto(ThesisDto thesisDto, Student student, Professor mentor, Professor commissionPresident, Professor commissionMember, ThesisType thesisType) {
 		
 		Thesis thesis = new Thesis();
 		

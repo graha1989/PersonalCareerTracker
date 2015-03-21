@@ -2,11 +2,11 @@ package com.pct.domain;
 
 public enum AwardType {
 	
-	RECOGNITION("PRIZNANJE"),
+	RECOGNITION("Priznanje"),
 	
-	PRIZE("NAGRADA"),
+	PRIZE("Nagrada"),
 	
-	LAUREL("ODLIKOVANJE");
+	LAUREL("Odlikovanje");
 	
 	private String awardType;
 

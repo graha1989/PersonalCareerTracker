@@ -32,11 +32,11 @@
 							ng-repeat="award in awards">
 							<td>{{ award.awardType }}</td>
 							<td>{{ award.awardName }}</td>
-							<td>{{ award.dateOfAward }}</td>
+							<td>{{ award.dateOfAward | date:'dd-MM-yyyy' }}</td>
 							<td>{{ award.awardedBy }}</td>
 							<td>{{ award.awardField }}</td>
-							<td class="delete"><a ng-click="deleteAward(award.id, $index)"><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.delete }}</a></td>
-							<td class="edit"><a ng-click="editAward()"><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.edit }}</a></td>
+							<td class="delete"><a ng-click="deleteAward(award.id, $index)"><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.awardButtons.delete }}</a></td>
+							<td class="edit"><a ng-click="editAward()"><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.awardButtons.edit }}</a></td>
 						</tr>
 						<tr ng-show="noResultsFound">
 							<td colspan="7">{{ errorMessages.error.emptyTable }}</td>
