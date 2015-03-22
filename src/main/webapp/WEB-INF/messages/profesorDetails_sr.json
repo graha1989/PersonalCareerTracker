@@ -7,10 +7,12 @@
         "masterMentoringTitle": "Mentorstva na master tezama",
         "specialisticMentoringTitle": "Mentorstva na specialističkim tezama",
         "doctorMentoringTitle": "Mentorstva na doktorskim tezama",
-        "newThesisPopupTitle":"Unos nove teze",
-        "editThesisPopupTitle":"Izmena teze",
-        "languageExperienceTitle":"Znanje jezika",
-        "awardsTitle":"Priznanja, nagrade i odlikovanja"
+        "newThesisPopupTitle": "Unos nove teze",
+        "editThesisPopupTitle": "Izmena teze",
+        "languageExperienceTitle": "Znanje jezika",
+        "awardsTitle": "Priznanja, nagrade i odlikovanja",
+        "editAwardPopupTitle": "Izmena priznanja",
+        "addAwardPopupTitle": "Dodavanje novog priznanja"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -55,50 +57,57 @@
             "doctorButton": "Doktorska teza"
         },
         "mentorThesisButtons": {
-        	"delete":"Izbriši",
-			"edit":"Izmeni",
-			"add":"Dodaj novu tezu",
-			"close":"Zatvori"
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novu tezu",
+            "close": "Zatvori"
         },
         "languageButton": "Znanje jezika",
         "languageExperienceButtons": {
-        	"delete":"Izbriši",
-			"edit":"Izmeni",
-			"add":"Dodaj novi jezik",
-			"close":"Zatvori",
-			"save":"Sačuvaj",
-			"cancel":"Odustani"
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novi jezik",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
         },
         "awardButtons": {
-        	"delete":"Izbriši",
-			"edit":"Izmeni",
-			"add":"Dodaj novu nagradu",
-			"close":"Zatvori",
-			"save":"Sačuvaj",
-			"cancel":"Odustani"
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novu nagradu",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
         }
     },
-    "mentoringTableLabels" : {
-		"thesisTitle":"Naziv teze",
-		"thesisStudent":"Student",
-		"thesisCommissionPresident":"Predsednik komisije",
-		"thesisCommissionMember":"Član komisije",
-		"thesisPaperScientificArea":"Oblast rada",
-		"thesisDateOfGraduation":"Datum odbrane teze",
-		"thesisUniversityName":"Univerzitet"
-	   },
-	"languageExperienceTableLabels" : {
-		"language":"Jezik",
-		"writing":"Piše",
-		"reading":"Čita",
-		"pronouncing":"Govori",
-		"selectLanguage":"Izaberite jezik"
-	   },
-	"awardsTableLabels" : {
-		"type":"Tip",
-		"name":"Naziv",
-		"dateOfAward":"Datum dodele",
-		"awardedBy":"Dodeljeno od strane",
-		"field":"Oblast"
-	   }
+    "mentoringTableLabels": {
+        "thesisTitle": "Naziv teze",
+        "thesisStudent": "Student",
+        "thesisCommissionPresident": "Predsednik komisije",
+        "thesisCommissionMember": "Član komisije",
+        "thesisPaperScientificArea": "Oblast rada",
+        "thesisDateOfGraduation": "Datum odbrane teze",
+        "thesisUniversityName": "Univerzitet"
+    },
+    "languageExperienceTableLabels": {
+        "language": "Jezik",
+        "writing": "Piše",
+        "reading": "Čita",
+        "pronouncing": "Govori",
+        "selectLanguage": "Izaberite jezik"
+    },
+    "awardsTableLabels": {
+        "type": "Tip",
+        "name": "Naziv",
+        "dateOfAward": "Datum dodele",
+        "awardedBy": "Dodeljeno od strane",
+        "field": "Oblast"
+    },
+    "awardPopupLabels": {
+        "awardNameLabel": "Naziv priznanja",
+        "awardedByLabel": "Dodeljeno od strane",
+        "dateOfAward": "Datum dodele",
+        "awardType": "Tip",
+        "awardField": "Oblast"
+    }
 }
