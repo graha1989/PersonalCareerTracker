@@ -112,5 +112,9 @@ app.factory("PctService", [
         loadAllAwardFields: function(params, callback) {
           $http.get('api/awards/allAwardFields').success(callback);
         },
+        loadSelectedAward: function(id, callback) {
+          $http.get('api/awards/selectedAward?id=' + id).success(callback)
+                  .error(callback);
+        },
       };
     }]);

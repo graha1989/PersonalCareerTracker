@@ -65,9 +65,18 @@ app.controller("AwardController", function($scope, $routeParams, $http, $route,
 var editAwardController = function($scope, $modalInstance, $routeParams, $http,
         $route, awardId, PctService) {
 
-  $scope.patterns = {
-    onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
-    onlyNumbers: /^[0-9 ]*$/
+  $scope.award = {};
+  $scope.master = {};
+
+  $scope.allAwardTypes = [];
+  $scope.allAwardFields = [];
+
+  /* Date picker functions */
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
   };
 
   $scope.loadResources = function() {
@@ -81,33 +90,81 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
               $scope.errorMessages = angular.fromJson(response);
             });
   };
-  /*
-   * $scope.loadSelectedStudent = function(id) {
-   * PctService.loadSelectedStudent(id, function(data) { if
-   * (angular.isObject(data)) { $scope.student = data; $scope.master =
-   * angular.copy($scope.student); $scope.noResultsFound = false; } else {
-   * $scope.noResultsFound = true; } }); };
-   */
+
+  $scope.loadAllAwardTypes = function() {
+    PctService.loadAllAwardTypes($routeParams, function(data) {
+      if (angular.isObject(data) && data.length > 0) {
+        $scope.allAwardTypes = data;
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
+  }
+
+  $scope.loadAllAwardFields = function() {
+    PctService.loadAllAwardFields($routeParams, function(data) {
+      if (angular.isObject(data) && data.length > 0) {
+        $scope.allAwardFields = data;
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
+  }
+
+  $scope.loadSelectedAward = function(id) {
+    PctService.loadSelectedAward(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.award = data;
+        $scope.master = angular.copy($scope.award);
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
+  };
+
   $scope.init = function() {
-    // $scope.loadSelectedStudent(studentId);
+    $scope.loadAllAwardTypes();
+    $scope.loadAllAwardFields();
+    $scope.loadSelectedAward(awardId);
     $scope.status = $routeParams.status;
     $scope.loadResources();
   };
 
   $scope.init();
-  /*
-   * $scope.saveStudent = function() { $http({ method: 'PUT', url:
-   * "api/students", data: $scope.student, headers: { 'Content-Type':
-   * 'application/json' } }).success(function(data, status) { $("html,
-   * body").animate({ scrollTop: 0 }, "slow"); $modalInstance.close();
-   * $route.reload(); }).error(function(data, status) { if
-   * (angular.isObject(data.fieldErrors)) { $scope.fieldErrors =
-   * angular.fromJson(data.fieldErrors); } $scope.status = status; $("html,
-   * body").animate({ scrollTop: 0 }, "slow"); }); };
-   * 
-   * $scope.isUnchanged = function(student) { return angular.equals(student,
-   * $scope.master); };
-   */
+
+  $scope.saveAward = function() {
+    $http({
+      method: 'PUT',
+      url: "api/awards",
+      data: $scope.award,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).success(function(data, status) {
+      $("html, body").animate({
+        scrollTop: 0
+      }, "slow");
+      $modalInstance.close();
+      $route.reload();
+    }).error(function(data, status) {
+      if (angular.isObject(data.fieldErrors)) {
+        $scope.fieldErrors = angular.fromJson(data.fieldErrors);
+      }
+      $scope.status = status;
+      $("html, body").animate({
+        scrollTop: 0
+      }, "slow");
+    });
+  };
+
+  $scope.isUnchanged = function(award) {
+    award.dateOfAward = new Date(award.dateOfAward).getTime();
+    return angular.equals(award, $scope.master);
+  };
+
   $scope.cancel = function() {
     $modalInstance.dismiss('cancel');
   };
@@ -116,9 +173,9 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
 
 var createNewAwardController = function($scope, $modalInstance, $routeParams,
         $http, $route, PctService) {
-  
+
   $scope.award = {};
-  
+
   $scope.allAwardTypes = [];
   $scope.allAwardFields = [];
 
@@ -160,7 +217,7 @@ var createNewAwardController = function($scope, $modalInstance, $routeParams,
       }
     });
   }
-  
+
   /* Date picker functions */
   $scope.open = function($event) {
     $event.preventDefault();
@@ -168,7 +225,7 @@ var createNewAwardController = function($scope, $modalInstance, $routeParams,
 
     $scope.opened = true;
   };
-  
+
   $scope.init = function() {
     $scope.loadAllAwardTypes();
     $scope.loadAllAwardFields();

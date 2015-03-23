@@ -12,13 +12,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
+import com.pct.constants.RequestMappings;
 import com.pct.domain.AwardField;
 import com.pct.domain.AwardType;
 import com.pct.domain.dto.AwardDto;
 import com.pct.service.AwardService;
+import com.pct.validation.AwardNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
 
 @RestController
@@ -62,6 +65,13 @@ public class AwardsController {
 		}
 
 		logger.debug("Award:" + award.getAwardName() + " successfully saved.");
+
+		return new ResponseEntity<AwardDto>(award, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "selectedAward", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AwardDto> showAward(@RequestParam(value = RequestMappings.ID, required = true) Long id) throws AwardNotFoundException {
+		AwardDto award = awardService.findAwardById(id);
 
 		return new ResponseEntity<AwardDto>(award, HttpStatus.OK);
 	}

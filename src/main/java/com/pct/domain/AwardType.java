@@ -11,23 +11,32 @@ public enum AwardType {
 
 	LAUREL("Odlikovanje");
 
-	private final String awardType;
+	private final String title;
 
-	private AwardType(String awardType) {
-		this.awardType = awardType;
+	private AwardType(String title) {
+		this.title = title;
 	}
 
-	public String getAwardType() {
-		return awardType;
+	public String getName() {
+		return name();
 	}
 	
-	public static AwardType getByAwardType(String awardType) throws IllegalArgumentException {
+	public String getTitle() {
+		return title;
+	}
+
+	public static AwardType getByAwardType(String title) throws IllegalArgumentException {
 		for (AwardType awardtype : AwardType.values()) {
-			if (awardtype.awardType.equals(awardType)) {
+			if (awardtype.title.equals(title)) {
 				return awardtype;
 			}
 		}
 		throw new IllegalArgumentException("Illegal award type code");
 	}
-
+	
+	@Override
+	public String toString() {
+		return getTitle();
+	}
+	
 }

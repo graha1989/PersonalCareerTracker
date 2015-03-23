@@ -5,6 +5,7 @@ import java.util.List;
 import com.pct.domain.AwardField;
 import com.pct.domain.AwardType;
 import com.pct.domain.dto.AwardDto;
+import com.pct.validation.AwardNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
 
 public interface AwardService {
@@ -16,5 +17,7 @@ public interface AwardService {
 	List<AwardField> findAllAwardFields();
 
 	AwardDto saveAward(AwardDto awardDto) throws ProfessorNotFoundException;
+
+	AwardDto findAwardById(Long id) throws AwardNotFoundException;
 	
 }

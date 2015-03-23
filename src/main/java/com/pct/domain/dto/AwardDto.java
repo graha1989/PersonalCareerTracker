@@ -15,8 +15,8 @@ import com.pct.domain.AwardType;
 
 public class AwardDto implements Serializable {
 
-	private static final long serialVersionUID = -1007098220318687716L;
-	
+	private static final long serialVersionUID = -4169829583298510729L;
+
 	@NotEmpty
 	@Length(max = 200)
 	@SafeHtml

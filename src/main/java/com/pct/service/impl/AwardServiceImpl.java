@@ -17,10 +17,11 @@ import com.pct.repository.AwardRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.service.AwardService;
 import com.pct.service.AwardUtil;
+import com.pct.validation.AwardNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
 
 @Service
-public class AwardServiceImpl implements AwardService{
+public class AwardServiceImpl implements AwardService {
 	
 	@Autowired
 	private AwardRepository awardRepository;
@@ -75,6 +76,22 @@ public class AwardServiceImpl implements AwardService{
 		}
 
 		return new AwardDto(awardRepository.save(award));
+	}
+
+	@Override
+	@Transactional
+	public AwardDto findAwardById(Long id) throws AwardNotFoundException {
+		
+		AwardDto awardDto;
+
+		if (id == null || awardRepository.findOne(id) == null) {
+			throw new AwardNotFoundException();
+		} else {
+			Award award = awardRepository.findOne(id);
+			awardDto = new AwardDto(award);
+		}
+
+		return awardDto;
 	}
 
 }

@@ -9,23 +9,32 @@ public enum AwardField {
 
 	PEDAGOGICAL_FIELD("Pedagoška oblast");
 
-	private final String awardField;
+	private final String title;
 
-	private AwardField(String awardField) {
-		this.awardField = awardField;
+	private AwardField(String title) {
+		this.title = title;
 	}
 
-	public String getAwardField() {
-		return awardField;
+	public String getName() {
+		return name();
+	}
+	
+	public String getTitle() {
+		return title;
 	}
 
-	public static AwardField getByAwardField(String awardField) throws IllegalArgumentException {
+	public static AwardField getByAwardField(String title) throws IllegalArgumentException {
 		for (AwardField awardfield : AwardField.values()) {
-			if (awardfield.awardField.equals(awardField)) {
+			if (awardfield.title.equals(title)) {
 				return awardfield;
 			}
 		}
-		throw new IllegalArgumentException("Illegal award type code");
+		throw new IllegalArgumentException("Illegal award field code");
 	}
-
+	
+	@Override
+	public String toString() {
+		return getTitle();
+	}
+	
 }
