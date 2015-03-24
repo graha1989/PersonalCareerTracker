@@ -11,7 +11,7 @@ import com.pct.domain.Student;
 import com.pct.domain.dto.StudentDto;
 import com.pct.repository.StudentRepository;
 import com.pct.service.StudentService;
-import com.pct.service.StudentUtil;
+import com.pct.service.util.StudentUtil;
 import com.pct.validation.StudentNotFoundException;
 
 /**

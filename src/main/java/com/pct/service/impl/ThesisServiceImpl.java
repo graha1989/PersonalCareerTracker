@@ -17,7 +17,7 @@ import com.pct.repository.StudentRepository;
 import com.pct.repository.ThesisRepository;
 import com.pct.repository.ThesisTypeRepository;
 import com.pct.service.ThesisService;
-import com.pct.service.ThesisUtil;
+import com.pct.service.util.ThesisUtil;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.StudentNotFoundException;
 import com.pct.validation.ThesisNotFoundException;

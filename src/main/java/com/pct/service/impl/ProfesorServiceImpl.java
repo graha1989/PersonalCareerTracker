@@ -11,7 +11,7 @@ import com.pct.domain.Professor;
 import com.pct.domain.dto.ProfessorDto;
 import com.pct.repository.ProfesorRepository;
 import com.pct.service.ProfessorService;
-import com.pct.service.ProfessorUtil;
+import com.pct.service.util.ProfessorUtil;
 import com.pct.validation.ProfessorNotFoundException;
 
 @Service

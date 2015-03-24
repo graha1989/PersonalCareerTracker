@@ -16,7 +16,7 @@ import com.pct.domain.enums.AwardType;
 import com.pct.repository.AwardRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.service.AwardService;
-import com.pct.service.AwardUtil;
+import com.pct.service.util.AwardUtil;
 import com.pct.validation.AwardNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
 

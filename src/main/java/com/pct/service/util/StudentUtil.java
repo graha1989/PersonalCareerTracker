@@ -1,4 +1,4 @@
-package com.pct.service;
+package com.pct.service.util;
 
 import com.pct.domain.Student;
 import com.pct.domain.dto.StudentDto;

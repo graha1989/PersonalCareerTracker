@@ -1,4 +1,4 @@
-package com.pct.service;
+package com.pct.service.util;
 
 import com.pct.domain.Professor;
 import com.pct.domain.Student;
