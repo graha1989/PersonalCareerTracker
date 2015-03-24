@@ -16,11 +16,11 @@ public enum AwardType {
 	private AwardType(String title) {
 		this.title = title;
 	}
-	
+
 	public String getName() {
 		return name();
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -33,10 +33,10 @@ public enum AwardType {
 		}
 		throw new IllegalArgumentException("Illegal award type code");
 	}
-	
+
 	@Override
 	public String toString() {
 		return getTitle();
 	}
-	
+
 }
