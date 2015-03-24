@@ -1,4 +1,4 @@
-package com.pct.domain;
+package com.pct.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

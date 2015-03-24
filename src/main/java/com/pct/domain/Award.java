@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.pct.domain.enums.AwardField;
+import com.pct.domain.enums.AwardType;
 
 @Entity
 @Table(name = "award")

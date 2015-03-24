@@ -10,8 +10,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import com.pct.domain.Award;
-import com.pct.domain.AwardField;
-import com.pct.domain.AwardType;
+import com.pct.domain.enums.AwardField;
+import com.pct.domain.enums.AwardType;
 
 public class AwardDto implements Serializable {
 
