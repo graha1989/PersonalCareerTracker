@@ -135,7 +135,7 @@
 					<div class="col-sm-6">
 						<select class="ng-binding form-control" id="inputAwardType"
 							name="inputAwardType" ng-model="award.awardType"
-							ng-options="awardType as awardType.title for awardType in allAwardTypes track by awardType.name"
+							ng-options="awardType.name as awardType.title for awardType in allAwardTypes"
 							required><option value="">{{
 							resources.awardPopupLabels.awardType }}</option></select>
 							<div
@@ -153,7 +153,7 @@
     				<div class="col-sm-6">
 						<select class="ng-binding form-control" id="inputAwardField"
 							name="inputAwardField" ng-model="award.awardField"
-							ng-options="awardField as awardField.title for awardField in allAwardFields track by awardField.name"
+							ng-options="awardField.name as awardField.title for awardField in allAwardFields"
 							required><option value="">{{
 							resources.awardPopupLabels.awardField }}</option></select>
 							<div

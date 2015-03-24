@@ -27,7 +27,7 @@ import com.pct.validation.ProfessorNotFoundException;
 @RestController
 @RequestMapping("/api/awards")
 public class AwardsController {
-		
+
 	private static final Logger logger = LoggerFactory.getLogger(AwardsController.class);
 
 	@Autowired
@@ -68,12 +68,21 @@ public class AwardsController {
 
 		return new ResponseEntity<AwardDto>(award, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "selectedAward", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AwardDto> showAward(@RequestParam(value = RequestMappings.ID, required = true) Long id) throws AwardNotFoundException {
+	public ResponseEntity<AwardDto> showAward(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws AwardNotFoundException {
 		AwardDto award = awardService.findAwardById(id);
 
 		return new ResponseEntity<AwardDto>(award, HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public ResponseEntity<AwardDto> deleteAward(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws AwardNotFoundException {
+		awardService.deleteAward(id);
+
+		return new ResponseEntity<AwardDto>(HttpStatus.OK);
 	}
 
 }

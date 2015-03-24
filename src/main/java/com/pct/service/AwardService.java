@@ -19,5 +19,7 @@ public interface AwardService {
 	AwardDto saveAward(AwardDto awardDto) throws ProfessorNotFoundException;
 
 	AwardDto findAwardById(Long id) throws AwardNotFoundException;
+
+	void deleteAward(Long id) throws AwardNotFoundException;
 	
 }

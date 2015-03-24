@@ -23,7 +23,7 @@ public enum AwardField {
 		return title;
 	}
 
-	public static AwardField getByAwardField(String title) throws IllegalArgumentException {
+	public static AwardField getByTitle(String title) throws IllegalArgumentException {
 		for (AwardField awardfield : AwardField.values()) {
 			if (awardfield.title.equals(title)) {
 				return awardfield;

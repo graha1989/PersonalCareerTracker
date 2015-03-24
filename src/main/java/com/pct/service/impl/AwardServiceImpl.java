@@ -22,17 +22,17 @@ import com.pct.validation.ProfessorNotFoundException;
 
 @Service
 public class AwardServiceImpl implements AwardService {
-	
+
 	@Autowired
 	private AwardRepository awardRepository;
-	
+
 	@Autowired
 	private ProfesorRepository professorRepository;
-	
+
 	@Override
 	@Transactional
 	public List<AwardDto> findAll() {
-		
+
 		List<AwardDto> awardsDtoList = new ArrayList<AwardDto>();
 
 		List<Award> awardsList = awardRepository.findAll();
@@ -59,16 +59,16 @@ public class AwardServiceImpl implements AwardService {
 	@Override
 	@Transactional
 	public AwardDto saveAward(AwardDto awardDto) throws ProfessorNotFoundException {
-		
+
 		Award award = new Award();
 		Professor mentor = new Professor();
-		
+
 		if (awardDto.getMentorId() == null || professorRepository.findOne(awardDto.getMentorId()) == null) {
 			throw new ProfessorNotFoundException();
 		} else {
 			mentor = professorRepository.findOne(awardDto.getMentorId());
 		}
-		
+
 		if (awardDto.getId() != null) {
 			award = AwardUtil.createAwardInstanceFromAwardDto(awardDto, mentor);
 		} else {
@@ -81,7 +81,7 @@ public class AwardServiceImpl implements AwardService {
 	@Override
 	@Transactional
 	public AwardDto findAwardById(Long id) throws AwardNotFoundException {
-		
+
 		AwardDto awardDto;
 
 		if (id == null || awardRepository.findOne(id) == null) {
@@ -92,6 +92,18 @@ public class AwardServiceImpl implements AwardService {
 		}
 
 		return awardDto;
+	}
+
+	@Override
+	@Transactional
+	public void deleteAward(Long id) throws AwardNotFoundException {
+
+		if (id == null || awardRepository.findOne(id) == null) {
+			throw new AwardNotFoundException();
+		}
+
+		awardRepository.delete(id);
+
 	}
 
 }

@@ -41,6 +41,18 @@ app.controller("AwardController", function($scope, $routeParams, $http, $route,
     window.history.back();
   };
 
+  $scope.deleteAward = function(id, index) {
+    PctService.deleteAward(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.errorStatus = data.status;
+      } else {
+        $scope.successStatus = "Successfully deleted award.";
+        $scope.awards.splice(index, 1);
+        $scope.loadAwards();
+      }
+    });
+  };
+
   $scope.editAward = function(id) {
     $modal.open({
       templateUrl: 'editAwardPopup.html',
@@ -117,6 +129,8 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
     PctService.loadSelectedAward(id, function(data) {
       if (angular.isObject(data)) {
         $scope.award = data;
+        $scope.award.awardType = data.awardType.name;
+        $scope.award.awardField = data.awardField.name;
         $scope.master = angular.copy($scope.award);
         $scope.noResultsFound = false;
       } else {

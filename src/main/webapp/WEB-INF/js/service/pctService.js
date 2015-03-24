@@ -116,5 +116,11 @@ app.factory("PctService", [
           $http.get('api/awards/selectedAward?id=' + id).success(callback)
                   .error(callback);
         },
+        deleteAward: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/awards?id=' + id
+          }).success(callback).error(callback);
+        },
       };
     }]);

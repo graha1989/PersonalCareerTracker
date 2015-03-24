@@ -16,7 +16,7 @@ public enum AwardType {
 	private AwardType(String title) {
 		this.title = title;
 	}
-
+	
 	public String getName() {
 		return name();
 	}
@@ -25,7 +25,7 @@ public enum AwardType {
 		return title;
 	}
 
-	public static AwardType getByAwardType(String title) throws IllegalArgumentException {
+	public static AwardType getByTitle(String title) throws IllegalArgumentException {
 		for (AwardType awardtype : AwardType.values()) {
 			if (awardtype.title.equals(title)) {
 				return awardtype;
