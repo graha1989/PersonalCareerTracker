@@ -39,6 +39,18 @@ public class AwardsController {
 
 		return new ResponseEntity<List<AwardDto>>(awards, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "allProfessorAwards", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<List<AwardDto>> showAllProfessorAwards(@RequestParam(value = "professorId", required = true) Long professorId) {
+		List<AwardDto> awards = null;
+		try {
+			awards = awardService.findAllAwards(professorId);
+		} catch (AwardNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<List<AwardDto>>(awards, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "allAwardTypes", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<AwardType>> showAllAwardTypes() {

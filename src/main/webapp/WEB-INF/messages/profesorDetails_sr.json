@@ -12,7 +12,8 @@
         "languageExperienceTitle": "Znanje jezika",
         "awardsTitle": "Priznanja, nagrade i odlikovanja",
         "editAwardPopupTitle": "Izmena priznanja",
-        "addAwardPopupTitle": "Dodavanje novog priznanja"
+        "addAwardPopupTitle": "Dodavanje novog priznanja",
+        "projectsTitle": "Prikaz projekata"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -78,6 +79,14 @@
             "close": "Zatvori",
             "save": "Sačuvaj",
             "cancel": "Odustani"
+        },
+        "projectButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novu nagradu",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
         }
     },
     "mentoringTableLabels": {
@@ -102,6 +111,14 @@
         "dateOfAward": "Datum dodele",
         "awardedBy": "Dodeljeno od strane",
         "field": "Oblast"
+    },
+    "projectsTableLabels": {
+        "projectName": "Naziv projekta",
+        "financedBy": "Finansiran (od koga)",
+        "projectType": "Vrsta projekta",
+        "startDate": "Započet",
+        "endDate": "Završio se",
+        "leader": "Rukovodilac"
     },
     "awardPopupLabels": {
         "awardNameLabel": "Naziv priznanja",

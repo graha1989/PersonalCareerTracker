@@ -21,5 +21,7 @@ public interface AwardService {
 	AwardDto findAwardById(Long id) throws AwardNotFoundException;
 
 	void deleteAward(Long id) throws AwardNotFoundException;
+
+	List<AwardDto> findAllAwards(Long professorId) throws AwardNotFoundException;
 	
 }

@@ -57,6 +57,9 @@ public class Professor extends AbstractEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	private Set<Award> awards;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+	private Set<ProjectExperience> projectExperiences;
+	
 	@OneToOne
 	@JoinColumn(name = "ulogaId")
 	private Uloga uloga;
@@ -82,6 +85,8 @@ public class Professor extends AbstractEntity {
 		this.specialScientificArea = specialScientificArea;
 		this.uloga = uloga;
 		this.languageExperiences = new HashSet<LanguageExperience>();
+		this.awards = new HashSet<Award>();
+		this.projectExperiences = new HashSet<ProjectExperience>();
 	}
 	
 	public String getUserName() {
@@ -218,4 +223,22 @@ public class Professor extends AbstractEntity {
 		}
 	}
 
+	public Set<ProjectExperience> getProjectExperiences() {
+		return projectExperiences;
+	}
+
+	public void setProjectExperiences(Set<ProjectExperience> projectExperiences) {
+		this.projectExperiences.clear();
+
+		if (projectExperiences != null) {
+			this.projectExperiences.addAll(projectExperiences);
+		}
+	}
+	
+	public void addProjectExperiences(ProjectExperience projectExperience) {
+		if (projectExperiences != null) {
+			this.projectExperiences.add(projectExperience);
+		}
+	}
+	
 }

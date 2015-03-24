@@ -106,6 +106,19 @@ app.factory("PctService", [
         loadAwards: function(params, callback) {
           $http.get('api/awards/allAwards').success(callback);
         },
+        loadProfessorAwards: function(professorId) {
+          var deferred = $q.defer();
+          $http.get("api/awards/allProfessorAwards", {
+            params: {
+              professorId: professorId
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
         loadAllAwardTypes: function(params, callback) {
           $http.get('api/awards/allAwardTypes').success(callback);
         },
@@ -121,6 +134,19 @@ app.factory("PctService", [
             method: 'DELETE',
             url: 'api/awards?id=' + id
           }).success(callback).error(callback);
+        },
+        loadProfessorProjectExperiences: function(professorId) {
+          var deferred = $q.defer();
+          $http.get("api/projects/allProfessorProjecExperiences", {
+            params: {
+              professorId: professorId
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
         },
       };
     }]);

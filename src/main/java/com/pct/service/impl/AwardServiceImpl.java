@@ -106,4 +106,22 @@ public class AwardServiceImpl implements AwardService {
 
 	}
 
+	@Override
+	@Transactional
+	public List<AwardDto> findAllAwards(Long professorId) throws AwardNotFoundException {
+
+		List<AwardDto> awardDtoList = new ArrayList<AwardDto>();
+		try {
+			List<Award> awardList = awardRepository.findAllAwards(professorId);
+			for (Award a : awardList) {
+				AwardDto awardDto = new AwardDto(a);
+				awardDtoList.add(awardDto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return awardDtoList;
+	}
+
 }

@@ -1,8 +1,8 @@
-app.controller("AwardController", function($scope, $routeParams, $http, $route,
-        $modal, PctService) {
+app.controller("ProjectController", function($scope, $routeParams, $http,
+        $route, $modal, PctService) {
 
-  $scope.awards = [];
-  $scope.award = {};
+  $scope.projects = [];
+  $scope.project = {};
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
@@ -19,19 +19,20 @@ app.controller("AwardController", function($scope, $routeParams, $http, $route,
             });
   };
 
-  $scope.loadAwards = function(professorId) {
-    return PctService.loadProfessorAwards(professorId).then(function(response) {
-      if (angular.isObject(response) && response.length > 0) {
-        $scope.awards = response;
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
+  $scope.loadProjects = function(professorId) {
+    return PctService.loadProfessorProjectExperiences(professorId).then(
+            function(response) {
+              if (angular.isObject(response) && response.length > 0) {
+                $scope.projects = response;
+                $scope.noResultsFound = false;
+              } else {
+                $scope.noResultsFound = true;
+              }
+            });
   };
 
   $scope.init = function() {
-    $scope.loadAwards($routeParams.mentorId);
+    $scope.loadProjects($routeParams.mentorId);
     $scope.loadResources();
   };
 

@@ -1,11 +1,15 @@
 package com.pct.domain;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.pct.domain.enums.ProjectType;
@@ -31,7 +35,14 @@ public class Project extends AbstractEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "projectType")
 	private ProjectType projectType;
-
+	
+	@Column(name = "projectLeader")
+	@Lob
+	private String projectLeader;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+	private Set<ProjectExperience> projectExperiences;
+	
 	public Project() {
 		super();
 	}
@@ -74,6 +85,32 @@ public class Project extends AbstractEntity {
 
 	public void setProjectType(ProjectType projectType) {
 		this.projectType = projectType;
+	}
+	
+	public String getProjectLeader() {
+		return projectLeader;
+	}
+
+	public void setProjectLeader(String projectLeader) {
+		this.projectLeader = projectLeader;
+	}
+
+	public Set<ProjectExperience> getProjectExperiences() {
+		return projectExperiences;
+	}
+
+	public void setProjectExperiences(Set<ProjectExperience> projectExperiences) {
+		this.projectExperiences.clear();
+
+		if (projectExperiences != null) {
+			this.projectExperiences.addAll(projectExperiences);
+		}
+	}
+	
+	public void addProjectExperiences(ProjectExperience projectExperience) {
+		if (projectExperiences != null) {
+			this.projectExperiences.add(projectExperience);
+		}
 	}
 
 }
