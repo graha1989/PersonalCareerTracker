@@ -37,6 +37,9 @@ public class ProjectExperienceDto implements Serializable {
 	
 	private Date projectEndDate;
 	
+	@NotEmpty
+	@Length(max = 400)
+	@SafeHtml
 	private String projectLeader;
 	
 	protected Long id;

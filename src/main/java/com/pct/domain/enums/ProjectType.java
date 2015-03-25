@@ -15,6 +15,10 @@ public enum ProjectType {
 		this.title = title;
 	}
 
+	public String getName() {
+		return name();
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -27,7 +31,7 @@ public enum ProjectType {
 		}
 		throw new IllegalArgumentException("Illegal project type code");
 	}
-	
+
 	@Override
 	public String toString() {
 		return getTitle();

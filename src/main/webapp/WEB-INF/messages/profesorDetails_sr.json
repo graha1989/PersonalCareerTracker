@@ -13,7 +13,9 @@
         "awardsTitle": "Priznanja, nagrade i odlikovanja",
         "editAwardPopupTitle": "Izmena priznanja",
         "addAwardPopupTitle": "Dodavanje novog priznanja",
-        "projectsTitle": "Prikaz projekata"
+        "projectsTitle": "Prikaz projekata",
+        "editProjectPopupTitle": "Izmena projekta",
+        "editProjectPopupTooltip": "U slučaju više rukovodilaca:\nRukovodilac 1; Rukovodilac 2..."
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -83,7 +85,7 @@
         "projectButtons": {
             "delete": "Izbriši",
             "edit": "Izmeni",
-            "add": "Dodaj novu nagradu",
+            "add": "Dodaj novi projekat",
             "close": "Zatvori",
             "save": "Sačuvaj",
             "cancel": "Odustani"
@@ -116,7 +118,7 @@
         "projectName": "Naziv projekta",
         "financedBy": "Finansiran (od koga)",
         "projectType": "Vrsta projekta",
-        "startDate": "Započet",
+        "startDate": "Projekat počeo",
         "endDate": "Završio se",
         "leader": "Rukovodilac"
     },
@@ -126,5 +128,13 @@
         "dateOfAward": "Datum dodele",
         "awardType": "Tip",
         "awardField": "Oblast"
+    },
+    "projectPopupLabels": {
+        "projectType": "Tip projekta",
+        "projectName": "Naziv projekta",
+        "projectFinancedBy": "Finansiran (od koga)",
+        "projectStartDate": "Projekat počeo",
+        "projectEndDate": "Završio se",
+        "projectLeader": "Rukovodilac"
     }
 }

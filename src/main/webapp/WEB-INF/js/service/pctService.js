@@ -148,5 +148,12 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        loadAllProjectTypes: function(params, callback) {
+          $http.get('api/projects/allProjectTypes').success(callback);
+        },
+        loadSelectedProject: function(id, callback) {
+          $http.get('api/projects/selectedProject?id=' + id).success(callback)
+                  .error(callback);
+        },
       };
     }]);

@@ -54,12 +54,12 @@ app.controller("ProjectController", function($scope, $routeParams, $http,
     });
   };
 
-  $scope.editAward = function(id) {
+  $scope.editProjectExperience = function(id) {
     $modal.open({
-      templateUrl: 'editAwardPopup.html',
-      controller: editAwardController,
+      templateUrl: 'editProjectPopup.html',
+      controller: editProjectExperienceController,
       resolve: {
-        awardId: function() {
+        projectId: function() {
           return id;
         }
       }
@@ -75,21 +75,32 @@ app.controller("ProjectController", function($scope, $routeParams, $http,
 
 });
 
-var editAwardController = function($scope, $modalInstance, $routeParams, $http,
-        $route, awardId, PctService) {
+var editProjectExperienceController = function($scope, $modalInstance,
+        $routeParams, $http, $route, projectId, PctService) {
 
-  $scope.award = {};
+  $scope.project = {};
   $scope.master = {};
 
-  $scope.allAwardTypes = [];
-  $scope.allAwardFields = [];
+  $scope.allProjectTypes = [];
+
+  $scope.patterns = {
+    projectLeadersList: /^[a-zA-ZčČćĆšŠđĐžŽ][a-zA-ZčČćĆšŠđĐžŽ ;]*$/
+  };
 
   /* Date picker functions */
-  $scope.open = function($event) {
+  $scope.openProjectStartDate = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
 
-    $scope.opened = true;
+    $scope.inputProjectStartDateOpened = true;
+  };
+
+  /* Date picker functions */
+  $scope.openProjectEndDate = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.inputProjectEndDateOpened = true;
   };
 
   $scope.loadResources = function() {
@@ -104,10 +115,10 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
             });
   };
 
-  $scope.loadAllAwardTypes = function() {
-    PctService.loadAllAwardTypes($routeParams, function(data) {
+  $scope.loadAllProjectTypes = function() {
+    PctService.loadAllProjectTypes($routeParams, function(data) {
       if (angular.isObject(data) && data.length > 0) {
-        $scope.allAwardTypes = data;
+        $scope.allProjectTypes = data;
         $scope.noResultsFound = false;
       } else {
         $scope.noResultsFound = true;
@@ -115,24 +126,12 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
     });
   }
 
-  $scope.loadAllAwardFields = function() {
-    PctService.loadAllAwardFields($routeParams, function(data) {
-      if (angular.isObject(data) && data.length > 0) {
-        $scope.allAwardFields = data;
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
-  }
-
-  $scope.loadSelectedAward = function(id) {
-    PctService.loadSelectedAward(id, function(data) {
+  $scope.loadSelectedProject = function(id) {
+    PctService.loadSelectedProject(id, function(data) {
       if (angular.isObject(data)) {
-        $scope.award = data;
-        $scope.award.awardType = data.awardType.name;
-        $scope.award.awardField = data.awardField.name;
-        $scope.master = angular.copy($scope.award);
+        $scope.project = data;
+        $scope.project.projectType = data.projectType.name;
+        $scope.master = angular.copy($scope.project);
         $scope.noResultsFound = false;
       } else {
         $scope.noResultsFound = true;
@@ -141,20 +140,19 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
   };
 
   $scope.init = function() {
-    $scope.loadAllAwardTypes();
-    $scope.loadAllAwardFields();
-    $scope.loadSelectedAward(awardId);
+    $scope.loadAllProjectTypes();
+    $scope.loadSelectedProject(projectId);
     $scope.status = $routeParams.status;
     $scope.loadResources();
   };
 
   $scope.init();
 
-  $scope.saveAward = function() {
+  $scope.saveProject = function() {
     $http({
       method: 'PUT',
-      url: "api/awards",
-      data: $scope.award,
+      url: "api/projects",
+      data: $scope.project,
       headers: {
         'Content-Type': 'application/json'
       }
@@ -175,9 +173,10 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
     });
   };
 
-  $scope.isUnchanged = function(award) {
-    award.dateOfAward = new Date(award.dateOfAward).getTime();
-    return angular.equals(award, $scope.master);
+  $scope.isUnchanged = function(project) {
+    project.projectStartDate = new Date(project.projectStartDate).getTime();
+    project.projectEndDate = new Date(project.projectEndDate).getTime();
+    return angular.equals(project, $scope.master);
   };
 
   $scope.cancel = function() {

@@ -1,5 +1,6 @@
 package com.pct.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,12 +14,12 @@ public class ProjectExperience extends AbstractEntity {
 
 	private static final long serialVersionUID = -353179734183526053L;
 	
-	@ManyToOne
+	@ManyToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "profesorId")
 	@JsonBackReference
 	private Professor professor;
 	
-	@ManyToOne
+	@ManyToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "projectId")
 	@JsonBackReference
 	private Project project;

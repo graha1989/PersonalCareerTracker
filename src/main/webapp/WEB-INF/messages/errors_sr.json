@@ -5,9 +5,12 @@
 		"invalidTranscriptNumberMaxLength" : "Max. 10 characters.",
 		"invalidThesisTitleMaxLength" : "Max. 200 characters.",
 		"invalidAwardNameAndAwardedByMaxLength" : "Max. 200 characters.",
+		"invalidProjectNameFinancedByMaxLength" : "Max. 200 characters.",
+		"invalidProjectLeaderFinancedByMaxLength" : "Max. 400 characters.",
 		"invalidMinPasswordLength" : "Min. 8 characters.",
 		"onlyNumbers" : "Only numbers.",
 		"onlyLetters" : "Only letters.",
+		"projectLeadesList" : "Wrong input! Look at the tooltip, please.",
 		"required" : "Field is required.",
 		"emptyTable" : "No data."
 	}

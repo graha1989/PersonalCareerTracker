@@ -1,6 +1,9 @@
 <div>
 
-	<form name="form" id="showAllProjectExperiencesForm" novalidate
+	<form
+		name="form"
+		id="showAllProjectExperiencesForm"
+		novalidate
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
 		ng-model="project">
 
@@ -10,9 +13,11 @@
 		<div class="modal-body">
 			<fieldset>
 
-				<table ng-show="projects != []"
+				<table
+					ng-show="projects != []"
 					class="table table-condensed table-striped table-hover"
-					cellspacing="0" cellpadding="0">
+					cellspacing="0"
+					cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
 							<td>{{ resources.projectsTableLabels.projectType }}</td>
@@ -23,22 +28,24 @@
 							<td>{{ resources.projectsTableLabels.leader }}</td>
 							<td colspan="2"></td>
 						</tr>
-						<tr class="active ng-scope" ng-repeat="project in projects">
+						<tr
+							class="active ng-scope"
+							ng-repeat="project in projects">
 							<td>{{ project.projectType.title }}</td>
 							<td>{{ project.projectName }}</td>
 							<td>{{ project.projectFinancedBy }}</td>
 							<td>{{ project.projectStartDate | date:'dd-MM-yyyy' }}</td>
 							<td>{{ project.projectEndDate | date:'dd-MM-yyyy' }}</td>
 							<td>{{ project.projectLeader }}</td>
-							<td class="delete"><button class="btn btn-link btn-xs"
+							<td class="delete"><button
+									class="btn btn-link btn-xs"
 									ng-click="deleteProjectExperience(project.id, $index)">
-									<span class="glyphicon glyphicon-trash"></span> {{
-									resources.buttons.projectButtons.delete }}
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.projectButtons.delete }}
 								</button></td>
-							<td class="edit"><button class="btn btn-link btn-xs"
+							<td class="edit"><button
+									class="btn btn-link btn-xs"
 									ng-click="editProjectExperience(project.id)">
-									<span class="glyphicon glyphicon-pencil"></span> {{
-									resources.buttons.projectButtons.edit }}
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.projectButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
@@ -49,58 +56,103 @@
 			</fieldset>
 		</div>
 		<div class="modal-footer action">
-			<button id="addNewButton" class="btn btn-success btn-sm"
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
 				ng-click="createNewProjectExperience()">
-				<span class="glyphicon glyphicon-plus"></span> {{
-				resources.buttons.projectButtons.add }}
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.projectButtons.add }}
 			</button>
 		</div>
 	</form>
 
-	<script type="text/ng-template" id="editAwardPopup.html">
-		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="award">
+	<script
+		type="text/ng-template"
+		id="editProjectPopup.html">
+		<form
+			name="form"
+			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+			role="form"
+			ng-model="project">
 			<div class="modal-header">
-    			<h3 class="modal-title">{{ resources.text.editAwardPopupTitle }}</h3>
-   	 		</div>
-    		<div class="modal-body">
-    			<div class="form-group">
-    				<label for="inputAwardName" class="col-sm-4 control-label">{{ resources.awardPopupLabels.awardNameLabel }} 
-						<span class="required">*</span>
-					</label>
-    				<div class="col-sm-6">
-      					<input type="text" class="form-control" id="inputAwardName" name="inputAwardName" ng-model="award.awardName" ng-maxlength="200" required />
-						<div
-							ng-show="form.inputAwardName.$dirty && form.inputAwardName.$invalid"
-							class="awardFieldError">
-							<span
-								ng-show="form.inputAwardName.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputAwardName.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidAwardNameAndAwardedByMaxLength }}</span>
-						</div>
-   		 			</div>
-  				</div>
-  				<div class="form-group">
-    				<label for="inputAwardedBy" class="col-sm-4 control-label">{{ resources.awardPopupLabels.awardedByLabel }} 
-						<span class="required">*</span>
-					</label>
-    				<div class="col-sm-6">
-      					<input type="text" class="form-control" id="inputAwardedBy" name="inputAwardedBy" ng-model="award.awardedBy" ng-maxlength="200" required />
-						<div
-							ng-show="form.inputAwardedBy.$dirty && form.inputAwardedBy.$invalid"
-							class="awardedByFieldError">
-							<span
-								ng-show="form.inputAwardedBy.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputAwardedBy.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidAwardNameAndAwardedByMaxLength }}</span>
-						</div>
-    				</div>
-  				</div>
+				<h3 class="modal-title">{{ resources.text.editProjectPopupTitle }}</h3>
+			</div>
+			<div class="modal-body">
 				<div class="form-group">
 					<label
-						for="inputDateOfAward"
-						class="col-sm-4 control-label">{{ resources.awardPopupLabels.dateOfAward }} <span class="required">*</span>
+						for="inputProjectType"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectType }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputProjectType"
+							name="inputProjectType"
+							ng-model="project.projectType"
+							ng-options="projectType.name as projectType.title for projectType in allProjectTypes"
+							required><option value="">{{ resources.projectPopupLabels.projectType }}</option></select>
+						<div
+							ng-show="form.inputProjectType.$dirty && form.inputProjectType.$invalid"
+							class="projectTypeFieldError">
+							<span
+								ng-show="form.inputProjectType.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProjectName"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputProjectName"
+							name="inputProjectName"
+							ng-model="project.projectName"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputProjectName.$dirty && form.inputProjectName.$invalid"
+							class="projectNameFieldError">
+							<span
+								ng-show="form.inputProjectName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputProjectName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProjectFinancedBy"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectFinancedBy }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputProjectFinancedBy"
+							name="inputProjectFinancedBy"
+							ng-model="project.projectFinancedBy"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputProjectFinancedBy.$dirty && form.inputProjectFinancedBy.$invalid"
+							class="projectFinancedByFieldError">
+							<span
+							ng-show="form.inputProjectFinancedBy.$error.required"
+							class="ng-binding">{{ errorMessages.error.required }}</span> <span
+							ng-show="form.inputProjectFinancedBy.$error.maxlength"
+							class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProjectStartDate"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectStartDate }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
 						<div
@@ -109,72 +161,116 @@
 							<input
 								type="text"
 								class="form-control"
-								id="inputDateOfAward"
-								name="inputDateOfAward"
+								id="inputProjectStartDate"
+								name="inputProjectStartDate"
 								placeholder="DD-MM-GGGG"
 								datepicker-popup="dd-MM-yyyy"
-								is-open="$parent.opened"
+								is-open="$parent.inputProjectStartDateOpened"
 								show-button-bar="false"
-								ng-model="award.dateOfAward"
+								ng-model="project.projectStartDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
-								ng-click="open($event)"></span>
+								ng-click="openProjectStartDate($event)"></span>
 							</span>
 						</div>
 						<div
-							ng-show="form.inputDateOfAward.$dirty && form.inputDateOfAward.$invalid"
-							class="dateOfAwardFieldError">
+							ng-show="form.inputProjectStartDate.$dirty && form.inputProjectStartDate.$invalid"
+							class="projectStartDateFieldError">
 							<span
-								ng-show="form.inputDateOfAward.$error.required"
+								ng-show="form.inputProjectStartDate.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="inputAwardType" class="col-sm-4 control-label">{{
-						resources.awardPopupLabels.awardType }} <span class="required">*</span>
+					<label
+						for="inputProjectEndDate"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectEndDate }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<select class="ng-binding form-control" id="inputAwardType"
-							name="inputAwardType" ng-model="award.awardType"
-							ng-options="awardType.name as awardType.title for awardType in allAwardTypes"
-							required><option value="">{{
-							resources.awardPopupLabels.awardType }}</option></select>
-							<div
-								ng-show="form.inputAwardType.$dirty && form.inputAwardType.$invalid"
-								class="awardTypeFieldError">
-								<span ng-show="form.inputAwardType.$error.required"
-									class="ng-binding">{{ errorMessages.error.required }}</span>
-							</div>
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputProjectEndDate"
+								name="inputProjectEndDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputProjectEndDateOpened"
+								show-button-bar="false"
+								ng-model="project.projectEndDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openProjectEndDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputProjectEndDate.$dirty && form.inputProjectEndDate.$invalid"
+							class="projectEndDateFieldError">
+							<span
+								ng-show="form.inputProjectEndDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
-    				<label for="inputAwardField" class="col-sm-4 control-label">{{ resources.awardPopupLabels.awardField }} 
-						<span class="required">*</span>
+					<label
+						for="inputProjectLeader"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectLeader }} <span class="required">*</span>
 					</label>
-    				<div class="col-sm-6">
-						<select class="ng-binding form-control" id="inputAwardField"
-							name="inputAwardField" ng-model="award.awardField"
-							ng-options="awardField.name as awardField.title for awardField in allAwardFields"
-							required><option value="">{{
-							resources.awardPopupLabels.awardField }}</option></select>
-							<div
-								ng-show="form.inputAwardField.$dirty && form.inputAwardField.$invalid"
-								class="awardFieldFieldError">
-								<span ng-show="form.inputAwardField.$error.required"
-									class="ng-binding">{{ errorMessages.error.required }}</span>
-							</div>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<input
+								type="text"
+								class="form-control"
+								id="inputProjectLeader"
+								name="inputProjectLeader"
+								ng-model="project.projectLeader"
+								ng-pattern="patterns.projectLeadersList"
+								ng-maxlength="400"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-info-sign"
+								data-toggle="tooltip"
+								data-placement="right"
+								title="{{ resources.text.editProjectPopupTooltip }}"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputProjectLeader.$dirty && form.inputProjectLeader.$invalid"
+							class="projectLeaderFieldError">
+							<span
+								ng-show="form.inputProjectLeader.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputProjectLeader.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span> <span
+								ng-show="form.inputProjectLeader.$error.pattern"
+								class="ng-binding">{{ errorMessages.error.projectLeadesList }}</span>
+						</div>
 					</div>
-  				</div>
-   			</div>
-   			<div class="modal-footer action">
-		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="$parent.form.$invalid || isUnchanged(award)" ng-click="saveAward()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.awardButtons.edit }}</button>
-		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.awardButtons.close }}</button>
-  			</div>
+				</div>
+			</div>
+			<div class="modal-footer action">
+				<button
+					id="submit_button"
+					type="submit"
+					class="btn btn-success btn-sm"
+					ng-disabled="$parent.form.$invalid || isUnchanged(project)"
+					ng-click="saveProject()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.projectButtons.edit }}
+				</button>
+				<button
+					id="cancel_button"
+					class="btn btn-sm"
+					ng-click="cancel()">{{ resources.buttons.projectButtons.close }}</button>
+			</div>
 		</form>
 	</script>
 
-	<script type="text/ng-template" id="createNewAwardPopup.html">
+	<script
+		type="text/ng-template"
+		id="createNewAwardPopup.html">
 		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="award">
 			<div class="modal-header">
     			<h3 class="modal-title">{{ resources.text.addAwardPopupTitle }}</h3>
