@@ -15,7 +15,7 @@ public class ProjectExperience extends AbstractEntity {
 	private static final long serialVersionUID = -353179734183526053L;
 	
 	@ManyToOne(cascade= CascadeType.ALL)
-	@JoinColumn(name = "profesorId")
+	@JoinColumn(name = "professorId")
 	@JsonBackReference
 	private Professor professor;
 	
@@ -43,5 +43,5 @@ public class ProjectExperience extends AbstractEntity {
 	public void setProject(Project project) {
 		this.project = project;
 	}
-	
+
 }

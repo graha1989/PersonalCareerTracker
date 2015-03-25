@@ -58,3 +58,9 @@ INSERT INTO award (awardName, awardedBy, dateOfAward, professorId, awardType, aw
 	('Mileva Marić Anštajn', 'Univerzitet Novi Sad', '2006-09-15', '3', 'PRIZE', 'SCIENTIFIC_FIELD'),
 	('Mihajlo Pupin', 'Univerzitet Novi Sad', '2008-09-15', '3', 'PRIZE', 'SCIENTIFIC_FIELD'),
 	('Dositej Obradović', 'Univerzitet Novi Sad', '2013-09-15', '3', 'PRIZE', 'PEDAGOGICAL_FIELD');	
+INSERT INTO project (name, financedBy, projectStartDate, projectEndDate, projectType, projectLeader) VALUES
+	('XML Projekat', 'Vlada Republike Srbije', '2006-09-15', '2010-11-19', 'SCIENTIFIC', 'Vladimir Kurbalija; Zoran Budimac'),
+	('Etika u informatici', 'Grad Novi Sad', '2012-04-22', '2015-01-01', 'OTHER', 'Mirjana Ivanović');
+INSERT INTO project_experience (projectId, professorId, isProfessorLeader) VALUES
+	('1', '3', '0'),
+	('2', '3', '0');
