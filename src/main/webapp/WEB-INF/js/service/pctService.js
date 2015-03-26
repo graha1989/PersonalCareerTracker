@@ -155,5 +155,18 @@ app.factory("PctService", [
           $http.get('api/projects/selectedProject?id=' + id).success(callback)
                   .error(callback);
         },
+        findProjectsStartsWith: function(value) {
+          var deferred = $q.defer();
+          $http.get("api/projects/findProjectStartsWith", {
+            params: {
+              value: value
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
       };
     }]);

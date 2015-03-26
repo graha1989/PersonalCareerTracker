@@ -15,7 +15,9 @@
         "addAwardPopupTitle": "Dodavanje novog priznanja",
         "projectsTitle": "Prikaz projekata",
         "editProjectPopupTitle": "Izmena projekta",
-        "editProjectPopupTooltip": "U slučaju više rukovodilaca:\nRukovodilac 1; Rukovodilac 2..."
+        "editProjectPopupTooltip": "U slučaju više rukovodilaca:\nRukovodilac 1; Rukovodilac 2...",
+        "IamProjectLeaderTooltip": "Trenutni korisnik je rukovodilac",
+        "addNewProjectPopupTitle": "Dodavanje novog projekta"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -120,7 +122,7 @@
         "projectType": "Vrsta projekta",
         "startDate": "Projekat počeo",
         "endDate": "Završio se",
-        "leader": "Rukovodilac"
+        "leader": "Rukovodioci"
     },
     "awardPopupLabels": {
         "awardNameLabel": "Naziv priznanja",
@@ -135,6 +137,7 @@
         "projectFinancedBy": "Finansiran (od koga)",
         "projectStartDate": "Projekat počeo",
         "projectEndDate": "Završio se",
-        "projectLeader": "Rukovodilac"
+        "projectLeader": "Rukovodioci",
+        "IamLeaderAlso": "Rukovodilac"
     }
 }

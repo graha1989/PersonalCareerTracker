@@ -1,5 +1,6 @@
 package com.pct.controller.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -60,7 +61,8 @@ public class ProjectController {
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<ProjectExperienceDto> persistProjectExperience(@Valid @RequestBody ProjectExperienceDto projectExperienceDto) {
+	public ResponseEntity<ProjectExperienceDto> persistProjectExperience(
+			@Valid @RequestBody ProjectExperienceDto projectExperienceDto) {
 
 		ProjectExperienceDto projectDto = null;
 		try {
@@ -71,11 +73,23 @@ public class ProjectController {
 			e.printStackTrace();
 		} catch (ProjectNotFoundException e) {
 			e.printStackTrace();
-		} 
+		}
 
 		logger.debug("Project experience:" + projectDto.getProjectName() + " successfully saved.");
 
 		return new ResponseEntity<ProjectExperienceDto>(projectDto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "findProjectStartsWith", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<List<ProjectExperienceDto>> findProjectStartsWith(
+			@RequestParam(value = "value", required = true) String value) throws ProjectExperienceNotFoundException {
+
+		List<ProjectExperienceDto> projects = new ArrayList<ProjectExperienceDto>();
+		if (value.length() >= 3) {
+			projects = projectService.findProjectsStartsWith(value);
+		}
+
+		return new ResponseEntity<List<ProjectExperienceDto>>(projects, HttpStatus.OK);
 	}
 
 }

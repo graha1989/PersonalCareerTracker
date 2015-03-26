@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
+import com.pct.domain.Project;
 import com.pct.domain.ProjectExperience;
 import com.pct.domain.enums.ProjectType;
 
@@ -42,6 +43,8 @@ public class ProjectExperienceDto implements Serializable {
 	@SafeHtml
 	private String projectLeader;
 	
+	private boolean professorLeader;
+	
 	protected Long id;
 
 	public ProjectExperienceDto() {
@@ -49,7 +52,7 @@ public class ProjectExperienceDto implements Serializable {
 	}
 
 	public ProjectExperienceDto(String projectName, String projectFinancedBy, Long projectId, Long professorId,
-			ProjectType projectType, Date projectStartDate, Date projectEndDate, String projectLeader, Long id) {
+			ProjectType projectType, Date projectStartDate, Date projectEndDate, String projectLeader, Boolean professorLeader, Long id) {
 		super();
 		this.projectName = projectName;
 		this.projectFinancedBy = projectFinancedBy;
@@ -59,6 +62,7 @@ public class ProjectExperienceDto implements Serializable {
 		this.projectStartDate = projectStartDate;
 		this.projectEndDate = projectEndDate;
 		this.projectLeader = projectLeader;
+		this.professorLeader = professorLeader;
 		this.id = id;
 	}
 	
@@ -71,7 +75,21 @@ public class ProjectExperienceDto implements Serializable {
 		this.projectStartDate = p.getProject().getProjectStartDate();
 		this.projectEndDate = p.getProject().getProjectEndDate();
 		this.projectLeader = p.getProject().getProjectLeader();
+		this.professorLeader = p.isProfessorLeader();
 		this.id = p.getId();
+	}
+
+	public ProjectExperienceDto(Project p) {
+		this.projectName = p.getName();
+		this.projectFinancedBy = p.getFinancedBy();
+		this.projectId = p.getId();
+		this.professorId = null;
+		this.projectType = p.getProjectType();
+		this.projectStartDate = p.getProjectStartDate();
+		this.projectEndDate = p.getProjectEndDate();
+		this.projectLeader = p.getProjectLeader();
+		this.professorLeader = false;
+		this.id = null;
 	}
 
 	public String getProjectName() {
@@ -144,6 +162,14 @@ public class ProjectExperienceDto implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public boolean isProfessorLeader() {
+		return professorLeader;
+	}
+
+	public void setProfessorLeader(boolean professorLeader) {
+		this.professorLeader = professorLeader;
 	}
 	
 }

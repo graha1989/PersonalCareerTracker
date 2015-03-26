@@ -24,23 +24,24 @@ import com.pct.validation.ProjectNotFoundException;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
-	
+
 	@Autowired
 	private ProjectExperienceRepository projectExperienceRepository;
-	
+
 	@Autowired
 	private ProfesorRepository professorRepository;
-	
+
 	@Autowired
 	private ProjectRepository projectRepository;
-	
+
 	@Override
 	@Transactional
 	public List<ProjectExperienceDto> findAllProjectExperiences(Long professorId) {
-		
+
 		List<ProjectExperienceDto> projectDtoList = new ArrayList<ProjectExperienceDto>();
 		try {
-			List<ProjectExperience> projectExperienceList = projectExperienceRepository.findAllProjectExperiences(professorId);
+			List<ProjectExperience> projectExperienceList = projectExperienceRepository
+					.findAllProjectExperiences(professorId);
 			for (ProjectExperience p : projectExperienceList) {
 				ProjectExperienceDto projectExperienceDto = new ProjectExperienceDto(p);
 				projectDtoList.add(projectExperienceDto);
@@ -83,25 +84,43 @@ public class ProjectServiceImpl implements ProjectService {
 		Professor professor = new Professor();
 		Project project = new Project();
 
-		if (projectExperienceDto.getProfessorId() == null || professorRepository.findOne(projectExperienceDto.getProfessorId()) == null) {
+		if (projectExperienceDto.getProfessorId() == null
+				|| professorRepository.findOne(projectExperienceDto.getProfessorId()) == null) {
 			throw new ProfessorNotFoundException();
 		} else {
 			professor = professorRepository.findOne(projectExperienceDto.getProfessorId());
 		}
-		
-		if (projectExperienceDto.getProjectId() == null || projectRepository.findOne(projectExperienceDto.getProjectId()) == null) {
+
+		if (projectExperienceDto.getProjectId() == null
+				|| projectRepository.findOne(projectExperienceDto.getProjectId()) == null) {
 			throw new ProjectNotFoundException();
 		} else {
 			project = projectRepository.findOne(projectExperienceDto.getProjectId());
 		}
 
 		if (projectExperienceDto.getId() != null) {
-			projectExperience = ProjectUtil.createProjectExperienceInstanceFromProjectExperienceDto(projectExperienceDto, professor, project);
+			projectExperience = ProjectUtil.createProjectExperienceInstanceFromProjectExperienceDto(
+					projectExperienceDto, professor, project);
 		} else {
-			projectExperience = ProjectUtil.createNewProjectExperienceInstanceFromProjectExperienceDto(projectExperienceDto, professor, project);
+			projectExperience = ProjectUtil.createNewProjectExperienceInstanceFromProjectExperienceDto(
+					projectExperienceDto, professor, project);
 		}
-		
+
 		return new ProjectExperienceDto(projectExperienceRepository.save(projectExperience));
+	}
+
+	@Override
+	@Transactional
+	public List<ProjectExperienceDto> findProjectsStartsWith(String value) {
+
+		List<ProjectExperienceDto> projectsDtoList = new ArrayList<ProjectExperienceDto>();
+
+		List<Project> projectsList = projectRepository.findByNameLike(value);
+		for (Project p : projectsList) {
+			ProjectExperienceDto projectDto = new ProjectExperienceDto(p);
+			projectsDtoList.add(projectDto);
+		}
+		return projectsDtoList;
 	}
 
 }

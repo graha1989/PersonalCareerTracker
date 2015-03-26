@@ -26,10 +26,11 @@ public class ProjectUtil {
 		project.setProjectStartDate(projectExperienceDto.getProjectStartDate());
 		project.setProjectEndDate(projectExperienceDto.getProjectEndDate());
 		project.setProjectType(projectExperienceDto.getProjectType());
-		project.setProjectLeader(project.getProjectLeader());
+		project.setProjectLeader(projectExperienceDto.getProjectLeader());
 		
 		projectExperience.setProfessor(professor);
 		projectExperience.setProject(project);
+		projectExperience.setProfessorLeader(projectExperienceDto.isProfessorLeader());
 		
 		return projectExperience;
 	}

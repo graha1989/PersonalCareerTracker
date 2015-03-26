@@ -23,6 +23,8 @@ public class ProjectExperience extends AbstractEntity {
 	@JoinColumn(name = "projectId")
 	@JsonBackReference
 	private Project project;
+	
+	private boolean professorLeader;
 
 	public ProjectExperience() {
 		super();
@@ -42,6 +44,14 @@ public class ProjectExperience extends AbstractEntity {
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+
+	public boolean isProfessorLeader() {
+		return professorLeader;
+	}
+
+	public void setProfessorLeader(boolean professorLeader) {
+		this.professorLeader = professorLeader;
 	}
 
 }
