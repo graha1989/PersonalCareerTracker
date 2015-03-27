@@ -111,11 +111,11 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	@Transactional
-	public List<ProjectExperienceDto> findProjectsStartsWith(String value) {
+	public List<ProjectExperienceDto> findProjectsStartsWith(String value, List<Long> projectIds) {
 
 		List<ProjectExperienceDto> projectsDtoList = new ArrayList<ProjectExperienceDto>();
 
-		List<Project> projectsList = projectRepository.findByNameLike(value);
+		List<Project> projectsList = projectRepository.findByNameLike(value, projectIds);
 		for (Project p : projectsList) {
 			ProjectExperienceDto projectDto = new ProjectExperienceDto(p);
 			projectsDtoList.add(projectDto);

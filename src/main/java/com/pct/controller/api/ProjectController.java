@@ -82,11 +82,12 @@ public class ProjectController {
 
 	@RequestMapping(value = "findProjectStartsWith", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<ProjectExperienceDto>> findProjectStartsWith(
-			@RequestParam(value = "value", required = true) String value) throws ProjectExperienceNotFoundException {
+			@RequestParam(value = "value", required = true) String value,
+			@RequestParam(value = "projectIds", required = false) List<Long> projectIds) throws ProjectExperienceNotFoundException {
 
 		List<ProjectExperienceDto> projects = new ArrayList<ProjectExperienceDto>();
 		if (value.length() >= 3) {
-			projects = projectService.findProjectsStartsWith(value);
+			projects = projectService.findProjectsStartsWith(value, projectIds);
 		}
 
 		return new ResponseEntity<List<ProjectExperienceDto>>(projects, HttpStatus.OK);

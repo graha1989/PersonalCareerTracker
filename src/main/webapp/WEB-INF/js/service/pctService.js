@@ -155,11 +155,12 @@ app.factory("PctService", [
           $http.get('api/projects/selectedProject?id=' + id).success(callback)
                   .error(callback);
         },
-        findProjectsStartsWith: function(value) {
+        findProjectsStartsWith: function(value, projectIds) {
           var deferred = $q.defer();
           $http.get("api/projects/findProjectStartsWith", {
             params: {
-              value: value
+              value: value,
+              projectIds: projectIds
             }
           }).success(function(response) {
             deferred.resolve(response);

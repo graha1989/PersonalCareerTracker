@@ -18,6 +18,6 @@ public interface ProjectService {
 
 	ProjectExperienceDto saveProjectExperience(ProjectExperienceDto projectExperienceDto) throws ProjectExperienceNotFoundException, ProfessorNotFoundException, ProjectNotFoundException;
 
-	List<ProjectExperienceDto> findProjectsStartsWith(String value);
+	List<ProjectExperienceDto> findProjectsStartsWith(String value, List<Long> projectIds);
 	
 }
