@@ -93,7 +93,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 		if (projectExperienceDto.getProjectId() == null
 				|| projectRepository.findOne(projectExperienceDto.getProjectId()) == null) {
-			throw new ProjectNotFoundException();
+			project = new Project();
 		} else {
 			project = projectRepository.findOne(projectExperienceDto.getProjectId());
 		}

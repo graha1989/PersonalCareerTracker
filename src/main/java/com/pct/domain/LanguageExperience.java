@@ -24,12 +24,12 @@ public class LanguageExperience extends AbstractEntity {
 	@Column(name = "pronouncing")
 	private boolean pronouncing;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "profesorId")
 	@JsonBackReference
 	private Professor professor;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "languageId")
 	@JsonBackReference
 	private Language language;

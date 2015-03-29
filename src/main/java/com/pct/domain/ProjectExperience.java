@@ -14,12 +14,12 @@ public class ProjectExperience extends AbstractEntity {
 
 	private static final long serialVersionUID = -353179734183526053L;
 	
-	@ManyToOne(cascade= CascadeType.ALL)
+	@ManyToOne(cascade= CascadeType.MERGE)
 	@JoinColumn(name = "professorId")
 	@JsonBackReference
 	private Professor professor;
 	
-	@ManyToOne(cascade= CascadeType.ALL)
+	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "projectId")
 	@JsonBackReference
 	private Project project;

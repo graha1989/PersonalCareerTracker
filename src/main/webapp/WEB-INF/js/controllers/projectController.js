@@ -152,6 +152,11 @@ var editProjectExperienceController = function($scope, $modalInstance,
 
   $scope.updateLeadersList = function($event) {
     var checkbox = $event.target;
+    $scope.projectLeadersArray = [];
+    for (var i = 0; i < $scope.projectLeaderCustom.split(";").length; i++) {
+      $scope.projectLeadersArray.push($scope.projectLeaderCustom.split(";")[i]
+              .trim());
+    }
     var index = $scope.arrayContainsElement($scope.projectLeadersArray,
             $scope.professorNameAndSurname);
     if (checkbox.checked && index == -1) {
@@ -266,6 +271,8 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
   $scope.projectLeadersArray = [];
   $scope.projectLeaderCustom = "";
 
+  $scope.isExistingProject = false;
+
   $scope.patterns = {
     projectLeadersList: /^[a-zA-ZčČćĆšŠđĐžŽ][a-zA-ZčČćĆšŠđĐžŽ ;]*$/
   };
@@ -301,6 +308,11 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
 
   $scope.updateLeadersList = function($event) {
     var checkbox = $event.target;
+    $scope.projectLeadersArray = [];
+    for (var i = 0; i < $scope.projectLeaderCustom.split(";").length; i++) {
+      $scope.projectLeadersArray.push($scope.projectLeaderCustom.split(";")[i]
+              .trim());
+    }
     var index = $scope.arrayContainsElement($scope.projectLeadersArray,
             $scope.professorNameAndSurname);
     if (checkbox.checked && index == -1) {
@@ -384,16 +396,16 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
   };
 
   $scope.onSelectProject = function() {
+    $scope.isExistingProject = true;
     $scope.project = angular.copy($scope.selectedProject);
     $scope.project.projectType = $scope.project.projectType.name;
     $scope.projectLeaderCustom = $scope.project.projectLeader;
-    for (var i = 0; i < $scope.projectLeaderCustom.split(";").length; i++) {
-      $scope.projectLeadersArray.push($scope.projectLeaderCustom.split(";")[i]
-              .trim());
-    }
   };
 
   $scope.saveProjectExperience = function() {
+    if (!$scope.isExistingProject) {
+      $scope.project.projectName = $scope.selectedProject;
+    }
     $scope.project.professorId = $routeParams.mentorId;
     $scope.project.projectLeader = $scope.projectLeaderCustom;
     $http({
