@@ -85,20 +85,18 @@ var editProjectExperienceController = function($scope, $modalInstance,
 
   $scope.project = {};
   $scope.master = {};
-
   $scope.allProjectTypes = [];
-
   $scope.professor = {};
   $scope.professorNameAndSurname = "";
-
   $scope.projectLeadersArray = [];
-  $scope.projectLeaderCustom = "";
+  $scope.newProjectLeader = "";
 
   $scope.patterns = {
-    projectLeadersList: /^[a-zA-ZčČćĆšŠđĐžŽ][a-zA-ZčČćĆšŠđĐžŽ ;]*$/
+    onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
+    onlyNumbers: /^[0-9 ]*$/
   };
 
-  /* Date picker functions */
+  /* Date picker functions for start date */
   $scope.openProjectStartDate = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
@@ -106,7 +104,7 @@ var editProjectExperienceController = function($scope, $modalInstance,
     $scope.inputProjectStartDateOpened = true;
   };
 
-  /* Date picker functions */
+  /* Date picker functions for end date */
   $scope.openProjectEndDate = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
@@ -150,13 +148,16 @@ var editProjectExperienceController = function($scope, $modalInstance,
     });
   };
 
+  $scope.createLeadersArray = function() {
+    var array = [];
+    for (var i = 0; i < $scope.project.projectLeader.split(";").length; i++) {
+      array.push($scope.project.projectLeader.split(";")[i].trim());
+    }
+    return array;
+  }
+
   $scope.updateLeadersList = function($event) {
     var checkbox = $event.target;
-    $scope.projectLeadersArray = [];
-    for (var i = 0; i < $scope.projectLeaderCustom.split(";").length; i++) {
-      $scope.projectLeadersArray.push($scope.projectLeaderCustom.split(";")[i]
-              .trim());
-    }
     var index = $scope.arrayContainsElement($scope.projectLeadersArray,
             $scope.professorNameAndSurname);
     if (checkbox.checked && index == -1) {
@@ -168,9 +169,9 @@ var editProjectExperienceController = function($scope, $modalInstance,
   };
 
   $scope.constructLeadersString = function(array) {
-    $scope.projectLeaderCustom = "";
+    $scope.project.projectLeader = "";
     for (var i = 0; i < array.length; i++) {
-      $scope.projectLeaderCustom = $scope.projectLeaderCustom
+      $scope.project.projectLeader = $scope.project.projectLeader
               + ((i > 0 && i < array.length) ? "; " : "") + array[i];
     }
   };
@@ -187,27 +188,18 @@ var editProjectExperienceController = function($scope, $modalInstance,
   };
 
   $scope.loadSelectedProject = function(id) {
-    PctService
-            .loadSelectedProject(
-                    id,
-                    function(data) {
-                      if (angular.isObject(data)) {
-                        $scope.project = data;
-                        $scope.project.projectType = data.projectType.name;
-                        $scope.master = angular.copy($scope.project);
-                        for (var i = 0; i < $scope.project.projectLeader
-                                .split(";").length; i++) {
-                          $scope.projectLeadersArray
-                                  .push($scope.project.projectLeader.split(";")[i]
-                                          .trim());
-                        }
-                        $scope
-                                .constructLeadersString($scope.projectLeadersArray);
-                        $scope.noResultsFound = false;
-                      } else {
-                        $scope.noResultsFound = true;
-                      }
-                    });
+    PctService.loadSelectedProject(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.project = data;
+        $scope.project.projectType = data.projectType.name;
+        $scope.master = angular.copy($scope.project);
+        $scope.projectLeadersArray = $scope.createLeadersArray();
+        $scope.constructLeadersString($scope.projectLeadersArray);
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
   };
 
   $scope.init = function() {
@@ -220,8 +212,18 @@ var editProjectExperienceController = function($scope, $modalInstance,
 
   $scope.init();
 
+  $scope.addProjectLeader = function() {
+    $scope.projectLeadersArray.push($scope.newProjectLeader);
+    $scope.constructLeadersString($scope.projectLeadersArray);
+    $scope.newProjectLeader = "";
+  };
+
+  $scope.removeProjectLeader = function(index) {
+    $scope.projectLeadersArray.splice(index, 1);
+    $scope.constructLeadersString($scope.projectLeadersArray);
+  };
+
   $scope.saveProject = function() {
-    $scope.project.projectLeader = $scope.projectLeaderCustom;
     $http({
       method: 'PUT',
       url: "api/projects",
@@ -264,20 +266,18 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
   $scope.project = {};
   $scope.selectedProject = [];
   $scope.allProjectTypes = [];
-
   $scope.professor = {};
   $scope.professorNameAndSurname = "";
-
   $scope.projectLeadersArray = [];
-  $scope.projectLeaderCustom = "";
-
+  $scope.newProjectLeader = "";
   $scope.isExistingProject = false;
-
+  
   $scope.patterns = {
-    projectLeadersList: /^[a-zA-ZčČćĆšŠđĐžŽ][a-zA-ZčČćĆšŠđĐžŽ ;]*$/
+    onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
+    onlyNumbers: /^[0-9 ]*$/
   };
 
-  /* Date picker functions */
+  /* Date picker functions for start date */
   $scope.openProjectStartDate = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
@@ -285,7 +285,7 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
     $scope.inputProjectStartDateOpened = true;
   };
 
-  /* Date picker functions */
+  /* Date picker functions for end date */
   $scope.openProjectEndDate = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
@@ -306,15 +306,19 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
     });
   };
 
+  $scope.createLeadersArray = function() {
+    var array = [];
+    for (var i = 0; i < $scope.project.projectLeader.split(";").length; i++) {
+      array.push($scope.project.projectLeader.split(";")[i].trim());
+    }
+    return array;
+  }
+
   $scope.updateLeadersList = function($event) {
     var checkbox = $event.target;
-    $scope.projectLeadersArray = [];
-    for (var i = 0; i < $scope.projectLeaderCustom.split(";").length; i++) {
-      $scope.projectLeadersArray.push($scope.projectLeaderCustom.split(";")[i]
-              .trim());
-    }
     var index = $scope.arrayContainsElement($scope.projectLeadersArray,
             $scope.professorNameAndSurname);
+    $scope.project.professorLeader = checkbox.checked;
     if (checkbox.checked && index == -1) {
       $scope.projectLeadersArray.push($scope.professorNameAndSurname.trim())
     } else if (!checkbox.checked && index !== -1) {
@@ -324,9 +328,9 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
   };
 
   $scope.constructLeadersString = function(array) {
-    $scope.projectLeaderCustom = "";
+    $scope.project.projectLeader = "";
     for (var i = 0; i < array.length; i++) {
-      $scope.projectLeaderCustom = $scope.projectLeaderCustom
+      $scope.project.projectLeader = $scope.project.projectLeader
               + ((i > 0 && i < array.length) ? "; " : "") + array[i];
     }
   };
@@ -382,6 +386,17 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
 
   $scope.init();
 
+  $scope.addProjectLeader = function() {
+    $scope.projectLeadersArray.push($scope.newProjectLeader);
+    $scope.constructLeadersString($scope.projectLeadersArray);
+    $scope.newProjectLeader = "";
+  };
+
+  $scope.removeProjectLeader = function(index) {
+    $scope.projectLeadersArray.splice(index, 1);
+    $scope.constructLeadersString($scope.projectLeadersArray);
+  };
+
   $scope.getProjects = function(val) {
     var projectExperienceIdsList = $scope.getProjectsIds(projects);
 
@@ -399,7 +414,7 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
     $scope.isExistingProject = true;
     $scope.project = angular.copy($scope.selectedProject);
     $scope.project.projectType = $scope.project.projectType.name;
-    $scope.projectLeaderCustom = $scope.project.projectLeader;
+    $scope.projectLeadersArray = $scope.createLeadersArray();
   };
 
   $scope.saveProjectExperience = function() {
@@ -407,7 +422,6 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
       $scope.project.projectName = $scope.selectedProject;
     }
     $scope.project.professorId = $routeParams.mentorId;
-    $scope.project.projectLeader = $scope.projectLeaderCustom;
     $http({
       method: 'POST',
       url: "api/projects",

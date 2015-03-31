@@ -2,8 +2,10 @@ package com.pct.domain;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,16 +19,16 @@ import javax.persistence.Table;
 public class Professor extends AbstractEntity {
 
 	private static final long serialVersionUID = 6438166967413025243L;
-	
+
 	@Column(name = "userName", nullable = true, length = 50)
 	private String userName;
-	
+
 	@Column(name = "password", nullable = true, length = 50)
 	private String password;
-	
+
 	@Column(name = "email", nullable = true, length = 50)
 	private String email;
-	
+
 	@Column(name = "name", length = 50)
 	private String name;
 
@@ -50,16 +52,16 @@ public class Professor extends AbstractEntity {
 
 	@Column(name = "specialScientificArea", length = 50)
 	private String specialScientificArea;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	private Set<LanguageExperience> languageExperiences;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	private Set<Award> awards;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor", cascade = CascadeType.ALL)
 	private Set<ProjectExperience> projectExperiences;
-	
+
 	@OneToOne
 	@JoinColumn(name = "ulogaId")
 	private Uloga uloga;
@@ -88,7 +90,7 @@ public class Professor extends AbstractEntity {
 		this.awards = new HashSet<Award>();
 		this.projectExperiences = new HashSet<ProjectExperience>();
 	}
-	
+
 	public String getUserName() {
 		return userName;
 	}
@@ -184,16 +186,16 @@ public class Professor extends AbstractEntity {
 	public void setSpecialScientificArea(String specialScientificArea) {
 		this.specialScientificArea = specialScientificArea;
 	}
-	
+
 	public void setLanguageExperiences(Set<LanguageExperience> languageExperiences) {
-		
+
 		this.languageExperiences.clear();
 
 		if (languageExperiences != null) {
 			this.languageExperiences.addAll(languageExperiences);
 		}
 	}
-	
+
 	public Set<LanguageExperience> getLanguageExperiences() {
 		return languageExperiences;
 	}
@@ -203,16 +205,16 @@ public class Professor extends AbstractEntity {
 			this.languageExperiences.add(languageExperiences);
 		}
 	}
-	
+
 	public void setAwards(Set<Award> awards) {
-		
+
 		this.awards.clear();
 
 		if (awards != null) {
 			this.awards.addAll(awards);
 		}
 	}
-	
+
 	public Set<Award> getAwards() {
 		return awards;
 	}
@@ -234,11 +236,42 @@ public class Professor extends AbstractEntity {
 			this.projectExperiences.addAll(projectExperiences);
 		}
 	}
-	
+
+	public ProjectExperience getProjectExperienceById(Long id) {
+		Iterator<ProjectExperience> it = projectExperiences.iterator();
+		while (it.hasNext()) {
+			ProjectExperience projectExperience = (ProjectExperience) it.next();
+			if (projectExperience.getId().equals(id)) {
+				return projectExperience;
+			}
+		}
+		return null;
+	}
+
 	public void addProjectExperiences(ProjectExperience projectExperience) {
 		if (projectExperiences != null) {
+			projectExperience.setProfessor(this);
 			this.projectExperiences.add(projectExperience);
 		}
 	}
-	
+
+	public ProjectExperience creatreNewProjectExperience(Project project, boolean professorLeader, Long id) {
+
+		ProjectExperience projectExperience = new ProjectExperience(this, project, professorLeader);
+		projectExperience.setId(id);
+		project.addProjectExperiences(projectExperience);
+		this.projectExperiences.add(projectExperience);
+
+		return projectExperience;
+	}
+
+	public ProjectExperience editProjectExperience(Project project, boolean professorLeader, Long id) {
+
+		ProjectExperience projectExperience = getProjectExperienceById(id);
+		projectExperience.setProfessorLeader(professorLeader);
+		project.addProjectExperiences(projectExperience);
+
+		return projectExperience;
+	}
+
 }

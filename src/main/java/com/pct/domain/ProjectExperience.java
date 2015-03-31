@@ -1,6 +1,5 @@
 package com.pct.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,14 +11,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "project_experience")
 public class ProjectExperience extends AbstractEntity {
 
-	private static final long serialVersionUID = -353179734183526053L;
-	
-	@ManyToOne(cascade= CascadeType.MERGE)
+	private static final long serialVersionUID = -4439523340893948274L;
+
+	@ManyToOne
 	@JoinColumn(name = "professorId")
 	@JsonBackReference
 	private Professor professor;
 	
-	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne
 	@JoinColumn(name = "projectId")
 	@JsonBackReference
 	private Project project;
@@ -28,6 +27,13 @@ public class ProjectExperience extends AbstractEntity {
 
 	public ProjectExperience() {
 		super();
+	}
+	
+	public ProjectExperience(Professor professor, Project project, boolean professorLeader) {
+		super();
+		this.professor = professor;
+		this.project = project;
+		this.professorLeader = professorLeader;
 	}
 
 	public Professor getProfessor() {

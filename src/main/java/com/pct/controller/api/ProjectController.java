@@ -61,12 +61,11 @@ public class ProjectController {
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<ProjectExperienceDto> persistProjectExperience(
+	public ResponseEntity<String> persistProjectExperience(
 			@Valid @RequestBody ProjectExperienceDto projectExperienceDto) {
 
-		ProjectExperienceDto projectDto = null;
 		try {
-			projectDto = projectService.saveProjectExperience(projectExperienceDto);
+			projectService.saveProjectExperience(projectExperienceDto);
 		} catch (ProjectExperienceNotFoundException e) {
 			e.printStackTrace();
 		} catch (ProfessorNotFoundException e) {
@@ -75,9 +74,9 @@ public class ProjectController {
 			e.printStackTrace();
 		}
 
-		logger.debug("Project experience:" + projectDto.getProjectName() + " successfully saved.");
+		logger.debug("Project experience:" + projectExperienceDto.getProjectName() + " successfully saved.");
 
-		return new ResponseEntity<ProjectExperienceDto>(projectDto, HttpStatus.OK);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "findProjectStartsWith", method = RequestMethod.GET, produces = "application/json")

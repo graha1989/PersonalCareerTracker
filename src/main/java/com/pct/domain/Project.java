@@ -1,8 +1,11 @@
 package com.pct.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -40,11 +43,12 @@ public class Project extends AbstractEntity {
 	@Lob
 	private String projectLeader;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade= CascadeType.ALL)
 	private Set<ProjectExperience> projectExperiences;
 	
 	public Project() {
 		super();
+		this.projectExperiences = new HashSet<ProjectExperience>();
 	}
 
 	public String getName() {
@@ -107,10 +111,40 @@ public class Project extends AbstractEntity {
 		}
 	}
 	
+	public ProjectExperience getProjectExperienceById(Long id) {
+		Iterator<ProjectExperience> it = projectExperiences.iterator();
+		while (it.hasNext()) {
+			ProjectExperience projectExperience = (ProjectExperience) it.next();
+			if (projectExperience.getId().equals(id)) {
+				return projectExperience;
+			}
+		}
+		return null;
+	}
+	
 	public void addProjectExperiences(ProjectExperience projectExperience) {
 		if (projectExperiences != null) {
+			projectExperience.setProject(this);
 			this.projectExperiences.add(projectExperience);
 		}
 	}
 
+	public ProjectExperience creatreNewProjectExperience(Professor professor, boolean professorLeader) {
+		
+		ProjectExperience projectExperience = new ProjectExperience(professor, this, professorLeader);
+		professor.addProjectExperiences(projectExperience);
+		this.projectExperiences.add(projectExperience);
+		
+		return projectExperience;
+	}
+	
+	public ProjectExperience editProjectExperience(Professor professor, boolean professorLeader, Long id) {
+		
+		ProjectExperience projectExperience = getProjectExperienceById(id);
+		projectExperience.setProfessorLeader(professorLeader);
+		professor.addProjectExperiences(projectExperience);
+		
+		return projectExperience;
+	}
+	
 }

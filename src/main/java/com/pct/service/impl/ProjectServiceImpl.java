@@ -77,15 +77,14 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	@Transactional
-	public ProjectExperienceDto saveProjectExperience(ProjectExperienceDto projectExperienceDto)
+	public void saveProjectExperience(ProjectExperienceDto projectExperienceDto)
 			throws ProjectExperienceNotFoundException, ProfessorNotFoundException, ProjectNotFoundException {
 
-		ProjectExperience projectExperience = new ProjectExperience();
-		Professor professor = new Professor();
-		Project project = new Project();
+		Professor professor;
+		Project project;
 
 		if (projectExperienceDto.getProfessorId() == null
-				|| professorRepository.findOne(projectExperienceDto.getProfessorId()) == null) {
+				|| !professorRepository.exists(projectExperienceDto.getProfessorId())) {
 			throw new ProfessorNotFoundException();
 		} else {
 			professor = professorRepository.findOne(projectExperienceDto.getProfessorId());
@@ -98,15 +97,8 @@ public class ProjectServiceImpl implements ProjectService {
 			project = projectRepository.findOne(projectExperienceDto.getProjectId());
 		}
 
-		if (projectExperienceDto.getId() != null) {
-			projectExperience = ProjectUtil.createProjectExperienceInstanceFromProjectExperienceDto(
-					projectExperienceDto, professor, project);
-		} else {
-			projectExperience = ProjectUtil.createNewProjectExperienceInstanceFromProjectExperienceDto(
-					projectExperienceDto, professor, project);
-		}
-
-		return new ProjectExperienceDto(projectExperienceRepository.save(projectExperience));
+		projectRepository.save(ProjectUtil.createOrUpdateProjectInstanceFromProjectExperienceDto(projectExperienceDto,
+				professor, project));
 	}
 
 	@Override
