@@ -33,14 +33,14 @@ public class AwardsController {
 	@Autowired
 	AwardService awardService;
 
-	@RequestMapping(value = "allAwards", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allAwards", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<AwardDto>> showAllAwards() {
 		List<AwardDto> awards = awardService.findAll();
 
 		return new ResponseEntity<List<AwardDto>>(awards, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "allProfessorAwards", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allProfessorAwards", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<AwardDto>> showAllProfessorAwards(@RequestParam(value = "professorId", required = true) Long professorId) {
 		List<AwardDto> awards = null;
 		try {
@@ -52,14 +52,14 @@ public class AwardsController {
 		return new ResponseEntity<List<AwardDto>>(awards, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allAwardTypes", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allAwardTypes", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<AwardType>> showAllAwardTypes() {
 		List<AwardType> awardTypes = awardService.findAllAwardTypes();
 
 		return new ResponseEntity<List<AwardType>>(awardTypes, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allAwardFields", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allAwardFields", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<AwardField>> showAllAwardFields() {
 		List<AwardField> awardFields = awardService.findAllAwardFields();
 
@@ -81,7 +81,7 @@ public class AwardsController {
 		return new ResponseEntity<AwardDto>(award, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedAward", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "selectedAward", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<AwardDto> showAward(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws AwardNotFoundException {
 		AwardDto award = awardService.findAwardById(id);

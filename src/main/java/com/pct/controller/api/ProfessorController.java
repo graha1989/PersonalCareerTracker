@@ -45,13 +45,13 @@ public class ProfessorController {
 		return new ResponseEntity<ProfessorDto>(profesor, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/selectedProfesor", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/selectedProfesor", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProfessorDto> showProfesor(String userName) throws ProfessorNotFoundException {
 		ProfessorDto profesor = professorService.findProfesorByUserName(userName);
 		return new ResponseEntity<ProfessorDto>(profesor, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "loadProfesorDetails", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "loadProfesorDetails", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProfessorDto> getProfessorById(@RequestParam(value = "id", required = true) Long id) {
 		ProfessorDto profesor = new ProfessorDto();
 		try {
@@ -62,7 +62,7 @@ public class ProfessorController {
 		return new ResponseEntity<ProfessorDto>(profesor, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "findProfessorStartsWith", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "findProfessorStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProfessorDto>> findProfessorStartsWith(
 			@RequestParam(value = "value", required = true) String value,
 			@RequestParam(value = "idProf", required = false) Long idProf,

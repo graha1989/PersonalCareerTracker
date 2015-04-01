@@ -115,4 +115,24 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectsDtoList;
 	}
 
+	@Override
+	@Transactional
+	public void deleteProjectExperience(Long id) throws ProjectExperienceNotFoundException {
+		
+		ProjectExperience projectExperience = projectExperienceRepository.findOne(id);
+		
+		if (id == null || projectExperience == null) {
+			throw new ProjectExperienceNotFoundException();
+		}
+		
+		projectExperience.getProject().getProjectExperiences().remove(projectExperience);
+		projectExperience.getProfessor().getProjectExperiences().remove(projectExperience);
+		
+		projectExperience.setProject(null);
+		projectExperience.setProfessor(null);
+		
+		projectExperienceRepository.delete(projectExperience);
+
+	}
+
 }

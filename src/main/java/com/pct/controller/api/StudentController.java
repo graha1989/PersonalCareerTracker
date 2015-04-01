@@ -31,14 +31,14 @@ public class StudentController {
 	@Autowired
 	StudentService studentService;
 
-	@RequestMapping(value = "allStudents", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allStudents", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<StudentDto>> showAllStudents() {
 		List<StudentDto> students = studentService.findAll();
 
 		return new ResponseEntity<List<StudentDto>>(students, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedStudent", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "selectedStudent", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<StudentDto> showStudent(@RequestParam(value = RequestMappings.ID, required = true) Long id) throws StudentNotFoundException {
 		StudentDto student = studentService.findStudentById(id);
 
@@ -67,7 +67,7 @@ public class StudentController {
 		return new ResponseEntity<StudentDto>(student, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "findStudentStartsWith", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "findStudentStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<StudentDto>> findStudentStartsWith(@RequestParam(value = "value", required = true) String value) throws StudentNotFoundException {
 		
 		List<StudentDto> students = new ArrayList<StudentDto>();

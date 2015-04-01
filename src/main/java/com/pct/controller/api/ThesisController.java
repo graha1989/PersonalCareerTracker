@@ -34,7 +34,7 @@ public class ThesisController {
 	@Autowired
 	ThesisService thesisService;
 
-	@RequestMapping(value = "allThesis", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allThesis", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ThesisDto>> showAllThesis(
 			@RequestParam(value = "mentorId", required = true) Long mentorId,
 			@RequestParam(value = "thesisTypeId", required = true) Long thesisTypeId) {
@@ -43,7 +43,7 @@ public class ThesisController {
 		return new ResponseEntity<List<ThesisDto>>(thesis, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allThesisTypes", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allThesisTypes", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ThesisType>> showAllThesisTypes() {
 		List<ThesisType> thesisTypes = thesisService.findAllThesisType();
 
@@ -69,7 +69,7 @@ public class ThesisController {
 		return new ResponseEntity<ThesisDto>(thesis, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "loadThesisTypeDetails", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "loadThesisTypeDetails", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ThesisType> getThesisTypeById(@RequestParam(value = "id", required = true) Long id) {
 		ThesisType thesisType = new ThesisType();
 		try {
@@ -89,7 +89,7 @@ public class ThesisController {
 		return new ResponseEntity<ThesisDto>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedThesis", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "selectedThesis", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ThesisDto> showThesis(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws ThesisNotFoundException {
 		ThesisDto thesis = thesisService.findThesisById(id);

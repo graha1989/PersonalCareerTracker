@@ -561,7 +561,7 @@
 				</div>
    			</div>
    			<div class="modal-footer action">
-		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-click="saveProjectExperience()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.projectButtons.save }}</button>
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="!validateForm()" ng-click="saveProjectExperience()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.projectButtons.save }}</button>
 		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.projectButtons.close }}</button>
   			</div>
 		</form>

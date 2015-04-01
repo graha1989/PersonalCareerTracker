@@ -35,14 +35,14 @@ public class LanguageController {
 	@Autowired
 	LanguageService languageService;
 	
-	@RequestMapping(value = "allProfessorLanguages", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allProfessorLanguages", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<LanguageExperienceDto>> showAllProfessorLanguages(@RequestParam(value = "mentorId", required = true) Long mentorId) {
 		List<LanguageExperienceDto> languages = languageService.findAllLanguageExperiences(mentorId);
 
 		return new ResponseEntity<List<LanguageExperienceDto>>(languages, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "allLanguages", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allLanguages", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<LanguageDto>> showAllLanguages(@RequestParam List<Long> languageExperienceIdsList) {
 		List<LanguageDto> languages = new ArrayList<LanguageDto>();
 		try {
@@ -71,7 +71,7 @@ public class LanguageController {
 		return new ResponseEntity<LanguageExperienceDto>(language, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "selectedLanguage", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "selectedLanguage", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<Language> loadLanguage(@RequestParam(value = RequestMappings.ID, required = true) Long id) throws LanguageNotFoundException {
 		
 		Language language = languageService.findLanguageById(id);

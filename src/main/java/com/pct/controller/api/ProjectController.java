@@ -34,7 +34,7 @@ public class ProjectController {
 	@Autowired
 	ProjectService projectService;
 
-	@RequestMapping(value = "allProfessorProjecExperiences", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allProfessorProjecExperiences", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProjectExperienceDto>> showAllProfessorProjects(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
 		List<ProjectExperienceDto> projects = projectService.findAllProjectExperiences(professorId);
@@ -44,14 +44,14 @@ public class ProjectController {
 		return new ResponseEntity<List<ProjectExperienceDto>>(projects, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allProjectTypes", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "allProjectTypes", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProjectType>> showAllProjectTypes() {
 		List<ProjectType> projectTypes = projectService.findAllProjectTypes();
 
 		return new ResponseEntity<List<ProjectType>>(projectTypes, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedProject", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "selectedProject", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProjectExperienceDto> showProject(
 			@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws ProjectExperienceNotFoundException {
@@ -61,8 +61,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<String> persistProjectExperience(
-			@Valid @RequestBody ProjectExperienceDto projectExperienceDto) {
+	public ResponseEntity<String> persistProjectExperience(@Valid @RequestBody ProjectExperienceDto projectExperienceDto) {
 
 		try {
 			projectService.saveProjectExperience(projectExperienceDto);
@@ -79,10 +78,11 @@ public class ProjectController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "findProjectStartsWith", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "findProjectStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProjectExperienceDto>> findProjectStartsWith(
 			@RequestParam(value = "value", required = true) String value,
-			@RequestParam(value = "projectIds", required = false) List<Long> projectIds) throws ProjectExperienceNotFoundException {
+			@RequestParam(value = "projectIds", required = false) List<Long> projectIds)
+			throws ProjectExperienceNotFoundException {
 
 		List<ProjectExperienceDto> projects = new ArrayList<ProjectExperienceDto>();
 		if (value.length() >= 3) {
@@ -90,6 +90,14 @@ public class ProjectController {
 		}
 
 		return new ResponseEntity<List<ProjectExperienceDto>>(projects, HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public ResponseEntity<ProjectExperienceDto> deleteProjectExperience(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws ProjectExperienceNotFoundException {
+		projectService.deleteProjectExperience(id);
+
+		return new ResponseEntity<ProjectExperienceDto>(HttpStatus.OK);
 	}
 
 }

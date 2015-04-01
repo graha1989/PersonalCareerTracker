@@ -42,14 +42,14 @@ app.controller("ProjectController", function($scope, $routeParams, $http,
     window.history.back();
   };
 
-  $scope.deleteAward = function(id, index) {
-    PctService.deleteAward(id, function(data) {
+  $scope.deleteProjectExperience = function(id, index) {
+    PctService.deleteProjectExperience(id, function(data) {
       if (angular.isObject(data)) {
         $scope.errorStatus = data.status;
       } else {
-        $scope.successStatus = "Successfully deleted award.";
-        $scope.awards.splice(index, 1);
-        $scope.loadAwards();
+        $scope.successStatus = "Successfully deleted project experience.";
+        $scope.projects.splice(index, 1);
+        $scope.loadProjects($routeParams.mentorId);
       }
     });
   };
@@ -81,7 +81,7 @@ app.controller("ProjectController", function($scope, $routeParams, $http,
 });
 
 var editProjectExperienceController = function($scope, $modalInstance,
-        $routeParams, $http, $route, projectId, PctService) {
+        $routeParams, $http, $route, $templateCache, projectId, PctService) {
 
   $scope.project = {};
   $scope.master = {};
@@ -90,6 +90,8 @@ var editProjectExperienceController = function($scope, $modalInstance,
   $scope.professorNameAndSurname = "";
   $scope.projectLeadersArray = [];
   $scope.newProjectLeader = "";
+  $scope.checkbox = angular
+          .element($templateCache.get('editProjectPopup.html'))[0].inputIsProfessorLeader;
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -157,12 +159,12 @@ var editProjectExperienceController = function($scope, $modalInstance,
   }
 
   $scope.updateLeadersList = function($event) {
-    var checkbox = $event.target;
+    $scope.checkbox = $event.target;
     var index = $scope.arrayContainsElement($scope.projectLeadersArray,
             $scope.professorNameAndSurname);
-    if (checkbox.checked && index == -1) {
+    if ($scope.checkbox.checked && index == -1) {
       $scope.projectLeadersArray.push($scope.professorNameAndSurname.trim())
-    } else if (!checkbox.checked && index !== -1) {
+    } else if (!$scope.checkbox.checked && index !== -1) {
       $scope.projectLeadersArray.splice(index, 1);
     }
     $scope.constructLeadersString($scope.projectLeadersArray);
@@ -220,6 +222,11 @@ var editProjectExperienceController = function($scope, $modalInstance,
 
   $scope.removeProjectLeader = function(index) {
     $scope.projectLeadersArray.splice(index, 1);
+    var index = $scope.arrayContainsElement($scope.projectLeadersArray,
+            $scope.professorNameAndSurname);
+    if (index == -1 && $scope.checkbox.checked) {
+      $scope.checkbox.checked = false;
+    }
     $scope.constructLeadersString($scope.projectLeadersArray);
   };
 
@@ -261,9 +268,10 @@ var editProjectExperienceController = function($scope, $modalInstance,
 };
 
 var createNewProjectExperienceController = function($scope, $modalInstance,
-        $routeParams, $http, $route, projects, PctService) {
+        $routeParams, $http, $route, $templateCache, projects, PctService) {
 
   $scope.project = {};
+  $scope.master = {};
   $scope.selectedProject = [];
   $scope.allProjectTypes = [];
   $scope.professor = {};
@@ -271,7 +279,9 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
   $scope.projectLeadersArray = [];
   $scope.newProjectLeader = "";
   $scope.isExistingProject = false;
-  
+  $scope.checkbox = angular.element($templateCache
+          .get('createNewProjectExperiencePopup.html'))[0].inputIsProfessorLeader;
+
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
@@ -315,13 +325,13 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
   }
 
   $scope.updateLeadersList = function($event) {
-    var checkbox = $event.target;
+    $scope.checkbox = $event.target;
     var index = $scope.arrayContainsElement($scope.projectLeadersArray,
             $scope.professorNameAndSurname);
-    $scope.project.professorLeader = checkbox.checked;
-    if (checkbox.checked && index == -1) {
+    $scope.project.professorLeader = $scope.checkbox.checked;
+    if ($scope.checkbox.checked && index == -1) {
       $scope.projectLeadersArray.push($scope.professorNameAndSurname.trim())
-    } else if (!checkbox.checked && index !== -1) {
+    } else if (!$scope.checkbox.checked && index !== -1) {
       $scope.projectLeadersArray.splice(index, 1);
     }
     $scope.constructLeadersString($scope.projectLeadersArray);
@@ -394,6 +404,11 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
 
   $scope.removeProjectLeader = function(index) {
     $scope.projectLeadersArray.splice(index, 1);
+    var index = $scope.arrayContainsElement($scope.projectLeadersArray,
+            $scope.professorNameAndSurname);
+    if (index == -1 && $scope.checkbox.checked) {
+      $scope.checkbox.checked = false;
+    }
     $scope.constructLeadersString($scope.projectLeadersArray);
   };
 
@@ -413,6 +428,7 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
   $scope.onSelectProject = function() {
     $scope.isExistingProject = true;
     $scope.project = angular.copy($scope.selectedProject);
+    $scope.master = angular.copy($scope.selectedProject);
     $scope.project.projectType = $scope.project.projectType.name;
     $scope.projectLeadersArray = $scope.createLeadersArray();
   };
@@ -451,12 +467,12 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
   };
 
   $scope.validateForm = function() {
-    if ($scope.project.projectName != null
-            && $scope.project.projectFinancedBy != null
-            && $scope.project.projectStartDate != null
-            && $scope.project.projectEndDate != null
-            && $scope.projectLeaderCustom != null
-            && $scope.project.projectType != null) {
+    if ((($scope.project.projectName != null && $scope.project.projectName != '') || ($scope.selectedProject != null && $scope.selectedProject != ''))
+            && $scope.project.projectFinancedBy != null && $scope.project.projectFinancedBy != ''
+            && $scope.project.projectStartDate != null && $scope.project.projectStartDate != ''
+            && $scope.project.projectEndDate != null && $scope.project.projectEndDate != ''
+            && $scope.project.projectLeader != null && $scope.project.projectLeader != ''
+            && $scope.project.projectType != null && $scope.project.projectType != '') {
       return true;
     } else {
       return false;

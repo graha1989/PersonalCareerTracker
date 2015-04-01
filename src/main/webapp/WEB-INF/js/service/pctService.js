@@ -169,5 +169,11 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        deleteProjectExperience: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/projects?id=' + id
+          }).success(callback).error(callback);
+        },
       };
     }]);
