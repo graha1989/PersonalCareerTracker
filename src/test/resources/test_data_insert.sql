@@ -65,3 +65,28 @@ INSERT INTO project (name, financedBy, projectStartDate, projectEndDate, project
 INSERT INTO project_experience (projectId, professorId, professorLeader) VALUES
 	('1', '3', '0'),
 	('2', '3', '0');
+INSERT INTO publication_category (code, description, nsmPoints, ttbtPoints, shPoints) VALUES
+	('M11', 'Istaknuta monografija međunarodnog značaja', '15', '15', '15'),
+	('M12', 'Monografija međunarodnog značaja', '10', '10', '10'),
+	('M13', 'Monografska studija/poglavlje u knjizi kategorije M11 ili rad u tematskom zborniku vodećeg međunarodnog značaja', '6', '6', '6'),
+	('M14', 'Monografska studija/poglavlje u knjizi kategorije M12 ili rad u tematskom zborniku međunarodnog značaja', '4', '4', '4'),
+	('M15', 'Leksikografska jedinica ili karta u naučnoj publikaciji vodećeg međunarodnog značaja', '3', '3', '3'),
+	('M16', 'Leksikografska jedinica ili karta u publikaciji međunarodnog značaja', '2', '2', '2'),
+	('M17', 'Uređivanje naučne monografije ili tematskog zbornika vodećeg međunarodnog značaja', '3', '3', '3'),
+	('M18', 'Uređivanje naučne monografije, tematskog zbornika, leksikografske ili kartografske publikacije međunarodnog značaja', '2', '2', '2'),
+	('M21', 'Rad u vrhunskom međunarodnom časopisu', '8', '8', '8'),
+	('M22', 'Rad u istaknutom međunarodnom časopisu', '5', '5', '5'),
+	('M23', 'Rad u međunarodnom časopisu', '3', '3', '4'),
+	('M24', 'Rad u časopisu međunarodnog značaja verifikovanog posebnom odlukom', '3', '3', '4'),
+	('M25', 'Naučna kritika i polemika u istaknutom međunarodnom časopisu', '1.5', '1.5', '1.5'),
+	('M26', 'Naučna kritika i polemika u međunarodnom časopisu', '1', '1', '1'),
+	('M27', 'Uređivanje istaknutog međunarodnog naučnog časopisa na god. nivou (gost urednik)', '3', '3', '3'),
+	('M28', 'Uređivanje međunarodnog naučnog časopisa', '2', '2', '2'),
+	('M31', 'Predavanje po pozivu sa međunarodnog skupa štampano u celini (neophodno pozivno pismo)', '3', '3', '3'),
+	('M32', 'Predavanje po pozivu sa međunarodnog skupa štampano u izvodu', '1.5', '1.5', '1.5'),
+	('M33', 'Saopštenje sa međunarodnog skupa štampano u celini', '1', '1', '1'),
+	('M34', 'Saopštenje sa međunarodnog skupa štampano u izvodu', '0.5', '0.5', '0.5'),
+	('M35', 'Autorizovana diskusija sa međunarodnog skupa', '0.3', '0.3', '0.3'),
+	('M36', 'Uređivanje zbornika saopštenja međunarodnog naučnog skupa', '1', '1', '1');
+INSERT INTO professor_publication (isbn, title, authors, publisher, pageRange, publicationType, quoted, publicationCategoryId) VALUES
+	('123456', 'Uvod u programiranje', 'Mirjana Ivanović; Đura Paunić', 'PMF', '50-90', 'SCIENTIFIC', '10', '5');

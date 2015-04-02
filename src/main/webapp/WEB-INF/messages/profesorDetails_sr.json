@@ -17,7 +17,8 @@
         "editProjectPopupTitle": "Izmena projekta",
         "editProjectPopupTooltip": "U slučaju više rukovodilaca:\nRukovodilac 1; Rukovodilac 2...",
         "IamProjectLeaderTooltip": "Trenutni korisnik je rukovodilac",
-        "addNewProjectPopupTitle": "Dodavanje novog projekta"
+        "addNewProjectPopupTitle": "Dodavanje novog projekta",
+        "professorPublicationsTitle": "Sve publikacije"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -140,5 +141,15 @@
         "projectLeader": "Rukovodilac",
         "newProjectLeader": "Novi rukovodilac",
         "IamLeaderAlso": "Rukovodilac"
+    },
+    "professorPublicationsTableLabels": {
+        "publicationType": "Tip publikacije",
+        "isbn": "ISBN",
+        "title": "Naslov",
+        "authors": "Autori",
+        "publisher": "Izdavač",
+        "pageRange": "Stranice",
+        "quoted": "Broj citata",
+        "category": "Kategorija"
     }
 }

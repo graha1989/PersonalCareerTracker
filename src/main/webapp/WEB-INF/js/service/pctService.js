@@ -175,5 +175,18 @@ app.factory("PctService", [
             url: 'api/projects?id=' + id
           }).success(callback).error(callback);
         },
+        loadProfessorsPublications: function(professorId) {
+          var deferred = $q.defer();
+          $http.get("api/publications/allProfessorPublications", {
+            params: {
+              professorId: professorId
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
       };
     }]);
