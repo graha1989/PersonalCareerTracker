@@ -33,7 +33,7 @@ public class PublicationCategory extends AbstractEntity {
 	@Column(name = "shPoints", nullable = true, columnDefinition = "Decimal(4,2)")
 	private Double shPoints;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "publicationCategory")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "publicationCategory")
 	private Set<ProfessorPublication> publications;
 
 	public PublicationCategory() {

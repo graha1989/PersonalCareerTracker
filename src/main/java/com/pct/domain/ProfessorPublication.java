@@ -18,7 +18,7 @@ public class ProfessorPublication extends AbstractEntity {
 
 	private static final long serialVersionUID = -8371039188814271676L;
 
-	@Column(name = "isbn", unique = true, length = 20)
+	@Column(name = "isbn", unique = true, length = 30)
 	private String isbn;
 
 	@Column(name = "title", length = 50)

@@ -188,5 +188,16 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        loadAllPublicationTypes: function(params, callback) {
+          $http.get('api/publications/allPublicationTypes').success(callback);
+        },
+        loadAllPublicationCategories: function(params, callback) {
+          $http.get('api/publications/allPublicationCategories').success(
+                  callback);
+        },
+        loadSelectedPublication: function(id, callback) {
+          $http.get('api/publications/selectedPublication?id=' + id).success(
+                  callback).error(callback);
+        },
       };
     }]);

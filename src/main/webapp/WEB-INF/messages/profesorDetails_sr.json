@@ -18,7 +18,8 @@
         "editProjectPopupTooltip": "U slučaju više rukovodilaca:\nRukovodilac 1; Rukovodilac 2...",
         "IamProjectLeaderTooltip": "Trenutni korisnik je rukovodilac",
         "addNewProjectPopupTitle": "Dodavanje novog projekta",
-        "professorPublicationsTitle": "Sve publikacije"
+        "professorPublicationsTitle": "Sve publikacije",
+        "editPublicationPopupTitle": "Izmena publikacije"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -92,6 +93,14 @@
             "close": "Zatvori",
             "save": "Sačuvaj",
             "cancel": "Odustani"
+        },
+        "publicationsButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novu publikaciju",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
         }
     },
     "mentoringTableLabels": {
@@ -151,5 +160,17 @@
         "pageRange": "Stranice",
         "quoted": "Broj citata",
         "category": "Kategorija"
+    },
+    "publicationPopupLabels": {
+    	"publicationIsbn": "ISBN",
+    	"publicationTitle": "Naslov",
+    	"publicationAuthor": "Autor",
+    	"publicationPublisher": "Izdavač",
+    	"publicationPageRange": "Stranice",
+    	"fromPage": "Od",
+    	"toPage": "Do",
+    	"publicationQuoted": "Broj citata",
+    	"publicationType": "Tip publikacije",
+    	"publicationCategory": "Kategorija"
     }
 }
