@@ -13,6 +13,7 @@
 		"invalidMinPasswordLength" : "Min. 8 characters.",
 		"onlyNumbers" : "Only numbers.",
 		"onlyLetters" : "Only letters.",
+		"aboveNumber" : "Must be above",
 		"onlyIsbn" : "Invalid ISBN.",
 		"projectLeadesList" : "Wrong input! Look at the tooltip, please.",
 		"required" : "Field is required.",

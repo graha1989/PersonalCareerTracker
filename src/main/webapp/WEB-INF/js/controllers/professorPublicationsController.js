@@ -67,6 +67,9 @@ var editPublicationPopupController = function($scope, $modalInstance,
   $scope.professor = {};
   $scope.professorNameAndSurname = "";
   $scope.publicationAuthorsArray = [];
+  $scope.startPage = 0;
+  $scope.endPage = 0;
+  $scope.publicationPageRanges = [];
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -127,6 +130,16 @@ var editPublicationPopupController = function($scope, $modalInstance,
     }
     return array;
   }
+  
+  $scope.createPageRangesArray = function() {
+    var array = [];
+    for (var i = 0; i < $scope.publication.pageRange.split(";").length; i++) {
+      var oneRangeString = $scope.publication.pageRange.split(";")[i].trim();
+      var oneRangeObject = {"startPage": parseInt(oneRangeString.split("-")[0].trim(), 10), "endPage": parseInt(oneRangeString.split("-")[1].trim(), 10)};
+      array.push(oneRangeObject);
+    }
+    return array;
+  }
 
   $scope.constructPublicationAuthorsString = function(array) {
     $scope.publication.authors = "";
@@ -153,10 +166,9 @@ var editPublicationPopupController = function($scope, $modalInstance,
         $scope.publication = data;
         $scope.publication.publicationType = data.publicationType.name;
         $scope.master = angular.copy($scope.publication);
-        
         $scope.publicationAuthorsArray = $scope.createAuthorsArray();
         $scope.constructPublicationAuthorsString($scope.publicationAuthorsArray);
-        
+        $scope.publicationPageRanges = $scope.createPageRangesArray();
         $scope.noResultsFound = false;
       } else {
         $scope.noResultsFound = true;
@@ -174,23 +186,28 @@ var editPublicationPopupController = function($scope, $modalInstance,
   };
 
   $scope.init();
-/*
-  $scope.addProjectLeader = function() {
-    $scope.projectLeadersArray.push($scope.newProjectLeader);
-    $scope.constructLeadersString($scope.projectLeadersArray);
-    $scope.newProjectLeader = "";
+
+  $scope.addPublicationAuthor = function() {
+    $scope.publicationAuthorsArray.push($scope.newPublicationAuthor);
+    $scope.constructPublicationAuthorsString($scope.publicationAuthorsArray);
+    $scope.newPublicationAuthor = "";
   };
 
-  $scope.removeProjectLeader = function(index) {
-    $scope.projectLeadersArray.splice(index, 1);
-    var index = $scope.arrayContainsElement($scope.projectLeadersArray,
-            $scope.professorNameAndSurname);
-    if (index == -1 && $scope.checkbox.checked) {
-      $scope.checkbox.checked = false;
-    }
-    $scope.constructLeadersString($scope.projectLeadersArray);
+  $scope.removePublicationAuthor = function(index) {
+    $scope.publicationAuthorsArray.splice(index, 1);
+    $scope.constructPublicationAuthorsString($scope.publicationAuthorsArray);
   };
-*/
+  
+  $scope.addNewPageRange = function() {
+    $scope.publicationPageRanges.push({"startPage": $scope.startPage, "endPage": $scope.endPage});
+    $scope.startPage = 0;
+    $scope.endPage = 0;
+  };
+  
+  $scope.removePageRange = function(index) {
+    $scope.publicationPageRanges.splice(index, 1);
+  };
+
   $scope.saveProject = function() {
     $http({
       method: 'PUT',
@@ -218,6 +235,10 @@ var editPublicationPopupController = function($scope, $modalInstance,
 
   $scope.isUnchanged = function(publication) {
     return angular.equals(publication, $scope.master);
+  };
+  
+  $scope.validatePageRangeInput = function() {
+    return $scope.startPage == 0 || $scope.endPage == 0 || $scope.endPage < $scope.startPage;
   };
 
   $scope.cancel = function() {

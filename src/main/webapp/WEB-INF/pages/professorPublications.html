@@ -131,7 +131,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-repeat="author in publicationAuthors">
+				<div ng-repeat="author in publicationAuthorsArray">
 					<div class="form-group">
 						<label
 							for="inputPublicationAuthor"
@@ -228,56 +228,136 @@
 						</div>
 					</div>
 				</div>
+				<div ng-repeat="range in publicationPageRanges">
+					<div class="row form-group">
+						<label
+							for="inputPublicationPageRange"
+							class="col-sm-4 control-label"
+							ng-show="$index == 0">{{ resources.publicationPopupLabels.publicationPageRange }} <span class="required">*</span>
+						</label>
+						<label
+							class="col-sm-4"
+							ng-show="$index != 0">
+						</label>
+						<div class="col-sm-3">
+							<input
+								type="number"
+								class="form-control"
+								id="inputPublicationFromPage"
+								name="inputPublicationFromPage"
+								ng-model="range.startPage"
+								min="1"
+								placeholder="{{ resources.publicationPopupLabels.fromPage }}"
+								ng-patern="onlyNumbers"
+								ng-maxlength="5"
+								ng-disabled="true" />
+							<div
+								ng-show="form.inputPublicationStartPage.$dirty && form.inputPublicationStartPage.$invalid"
+								class="publicationStartPageFieldError">
+								<span
+									ng-show="form.inputPublicationStartPage.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputPublicationStartPage.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<input
+								type="number"
+								class="form-control"
+								id="inputPublicationToPage"
+								name="inputPublicationToPage"
+								ng-model="range.endPage"
+								min="1"
+								placeholder="{{ resources.publicationPopupLabels.toPage }}"
+								ng-patern="onlyNumbers"
+								ng-maxlength="5"
+								ng-disabled="true" />
+							<div
+								ng-show="form.inputPublicationToPage.$dirty && form.inputPublicationToPage.$invalid"
+								class="publicationStartPageFieldError">
+								<span
+									ng-show="form.inputPublicationToPage.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputPublicationToPage.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<button
+								id="remove_button"
+								type="button"
+								class="btn btn-link btn-sm"
+								ng-click="removePageRange($index)">
+								<span class="glyphicon glyphicon-remove" />
+							</button>
+						</div>
+					</div>
+				</div>
 				<div class="row form-group">
 					<label
-						for="inputPublicationPageRange"
-						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationPageRange }} <span class="required">*</span>
+						class="col-sm-4">
 					</label>
 					<div class="col-sm-3">
 						<input
 							type="number"
 							class="form-control"
-							id="inputPublicationFromPage"
-							name="inputPublicationFromPage"
-							ng-model="startPage"
+							id="inputNewPublicationFromPage"
+							name="inputNewPublicationFromPage"
+							ng-model="$parent.startPage"
 							min="1"
 							placeholder="{{ resources.publicationPopupLabels.fromPage }}"
 							ng-patern="onlyNumbers"
 							ng-maxlength="5"
-							required />
+							ng-required="publicationPageRanges.length == 0" />
 						<div
 							ng-show="form.inputPublicationStartPage.$dirty && form.inputPublicationStartPage.$invalid"
 							class="publicationStartPageFieldError">
 							<span
-								ng-show="form.inputPublicationStartPage.$error.required"
+								ng-show="form.inputNewPublicationFromPage.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputPublicationStartPage.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span>
+								ng-show="form.inputNewPublicationFromPage.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span> <span
+								ng-show="form.inputNewPublicationFromPage.$error.number"
+								class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<input
 							type="number"
 							class="form-control"
-							id="inputPublicationToPage"
-							name="inputPublicationToPage"
-							ng-model="endPage"
+							id="inputNewPublicationToPage"
+							name="inputNewPublicationToPage"
+							ng-model="$parent.endPage"
+							ng-disabled="!$parent.startPage"
 							min="1"
 							placeholder="{{ resources.publicationPopupLabels.toPage }}"
 							ng-patern="onlyNumbers"
 							ng-maxlength="5"
-							required />
+							ng-required="publicationPageRanges.length == 0" />
 						<div
 							ng-show="form.inputPublicationToPage.$dirty && form.inputPublicationToPage.$invalid"
 							class="publicationStartPageFieldError">
 							<span
-								ng-show="form.inputPublicationToPage.$error.required"
+								ng-show="form.inputNewPublicationToPage.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputPublicationToPage.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span>
+								ng-show="form.inputNewPublicationToPage.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span> <span
+								ng-show="form.inputNewPublicationToPage.$error.number"
+								class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span>
 						</div>
 					</div>
-				</div>			
+					<div class="col-sm-2">
+						<button
+							id="add_button"
+							type="button"
+							class="btn btn-link btn-sm"
+							ng-disabled="validatePageRangeInput()"
+							ng-click="addNewPageRange()">
+							<span class="glyphicon glyphicon-plus" />
+						</button>
+					</div>
+				</div>
 				<div class="form-group">
 					<label
 						for="inputPublicationQuotedNum"
