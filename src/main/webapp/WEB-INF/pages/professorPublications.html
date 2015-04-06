@@ -417,7 +417,7 @@
 							id="inputPublicationCategory"
 							name="inputPublicationCategory"
 							ng-model="publication.category"
-							ng-options="category as category.code for category in allPublicationCategories track by category.code"
+							ng-options="category.code for category in allPublicationCategories track by category.id"
 							required><option value="">{{ resources.publicationPopupLabels.publicationCategory }}</option></select>
 						<div
 							ng-show="form.inputPublicationCategory.$dirty && form.inputPublicationCategory.$invalid"
@@ -434,14 +434,14 @@
 					id="submit_button"
 					type="submit"
 					class="btn btn-success btn-sm"
-					ng-disabled="$parent.form.$invalid || isUnchanged(project) || projectLeadersArray.length == 0"
-					ng-click="saveProject()">
-					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.projectButtons.edit }}
+					ng-disabled="$parent.form.$invalid || isUnchanged(publication)"
+					ng-click="saveProfessorPublication()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.publicationsButtons.edit }}
 				</button>
 				<button
 					id="cancel_button"
 					class="btn btn-sm"
-					ng-click="cancel()">{{ resources.buttons.projectButtons.close }}</button>
+					ng-click="cancel()">{{ resources.buttons.publicationsButtons.close }}</button>
 			</div>
 		</form>
 	</script>

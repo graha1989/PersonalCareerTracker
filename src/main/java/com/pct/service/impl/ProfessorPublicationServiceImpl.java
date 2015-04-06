@@ -8,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pct.domain.Professor;
 import com.pct.domain.ProfessorPublication;
 import com.pct.domain.PublicationCategory;
 import com.pct.domain.dto.PublicationDto;
 import com.pct.domain.enums.PublicationType;
+import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProfessorPublicationsRepository;
 import com.pct.repository.PublicationCategoryRepository;
 import com.pct.service.ProfessorPublicationService;
+import com.pct.service.util.PublicationUtil;
+import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.PublicationCategoryNotFoundException;
 import com.pct.validation.PublicationNotFoundException;
 
 @Service
@@ -25,6 +30,9 @@ public class ProfessorPublicationServiceImpl implements ProfessorPublicationServ
 
 	@Autowired
 	private PublicationCategoryRepository publicationCategoryRepository;
+
+	@Autowired
+	private ProfesorRepository professorRepository;
 
 	@Override
 	@Transactional
@@ -71,6 +79,32 @@ public class ProfessorPublicationServiceImpl implements ProfessorPublicationServ
 		}
 
 		return publicationDto;
+	}
+
+	@Override
+	@Transactional
+	public void saveProfessorPublication(PublicationDto publicationDto) throws PublicationNotFoundException,
+			ProfessorNotFoundException, PublicationCategoryNotFoundException {
+
+		Professor professor;
+		PublicationCategory category;
+
+		if (publicationDto.getProfessorId() == null || !professorRepository.exists(publicationDto.getProfessorId())) {
+			throw new ProfessorNotFoundException();
+		} else {
+			professor = professorRepository.findOne(publicationDto.getProfessorId());
+		}
+
+		if (publicationDto.getCategory().getId() == null
+				|| publicationCategoryRepository.findOne(publicationDto.getCategory().getId()) == null) {
+			throw new PublicationCategoryNotFoundException();
+		} else {
+			category = publicationCategoryRepository.findOne(publicationDto.getCategory().getId());
+		}
+
+		professorRepository.save(PublicationUtil.createOrUpdatePublicationInstanceFromPublicationDto(publicationDto,
+				professor, category));
+
 	}
 
 }

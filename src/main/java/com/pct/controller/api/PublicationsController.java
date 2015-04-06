@@ -2,11 +2,14 @@ package com.pct.controller.api;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +21,9 @@ import com.pct.domain.PublicationCategory;
 import com.pct.domain.dto.PublicationDto;
 import com.pct.domain.enums.PublicationType;
 import com.pct.service.ProfessorPublicationService;
+import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.ProjectExperienceNotFoundException;
+import com.pct.validation.PublicationCategoryNotFoundException;
 import com.pct.validation.PublicationNotFoundException;
 
 @RestController
@@ -75,10 +80,28 @@ public class PublicationsController {
 		} catch (PublicationNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		logger.debug("Successfully loaded publication: " + publicationDto.getTitle() + ".");
-		
+
 		return new ResponseEntity<PublicationDto>(publicationDto, HttpStatus.OK);
+	}
+
+	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<String> persistProfessorPublication(@Valid @RequestBody PublicationDto publicationDto) {
+
+		try {
+			professorPublicationService.saveProfessorPublication(publicationDto);
+		} catch (PublicationNotFoundException e) {
+			e.printStackTrace();
+		} catch (ProfessorNotFoundException e) {
+			e.printStackTrace();
+		} catch (PublicationCategoryNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		logger.debug("Publication: " + publicationDto.getTitle() + " successfully saved.");
+
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 }

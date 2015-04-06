@@ -5,6 +5,8 @@ import java.util.List;
 import com.pct.domain.PublicationCategory;
 import com.pct.domain.dto.PublicationDto;
 import com.pct.domain.enums.PublicationType;
+import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.PublicationCategoryNotFoundException;
 import com.pct.validation.PublicationNotFoundException;
 
 public interface ProfessorPublicationService {
@@ -16,5 +18,7 @@ public interface ProfessorPublicationService {
 	List<PublicationCategory> findAllPublicationCategories();
 
 	PublicationDto findPublicationById(Long id) throws PublicationNotFoundException;
+
+	void saveProfessorPublication(PublicationDto publicationDto) throws PublicationNotFoundException, ProfessorNotFoundException, PublicationCategoryNotFoundException;
 	
 }

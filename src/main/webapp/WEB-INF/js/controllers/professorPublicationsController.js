@@ -67,9 +67,11 @@ var editPublicationPopupController = function($scope, $modalInstance,
   $scope.professor = {};
   $scope.professorNameAndSurname = "";
   $scope.publicationAuthorsArray = [];
+  $scope.masterPublicationAuthorsArray = [];
   $scope.startPage = 0;
   $scope.endPage = 0;
   $scope.publicationPageRanges = [];
+  $scope.masterPublicationPageRanges = [];
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -130,12 +132,15 @@ var editPublicationPopupController = function($scope, $modalInstance,
     }
     return array;
   }
-  
+
   $scope.createPageRangesArray = function() {
     var array = [];
     for (var i = 0; i < $scope.publication.pageRange.split(";").length; i++) {
       var oneRangeString = $scope.publication.pageRange.split(";")[i].trim();
-      var oneRangeObject = {"startPage": parseInt(oneRangeString.split("-")[0].trim(), 10), "endPage": parseInt(oneRangeString.split("-")[1].trim(), 10)};
+      var oneRangeObject = {
+        "startPage": parseInt(oneRangeString.split("-")[0].trim(), 10),
+        "endPage": parseInt(oneRangeString.split("-")[1].trim(), 10)
+      };
       array.push(oneRangeObject);
     }
     return array;
@@ -146,6 +151,14 @@ var editPublicationPopupController = function($scope, $modalInstance,
     for (var i = 0; i < array.length; i++) {
       $scope.publication.authors = $scope.publication.authors
               + ((i > 0 && i < array.length) ? "; " : "") + array[i];
+    }
+  };
+
+  $scope.constructPublicationPageRangesString = function(array) {
+    $scope.publication.pageRange = "";
+    for (var i = 0; i < array.length; i++) {
+      $scope.publication.pageRange = $scope.publication.pageRange
+              + ((i > 0 && i < array.length) ? "; " : "") + array[i].startPage + "-" + array[i].endPage;
     }
   };
 
@@ -161,19 +174,31 @@ var editPublicationPopupController = function($scope, $modalInstance,
   };
 
   $scope.loadSelectedPublication = function(id) {
-    PctService.loadSelectedPublication(id, function(data) {
-      if (angular.isObject(data)) {
-        $scope.publication = data;
-        $scope.publication.publicationType = data.publicationType.name;
-        $scope.master = angular.copy($scope.publication);
-        $scope.publicationAuthorsArray = $scope.createAuthorsArray();
-        $scope.constructPublicationAuthorsString($scope.publicationAuthorsArray);
-        $scope.publicationPageRanges = $scope.createPageRangesArray();
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
+    PctService
+            .loadSelectedPublication(
+                    id,
+                    function(data) {
+                      if (angular.isObject(data)) {
+                        $scope.publication = data;
+                        $scope.publication.publicationType = data.publicationType.name;
+                        $scope.master = angular.copy($scope.publication);
+                        $scope.publicationAuthorsArray = $scope
+                                .createAuthorsArray();
+                        $scope.masterPublicationAuthorsArray = angular
+                                .copy($scope.publicationAuthorsArray);
+                        $scope
+                                .constructPublicationAuthorsString($scope.publicationAuthorsArray);
+                        $scope.publicationPageRanges = $scope
+                                .createPageRangesArray();
+                        $scope.masterPublicationPageRanges = angular
+                                .copy($scope.publicationPageRanges);
+                        $scope
+                                .constructPublicationPageRangesString($scope.publicationPageRanges)
+                        $scope.noResultsFound = false;
+                      } else {
+                        $scope.noResultsFound = true;
+                      }
+                    });
   };
 
   $scope.init = function() {
@@ -197,18 +222,23 @@ var editPublicationPopupController = function($scope, $modalInstance,
     $scope.publicationAuthorsArray.splice(index, 1);
     $scope.constructPublicationAuthorsString($scope.publicationAuthorsArray);
   };
-  
+
   $scope.addNewPageRange = function() {
-    $scope.publicationPageRanges.push({"startPage": $scope.startPage, "endPage": $scope.endPage});
+    $scope.publicationPageRanges.push({
+      "startPage": $scope.startPage,
+      "endPage": $scope.endPage
+    });
+    $scope.constructPublicationPageRangesString($scope.publicationPageRanges);
     $scope.startPage = 0;
     $scope.endPage = 0;
   };
-  
+
   $scope.removePageRange = function(index) {
     $scope.publicationPageRanges.splice(index, 1);
+    $scope.constructPublicationPageRangesString($scope.publicationPageRanges);
   };
 
-  $scope.saveProject = function() {
+  $scope.saveProfessorPublication = function() {
     $http({
       method: 'PUT',
       url: "api/publications",
@@ -233,12 +263,66 @@ var editPublicationPopupController = function($scope, $modalInstance,
     });
   };
 
+  $scope.areArraysEqual = function(array1, array2) {
+    var temp = new Array();
+    if ((!array1[0]) || (!array2[0])) { // If either is not an array
+      return false;
+    }
+    if (array1.length != array2.length) { return false; }
+    // Put all the elements from array1 into a "tagged" array
+    for (var i = 0; i < array1.length; i++) {
+      key = (typeof array1[i]) + "~" + array1[i];
+      // Use "typeof" so a number 1 isn't equal to a string "1".
+      if (temp[key]) {
+        temp[key]++;
+      } else {
+        temp[key] = 1;
+      }
+      // temp[key] = # of occurrences of the value (so an element could appear
+      // multiple times)
+    }
+    // Go through array2 - if same tag missing in "tagged" array, not equal
+    for (var i = 0; i < array2.length; i++) {
+      key = (typeof array2[i]) + "~" + array2[i];
+      if (temp[key]) {
+        if (temp[key] == 0) {
+          return false;
+        } else {
+          temp[key]--;
+        }
+        // Subtract to keep track of # of appearances in array2
+      } else { // Key didn't appear in array1, arrays are not equal.
+        return false;
+      }
+    }
+    // If we get to this point, then every generated key in array1 showed up the
+    // exact same
+    // number of times in array2, so the arrays are equal.
+    return true;
+  }
+
   $scope.isUnchanged = function(publication) {
-    return angular.equals(publication, $scope.master);
+    if (angular.equals(publication.isbn, $scope.master.isbn)
+            && angular.equals(publication.title, $scope.master.title)
+            && angular.equals(publication.publisher, $scope.master.publisher)
+            && angular.equals(publication.publicationType,
+                    $scope.master.publicationType)
+            && angular.equals(publication.quoted, $scope.master.quoted)
+            && angular.equals(publication.category, $scope.master.category)
+            && $scope.areArraysEqual($scope.publicationAuthorsArray,
+                    $scope.masterPublicationAuthorsArray)
+            && $scope.areArraysEqual($scope.publicationPageRanges,
+                    $scope.masterPublicationPageRanges)) {
+      return true;
+    } else {
+      return false;
+    }
+
   };
-  
+
   $scope.validatePageRangeInput = function() {
-    return $scope.startPage == 0 || $scope.endPage == 0 || $scope.endPage < $scope.startPage;
+    return $scope.startPage == 0 || $scope.endPage == 0
+            || $scope.endPage < $scope.startPage;
   };
 
   $scope.cancel = function() {

@@ -31,7 +31,7 @@ public class ProfessorPublication extends AbstractEntity {
 	@Column(name = "publisher", length = 50)
 	private String publisher;
 
-	@Column(name = "pageRange", length = 15)
+	@Column(name = "pageRange", length = 55)
 	private String pageRange;
 
 	@Enumerated(EnumType.STRING)

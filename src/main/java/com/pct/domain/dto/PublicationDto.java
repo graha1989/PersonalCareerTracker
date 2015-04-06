@@ -41,7 +41,7 @@ public class PublicationDto implements Serializable {
 	private String publisher;
 	
 	@NotEmpty
-	@Length(max = 15)
+	@Length(max = 55)
 	@SafeHtml
 	private String pageRange;
 	
