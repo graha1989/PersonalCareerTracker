@@ -40,7 +40,7 @@
 							<td>{{ publication.publisher }}</td>
 							<td>{{ publication.pageRange }}</td>
 							<td>{{ publication.quoted }}</td>
-							<td>{{ publication.category.code }}</td>
+							<td>{{ publication.publicationCategory.code }}</td>
 							<td class="delete"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteProfessorPublication(publication.id, $index)">
@@ -416,8 +416,8 @@
 							class="ng-binding form-control"
 							id="inputPublicationCategory"
 							name="inputPublicationCategory"
-							ng-model="publication.category"
-							ng-options="category.code for category in allPublicationCategories track by category.id"
+							ng-model="publication.publicationCategory"
+							ng-options="publicationCategory.code for publicationCategory in allPublicationCategories track by publicationCategory.id"
 							required><option value="">{{ resources.publicationPopupLabels.publicationCategory }}</option></select>
 						<div
 							ng-show="form.inputPublicationCategory.$dirty && form.inputPublicationCategory.$invalid"

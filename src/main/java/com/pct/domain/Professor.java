@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.pct.domain.enums.PublicationType;
+
 @Entity
 @Table(name = "professor")
 public class Professor extends AbstractEntity {
@@ -54,16 +57,18 @@ public class Professor extends AbstractEntity {
 	private String specialScientificArea;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
-	private Set<LanguageExperience> languageExperiences;
+	private Set<LanguageExperience> languageExperiences = new HashSet<LanguageExperience>();
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
-	private Set<Award> awards;
+	private Set<Award> awards = new HashSet<Award>();
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor", cascade = CascadeType.ALL)
-	private Set<ProjectExperience> projectExperiences;
+	@JsonManagedReference(value = "professor")
+	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor", cascade = CascadeType.ALL)
-	private Set<ProfessorPublication> publications;
+	@JsonManagedReference(value = "professor")
+	private Set<ProfessorPublication> professorPublications = new HashSet<ProfessorPublication>();
 
 	@OneToOne
 	@JoinColumn(name = "ulogaId")
@@ -89,9 +94,6 @@ public class Professor extends AbstractEntity {
 		this.scientificArea = scientificArea;
 		this.specialScientificArea = specialScientificArea;
 		this.uloga = uloga;
-		this.languageExperiences = new HashSet<LanguageExperience>();
-		this.awards = new HashSet<Award>();
-		this.projectExperiences = new HashSet<ProjectExperience>();
 	}
 
 	public String getUserName() {
@@ -278,19 +280,19 @@ public class Professor extends AbstractEntity {
 	}
 
 	public Set<ProfessorPublication> getProfessorPublications() {
-		return publications;
+		return professorPublications;
 	}
 
-	public void setProfessorPublications(Set<ProfessorPublication> publications) {
-		this.publications.clear();
+	public void setProfessorPublications(Set<ProfessorPublication> professorPublications) {
+		this.professorPublications.clear();
 
-		if (publications != null) {
-			this.publications.addAll(publications);
+		if (professorPublications != null) {
+			this.professorPublications.addAll(professorPublications);
 		}
 	}
 
 	public ProfessorPublication getProfessorPublicationById(Long id) {
-		Iterator<ProfessorPublication> it = publications.iterator();
+		Iterator<ProfessorPublication> it = professorPublications.iterator();
 		while (it.hasNext()) {
 			ProfessorPublication professorPublication = (ProfessorPublication) it.next();
 			if (professorPublication.getId().equals(id)) {
@@ -303,34 +305,35 @@ public class Professor extends AbstractEntity {
 	public void addProfessorPublications(ProfessorPublication professorPublication) {
 		if (professorPublication != null) {
 			professorPublication.setProfessor(this);
-			this.publications.add(professorPublication);
+			this.professorPublications.add(professorPublication);
 		}
 	}
 
 	public ProfessorPublication creatreNewProfessorPublication(PublicationCategory category, String isbn, String title,
-			String authors, String publisher, String pageRange, Integer quoted) {
+			String authors, String publisher, String pageRange, PublicationType publicationType, Integer quoted) {
 
-		ProfessorPublication professorPublication = new ProfessorPublication(this, category, isbn, title, authors,
-				publisher, pageRange, quoted);
+		ProfessorPublication professorPublication = new ProfessorPublication(isbn, title, authors, publisher,
+				pageRange, publicationType, quoted, category, this);
 		category.addProfessorPublication(professorPublication);
-		this.publications.add(professorPublication);
+		this.professorPublications.add(professorPublication);
 
 		return professorPublication;
 	}
 
 	public ProfessorPublication editProfessorPublication(PublicationCategory category, String isbn, String title,
-			String authors, String publisher, String pageRange, Integer quoted, Long id) {
-		
+			String authors, String publisher, String pageRange, Integer quoted, PublicationType publicationType, Long id) {
+
 		ProfessorPublication professorPublication = getProfessorPublicationById(id);
 		professorPublication.setIsbn(isbn);
 		professorPublication.setTitle(title);
 		professorPublication.setAuthors(authors);
 		professorPublication.setPublisher(publisher);
 		professorPublication.setPageRange(pageRange);
+		professorPublication.setPublicationType(publicationType);
 		professorPublication.setQuoted(quoted);
-		
+
 		category.addProfessorPublication(professorPublication);
-		
+
 		return professorPublication;
 	}
 

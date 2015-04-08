@@ -242,10 +242,7 @@ var editPublicationPopupController = function($scope, $modalInstance,
     $http({
       method: 'PUT',
       url: "api/publications",
-      data: $scope.publication,
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      data: $scope.publication
     }).success(function(data, status) {
       $("html, body").animate({
         scrollTop: 0
@@ -308,7 +305,7 @@ var editPublicationPopupController = function($scope, $modalInstance,
             && angular.equals(publication.publicationType,
                     $scope.master.publicationType)
             && angular.equals(publication.quoted, $scope.master.quoted)
-            && angular.equals(publication.category, $scope.master.category)
+            && angular.equals(publication.publicationCategory, $scope.master.publicationCategory)
             && $scope.areArraysEqual($scope.publicationAuthorsArray,
                     $scope.masterPublicationAuthorsArray)
             && $scope.areArraysEqual($scope.publicationPageRanges,

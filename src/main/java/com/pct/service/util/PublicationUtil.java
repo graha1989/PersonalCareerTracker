@@ -12,11 +12,11 @@ public class PublicationUtil {
 		if (publicationDto.getId() == null) {
 			professor.creatreNewProfessorPublication(category, publicationDto.getIsbn(), publicationDto.getTitle(),
 					publicationDto.getAuthors(), publicationDto.getPublisher(), publicationDto.getPageRange(),
-					publicationDto.getQuoted());
+					publicationDto.getPublicationType(), publicationDto.getQuoted());
 		} else {
 			professor.editProfessorPublication(category, publicationDto.getIsbn(), publicationDto.getTitle(),
 					publicationDto.getAuthors(), publicationDto.getPublisher(), publicationDto.getPageRange(),
-					publicationDto.getQuoted(), publicationDto.getId());
+					publicationDto.getQuoted(), publicationDto.getPublicationType(), publicationDto.getId());
 		}
 
 		return professor;

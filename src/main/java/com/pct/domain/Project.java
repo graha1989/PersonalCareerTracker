@@ -15,6 +15,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pct.domain.enums.ProjectType;
 
 @Entity
@@ -44,6 +45,7 @@ public class Project extends AbstractEntity {
 	private String projectLeader;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade= CascadeType.ALL)
+	@JsonManagedReference(value = "project")
 	private Set<ProjectExperience> projectExperiences;
 	
 	public Project() {

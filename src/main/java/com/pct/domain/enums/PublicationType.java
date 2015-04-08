@@ -1,6 +1,7 @@
 package com.pct.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum PublicationType {
@@ -10,7 +11,8 @@ public enum PublicationType {
 	TEXTBOOK("Udžbenik"),
 	
 	OTHER("Ostala didaktička sredstva");
-
+	
+	@JsonProperty("title")
 	private final String title;
 
 	private PublicationType(String title) {
@@ -20,11 +22,11 @@ public enum PublicationType {
 	public String getName() {
 		return name();
 	}
-
+	
 	public String getTitle() {
 		return title;
 	}
-
+	
 	public static PublicationType getByTitle(String title) throws IllegalArgumentException {
 		for (PublicationType publicationType : PublicationType.values()) {
 			if (publicationType.title.equals(title)) {

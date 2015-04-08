@@ -95,11 +95,11 @@ public class ProfessorPublicationServiceImpl implements ProfessorPublicationServ
 			professor = professorRepository.findOne(publicationDto.getProfessorId());
 		}
 
-		if (publicationDto.getCategory().getId() == null
-				|| publicationCategoryRepository.findOne(publicationDto.getCategory().getId()) == null) {
+		if (publicationDto.getPublicationCategory().getId() == null
+				|| publicationCategoryRepository.findOne(publicationDto.getPublicationCategory().getId()) == null) {
 			throw new PublicationCategoryNotFoundException();
 		} else {
-			category = publicationCategoryRepository.findOne(publicationDto.getCategory().getId());
+			category = publicationCategoryRepository.findOne(publicationDto.getPublicationCategory().getId());
 		}
 
 		professorRepository.save(PublicationUtil.createOrUpdatePublicationInstanceFromPublicationDto(publicationDto,

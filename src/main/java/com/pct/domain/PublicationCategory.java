@@ -3,17 +3,20 @@ package com.pct.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "publication_category")
 public class PublicationCategory extends AbstractEntity {
 
-	private static final long serialVersionUID = -7712552499088434060L;
+	private static final long serialVersionUID = -6711978289006452557L;
 
 	@Column(name = "code", unique = true, length = 5)
 	private String code;
@@ -33,12 +36,12 @@ public class PublicationCategory extends AbstractEntity {
 	@Column(name = "shPoints", nullable = true, columnDefinition = "Decimal(4,2)")
 	private Double shPoints;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "publicationCategory")
-	private Set<ProfessorPublication> publications;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "publicationCategory", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "publicationCategory")
+	private Set<ProfessorPublication> professorPublications = new HashSet<ProfessorPublication>();
 
 	public PublicationCategory() {
 		super();
-		this.publications = new HashSet<ProfessorPublication>();
 	}
 
 	public PublicationCategory(String code, String description, Double nsmPoints, Double ttbtPoints, Double shPoints,
@@ -49,7 +52,7 @@ public class PublicationCategory extends AbstractEntity {
 		this.nsmPoints = nsmPoints;
 		this.ttbtPoints = ttbtPoints;
 		this.shPoints = shPoints;
-		this.publications = new HashSet<ProfessorPublication>(publications);
+		this.professorPublications = publications;
 	}
 
 	public String getCode() {
@@ -93,21 +96,21 @@ public class PublicationCategory extends AbstractEntity {
 	}
 
 	public Set<ProfessorPublication> getProfessorPublications() {
-		return publications;
+		return professorPublications;
 	}
 
-	public void setProfessorPublications(Set<ProfessorPublication> publications) {
-		this.publications.clear();
+	public void setProfessorPublications(Set<ProfessorPublication> professorPublications) {
+		this.professorPublications.clear();
 
-		if (publications != null) {
-			this.publications.addAll(publications);
+		if (professorPublications != null) {
+			this.professorPublications.addAll(professorPublications);
 		}
 	}
 
 	public void addProfessorPublication(ProfessorPublication professorPublication) {
-		if (publications != null) {
+		if (professorPublications != null) {
 			professorPublication.setPublicationCategory(this);
-			this.publications.add(professorPublication);
+			this.professorPublications.add(professorPublication);
 		}
 	}
 

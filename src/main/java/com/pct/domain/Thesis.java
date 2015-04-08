@@ -38,17 +38,17 @@ public class Thesis extends AbstractEntity {
 	
 	@OneToOne
 	@JoinColumn(name = "mentorId")
-	@JsonBackReference
+	@JsonBackReference(value = "mentor")
 	private Professor mentor;
 	
 	@OneToOne
 	@JoinColumn(name = "commissionMemberId")
-	@JsonBackReference
+	@JsonBackReference(value = "commissionMember")
 	private Professor commissionMember;
 	
 	@OneToOne
 	@JoinColumn(name = "commissionPresidentId")
-	@JsonBackReference
+	@JsonBackReference(value = "commissionPresident")
 	private Professor commissionPresident;
 
 	public Thesis() {

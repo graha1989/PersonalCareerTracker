@@ -31,7 +31,7 @@ public class Award extends AbstractEntity {
 	
 	@OneToOne
 	@JoinColumn(name = "professorId")
-	@JsonBackReference
+	@JsonBackReference(value = "professor")
 	private Professor professor;
 	
 	@Enumerated(EnumType.STRING)

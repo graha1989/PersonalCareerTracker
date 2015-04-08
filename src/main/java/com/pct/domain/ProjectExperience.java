@@ -15,12 +15,12 @@ public class ProjectExperience extends AbstractEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "professorId")
-	@JsonBackReference
+	@JsonBackReference(value = "professor")
 	private Professor professor;
 	
 	@ManyToOne
 	@JoinColumn(name = "projectId")
-	@JsonBackReference
+	@JsonBackReference(value = "project")
 	private Project project;
 	
 	private boolean professorLeader;

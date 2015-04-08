@@ -2,8 +2,8 @@ package com.pct.domain.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -15,13 +15,13 @@ import com.pct.domain.enums.PublicationType;
 
 public class PublicationDto implements Serializable {
 
-	private static final long serialVersionUID = -617762781319172047L;
-	
+	private static final long serialVersionUID = 8325577395997414231L;
+
 	@NotNull
 	private PublicationType publicationType;
 	
 	@NotEmpty
-	@Length(max = 20)
+	@Length(max = 30)
 	@SafeHtml
 	private String isbn;
 	
@@ -45,12 +45,12 @@ public class PublicationDto implements Serializable {
 	@SafeHtml
 	private String pageRange;
 	
-	@NotEmpty
-	@Size(min = 0)
+	@NotNull
+	@Min(0)
 	private Integer quoted;
 	
 	@NotNull
-	private PublicationCategory category;
+	private PublicationCategory publicationCategory;
 	
 	protected Long professorId;
 	
@@ -61,7 +61,7 @@ public class PublicationDto implements Serializable {
 	}
 
 	public PublicationDto(PublicationType publicationType, String isbn, String title, String authors, String publisher,
-			String pageRange, Integer quoted, PublicationCategory category, Long professorId, Long id) {
+			String pageRange, Integer quoted, PublicationCategory publicationCategory, Long professorId, Long id) {
 		super();
 		this.publicationType = publicationType;
 		this.isbn = isbn;
@@ -70,7 +70,7 @@ public class PublicationDto implements Serializable {
 		this.publisher = publisher;
 		this.pageRange = pageRange;
 		this.quoted = quoted;
-		this.category = category;
+		this.publicationCategory = publicationCategory;
 		this.professorId = professorId;
 		this.id = id;
 	}
@@ -84,7 +84,7 @@ public class PublicationDto implements Serializable {
 		this.publisher = p.getPublisher();
 		this.pageRange = p.getPageRange();
 		this.quoted = p.getQuoted();
-		this.category = p.getPublicationCategory();
+		this.publicationCategory = p.getPublicationCategory();
 		this.professorId = p.getProfessor().getId();
 		this.id = p.getId();
 	}
@@ -145,12 +145,12 @@ public class PublicationDto implements Serializable {
 		this.quoted = quoted;
 	}
 
-	public PublicationCategory getCategory() {
-		return category;
+	public PublicationCategory getPublicationCategory() {
+		return publicationCategory;
 	}
 
-	public void setCategory(PublicationCategory category) {
-		this.category = category;
+	public void setPublicationCategory(PublicationCategory publicationCategory) {
+		this.publicationCategory = publicationCategory;
 	}
 
 	public Long getProfessorId() {

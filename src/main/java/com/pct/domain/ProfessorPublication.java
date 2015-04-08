@@ -10,13 +10,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.enums.PublicationType;
+import com.pct.domain.enums.PublicationTypeEnumDeserializer;
 
 @Entity
 @Table(name = "professor_publication")
 public class ProfessorPublication extends AbstractEntity {
 
-	private static final long serialVersionUID = -8371039188814271676L;
+	private static final long serialVersionUID = -7256632218559132120L;
 
 	@Column(name = "isbn", unique = true, length = 30)
 	private String isbn;
@@ -36,6 +38,7 @@ public class ProfessorPublication extends AbstractEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "publicationType")
+	@JsonDeserialize(using = PublicationTypeEnumDeserializer.class)
 	private PublicationType publicationType;
 
 	@Column(name = "quoted")
@@ -43,28 +46,31 @@ public class ProfessorPublication extends AbstractEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "publicationCategoryId")
-	@JsonBackReference
+	@JsonBackReference(value = "publicationCategory")
 	private PublicationCategory publicationCategory;
 
 	@ManyToOne
 	@JoinColumn(name = "professorId")
-	@JsonBackReference
+	@JsonBackReference(value = "professor")
 	private Professor professor;
 
 	public ProfessorPublication() {
 		super();
 	}
 
-	public ProfessorPublication(Professor professor, PublicationCategory category, String isbn, String title,
-			String authors, String publisher, String pageRange, Integer quoted) {
-		this.professor = professor;
-		this.publicationCategory = category;
+	public ProfessorPublication(String isbn, String title, String authors, String publisher, String pageRange,
+			PublicationType publicationType, Integer quoted, PublicationCategory publicationCategory,
+			Professor professor) {
+		super();
 		this.isbn = isbn;
 		this.title = title;
 		this.authors = authors;
 		this.publisher = publisher;
 		this.pageRange = pageRange;
+		this.publicationType = publicationType;
 		this.quoted = quoted;
+		this.publicationCategory = publicationCategory;
+		this.professor = professor;
 	}
 
 	public String getIsbn() {

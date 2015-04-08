@@ -26,12 +26,12 @@ public class LanguageExperience extends AbstractEntity {
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "profesorId")
-	@JsonBackReference
+	@JsonBackReference(value = "professor")
 	private Professor professor;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "languageId")
-	@JsonBackReference
+	@JsonBackReference(value = "language")
 	private Language language;
 	
 	public LanguageExperience() {
