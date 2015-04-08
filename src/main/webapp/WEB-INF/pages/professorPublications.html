@@ -395,7 +395,7 @@
 							id="inputPublicationType"
 							name="inputPublicationType"
 							ng-model="publication.publicationType"
-							ng-options="publicationType.name as publicationType.title for publicationType in allPublicationTypes"
+							ng-options="publicationType.title for publicationType in allPublicationTypes track by publicationType.name"
 							required><option value="">{{ resources.publicationPopupLabels.publicationType }}</option></select>
 						<div
 							ng-show="form.inputPublicationType.$dirty && form.inputPublicationType.$invalid"

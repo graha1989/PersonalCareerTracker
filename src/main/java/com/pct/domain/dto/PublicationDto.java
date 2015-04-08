@@ -9,15 +9,18 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.ProfessorPublication;
 import com.pct.domain.PublicationCategory;
 import com.pct.domain.enums.PublicationType;
+import com.pct.domain.enums.deserializers.PublicationTypeEnumDeserializer;
 
 public class PublicationDto implements Serializable {
 
 	private static final long serialVersionUID = 8325577395997414231L;
 
 	@NotNull
+	@JsonDeserialize(using = PublicationTypeEnumDeserializer.class)
 	private PublicationType publicationType;
 	
 	@NotEmpty

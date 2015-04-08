@@ -1,4 +1,4 @@
-package com.pct.domain.enums;
+package com.pct.domain.enums.deserializers;
 
 import java.io.IOException;
 
@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.TextNode;
+import com.pct.domain.enums.PublicationType;
 
 public class PublicationTypeEnumDeserializer extends JsonDeserializer<PublicationType> {
 

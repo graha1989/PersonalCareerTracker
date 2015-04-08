@@ -158,7 +158,8 @@ var editPublicationPopupController = function($scope, $modalInstance,
     $scope.publication.pageRange = "";
     for (var i = 0; i < array.length; i++) {
       $scope.publication.pageRange = $scope.publication.pageRange
-              + ((i > 0 && i < array.length) ? "; " : "") + array[i].startPage + "-" + array[i].endPage;
+              + ((i > 0 && i < array.length) ? "; " : "") + array[i].startPage
+              + "-" + array[i].endPage;
     }
   };
 
@@ -180,7 +181,6 @@ var editPublicationPopupController = function($scope, $modalInstance,
                     function(data) {
                       if (angular.isObject(data)) {
                         $scope.publication = data;
-                        $scope.publication.publicationType = data.publicationType.name;
                         $scope.master = angular.copy($scope.publication);
                         $scope.publicationAuthorsArray = $scope
                                 .createAuthorsArray();
@@ -305,7 +305,8 @@ var editPublicationPopupController = function($scope, $modalInstance,
             && angular.equals(publication.publicationType,
                     $scope.master.publicationType)
             && angular.equals(publication.quoted, $scope.master.quoted)
-            && angular.equals(publication.publicationCategory, $scope.master.publicationCategory)
+            && angular.equals(publication.publicationCategory,
+                    $scope.master.publicationCategory)
             && $scope.areArraysEqual($scope.publicationAuthorsArray,
                     $scope.masterPublicationAuthorsArray)
             && $scope.areArraysEqual($scope.publicationPageRanges,

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.enums.PublicationType;
-import com.pct.domain.enums.PublicationTypeEnumDeserializer;
+import com.pct.domain.enums.deserializers.PublicationTypeEnumDeserializer;
 
 @Entity
 @Table(name = "professor_publication")
