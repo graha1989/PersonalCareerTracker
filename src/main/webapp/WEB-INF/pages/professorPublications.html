@@ -231,7 +231,6 @@
 				<div ng-repeat="range in publicationPageRanges">
 					<div class="row form-group">
 						<label
-							for="inputPublicationPageRange"
 							class="col-sm-4 control-label"
 							ng-show="$index == 0">{{ resources.publicationPopupLabels.publicationPageRange }} <span class="required">*</span>
 						</label>
@@ -248,7 +247,6 @@
 								ng-model="range.startPage"
 								min="1"
 								placeholder="{{ resources.publicationPopupLabels.fromPage }}"
-								ng-patern="onlyNumbers"
 								ng-maxlength="5"
 								ng-disabled="true" />
 							<div
@@ -258,7 +256,11 @@
 									ng-show="form.inputPublicationStartPage.$error.required"
 									class="ng-binding">{{ errorMessages.error.required }}</span> <span
 									ng-show="form.inputPublicationStartPage.$error.maxlength"
-									class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span>
+									class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span> <span
+									ng-show="form.inputPublicationStartPage.$error.number"
+									class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span> <span
+									ng-show="form.inputPublicationStartPage.$error.min"
+									class="ng-binding">{{ errorMessages.error.minNumber }}</span>
 							</div>
 						</div>
 						<div class="col-sm-3">
@@ -270,7 +272,6 @@
 								ng-model="range.endPage"
 								min="1"
 								placeholder="{{ resources.publicationPopupLabels.toPage }}"
-								ng-patern="onlyNumbers"
 								ng-maxlength="5"
 								ng-disabled="true" />
 							<div
@@ -280,7 +281,11 @@
 									ng-show="form.inputPublicationToPage.$error.required"
 									class="ng-binding">{{ errorMessages.error.required }}</span> <span
 									ng-show="form.inputPublicationToPage.$error.maxlength"
-									class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span>
+									class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span> <span
+									ng-show="form.inputPublicationToPage.$error.number"
+									class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span> <span
+									ng-show="form.inputPublicationToPage.$error.min"
+									class="ng-binding">{{ errorMessages.error.minNumber }}</span>
 							</div>
 						</div>
 						<div class="col-sm-2">
@@ -296,7 +301,11 @@
 				</div>
 				<div class="row form-group">
 					<label
-						class="col-sm-4">
+						class="col-sm-4" ng-show="publicationPageRanges.length != 0">
+					</label>
+					<label
+						class="col-sm-4 control-label"
+						ng-show="publicationPageRanges.length == 0">{{ resources.publicationPopupLabels.publicationPageRange }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-3">
 						<input
@@ -304,22 +313,23 @@
 							class="form-control"
 							id="inputNewPublicationFromPage"
 							name="inputNewPublicationFromPage"
-							ng-model="$parent.startPage"
-							min="1"
 							placeholder="{{ resources.publicationPopupLabels.fromPage }}"
-							ng-patern="onlyNumbers"
+							min="1"
+							ng-model="$parent.startPage"
 							ng-maxlength="5"
 							ng-required="publicationPageRanges.length == 0" />
 						<div
-							ng-show="form.inputPublicationStartPage.$dirty && form.inputPublicationStartPage.$invalid"
-							class="publicationStartPageFieldError">
+							ng-show="form.inputNewPublicationFromPage.$dirty && form.inputNewPublicationFromPage.$invalid"
+							class="publicationNewStartPageFieldError">
 							<span
 								ng-show="form.inputNewPublicationFromPage.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
 								ng-show="form.inputNewPublicationFromPage.$error.maxlength"
 								class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span> <span
 								ng-show="form.inputNewPublicationFromPage.$error.number"
-								class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span>
+								class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span> <span
+								ng-show="form.inputNewPublicationFromPage.$error.min"
+								class="ng-binding">{{ errorMessages.error.minNumber }}</span>
 						</div>
 					</div>
 					<div class="col-sm-3">
@@ -328,23 +338,24 @@
 							class="form-control"
 							id="inputNewPublicationToPage"
 							name="inputNewPublicationToPage"
+							placeholder="{{ resources.publicationPopupLabels.toPage }}"
+							min="1"
 							ng-model="$parent.endPage"
 							ng-disabled="!$parent.startPage"
-							min="1"
-							placeholder="{{ resources.publicationPopupLabels.toPage }}"
-							ng-patern="onlyNumbers"
 							ng-maxlength="5"
 							ng-required="publicationPageRanges.length == 0" />
 						<div
-							ng-show="form.inputPublicationToPage.$dirty && form.inputPublicationToPage.$invalid"
-							class="publicationStartPageFieldError">
+							ng-show="form.inputNewPublicationToPage.$dirty && form.inputNewPublicationToPage.$invalid"
+							class="publicationNewEndPageFieldError">
 							<span
 								ng-show="form.inputNewPublicationToPage.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
 								ng-show="form.inputNewPublicationToPage.$error.maxlength"
 								class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span> <span
 								ng-show="form.inputNewPublicationToPage.$error.number"
-								class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span>
+								class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span> <span
+								ng-show="form.inputNewPublicationToPage.$error.min"
+								class="ng-binding">{{ errorMessages.error.minNumber }}</span>
 						</div>
 					</div>
 					<div class="col-sm-2">
@@ -380,7 +391,9 @@
 								ng-show="form.inputPublicationQuotedNum.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
 								ng-show="form.inputPublicationQuotedNum.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
+								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+								ng-show="form.inputPublicationQuotedNum.$error.min"
+								class="ng-binding">{{ errorMessages.error.minQuotedNumber }}</span>
 						</div>
 					</div>
 				</div>
@@ -434,7 +447,7 @@
 					id="submit_button"
 					type="submit"
 					class="btn btn-success btn-sm"
-					ng-disabled="$parent.form.$invalid || isUnchanged(publication)"
+					ng-disabled="form.$invalid || $parent.isUnchanged(publication) || noAuthors() || noPageRanges()"
 					ng-click="saveProfessorPublication()">
 					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.publicationsButtons.edit }}
 				</button>

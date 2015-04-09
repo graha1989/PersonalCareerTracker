@@ -17,6 +17,8 @@
 		"onlyIsbn" : "Invalid ISBN.",
 		"projectLeadesList" : "Wrong input! Look at the tooltip, please.",
 		"required" : "Field is required.",
-		"emptyTable" : "No data."
+		"emptyTable" : "No data.",
+		"minNumber" : "Min. number is 1",
+		"minQuotedNumber" : "Min. number is 0"
 	}
 }

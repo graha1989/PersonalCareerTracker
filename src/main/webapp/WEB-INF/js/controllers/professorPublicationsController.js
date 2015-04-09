@@ -68,10 +68,11 @@ var editPublicationPopupController = function($scope, $modalInstance,
   $scope.professorNameAndSurname = "";
   $scope.publicationAuthorsArray = [];
   $scope.masterPublicationAuthorsArray = [];
-  $scope.startPage = 0;
-  $scope.endPage = 0;
+  $scope.startPage = "";
+  $scope.endPage = "";
   $scope.publicationPageRanges = [];
   $scope.masterPublicationPageRanges = [];
+  $scope.test = true;
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -193,7 +194,7 @@ var editPublicationPopupController = function($scope, $modalInstance,
                         $scope.masterPublicationPageRanges = angular
                                 .copy($scope.publicationPageRanges);
                         $scope
-                                .constructPublicationPageRangesString($scope.publicationPageRanges)
+                                .constructPublicationPageRangesString($scope.publicationPageRanges);
                         $scope.noResultsFound = false;
                       } else {
                         $scope.noResultsFound = true;
@@ -229,8 +230,8 @@ var editPublicationPopupController = function($scope, $modalInstance,
       "endPage": $scope.endPage
     });
     $scope.constructPublicationPageRangesString($scope.publicationPageRanges);
-    $scope.startPage = 0;
-    $scope.endPage = 0;
+    $scope.startPage = "";
+    $scope.endPage = "";
   };
 
   $scope.removePageRange = function(index) {
@@ -260,43 +261,33 @@ var editPublicationPopupController = function($scope, $modalInstance,
     });
   };
 
-  $scope.areArraysEqual = function(array1, array2) {
-    var temp = new Array();
-    if ((!array1[0]) || (!array2[0])) { // If either is not an array
-      return false;
-    }
+  $scope.testArrays = function(array1, array2) {
+    if ((!array1[0]) || (!array2[0])) { return false; }
     if (array1.length != array2.length) { return false; }
-    // Put all the elements from array1 into a "tagged" array
-    for (var i = 0; i < array1.length; i++) {
-      key = (typeof array1[i]) + "~" + array1[i];
-      // Use "typeof" so a number 1 isn't equal to a string "1".
-      if (temp[key]) {
-        temp[key]++;
-      } else {
-        temp[key] = 1;
-      }
-      // temp[key] = # of occurrences of the value (so an element could appear
-      // multiple times)
-    }
-    // Go through array2 - if same tag missing in "tagged" array, not equal
-    for (var i = 0; i < array2.length; i++) {
-      key = (typeof array2[i]) + "~" + array2[i];
-      if (temp[key]) {
-        if (temp[key] == 0) {
-          return false;
-        } else {
-          temp[key]--;
-        }
-        // Subtract to keep track of # of appearances in array2
-      } else { // Key didn't appear in array1, arrays are not equal.
+    var pom = false;
+    outer: for (var i = 0; i < array1.length; i++) {
+      var object1 = array1[i];
+      if ($.isEmptyObject(object1)) {
         return false;
+      } else {
+        inner: for (var j = 0; j < array2.length; j++) {
+          var object2 = array2[j];
+          if ($.isEmptyObject(object2)) {
+            return false;
+          } else {
+            if (angular.equals(object1, object2)) {
+              pom = true;
+              break inner;
+            } else {
+              pom = false;
+              continue inner;
+            }
+          }
+        }
       }
     }
-    // If we get to this point, then every generated key in array1 showed up the
-    // exact same
-    // number of times in array2, so the arrays are equal.
-    return true;
-  }
+    return pom;
+  };
 
   $scope.isUnchanged = function(publication) {
     if (angular.equals(publication.isbn, $scope.master.isbn)
@@ -307,15 +298,23 @@ var editPublicationPopupController = function($scope, $modalInstance,
             && angular.equals(publication.quoted, $scope.master.quoted)
             && angular.equals(publication.publicationCategory,
                     $scope.master.publicationCategory)
-            && $scope.areArraysEqual($scope.publicationAuthorsArray,
+            && $scope.testArrays($scope.publicationAuthorsArray,
                     $scope.masterPublicationAuthorsArray)
-            && $scope.areArraysEqual($scope.publicationPageRanges,
+            && $scope.testArrays($scope.publicationPageRanges,
                     $scope.masterPublicationPageRanges)) {
       return true;
     } else {
       return false;
     }
 
+  };
+
+  $scope.noAuthors = function() {
+    return $scope.publicationAuthorsArray.length == 0;
+  };
+
+  $scope.noPageRanges = function() {
+    return $scope.publicationPageRanges.length == 0;
   };
 
   $scope.validatePageRangeInput = function() {
