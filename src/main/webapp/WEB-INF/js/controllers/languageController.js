@@ -140,6 +140,9 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
   };
 
   $scope.cancelAddingNew = function() {
+    $scope.language.reading = false;
+    $scope.language.writing = false;
+    $scope.language.pronouncing = false;
     $scope.addNewRow = false;
   };
 

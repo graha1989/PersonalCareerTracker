@@ -20,5 +20,7 @@ public interface ProfessorPublicationService {
 	PublicationDto findPublicationById(Long id) throws PublicationNotFoundException;
 
 	void saveProfessorPublication(PublicationDto publicationDto) throws PublicationNotFoundException, ProfessorNotFoundException, PublicationCategoryNotFoundException;
+
+	void deleteProfessorPublication(Long id) throws PublicationNotFoundException;
 	
 }

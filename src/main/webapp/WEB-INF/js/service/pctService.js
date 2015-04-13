@@ -199,5 +199,11 @@ app.factory("PctService", [
           $http.get('api/publications/selectedPublication?id=' + id).success(
                   callback).error(callback);
         },
+        deleteProfessorPublication: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/publications?id=' + id
+          }).success(callback).error(callback);
+        },
       };
     }]);

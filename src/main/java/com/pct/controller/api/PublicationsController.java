@@ -104,4 +104,13 @@ public class PublicationsController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
+	@RequestMapping(method = RequestMethod.DELETE)
+	public ResponseEntity<PublicationDto> deleteProfessorPublication(
+			@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws PublicationNotFoundException {
+		professorPublicationService.deleteProfessorPublication(id);
+
+		return new ResponseEntity<PublicationDto>(HttpStatus.OK);
+	}
+
 }

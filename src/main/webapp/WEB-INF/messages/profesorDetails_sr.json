@@ -19,7 +19,8 @@
         "IamProjectLeaderTooltip": "Trenutni korisnik je rukovodilac",
         "addNewProjectPopupTitle": "Dodavanje novog projekta",
         "professorPublicationsTitle": "Sve publikacije",
-        "editPublicationPopupTitle": "Izmena publikacije"
+        "editPublicationPopupTitle": "Izmena publikacije",
+        "newPublicationPopupTitle": "Unos nove publikacije"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",

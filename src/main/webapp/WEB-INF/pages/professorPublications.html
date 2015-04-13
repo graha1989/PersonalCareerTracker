@@ -1,37 +1,36 @@
 <div>
 
-	<form
-		name="form"
-		id="showAllProfessorPublicationsForm"
-		novalidate
+	<form name="form" id="showAllProfessorPublicationsForm" novalidate
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
 		ng-model="publication">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ resources.text.professorPublicationsTitle }}</h3>
+			<h3 class="modal-title">{{
+				resources.text.professorPublicationsTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
 
-				<table
-					ng-show="publications != []"
+				<table ng-show="publications != []"
 					class="table table-condensed table-striped table-hover"
-					cellspacing="0"
-					cellpadding="0">
+					cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
-							<td>{{ resources.professorPublicationsTableLabels.publicationType }}</td>
+							<td>{{
+								resources.professorPublicationsTableLabels.publicationType }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.isbn }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.title }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.authors }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.publisher }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.pageRange }}</td>
+							<td>{{ resources.professorPublicationsTableLabels.publisher
+								}}</td>
+							<td>{{ resources.professorPublicationsTableLabels.pageRange
+								}}</td>
 							<td>{{ resources.professorPublicationsTableLabels.quoted }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.category }}</td>
+							<td>{{ resources.professorPublicationsTableLabels.category
+								}}</td>
 							<td colspan="2"></td>
 						</tr>
-						<tr
-							class="active ng-scope"
+						<tr class="active ng-scope"
 							ng-repeat="publication in publications">
 							<td>{{ publication.publicationType.title }}</td>
 							<td>{{ publication.isbn }}</td>
@@ -41,15 +40,15 @@
 							<td>{{ publication.pageRange }}</td>
 							<td>{{ publication.quoted }}</td>
 							<td>{{ publication.publicationCategory.code }}</td>
-							<td class="delete"><button
-									class="btn btn-link btn-xs"
+							<td class="delete"><button class="btn btn-link btn-xs"
 									ng-click="deleteProfessorPublication(publication.id, $index)">
-									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.publicationsButtons.delete }}
+									<span class="glyphicon glyphicon-trash"></span> {{
+									resources.buttons.publicationsButtons.delete }}
 								</button></td>
-							<td class="edit"><button
-									class="btn btn-link btn-xs"
+							<td class="edit"><button class="btn btn-link btn-xs"
 									ng-click="editProfessorPublication(publication.id)">
-									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.publicationsButtons.edit }}
+									<span class="glyphicon glyphicon-pencil"></span> {{
+									resources.buttons.publicationsButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
@@ -60,18 +59,15 @@
 			</fieldset>
 		</div>
 		<div class="modal-footer action">
-			<button
-				id="addNewButton"
-				class="btn btn-success btn-sm"
+			<button id="addNewButton" class="btn btn-success btn-sm"
 				ng-click="createNewProfessorPublication()">
-				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.publicationsButtons.add }}
+				<span class="glyphicon glyphicon-plus"></span> {{
+				resources.buttons.publicationsButtons.add }}
 			</button>
 		</div>
 	</form>
 
-	<script
-		type="text/ng-template"
-		id="editPublicationPopup.html">
+	<script type="text/ng-template" id="editPublicationPopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
@@ -450,6 +446,394 @@
 					ng-disabled="form.$invalid || $parent.isUnchanged(publication) || noAuthors() || noPageRanges()"
 					ng-click="saveProfessorPublication()">
 					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.publicationsButtons.edit }}
+				</button>
+				<button
+					id="cancel_button"
+					class="btn btn-sm"
+					ng-click="cancel()">{{ resources.buttons.publicationsButtons.close }}</button>
+			</div>
+		</form>
+	</script>
+
+	<script type="text/ng-template" id="createNewPublicationPopup.html">
+		<form
+			name="form"
+			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+			role="form"
+			ng-model="publication">
+			<div class="modal-header">
+				<h3 class="modal-title">{{ resources.text.newPublicationPopupTitle }}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label
+						for="inputPublicationIsbn"
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationIsbn }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputPublicationIsbn"
+							name="inputPublicationIsbn"
+							ng-model="publication.isbn"
+							ng-maxlength="30"
+							required />
+						<div
+							ng-show="form.inputPublicationIsbn.$dirty && form.inputPublicationIsbn.$invalid"
+							class="publicationIsbnFieldError">
+							<span
+								ng-show="form.inputPublicationIsbn.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputPublicationIsbn.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidPublicationIsbnMaxLength }}</span> 
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputPublicationTitle"
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationTitle }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputPublicationTitle"
+							name="inputPublicationTitle"
+							ng-model="publication.title"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputPublicationTitle.$dirty && form.inputPublicationTitle.$invalid"
+							class="publicationTitleFieldError">
+							<span
+								ng-show="form.inputPublicationTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputPublicationTitle.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div ng-repeat="author in publicationAuthorsArray">
+					<div class="form-group">
+						<label
+							for="inputPublicationAuthor"
+							class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationAuthor }} {{ $index + 1 }}<span class="required">*</span>
+						</label>
+						<div class="col-sm-6">
+							<div class="input-group">
+								<input
+									type="text"
+									class="ng-binding form-control"
+									id="inputPublicationAuthor"
+									name="inputPublicationAuthor"
+									ng-disabled="true"
+									ng-model="author"
+									ng-maxlength="100" /> 
+								<span
+									id="remove_button"
+									type="button"
+									class="btn btn-sucess btn-sm input-group-addon"
+									ng-click="removePublicationAuthor($index)">
+									<span class="glyphicon glyphicon-remove" />
+								</span>
+							</div>
+							<div
+								ng-show="form.inputPublicationAuthor.$dirty && form.inputPublicationAuthor.$invalid"
+								class="publicationAuthorFieldError">
+							 	<span
+									ng-show="form.inputPublicationAuthor.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidPublicationAuthorMaxLength }}</span> 
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputNewPublicationAuthor"
+							class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationAuthor }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<input
+								type="text"
+								class="ng-binding form-control"
+								id="inputNewPublicationAuthor"
+								name="inputNewPublicationAuthor"
+								ng-model="$parent.newPublicationAuthor"
+								ng-pattern="patterns.onlyLetters"
+								ng-maxlength="100"
+								ng-required="publicationAuthorsArray.length == 0" /> 
+							<span
+								id="add_button"
+								type="button"
+								class="btn btn-sm input-group-addon"
+								ng-disabled="!newPublicationAuthor"
+								ng-click="addPublicationAuthor()">
+								<span class="glyphicon glyphicon-plus" />
+							</span>
+						</div>
+						<div
+							ng-show="form.inputNewProjectLeader.$dirty && form.inputNewProjectLeader.$invalid"
+							class="projectLeaderFieldError">
+							<span
+								ng-show="form.inputNewPublicationAuthor.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNewPublicationAuthor.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidPublicationAuthorMaxLength }}</span> <span
+								ng-show="form.inputNewPublicationAuthor.$error.pattern"
+								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputPublicationPublisher"
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationPublisher }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputPublicationPublisher"
+							name="inputPublicationPublisher"
+							ng-model="publication.publisher"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputPublicationTitle.$dirty && form.inputPublicationTitle.$invalid"
+							class="publicationTitleFieldError">
+							<span
+								ng-show="form.inputPublicationPublisher.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputPublicationPublisher.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div ng-repeat="range in publicationPageRanges">
+					<div class="row form-group">
+						<label
+							class="col-sm-4 control-label"
+							ng-show="$index == 0">{{ resources.publicationPopupLabels.publicationPageRange }} <span class="required">*</span>
+						</label>
+						<label
+							class="col-sm-4"
+							ng-show="$index != 0">
+						</label>
+						<div class="col-sm-3">
+							<input
+								type="number"
+								class="form-control"
+								id="inputPublicationFromPage"
+								name="inputPublicationFromPage"
+								ng-model="range.startPage"
+								min="1"
+								placeholder="{{ resources.publicationPopupLabels.fromPage }}"
+								ng-maxlength="5"
+								ng-disabled="true" />
+							<div
+								ng-show="form.inputPublicationStartPage.$dirty && form.inputPublicationStartPage.$invalid"
+								class="publicationStartPageFieldError">
+								<span
+									ng-show="form.inputPublicationStartPage.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputPublicationStartPage.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span> <span
+									ng-show="form.inputPublicationStartPage.$error.number"
+									class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span> <span
+									ng-show="form.inputPublicationStartPage.$error.min"
+									class="ng-binding">{{ errorMessages.error.minNumber }}</span>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<input
+								type="number"
+								class="form-control"
+								id="inputPublicationToPage"
+								name="inputPublicationToPage"
+								ng-model="range.endPage"
+								min="1"
+								placeholder="{{ resources.publicationPopupLabels.toPage }}"
+								ng-maxlength="5"
+								ng-disabled="true" />
+							<div
+								ng-show="form.inputPublicationToPage.$dirty && form.inputPublicationToPage.$invalid"
+								class="publicationStartPageFieldError">
+								<span
+									ng-show="form.inputPublicationToPage.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputPublicationToPage.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span> <span
+									ng-show="form.inputPublicationToPage.$error.number"
+									class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span> <span
+									ng-show="form.inputPublicationToPage.$error.min"
+									class="ng-binding">{{ errorMessages.error.minNumber }}</span>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<button
+								id="remove_button"
+								type="button"
+								class="btn btn-link btn-sm"
+								ng-click="removePageRange($index)">
+								<span class="glyphicon glyphicon-remove" />
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label
+						class="col-sm-4" ng-show="publicationPageRanges.length != 0">
+					</label>
+					<label
+						class="col-sm-4 control-label"
+						ng-show="publicationPageRanges.length == 0">{{ resources.publicationPopupLabels.publicationPageRange }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNewPublicationFromPage"
+							name="inputNewPublicationFromPage"
+							placeholder="{{ resources.publicationPopupLabels.fromPage }}"
+							min="1"
+							ng-model="$parent.startPage"
+							ng-maxlength="5"
+							ng-required="publicationPageRanges.length == 0" />
+						<div
+							ng-show="form.inputNewPublicationFromPage.$dirty && form.inputNewPublicationFromPage.$invalid"
+							class="publicationNewStartPageFieldError">
+							<span
+								ng-show="form.inputNewPublicationFromPage.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNewPublicationFromPage.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span> <span
+								ng-show="form.inputNewPublicationFromPage.$error.number"
+								class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span> <span
+								ng-show="form.inputNewPublicationFromPage.$error.min"
+								class="ng-binding">{{ errorMessages.error.minNumber }}</span>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNewPublicationToPage"
+							name="inputNewPublicationToPage"
+							placeholder="{{ resources.publicationPopupLabels.toPage }}"
+							min="1"
+							ng-model="$parent.endPage"
+							ng-disabled="!$parent.startPage"
+							ng-maxlength="5"
+							ng-required="publicationPageRanges.length == 0" />
+						<div
+							ng-show="form.inputNewPublicationToPage.$dirty && form.inputNewPublicationToPage.$invalid"
+							class="publicationNewEndPageFieldError">
+							<span
+								ng-show="form.inputNewPublicationToPage.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNewPublicationToPage.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidPublicationPageNumberMaxLength }}</span> <span
+								ng-show="form.inputNewPublicationToPage.$error.number"
+								class="ng-binding">{{ errorMessages.error.onlyNumbers }}</span> <span
+								ng-show="form.inputNewPublicationToPage.$error.min"
+								class="ng-binding">{{ errorMessages.error.minNumber }}</span>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<button
+							id="add_button"
+							type="button"
+							class="btn btn-link btn-sm"
+							ng-disabled="validatePageRangeInput()"
+							ng-click="addNewPageRange()">
+							<span class="glyphicon glyphicon-plus" />
+						</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputPublicationQuotedNum"
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationQuoted }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control ng-valid ng-valid-number ng-valid-min ng-valid-maxlength ng-dirty"
+							id="inputPublicationQuotedNum"
+							name="inputPublicationQuotedNum"
+							ng-model="publication.quoted"
+							min="0"
+							ng-maxlength="5"
+							required />
+						<div
+							ng-show="form.inputPublicationQuotedNum.$dirty && form.inputPublicationQuotedNum.$invalid"
+							class="publicationQuotedNumError">
+							<span
+								ng-show="form.inputPublicationQuotedNum.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputPublicationQuotedNum.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+								ng-show="form.inputPublicationQuotedNum.$error.min"
+								class="ng-binding">{{ errorMessages.error.minQuotedNumber }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputPublicationType"
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationType }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputPublicationType"
+							name="inputPublicationType"
+							ng-model="publication.publicationType"
+							ng-options="publicationType.title for publicationType in allPublicationTypes track by publicationType.name"
+							required><option value="">{{ resources.publicationPopupLabels.publicationType }}</option></select>
+						<div
+							ng-show="form.inputPublicationType.$dirty && form.inputPublicationType.$invalid"
+							class="publicationTypeFieldError">
+							<span
+								ng-show="form.inputPublicationType.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputPublicationCategory"
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationCategory }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputPublicationCategory"
+							name="inputPublicationCategory"
+							ng-model="publication.publicationCategory"
+							ng-options="publicationCategory.code for publicationCategory in allPublicationCategories track by publicationCategory.id"
+							required><option value="">{{ resources.publicationPopupLabels.publicationCategory }}</option></select>
+						<div
+							ng-show="form.inputPublicationCategory.$dirty && form.inputPublicationCategory.$invalid"
+							class="publicationCategoryFieldError">
+							<span
+								ng-show="form.inputPublicationCategory.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+			</div>	
+			<div class="modal-footer action">
+				<button
+					id="submit_button"
+					type="submit"
+					class="btn btn-success btn-sm"
+					ng-disabled="form.$invalid || !validateForm()"
+					ng-click="saveProfessorPublication()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.publicationsButtons.save }}
 				</button>
 				<button
 					id="cancel_button"

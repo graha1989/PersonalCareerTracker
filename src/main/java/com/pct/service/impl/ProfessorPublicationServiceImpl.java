@@ -107,4 +107,24 @@ public class ProfessorPublicationServiceImpl implements ProfessorPublicationServ
 
 	}
 
+	@Override
+	@Transactional
+	public void deleteProfessorPublication(Long id) throws PublicationNotFoundException {
+
+		ProfessorPublication professorPublication = professorPublicationsRepository.findOne(id);
+
+		if (id == null || professorPublication == null) {
+			throw new PublicationNotFoundException();
+		}
+
+		professorPublication.getPublicationCategory().getProfessorPublications().remove(professorPublication);
+		professorPublication.getProfessor().getProfessorPublications().remove(professorPublication);
+
+		professorPublication.setPublicationCategory(null);
+		professorPublication.setProfessor(null);
+
+		professorPublicationsRepository.delete(professorPublication);
+
+	}
+
 }
