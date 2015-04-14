@@ -314,7 +314,9 @@ public class Professor extends AbstractEntity {
 
 		ProfessorPublication professorPublication = new ProfessorPublication(isbn, title, authors, publisher,
 				pageRange, publicationType, quoted, category, this);
-		category.addProfessorPublication(professorPublication);
+		if (category != null) {
+			category.addProfessorPublication(professorPublication);
+		}
 		this.professorPublications.add(professorPublication);
 
 		return professorPublication;
@@ -331,8 +333,11 @@ public class Professor extends AbstractEntity {
 		professorPublication.setPageRange(pageRange);
 		professorPublication.setPublicationType(publicationType);
 		professorPublication.setQuoted(quoted);
+		professorPublication.setPublicationCategory(category);
 
-		category.addProfessorPublication(professorPublication);
+		if (category != null) {
+			category.addProfessorPublication(professorPublication);
+		}
 
 		return professorPublication;
 	}

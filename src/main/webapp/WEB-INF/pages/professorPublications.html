@@ -426,8 +426,9 @@
 							id="inputPublicationCategory"
 							name="inputPublicationCategory"
 							ng-model="publication.publicationCategory"
+							ng-disabled="scientificPublicationNotSelected()"
 							ng-options="publicationCategory.code for publicationCategory in allPublicationCategories track by publicationCategory.id"
-							required><option value="">{{ resources.publicationPopupLabels.publicationCategory }}</option></select>
+							ng-required="!scientificPublicationNotSelected()"><option value="">{{ resources.publicationPopupLabels.publicationCategory }}</option></select>
 						<div
 							ng-show="form.inputPublicationCategory.$dirty && form.inputPublicationCategory.$invalid"
 							class="publicationCategoryFieldError">
@@ -814,8 +815,9 @@
 							id="inputPublicationCategory"
 							name="inputPublicationCategory"
 							ng-model="publication.publicationCategory"
+							ng-disabled="scientificPublicationNotSelected()"
 							ng-options="publicationCategory.code for publicationCategory in allPublicationCategories track by publicationCategory.id"
-							required><option value="">{{ resources.publicationPopupLabels.publicationCategory }}</option></select>
+							ng-required="!scientificPublicationNotSelected()"><option value="">{{ resources.publicationPopupLabels.publicationCategory }}</option></select>
 						<div
 							ng-show="form.inputPublicationCategory.$dirty && form.inputPublicationCategory.$invalid"
 							class="publicationCategoryFieldError">

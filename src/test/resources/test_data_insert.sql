@@ -90,4 +90,6 @@ INSERT INTO publication_category (code, description, nsmPoints, ttbtPoints, shPo
 	('M36', 'Uređivanje zbornika saopštenja međunarodnog naučnog skupa', '1', '1', '1');
 INSERT INTO professor_publication (isbn, title, authors, publisher, pageRange, publicationType, quoted, publicationCategoryId, professorId) VALUES
 	('ISBN:978-1-56619-909-4', 'Uvod u programiranje', 'Mirjana Ivanović; Đura Paunić; Srđan Bojić', 'PMF', '50-90', 'SCIENTIFIC', '10', '5', '3'),
-	('ISBN:555-3-67780-010-5', 'Matematička logika', 'Gradimir Vojvodić; Srđan Bojić', 'PMF', '1-120', 'TEXTBOOK', '20', '8', '3');
+	('ISBN:32-10-20022-879-1', 'XML tehnologije u primeni', 'Đorđe Herceg; Srđan Bojić', 'Stylos', '1-300', 'SCIENTIFIC', '19', '13', '3'),
+	('ISBN:555-3-67780-010-5', 'Matematička logika', 'Gradimir Vojvodić; Srđan Bojić', 'PMF', '1-120', 'TEXTBOOK', '20', null, '3'),
+	('ISBN:222-3-99633-011-4', 'Matematička analiza', 'Arpad Takači; Srđan Bojić', 'PMF', '1-120', 'TEXTBOOK', '6', null, '3');

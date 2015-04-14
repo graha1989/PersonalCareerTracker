@@ -52,7 +52,6 @@ public class PublicationDto implements Serializable {
 	@Min(0)
 	private Integer quoted;
 	
-	@NotNull
 	private PublicationCategory publicationCategory;
 	
 	protected Long professorId;

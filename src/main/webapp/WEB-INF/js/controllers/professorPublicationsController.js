@@ -340,6 +340,20 @@ var editPublicationPopupController = function($scope, $modalInstance,
             || $scope.endPage < $scope.startPage;
   };
 
+  $scope.scientificPublicationNotSelected = function() {
+    if (angular.isUndefined($scope.publication.publicationType)
+            || $scope.publication.publicationType === null
+            || $scope.publication.publicationType === '') {
+      $scope.publication.publicationCategory = null;
+      return true;
+    } else if ($scope.publication.publicationType.name == "SCIENTIFIC") {
+      return false;
+    } else {
+      $scope.publication.publicationCategory = null;
+      return true;
+    }
+  };
+
   $scope.cancel = function() {
     $modalInstance.dismiss('cancel');
   };
@@ -399,18 +413,23 @@ var createNewPublicationController = function($scope, $modalInstance,
   };
 
   $scope.loadProfessorNameAndSurname = function() {
-    PctService.loadProfesor($routeParams.professorId, function(data) {
-      if (angular.isObject(data)) {
-        $scope.professor = data;
-        $scope.professorNameAndSurname = $scope.professor.name + " "
-                + $scope.professor.surname;
-        $scope.publicationAuthorsArray.push($scope.professorNameAndSurname);
-        $scope.constructPublicationAuthorsString($scope.publicationAuthorsArray);
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
+    PctService
+            .loadProfesor(
+                    $routeParams.professorId,
+                    function(data) {
+                      if (angular.isObject(data)) {
+                        $scope.professor = data;
+                        $scope.professorNameAndSurname = $scope.professor.name
+                                + " " + $scope.professor.surname;
+                        $scope.publicationAuthorsArray
+                                .push($scope.professorNameAndSurname);
+                        $scope
+                                .constructPublicationAuthorsString($scope.publicationAuthorsArray);
+                        $scope.noResultsFound = false;
+                      } else {
+                        $scope.noResultsFound = true;
+                      }
+                    });
   };
 
   $scope.createAuthorsArray = function() {
@@ -550,7 +569,9 @@ var createNewPublicationController = function($scope, $modalInstance,
   };
 
   $scope.validateForm = function() {
-    if ((($scope.publication.isbn != null && $scope.publication.isbn != '') || ($scope.publication.title != null && $scope.publication.title != ''))
+    if ($scope.publication.isbn != null && $scope.publication.isbn != ''
+            && $scope.publication.title != null
+            && $scope.publication.title != ''
             && $scope.publication.authors != null
             && $scope.publication.authors != ''
             && $scope.publication.publisher != null
@@ -560,10 +581,17 @@ var createNewPublicationController = function($scope, $modalInstance,
             && $scope.publication.quoted != null
             && $scope.publication.quoted != ''
             && $scope.publication.publicationType != null
-            && $scope.publication.publicationType != ''
-            && $scope.publication.publicationCategory != null
-            && $scope.publication.publicationCategory != '') {
-      return true;
+            && $scope.publication.publicationType != '') {
+      if ($scope.publication.publicationType.name === "SCIENTIFIC"
+              && $scope.publication.publicationCategory != null
+              && $scope.publication.publicationCategory != '') {
+        return true;
+      } else if ($scope.publication.publicationType.name === "SCIENTIFIC"
+              && ($scope.publication.publicationCategory == null || $scope.publication.publicationCategory == '')) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
       return false;
     }
@@ -572,6 +600,20 @@ var createNewPublicationController = function($scope, $modalInstance,
   $scope.validatePageRangeInput = function() {
     return $scope.startPage == 0 || $scope.endPage == 0
             || $scope.endPage < $scope.startPage;
+  };
+
+  $scope.scientificPublicationNotSelected = function() {
+    if (angular.isUndefined($scope.publication.publicationType)
+            || $scope.publication.publicationType === null
+            || $scope.publication.publicationType === '') {
+      $scope.publication.publicationCategory = null;
+      return true;
+    } else if ($scope.publication.publicationType.name === "SCIENTIFIC") {
+      return false;
+    } else {
+      $scope.publication.publicationCategory = null;
+      return true;
+    }
   };
 
   $scope.cancel = function() {

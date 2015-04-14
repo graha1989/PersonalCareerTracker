@@ -95,9 +95,9 @@ public class ProfessorPublicationServiceImpl implements ProfessorPublicationServ
 			professor = professorRepository.findOne(publicationDto.getProfessorId());
 		}
 
-		if (publicationDto.getPublicationCategory().getId() == null
+		if (publicationDto.getPublicationCategory() == null || publicationDto.getPublicationCategory().getId() == null
 				|| publicationCategoryRepository.findOne(publicationDto.getPublicationCategory().getId()) == null) {
-			throw new PublicationCategoryNotFoundException();
+			category = null;
 		} else {
 			category = publicationCategoryRepository.findOne(publicationDto.getPublicationCategory().getId());
 		}
@@ -117,7 +117,10 @@ public class ProfessorPublicationServiceImpl implements ProfessorPublicationServ
 			throw new PublicationNotFoundException();
 		}
 
-		professorPublication.getPublicationCategory().getProfessorPublications().remove(professorPublication);
+		if (professorPublication.getPublicationCategory() != null) {
+			professorPublication.getPublicationCategory().getProfessorPublications().remove(professorPublication);
+		}
+
 		professorPublication.getProfessor().getProfessorPublications().remove(professorPublication);
 
 		professorPublication.setPublicationCategory(null);

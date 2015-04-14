@@ -1,5 +1,6 @@
 package com.pct.domain;
 
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -47,6 +48,7 @@ public class ProfessorPublication extends AbstractEntity {
 	@ManyToOne
 	@JoinColumn(name = "publicationCategoryId")
 	@JsonBackReference(value = "publicationCategory")
+	@Nullable
 	private PublicationCategory publicationCategory;
 
 	@ManyToOne
