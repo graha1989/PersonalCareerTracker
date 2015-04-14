@@ -1,0 +1,29 @@
+package com.pct.service;
+
+import java.util.List;
+
+import com.pct.domain.PublicationCategory;
+import com.pct.domain.dto.InternationalPublicationDto;
+import com.pct.domain.dto.ProfessorPublicationDto;
+import com.pct.domain.enums.PublicationType;
+import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.PublicationCategoryNotFoundException;
+import com.pct.validation.PublicationNotFoundException;
+
+public interface PublicationService {
+
+	List<ProfessorPublicationDto> findAllPublications(Long professorId) throws PublicationNotFoundException;
+
+	List<PublicationType> findAllPublicationTypes();
+
+	List<PublicationCategory> findAllPublicationCategories();
+
+	ProfessorPublicationDto findPublicationById(Long id) throws PublicationNotFoundException;
+
+	void saveProfessorPublication(ProfessorPublicationDto professorPublicationDto) throws PublicationNotFoundException, ProfessorNotFoundException, PublicationCategoryNotFoundException;
+
+	void deleteProfessorPublication(Long id) throws PublicationNotFoundException;
+
+	List<InternationalPublicationDto> findAllInternationalPublications(Long professorId) throws PublicationNotFoundException;
+	
+}

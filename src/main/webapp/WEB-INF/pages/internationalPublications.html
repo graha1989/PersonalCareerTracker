@@ -2,13 +2,13 @@
 
 	<form
 		name="form"
-		id="showAllProfessorPublicationsForm"
+		id="showAllInternationalPublicationsForm"
 		novalidate
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
 		ng-model="publication">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ resources.text.professorPublicationsTitle }}</h3>
+			<h3 class="modal-title">{{ resources.text.internationalPublicationsTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
@@ -20,15 +20,14 @@
 					cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
-							<td>{{ resources.professorPublicationsTableLabels.publicationType }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.isbn }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.title }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.journalTitle }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.authors }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.publisher }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.pageRange }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.quoted }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.category }}</td>
+							<td>{{ resources.internationalPublicationsTableLabels.publicationType }}</td>
+							<td>{{ resources.internationalPublicationsTableLabels.isbn }}</td>
+							<td>{{ resources.internationalPublicationsTableLabels.title }}</td>
+							<td>{{ resources.internationalPublicationsTableLabels.journalTitle }}</td>
+							<td>{{ resources.internationalPublicationsTableLabels.authors }}</td>
+							<td>{{ resources.internationalPublicationsTableLabels.publisher }}</td>
+							<td>{{ resources.internationalPublicationsTableLabels.pagesWithQuotes }}</td>
+							<td>{{ resources.internationalPublicationsTableLabels.category }}</td>
 							<td colspan="2"></td>
 						</tr>
 						<tr
@@ -40,22 +39,21 @@
 							<td>{{ publication.journalTitle }}</td>
 							<td>{{ publication.authors }}</td>
 							<td>{{ publication.publisher }}</td>
-							<td>{{ publication.pageRange }}</td>
-							<td>{{ publication.quoted }}</td>
+							<td>{{ publication.pagesWithQuotes }}</td>
 							<td>{{ publication.publicationCategory.code }}</td>
 							<td class="delete"><button
 									class="btn btn-link btn-xs"
-									ng-click="deleteProfessorPublication(publication.id, $index)">
+									ng-click="deleteInternationalPublication(publication.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.publicationsButtons.delete }}
 								</button></td>
 							<td class="edit"><button
 									class="btn btn-link btn-xs"
-									ng-click="editProfessorPublication(publication.id)">
+									ng-click="editInternationalPublication(publication.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.publicationsButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="11">{{ errorMessages.error.emptyTable }}</td>
+							<td colspan="10">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -65,7 +63,7 @@
 			<button
 				id="addNewButton"
 				class="btn btn-success btn-sm"
-				ng-click="createNewProfessorPublication()">
+				ng-click="createNewInternationalPublication()">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.publicationsButtons.add }}
 			</button>
 		</div>
@@ -73,7 +71,7 @@
 
 	<script
 		type="text/ng-template"
-		id="editProfessorPublicationPopup.html">
+		id="editPublicationPopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
@@ -133,33 +131,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<label
-						for="inputPublicationJournalTitle"
-						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationJournalTitle }} 
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputPublicationJournalTitle"
-							name="inputPublicationJournalTitle"
-							ng-model="publication.journalTitle"
-							ng-maxlength="50" />
-						<div
-							ng-show="form.inputPublicationJournalTitle.$dirty && form.inputPublicationJournalTitle.$invalid"
-							class="publicationJournalTitleFieldError">
-							<span
-								ng-show="form.inputPublicationJournalTitle.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
-						</div>
-					</div>
-				</div>
 				<div ng-repeat="author in publicationAuthorsArray">
 					<div class="form-group">
 						<label
 							for="inputPublicationAuthor"
-							class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationAuthor }} {{ $index + 1 }} 
+							class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationAuthor }} {{ $index + 1 }}<span class="required">*</span>
 						</label>
 						<div class="col-sm-6">
 							<div class="input-group">
@@ -192,7 +168,7 @@
 				<div class="form-group">
 					<label
 						for="inputNewPublicationAuthor"
-							class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationAuthor }} <span ng-show="publicationAuthorsArray.length == 0" class="required">*</span>
+							class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationAuthor }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
 						<div class="input-group">
@@ -256,7 +232,7 @@
 					<div class="row form-group">
 						<label
 							class="col-sm-4 control-label"
-							ng-show="$index == 0">{{ resources.publicationPopupLabels.publicationPageRange }} 
+							ng-show="$index == 0">{{ resources.publicationPopupLabels.publicationPageRange }} <span class="required">*</span>
 						</label>
 						<label
 							class="col-sm-4"
@@ -486,7 +462,7 @@
 
 	<script
 		type="text/ng-template"
-		id="createNewProfessorPublicationPopup.html">
+		id="createNewPublicationPopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
@@ -546,33 +522,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<label
-						for="inputPublicationJournalTitle"
-						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationJournalTitle }} 
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputPublicationJournalTitle"
-							name="inputPublicationJournalTitle"
-							ng-model="publication.journalTitle"
-							ng-maxlength="50" />
-						<div
-							ng-show="form.inputPublicationJournalTitle.$dirty && form.inputPublicationJournalTitle.$invalid"
-							class="publicationJournalTitleFieldError">
-							<span
-								ng-show="form.inputPublicationJournalTitle.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
-						</div>
-					</div>
-				</div>
 				<div ng-repeat="author in publicationAuthorsArray">
 					<div class="form-group">
 						<label
 							for="inputPublicationAuthor"
-							class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationAuthor }} {{ $index + 1 }}
+							class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationAuthor }} {{ $index + 1 }}<span class="required">*</span>
 						</label>
 						<div class="col-sm-6">
 							<div class="input-group">
@@ -605,7 +559,7 @@
 				<div class="form-group">
 					<label
 						for="inputNewPublicationAuthor"
-							class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationAuthor }} <span ng-show="publicationAuthorsArray.length == 0" class="required">*</span>
+							class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationAuthor }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
 						<div class="input-group">
@@ -669,7 +623,7 @@
 					<div class="row form-group">
 						<label
 							class="col-sm-4 control-label"
-							ng-show="$index == 0">{{ resources.publicationPopupLabels.publicationPageRange }} 
+							ng-show="$index == 0">{{ resources.publicationPopupLabels.publicationPageRange }} <span class="required">*</span>
 						</label>
 						<label
 							class="col-sm-4"

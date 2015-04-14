@@ -49,6 +49,10 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         templateUrl: 'pages/professorPublications.html?professorId=:professorId',
         controller: 'ProfessorPublicationsController'
       })
+      .when('/publications/internationalPublications/professorId/:professorId', {
+        templateUrl: 'pages/internationalPublications.html?professorId=:professorId',
+        controller: 'InternationalPublicationsController'
+      })
 			.otherwise({
 				redirectTo: '/showAllStudents'
 			});

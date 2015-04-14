@@ -18,7 +18,8 @@
         "editProjectPopupTooltip": "U slučaju više rukovodilaca:\nRukovodilac 1; Rukovodilac 2...",
         "IamProjectLeaderTooltip": "Trenutni korisnik je rukovodilac",
         "addNewProjectPopupTitle": "Dodavanje novog projekta",
-        "professorPublicationsTitle": "Sve publikacije",
+        "professorPublicationsTitle": "Sve lične publikacije",
+        "internationalPublicationsTitle": "Sve međunarodne publikacije",
         "editPublicationPopupTitle": "Izmena publikacije",
         "newPublicationPopupTitle": "Unos nove publikacije"
     },
@@ -156,15 +157,27 @@
         "publicationType": "Tip publikacije",
         "isbn": "ISBN",
         "title": "Naslov",
+        "journalTitle": "Časopis",
         "authors": "Autori",
         "publisher": "Izdavač",
         "pageRange": "Stranice",
         "quoted": "Broj citata",
         "category": "Kategorija"
     },
+    "internationalPublicationsTableLabels": {
+        "publicationType": "Tip publikacije",
+        "isbn": "ISBN",
+        "title": "Naslov",
+        "journalTitle": "Časopis",
+        "authors": "Autori",
+        "publisher": "Izdavač",
+        "pagesWithQuotes": "Stranice",
+        "category": "Kategorija"
+    },
     "publicationPopupLabels": {
     	"publicationIsbn": "ISBN",
     	"publicationTitle": "Naslov",
+    	"publicationJournalTitle": "Časopis",
     	"publicationAuthor": "Autor",
     	"publicationPublisher": "Izdavač",
     	"publicationPageRange": "Stranice",

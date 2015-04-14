@@ -15,59 +15,65 @@ import com.pct.domain.PublicationCategory;
 import com.pct.domain.enums.PublicationType;
 import com.pct.domain.enums.deserializers.PublicationTypeEnumDeserializer;
 
-public class PublicationDto implements Serializable {
+public class ProfessorPublicationDto implements Serializable {
 
 	private static final long serialVersionUID = 8325577395997414231L;
 
 	@NotNull
 	@JsonDeserialize(using = PublicationTypeEnumDeserializer.class)
 	private PublicationType publicationType;
-	
+
 	@NotEmpty
 	@Length(max = 30)
 	@SafeHtml
 	private String isbn;
-	
+
 	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	private String title;
 	
+	@Length(max = 50)
+	@SafeHtml
+	private String journalTitle;
+
 	@NotEmpty
 	@Length(max = 400)
 	@SafeHtml
 	private String authors;
-	
+
 	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	private String publisher;
-	
+
 	@NotEmpty
-	@Length(max = 55)
+	@Length(max = 100)
 	@SafeHtml
 	private String pageRange;
-	
+
 	@NotNull
 	@Min(0)
 	private Integer quoted;
-	
+
 	private PublicationCategory publicationCategory;
-	
+
 	protected Long professorId;
-	
+
 	protected Long id;
 
-	public PublicationDto() {
+	public ProfessorPublicationDto() {
 		super();
 	}
 
-	public PublicationDto(PublicationType publicationType, String isbn, String title, String authors, String publisher,
-			String pageRange, Integer quoted, PublicationCategory publicationCategory, Long professorId, Long id) {
+	public ProfessorPublicationDto(PublicationType publicationType, String isbn, String title, String journalTitle, String authors,
+			String publisher, String pageRange, Integer quoted, PublicationCategory publicationCategory,
+			Long professorId, Long id) {
 		super();
 		this.publicationType = publicationType;
 		this.isbn = isbn;
 		this.title = title;
+		this.journalTitle = journalTitle;
 		this.authors = authors;
 		this.publisher = publisher;
 		this.pageRange = pageRange;
@@ -76,12 +82,13 @@ public class PublicationDto implements Serializable {
 		this.professorId = professorId;
 		this.id = id;
 	}
-	
-	public PublicationDto(ProfessorPublication p) {
+
+	public ProfessorPublicationDto(ProfessorPublication p) {
 		super();
 		this.publicationType = p.getPublicationType();
 		this.isbn = p.getIsbn();
 		this.title = p.getTitle();
+		this.journalTitle = p.getJournalTitle();
 		this.authors = p.getAuthors();
 		this.publisher = p.getPublisher();
 		this.pageRange = p.getPageRange();
@@ -113,6 +120,14 @@ public class PublicationDto implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getJournalTitle() {
+		return journalTitle;
+	}
+
+	public void setJournalTitle(String journalTitle) {
+		this.journalTitle = journalTitle;
 	}
 
 	public String getAuthors() {
@@ -170,5 +185,5 @@ public class PublicationDto implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 }

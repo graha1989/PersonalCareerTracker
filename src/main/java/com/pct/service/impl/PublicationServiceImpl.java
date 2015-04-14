@@ -8,22 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pct.domain.InternationalPublication;
 import com.pct.domain.Professor;
 import com.pct.domain.ProfessorPublication;
 import com.pct.domain.PublicationCategory;
-import com.pct.domain.dto.PublicationDto;
+import com.pct.domain.dto.InternationalPublicationDto;
+import com.pct.domain.dto.ProfessorPublicationDto;
 import com.pct.domain.enums.PublicationType;
+import com.pct.repository.InternationalPublicationsRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProfessorPublicationsRepository;
 import com.pct.repository.PublicationCategoryRepository;
-import com.pct.service.ProfessorPublicationService;
+import com.pct.service.PublicationService;
 import com.pct.service.util.PublicationUtil;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.PublicationCategoryNotFoundException;
 import com.pct.validation.PublicationNotFoundException;
 
 @Service
-public class ProfessorPublicationServiceImpl implements ProfessorPublicationService {
+public class PublicationServiceImpl implements PublicationService {
 
 	@Autowired
 	private ProfessorPublicationsRepository professorPublicationsRepository;
@@ -33,18 +36,21 @@ public class ProfessorPublicationServiceImpl implements ProfessorPublicationServ
 
 	@Autowired
 	private ProfesorRepository professorRepository;
+	
+	@Autowired
+	private InternationalPublicationsRepository internationalPublicationsRepository;
 
 	@Override
 	@Transactional
-	public List<PublicationDto> findAllPublications(Long professorId) throws PublicationNotFoundException {
+	public List<ProfessorPublicationDto> findAllPublications(Long professorId) throws PublicationNotFoundException {
 
-		List<PublicationDto> publicationDtoList = new ArrayList<PublicationDto>();
+		List<ProfessorPublicationDto> publicationDtoList = new ArrayList<ProfessorPublicationDto>();
 		try {
 			List<ProfessorPublication> publicationsList = professorPublicationsRepository
 					.findAllPublications(professorId);
 			for (ProfessorPublication p : publicationsList) {
-				PublicationDto publicationDto = new PublicationDto(p);
-				publicationDtoList.add(publicationDto);
+				ProfessorPublicationDto professorPublicationDto = new ProfessorPublicationDto(p);
+				publicationDtoList.add(professorPublicationDto);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,43 +73,45 @@ public class ProfessorPublicationServiceImpl implements ProfessorPublicationServ
 
 	@Override
 	@Transactional
-	public PublicationDto findPublicationById(Long id) throws PublicationNotFoundException {
+	public ProfessorPublicationDto findPublicationById(Long id) throws PublicationNotFoundException {
 
-		PublicationDto publicationDto;
+		ProfessorPublicationDto professorPublicationDto;
 
 		if (id == null || professorPublicationsRepository.findOne(id) == null) {
 			throw new PublicationNotFoundException();
 		} else {
 			ProfessorPublication publication = professorPublicationsRepository.findOne(id);
-			publicationDto = new PublicationDto(publication);
+			professorPublicationDto = new ProfessorPublicationDto(publication);
 		}
 
-		return publicationDto;
+		return professorPublicationDto;
 	}
 
 	@Override
 	@Transactional
-	public void saveProfessorPublication(PublicationDto publicationDto) throws PublicationNotFoundException,
-			ProfessorNotFoundException, PublicationCategoryNotFoundException {
+	public void saveProfessorPublication(ProfessorPublicationDto professorPublicationDto)
+			throws PublicationNotFoundException, ProfessorNotFoundException, PublicationCategoryNotFoundException {
 
 		Professor professor;
 		PublicationCategory category;
 
-		if (publicationDto.getProfessorId() == null || !professorRepository.exists(publicationDto.getProfessorId())) {
+		if (professorPublicationDto.getProfessorId() == null
+				|| !professorRepository.exists(professorPublicationDto.getProfessorId())) {
 			throw new ProfessorNotFoundException();
 		} else {
-			professor = professorRepository.findOne(publicationDto.getProfessorId());
+			professor = professorRepository.findOne(professorPublicationDto.getProfessorId());
 		}
 
-		if (publicationDto.getPublicationCategory() == null || publicationDto.getPublicationCategory().getId() == null
-				|| publicationCategoryRepository.findOne(publicationDto.getPublicationCategory().getId()) == null) {
+		if (professorPublicationDto.getPublicationCategory() == null
+				|| professorPublicationDto.getPublicationCategory().getId() == null
+				|| publicationCategoryRepository.findOne(professorPublicationDto.getPublicationCategory().getId()) == null) {
 			category = null;
 		} else {
-			category = publicationCategoryRepository.findOne(publicationDto.getPublicationCategory().getId());
+			category = publicationCategoryRepository.findOne(professorPublicationDto.getPublicationCategory().getId());
 		}
 
-		professorRepository.save(PublicationUtil.createOrUpdatePublicationInstanceFromPublicationDto(publicationDto,
-				professor, category));
+		professorRepository.save(PublicationUtil.createOrUpdatePublicationInstanceFromPublicationDto(
+				professorPublicationDto, professor, category));
 
 	}
 
@@ -127,6 +135,27 @@ public class ProfessorPublicationServiceImpl implements ProfessorPublicationServ
 		professorPublication.setProfessor(null);
 
 		professorPublicationsRepository.delete(professorPublication);
+
+	}
+
+	@Override
+	@Transactional
+	public List<InternationalPublicationDto> findAllInternationalPublications(Long professorId)
+			throws PublicationNotFoundException {
+
+		List<InternationalPublicationDto> publicationDtoList = new ArrayList<InternationalPublicationDto>();
+		try {
+			List<InternationalPublication> publicationsList = internationalPublicationsRepository
+					.findAllInternationalPublications(professorId);
+			for (InternationalPublication p : publicationsList) {
+				InternationalPublicationDto internationalPublicationDto = new InternationalPublicationDto(p);
+				publicationDtoList.add(internationalPublicationDto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return publicationDtoList;
 
 	}
 

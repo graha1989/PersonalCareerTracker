@@ -310,10 +310,11 @@ public class Professor extends AbstractEntity {
 	}
 
 	public ProfessorPublication creatreNewProfessorPublication(PublicationCategory category, String isbn, String title,
-			String authors, String publisher, String pageRange, PublicationType publicationType, Integer quoted) {
+			String journalTitle, String authors, String publisher, String pageRange, PublicationType publicationType,
+			Integer quoted) {
 
-		ProfessorPublication professorPublication = new ProfessorPublication(isbn, title, authors, publisher,
-				pageRange, publicationType, quoted, category, this);
+		ProfessorPublication professorPublication = new ProfessorPublication(isbn, title, journalTitle, authors,
+				publisher, pageRange, publicationType, quoted, category, this);
 		if (category != null) {
 			category.addProfessorPublication(professorPublication);
 		}
@@ -323,11 +324,13 @@ public class Professor extends AbstractEntity {
 	}
 
 	public ProfessorPublication editProfessorPublication(PublicationCategory category, String isbn, String title,
-			String authors, String publisher, String pageRange, Integer quoted, PublicationType publicationType, Long id) {
+			String journalTitle, String authors, String publisher, String pageRange, Integer quoted,
+			PublicationType publicationType, Long id) {
 
 		ProfessorPublication professorPublication = getProfessorPublicationById(id);
 		professorPublication.setIsbn(isbn);
 		professorPublication.setTitle(title);
+		professorPublication.setJournalTitle(journalTitle);
 		professorPublication.setAuthors(authors);
 		professorPublication.setPublisher(publisher);
 		professorPublication.setPageRange(pageRange);

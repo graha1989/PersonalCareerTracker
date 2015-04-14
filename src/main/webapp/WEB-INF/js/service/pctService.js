@@ -188,6 +188,19 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        loadInternationalPublications: function(professorId) {
+          var deferred = $q.defer();
+          $http.get("api/publications/allInternationalPublications", {
+            params: {
+              professorId: professorId
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
         loadAllPublicationTypes: function(params, callback) {
           $http.get('api/publications/allPublicationTypes').success(callback);
         },

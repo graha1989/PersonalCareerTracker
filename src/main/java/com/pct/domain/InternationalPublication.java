@@ -16,14 +16,14 @@ import com.pct.domain.enums.PublicationType;
 import com.pct.domain.enums.deserializers.PublicationTypeEnumDeserializer;
 
 @Entity
-@Table(name = "professor_publication")
-public class ProfessorPublication extends AbstractEntity {
+@Table(name = "international_publication")
+public class InternationalPublication extends AbstractEntity {
 
-	private static final long serialVersionUID = -7256632218559132120L;
+	private static final long serialVersionUID = 7937309852122160026L;
 
 	@Column(name = "isbn", unique = true, length = 30)
 	private String isbn;
-	
+
 	@Column(name = "journalTitle", length = 50)
 	@Nullable
 	private String journalTitle;
@@ -38,21 +38,17 @@ public class ProfessorPublication extends AbstractEntity {
 	@Column(name = "publisher", length = 50)
 	private String publisher;
 
-	@Column(name = "pageRange", length = 100)
-	private String pageRange;
+	@Column(name = "pagesWithQuotes", length = 100)
+	private String pagesWithQuotes;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "publicationType")
 	@JsonDeserialize(using = PublicationTypeEnumDeserializer.class)
 	private PublicationType publicationType;
 
-	@Column(name = "quoted")
-	private Integer quoted;
-
 	@ManyToOne
 	@JoinColumn(name = "publicationCategoryId")
 	@JsonBackReference(value = "publicationCategory")
-	@Nullable
 	private PublicationCategory publicationCategory;
 
 	@ManyToOne
@@ -60,12 +56,12 @@ public class ProfessorPublication extends AbstractEntity {
 	@JsonBackReference(value = "professor")
 	private Professor professor;
 
-	public ProfessorPublication() {
+	public InternationalPublication() {
 		super();
 	}
 
-	public ProfessorPublication(String isbn, String title, String jurnalTitle, String authors, String publisher, String pageRange,
-			PublicationType publicationType, Integer quoted, PublicationCategory publicationCategory,
+	public InternationalPublication(String isbn, String title, String jurnalTitle, String authors, String publisher,
+			String pagesWithQuotes, PublicationType publicationType, PublicationCategory publicationCategory,
 			Professor professor) {
 		super();
 		this.isbn = isbn;
@@ -73,9 +69,8 @@ public class ProfessorPublication extends AbstractEntity {
 		this.journalTitle = jurnalTitle;
 		this.authors = authors;
 		this.publisher = publisher;
-		this.pageRange = pageRange;
+		this.pagesWithQuotes = pagesWithQuotes;
 		this.publicationType = publicationType;
-		this.quoted = quoted;
 		this.publicationCategory = publicationCategory;
 		this.professor = professor;
 	}
@@ -92,16 +87,16 @@ public class ProfessorPublication extends AbstractEntity {
 		return title;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public String getJournalTitle() {
 		return journalTitle;
 	}
 
 	public void setJournalTitle(String journalTitle) {
 		this.journalTitle = journalTitle;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public String getAuthors() {
@@ -120,12 +115,12 @@ public class ProfessorPublication extends AbstractEntity {
 		this.publisher = publisher;
 	}
 
-	public String getPageRange() {
-		return pageRange;
+	public String getPagesWithQuotes() {
+		return pagesWithQuotes;
 	}
 
-	public void setPageRange(String pageRange) {
-		this.pageRange = pageRange;
+	public void setPagesWithQuotes(String pagesWithQuotes) {
+		this.pagesWithQuotes = pagesWithQuotes;
 	}
 
 	public PublicationType getPublicationType() {
@@ -134,14 +129,6 @@ public class ProfessorPublication extends AbstractEntity {
 
 	public void setPublicationType(PublicationType publicationType) {
 		this.publicationType = publicationType;
-	}
-
-	public Integer getQuoted() {
-		return quoted;
-	}
-
-	public void setQuoted(Integer quoted) {
-		this.quoted = quoted;
 	}
 
 	public PublicationCategory getPublicationCategory() {

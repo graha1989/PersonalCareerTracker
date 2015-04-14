@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
 import com.pct.domain.PublicationCategory;
-import com.pct.domain.dto.PublicationDto;
+import com.pct.domain.dto.InternationalPublicationDto;
+import com.pct.domain.dto.ProfessorPublicationDto;
 import com.pct.domain.enums.PublicationType;
-import com.pct.service.ProfessorPublicationService;
+import com.pct.service.PublicationService;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.ProjectExperienceNotFoundException;
 import com.pct.validation.PublicationCategoryNotFoundException;
@@ -33,27 +34,43 @@ public class PublicationsController {
 	private static final Logger logger = LoggerFactory.getLogger(PublicationsController.class);
 
 	@Autowired
-	ProfessorPublicationService professorPublicationService;
-
+	PublicationService publicationService;
+	
 	@RequestMapping(value = "allProfessorPublications", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<List<PublicationDto>> showAllProfessorPublications(
+	public ResponseEntity<List<ProfessorPublicationDto>> showAllProfessorPublications(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
 
-		List<PublicationDto> publications = null;
+		List<ProfessorPublicationDto> publications = null;
 		try {
-			publications = professorPublicationService.findAllPublications(professorId);
+			publications = publicationService.findAllPublications(professorId);
 		} catch (PublicationNotFoundException e) {
 			e.printStackTrace();
 		}
 
 		logger.debug("Professor got: " + publications.size() + " publications.");
 
-		return new ResponseEntity<List<PublicationDto>>(publications, HttpStatus.OK);
+		return new ResponseEntity<List<ProfessorPublicationDto>>(publications, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "allInternationalPublications", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<List<InternationalPublicationDto>> showAllInternationalPublications(
+			@RequestParam(value = "professorId", required = true) Long professorId) {
+
+		List<InternationalPublicationDto> publications = null;
+		try {
+			publications = publicationService.findAllInternationalPublications(professorId);
+		} catch (PublicationNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		logger.debug("Professor got: " + publications.size() + " international publications related.");
+
+		return new ResponseEntity<List<InternationalPublicationDto>>(publications, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "allPublicationTypes", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<PublicationType>> getAllPublicationTypes() {
-		List<PublicationType> publicationTypes = professorPublicationService.findAllPublicationTypes();
+		List<PublicationType> publicationTypes = publicationService.findAllPublicationTypes();
 
 		logger.debug("Successfully  loaded: " + publicationTypes.size() + " publication types.");
 
@@ -62,7 +79,7 @@ public class PublicationsController {
 
 	@RequestMapping(value = "allPublicationCategories", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<PublicationCategory>> getAllPublicationCategories() {
-		List<PublicationCategory> publicationCategories = professorPublicationService.findAllPublicationCategories();
+		List<PublicationCategory> publicationCategories = publicationService.findAllPublicationCategories();
 
 		logger.debug("Successfully  loaded: " + publicationCategories.size() + " publication categories.");
 
@@ -70,27 +87,27 @@ public class PublicationsController {
 	}
 
 	@RequestMapping(value = "selectedPublication", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<PublicationDto> showPublication(
+	public ResponseEntity<ProfessorPublicationDto> showPublication(
 			@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws ProjectExperienceNotFoundException {
 
-		PublicationDto publicationDto = null;
+		ProfessorPublicationDto professorPublicationDto = null;
 		try {
-			publicationDto = professorPublicationService.findPublicationById(id);
+			professorPublicationDto = publicationService.findPublicationById(id);
 		} catch (PublicationNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		logger.debug("Successfully loaded publication: " + publicationDto.getTitle() + ".");
+		logger.debug("Successfully loaded publication: " + professorPublicationDto.getTitle() + ".");
 
-		return new ResponseEntity<PublicationDto>(publicationDto, HttpStatus.OK);
+		return new ResponseEntity<ProfessorPublicationDto>(professorPublicationDto, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<String> persistProfessorPublication(@Valid @RequestBody PublicationDto publicationDto) {
+	public ResponseEntity<String> persistProfessorPublication(@Valid @RequestBody ProfessorPublicationDto professorPublicationDto) {
 
 		try {
-			professorPublicationService.saveProfessorPublication(publicationDto);
+			publicationService.saveProfessorPublication(professorPublicationDto);
 		} catch (PublicationNotFoundException e) {
 			e.printStackTrace();
 		} catch (ProfessorNotFoundException e) {
@@ -99,18 +116,18 @@ public class PublicationsController {
 			e.printStackTrace();
 		}
 
-		logger.debug("Publication: " + publicationDto.getTitle() + " successfully saved.");
+		logger.debug("Publication: " + professorPublicationDto.getTitle() + " successfully saved.");
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ResponseEntity<PublicationDto> deleteProfessorPublication(
+	public ResponseEntity<ProfessorPublicationDto> deleteProfessorPublication(
 			@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws PublicationNotFoundException {
-		professorPublicationService.deleteProfessorPublication(id);
+		publicationService.deleteProfessorPublication(id);
 
-		return new ResponseEntity<PublicationDto>(HttpStatus.OK);
+		return new ResponseEntity<ProfessorPublicationDto>(HttpStatus.OK);
 	}
 
 }

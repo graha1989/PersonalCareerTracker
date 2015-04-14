@@ -1,4 +1,4 @@
-app.controller("ProfessorPublicationsController", function($scope,
+app.controller("InternationalPublicationsController", function($scope,
         $routeParams, $http, $location, $modal, PctService) {
 
   $scope.publications = [];
@@ -20,8 +20,8 @@ app.controller("ProfessorPublicationsController", function($scope,
             });
   };
 
-  $scope.loadProfessorsPublications = function(professorId) {
-    return PctService.loadProfessorsPublications(professorId).then(
+  $scope.loadInternationalPublications = function(professorId) {
+    return PctService.loadInternationalPublications(professorId).then(
             function(response) {
               if (angular.isObject(response) && response.length > 0) {
                 $scope.publications = response;
@@ -33,7 +33,7 @@ app.controller("ProfessorPublicationsController", function($scope,
   };
 
   $scope.init = function() {
-    $scope.loadProfessorsPublications($routeParams.professorId);
+    $scope.loadInternationalPublications($routeParams.professorId);
     $scope.loadResources();
   };
 
@@ -57,8 +57,8 @@ app.controller("ProfessorPublicationsController", function($scope,
 
   $scope.editProfessorPublication = function(id) {
     $modal.open({
-      templateUrl: 'editProfessorPublicationPopup.html',
-      controller: editProfessorPublicationPopupController,
+      templateUrl: 'editInternationalPublicationPopup.html',
+      controller: editInternationalPublicationPopupController,
       resolve: {
         publicationId: function() {
           return id;
@@ -69,14 +69,14 @@ app.controller("ProfessorPublicationsController", function($scope,
 
   $scope.createNewProfessorPublication = function() {
     $modal.open({
-      templateUrl: 'createNewProfessorPublicationPopup.html',
-      controller: createNewProfessorPublicationController,
+      templateUrl: 'createNewInternationalPublicationPopup.html',
+      controller: createInternationalNewPublicationController,
     });
   };
 
 });
 
-var editProfessorPublicationPopupController = function($scope, $modalInstance,
+var editInternationalPublicationPopupController = function($scope, $modalInstance,
         $routeParams, $http, $route, publicationId, PctService) {
 
   $scope.publication = {};
@@ -310,7 +310,6 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
   $scope.isUnchanged = function(publication) {
     if (angular.equals(publication.isbn, $scope.master.isbn)
             && angular.equals(publication.title, $scope.master.title)
-            && angular.equals(publication.journalTitle, $scope.master.journalTitle)
             && angular.equals(publication.publisher, $scope.master.publisher)
             && angular.equals(publication.publicationType,
                     $scope.master.publicationType)
@@ -361,7 +360,7 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
 
 };
 
-var createNewProfessorPublicationController = function($scope, $modalInstance,
+var createNewInternationalPublicationController = function($scope, $modalInstance,
         $routeParams, $http, $route, PctService) {
 
   $scope.publication = {};

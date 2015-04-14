@@ -2,21 +2,25 @@ package com.pct.service.util;
 
 import com.pct.domain.Professor;
 import com.pct.domain.PublicationCategory;
-import com.pct.domain.dto.PublicationDto;
+import com.pct.domain.dto.ProfessorPublicationDto;
 
 public class PublicationUtil {
 
-	public static Professor createOrUpdatePublicationInstanceFromPublicationDto(PublicationDto publicationDto,
-			Professor professor, PublicationCategory category) {
+	public static Professor createOrUpdatePublicationInstanceFromPublicationDto(
+			ProfessorPublicationDto professorPublicationDto, Professor professor, PublicationCategory category) {
 
-		if (publicationDto.getId() == null) {
-			professor.creatreNewProfessorPublication(category, publicationDto.getIsbn(), publicationDto.getTitle(),
-					publicationDto.getAuthors(), publicationDto.getPublisher(), publicationDto.getPageRange(),
-					publicationDto.getPublicationType(), publicationDto.getQuoted());
+		if (professorPublicationDto.getId() == null) {
+			professor.creatreNewProfessorPublication(category, professorPublicationDto.getIsbn(),
+					professorPublicationDto.getTitle(), professorPublicationDto.getJournalTitle(),
+					professorPublicationDto.getAuthors(), professorPublicationDto.getPublisher(),
+					professorPublicationDto.getPageRange(), professorPublicationDto.getPublicationType(),
+					professorPublicationDto.getQuoted());
 		} else {
-			professor.editProfessorPublication(category, publicationDto.getIsbn(), publicationDto.getTitle(),
-					publicationDto.getAuthors(), publicationDto.getPublisher(), publicationDto.getPageRange(),
-					publicationDto.getQuoted(), publicationDto.getPublicationType(), publicationDto.getId());
+			professor.editProfessorPublication(category, professorPublicationDto.getIsbn(),
+					professorPublicationDto.getTitle(), professorPublicationDto.getJournalTitle(),
+					professorPublicationDto.getAuthors(), professorPublicationDto.getPublisher(),
+					professorPublicationDto.getPageRange(), professorPublicationDto.getQuoted(),
+					professorPublicationDto.getPublicationType(), professorPublicationDto.getId());
 		}
 
 		return professor;
