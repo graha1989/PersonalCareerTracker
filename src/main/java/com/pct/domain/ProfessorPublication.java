@@ -23,7 +23,7 @@ public class ProfessorPublication extends AbstractEntity {
 
 	@Column(name = "isbn", unique = true, length = 30)
 	private String isbn;
-	
+
 	@Column(name = "journalTitle", length = 50)
 	@Nullable
 	private String journalTitle;
@@ -60,13 +60,16 @@ public class ProfessorPublication extends AbstractEntity {
 	@JsonBackReference(value = "professor")
 	private Professor professor;
 
+	@Column(name = "year", length = 4)
+	private String year;
+
 	public ProfessorPublication() {
 		super();
 	}
 
-	public ProfessorPublication(String isbn, String title, String jurnalTitle, String authors, String publisher, String pageRange,
-			PublicationType publicationType, Integer quoted, PublicationCategory publicationCategory,
-			Professor professor) {
+	public ProfessorPublication(String isbn, String title, String jurnalTitle, String authors, String publisher,
+			String pageRange, PublicationType publicationType, Integer quoted, PublicationCategory publicationCategory,
+			Professor professor, String year) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -78,6 +81,7 @@ public class ProfessorPublication extends AbstractEntity {
 		this.quoted = quoted;
 		this.publicationCategory = publicationCategory;
 		this.professor = professor;
+		this.year = year;
 	}
 
 	public String getIsbn() {
@@ -158,6 +162,14 @@ public class ProfessorPublication extends AbstractEntity {
 
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 }

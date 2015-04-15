@@ -10,6 +10,8 @@
 		"invalidPublicationPageNumberMaxLength" : "Max. 10 characters.",
 		"invalidProjectLeaderFinancedByMaxLength" : "Max. 400 characters.",
 		"invalidPublicationIsbnMaxLength" : "Max. 20 characters.",
+		"invalidPublicationYearMinLength" : "Min. 4 characters.",
+		"invalidPublicationYearMaxLength" : "Max. 4 characters.",
 		"invalidMinPasswordLength" : "Min. 8 characters.",
 		"onlyNumbers" : "Only numbers.",
 		"onlyLetters" : "Only letters.",

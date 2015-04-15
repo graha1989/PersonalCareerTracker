@@ -32,7 +32,7 @@ public class ProfessorPublicationDto implements Serializable {
 	@Length(max = 50)
 	@SafeHtml
 	private String title;
-	
+
 	@Length(max = 50)
 	@SafeHtml
 	private String journalTitle;
@@ -56,6 +56,11 @@ public class ProfessorPublicationDto implements Serializable {
 	@Min(0)
 	private Integer quoted;
 
+	@NotEmpty
+	@Length(max = 4)
+	@SafeHtml
+	private String year;
+
 	private PublicationCategory publicationCategory;
 
 	protected Long professorId;
@@ -66,9 +71,9 @@ public class ProfessorPublicationDto implements Serializable {
 		super();
 	}
 
-	public ProfessorPublicationDto(PublicationType publicationType, String isbn, String title, String journalTitle, String authors,
-			String publisher, String pageRange, Integer quoted, PublicationCategory publicationCategory,
-			Long professorId, Long id) {
+	public ProfessorPublicationDto(PublicationType publicationType, String isbn, String title, String journalTitle,
+			String authors, String publisher, String pageRange, Integer quoted, String year,
+			PublicationCategory publicationCategory, Long professorId, Long id) {
 		super();
 		this.publicationType = publicationType;
 		this.isbn = isbn;
@@ -78,6 +83,7 @@ public class ProfessorPublicationDto implements Serializable {
 		this.publisher = publisher;
 		this.pageRange = pageRange;
 		this.quoted = quoted;
+		this.year = year;
 		this.publicationCategory = publicationCategory;
 		this.professorId = professorId;
 		this.id = id;
@@ -93,6 +99,7 @@ public class ProfessorPublicationDto implements Serializable {
 		this.publisher = p.getPublisher();
 		this.pageRange = p.getPageRange();
 		this.quoted = p.getQuoted();
+		this.year = p.getYear();
 		this.publicationCategory = p.getPublicationCategory();
 		this.professorId = p.getProfessor().getId();
 		this.id = p.getId();
@@ -160,6 +167,14 @@ public class ProfessorPublicationDto implements Serializable {
 
 	public void setQuoted(Integer quoted) {
 		this.quoted = quoted;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 	public PublicationCategory getPublicationCategory() {

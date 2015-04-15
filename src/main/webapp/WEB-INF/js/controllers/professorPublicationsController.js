@@ -310,11 +310,13 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
   $scope.isUnchanged = function(publication) {
     if (angular.equals(publication.isbn, $scope.master.isbn)
             && angular.equals(publication.title, $scope.master.title)
-            && angular.equals(publication.journalTitle, $scope.master.journalTitle)
+            && angular.equals(publication.journalTitle,
+                    $scope.master.journalTitle)
             && angular.equals(publication.publisher, $scope.master.publisher)
             && angular.equals(publication.publicationType,
                     $scope.master.publicationType)
             && angular.equals(publication.quoted, $scope.master.quoted)
+            && angular.equals(publication.year, $scope.master.year)
             && angular.equals(publication.publicationCategory,
                     $scope.master.publicationCategory)
             && $scope.testArrays($scope.publicationAuthorsArray,
@@ -581,6 +583,8 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
             && $scope.publication.pageRange != ''
             && $scope.publication.quoted != null
             && $scope.publication.quoted != ''
+            && $scope.publication.year != null
+            && $scope.publication.year != ''
             && $scope.publication.publicationType != null
             && $scope.publication.publicationType != '') {
       if ($scope.publication.publicationType.name === "SCIENTIFIC"

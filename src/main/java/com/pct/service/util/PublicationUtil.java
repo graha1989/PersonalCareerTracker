@@ -14,16 +14,16 @@ public class PublicationUtil {
 					professorPublicationDto.getTitle(), professorPublicationDto.getJournalTitle(),
 					professorPublicationDto.getAuthors(), professorPublicationDto.getPublisher(),
 					professorPublicationDto.getPageRange(), professorPublicationDto.getPublicationType(),
-					professorPublicationDto.getQuoted());
+					professorPublicationDto.getQuoted(), professorPublicationDto.getYear());
 		} else {
 			professor.editProfessorPublication(category, professorPublicationDto.getIsbn(),
 					professorPublicationDto.getTitle(), professorPublicationDto.getJournalTitle(),
 					professorPublicationDto.getAuthors(), professorPublicationDto.getPublisher(),
 					professorPublicationDto.getPageRange(), professorPublicationDto.getQuoted(),
-					professorPublicationDto.getPublicationType(), professorPublicationDto.getId());
+					professorPublicationDto.getYear(), professorPublicationDto.getPublicationType(),
+					professorPublicationDto.getId());
 		}
 
 		return professor;
 	}
-
 }

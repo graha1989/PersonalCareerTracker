@@ -162,7 +162,8 @@
         "publisher": "Izdavač",
         "pageRange": "Stranice",
         "quoted": "Broj citata",
-        "category": "Kategorija"
+        "category": "Kategorija",
+        "year": "Godina"
     },
     "internationalPublicationsTableLabels": {
         "publicationType": "Tip publikacije",
@@ -185,6 +186,7 @@
     	"toPage": "Do",
     	"publicationQuoted": "Broj citata",
     	"publicationType": "Tip publikacije",
-    	"publicationCategory": "Kategorija"
+    	"publicationCategory": "Kategorija",
+    	"publicationYear": "Godina"
     }
 }

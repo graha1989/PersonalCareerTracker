@@ -27,6 +27,7 @@
 							<td>{{ resources.professorPublicationsTableLabels.authors }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.publisher }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.pageRange }}</td>
+							<td>{{ resources.professorPublicationsTableLabels.year }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.quoted }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.category }}</td>
 							<td colspan="2"></td>
@@ -41,6 +42,7 @@
 							<td>{{ publication.authors }}</td>
 							<td>{{ publication.publisher }}</td>
 							<td>{{ publication.pageRange }}</td>
+							<td>{{ publication.year }}</td>
 							<td>{{ publication.quoted }}</td>
 							<td>{{ publication.publicationCategory.code }}</td>
 							<td class="delete"><button
@@ -55,7 +57,7 @@
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="11">{{ errorMessages.error.emptyTable }}</td>
+							<td colspan="12">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -391,6 +393,34 @@
 							ng-click="addNewPageRange()">
 							<span class="glyphicon glyphicon-plus" />
 						</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputPublicationYear"
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationYear }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputPublicationYear"
+							name="inputPublicationYear"
+							ng-model="publication.year"
+							ng-maxlength="4"
+							ng-minlength="4"
+							required />
+						<div
+							ng-show="form.inputPublicationYear.$dirty && form.inputPublicationYear.$invalid"
+							class="publicationYearFieldError">
+							<span
+								ng-show="form.inputPublicationYear.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputPublicationYear.$error.minlength"
+								class="ng-binding">{{ errorMessages.error.invalidPublicationYearMinLength }}</span> <span
+								ng-show="form.inputPublicationYear.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidPublicationYearMaxLength }}</span> 
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -804,6 +834,34 @@
 							ng-click="addNewPageRange()">
 							<span class="glyphicon glyphicon-plus" />
 						</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputPublicationYear"
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationYear }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputPublicationYear"
+							name="inputPublicationYear"
+							ng-model="publication.year"
+							ng-maxlength="4"
+							ng-minlength="4"
+							required />
+						<div
+							ng-show="form.inputPublicationYear.$dirty && form.inputPublicationYear.$invalid"
+							class="publicationYearFieldError">
+							<span
+								ng-show="form.inputPublicationYear.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputPublicationYear.$error.minlength"
+								class="ng-binding">{{ errorMessages.error.invalidPublicationYearMinLength }}</span> <span
+								ng-show="form.inputPublicationYear.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidPublicationYearMaxLength }}</span> 
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
