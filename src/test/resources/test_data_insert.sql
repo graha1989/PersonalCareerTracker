@@ -119,3 +119,8 @@ INSERT INTO international_publication (isbn, title, journalTitle, authors, publi
 	('ISBN:444-1-57200-544-1', 'Fuzzy Information Processing', 'International IT magazine', 'Srđan Bojić', 'PMF', '50-52', '2011', 'SCIENTIFIC', '5', '3'),
 	('ISBN:544-3-25698-332-3', 'Fuzzy Database', null, 'Miloš Racković; Srđan Bojić', 'PMF', '40-50', '2009', 'SCIENTIFIC', '10', '3')
 	ON DUPLICATE KEY UPDATE isbn=VALUES(isbn), title=VALUES(title), journalTitle=VALUES(journalTitle), authors=VALUES(authors), publisher=VALUES(publisher), pagesWithQuotes=VALUES(pagesWithQuotes), year=VALUES(year), publicationType=VALUES(publicationType), publicationCategoryId=VALUES(publicationCategoryId), professorId=VALUES(professorId);
+	
+INSERT INTO institution (institutionType, name, country, city, adress) VALUES
+	('UNIVERSITY', 'Univerzitet u Novom Sadu, Prirodno-matematički fakultet', 'Srbija', 'Novi Sad', 'Trg Zorana Đinđića 6'),
+	('UNIVERSITY', 'Univerzitet u Beogradu, ETF', 'Srbija', 'Beograd', 'Dositeja Obradovića 23')
+	ON DUPLICATE KEY UPDATE institutionType=VALUES(institutionType), name=VALUES(name), country=VALUES(country), city=VALUES(city), adress=VALUES(adress);
