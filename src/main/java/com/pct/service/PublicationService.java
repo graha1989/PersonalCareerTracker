@@ -26,7 +26,9 @@ public interface PublicationService {
 			ProfessorNotFoundException, PublicationCategoryNotFoundException;
 
 	void deleteProfessorPublication(Long id) throws PublicationNotFoundException;
-
+	
+	void deleteInternationalPublication(Long id) throws PublicationNotFoundException;
+	
 	List<InternationalPublicationDto> findAllInternationalPublications(Long professorId)
 			throws PublicationNotFoundException;
 

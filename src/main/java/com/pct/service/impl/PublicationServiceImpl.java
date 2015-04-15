@@ -128,7 +128,6 @@ public class PublicationServiceImpl implements PublicationService {
 
 		professorRepository.save(PublicationUtil.createOrUpdateProfessorPublicationInstanceFromPublicationDto(
 				professorPublicationDto, professor, category));
-
 	}
 
 	@Override
@@ -157,7 +156,6 @@ public class PublicationServiceImpl implements PublicationService {
 
 		professorRepository.save(PublicationUtil.createOrUpdateInternationalPublicationInstanceFromPublicationDto(
 				internationalPublicationDto, professor, category));
-
 	}
 
 	@Override
@@ -180,7 +178,6 @@ public class PublicationServiceImpl implements PublicationService {
 		professorPublication.setProfessor(null);
 
 		professorPublicationsRepository.delete(professorPublication);
-
 	}
 
 	@Override
@@ -201,7 +198,28 @@ public class PublicationServiceImpl implements PublicationService {
 		}
 
 		return publicationDtoList;
+	}
 
+	@Override
+	@Transactional
+	public void deleteInternationalPublication(Long id) throws PublicationNotFoundException {
+
+		InternationalPublication internationalPublication = internationalPublicationsRepository.findOne(id);
+
+		if (id == null || internationalPublication == null) {
+			throw new PublicationNotFoundException();
+		}
+
+		if (internationalPublication.getPublicationCategory() != null) {
+			internationalPublication.getPublicationCategory().getProfessorPublications().remove(internationalPublication);
+		}
+
+		internationalPublication.getProfessor().getProfessorPublications().remove(internationalPublication);
+
+		internationalPublication.setPublicationCategory(null);
+		internationalPublication.setProfessor(null);
+
+		internationalPublicationsRepository.delete(internationalPublication);
 	}
 
 }

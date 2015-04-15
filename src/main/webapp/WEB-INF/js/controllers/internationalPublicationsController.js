@@ -43,12 +43,12 @@ app.controller("InternationalPublicationsController", function($scope,
     window.history.back();
   };
 
-  $scope.deleteProfessorPublication = function(id, index) {
-    PctService.deleteProfessorPublication(id, function(data) {
+  $scope.deleteInternationalPublication = function(id, index) {
+    PctService.deleteInternationalPublication(id, function(data) {
       if (angular.isObject(data) && data.length > 0) {
         $scope.errorStatus = data.status;
       } else {
-        $scope.successStatus = "Successfully deleted professor publication.";
+        $scope.successStatus = "Successfully deleted international publication.";
         $scope.internationalPublications.splice(index, 1);
         $scope.loadInternationalPublications($routeParams.professorId);
       }

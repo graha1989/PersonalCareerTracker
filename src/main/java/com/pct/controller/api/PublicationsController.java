@@ -155,12 +155,20 @@ public class PublicationsController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE)
+	@RequestMapping(value = "professorPublication", method = RequestMethod.DELETE)
 	public ResponseEntity<ProfessorPublicationDto> deleteProfessorPublication(
 			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws PublicationNotFoundException {
 		publicationService.deleteProfessorPublication(id);
 
 		return new ResponseEntity<ProfessorPublicationDto>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "internationalPublication", method = RequestMethod.DELETE)
+	public ResponseEntity<InternationalPublicationDto> deleteInternationalPublication(
+			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws PublicationNotFoundException {
+		publicationService.deleteInternationalPublication(id);
+
+		return new ResponseEntity<InternationalPublicationDto>(HttpStatus.OK);
 	}
 
 }
