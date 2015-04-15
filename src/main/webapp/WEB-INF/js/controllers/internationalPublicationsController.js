@@ -1,80 +1,97 @@
-app.controller("InternationalPublicationsController", function($scope,
-        $routeParams, $http, $location, $modal, PctService) {
+app
+        .controller(
+                "InternationalPublicationsController",
+                function($scope, $routeParams, $http, $location, $modal,
+                        PctService) {
 
-  $scope.internationalPublications = [];
-  $scope.internationalPublication = {};
+                  $scope.internationalPublications = [];
+                  $scope.internationalPublication = {};
 
-  $scope.noResultsFound = true;
-  $scope.resources = {};
-  $scope.errorMessages = {};
+                  $scope.noResultsFound = true;
+                  $scope.resources = {};
+                  $scope.errorMessages = {};
 
-  $scope.loadResources = function() {
-    var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
-  };
+                  $scope.loadResources = function() {
+                    var locale = document.getElementById('localeCode');
+                    $http.get(
+                            'messages/profesorDetails_' + locale.value
+                                    + '.json').success(function(response) {
+                      $scope.resources = angular.fromJson(response);
+                    });
+                    $http.get('messages/errors_' + locale.value + '.json')
+                            .success(
+                                    function(response) {
+                                      $scope.errorMessages = angular
+                                              .fromJson(response);
+                                    });
+                  };
 
-  $scope.loadInternationalPublications = function(professorId) {
-    return PctService.loadInternationalPublications(professorId).then(
-            function(response) {
-              if (angular.isObject(response) && response.length > 0) {
-                $scope.internationalPublications = response;
-                $scope.noResultsFound = false;
-              } else {
-                $scope.noResultsFound = true;
-              }
-            });
-  };
+                  $scope.loadInternationalPublications = function(professorId) {
+                    return PctService
+                            .loadInternationalPublications(professorId)
+                            .then(
+                                    function(response) {
+                                      if (angular.isObject(response)
+                                              && response.length > 0) {
+                                        $scope.internationalPublications = response;
+                                        $scope.noResultsFound = false;
+                                      } else {
+                                        $scope.noResultsFound = true;
+                                      }
+                                    });
+                  };
 
-  $scope.init = function() {
-    $scope.loadInternationalPublications($routeParams.professorId);
-    $scope.loadResources();
-  };
+                  $scope.init = function() {
+                    $scope
+                            .loadInternationalPublications($routeParams.professorId);
+                    $scope.loadResources();
+                  };
 
-  $scope.init();
+                  $scope.init();
 
-  $scope.goBack = function() {
-    window.history.back();
-  };
+                  $scope.goBack = function() {
+                    window.history.back();
+                  };
 
-  $scope.deleteInternationalPublication = function(id, index) {
-    PctService.deleteInternationalPublication(id, function(data) {
-      if (angular.isObject(data) && data.length > 0) {
-        $scope.errorStatus = data.status;
-      } else {
-        $scope.successStatus = "Successfully deleted international publication.";
-        $scope.internationalPublications.splice(index, 1);
-        $scope.loadInternationalPublications($routeParams.professorId);
-      }
-    });
-  };
+                  $scope.deleteInternationalPublication = function(id, index) {
+                    PctService
+                            .deleteInternationalPublication(
+                                    id,
+                                    function(data) {
+                                      if (angular.isObject(data)
+                                              && data.length > 0) {
+                                        $scope.errorStatus = data.status;
+                                      } else {
+                                        $scope.successStatus = "Successfully deleted international publication.";
+                                        $scope.internationalPublications
+                                                .splice(index, 1);
+                                        $scope
+                                                .loadInternationalPublications($routeParams.professorId);
+                                      }
+                                    });
+                  };
 
-  $scope.editInternationalPublication = function(id) {
-    $modal.open({
-      templateUrl: 'editInternationalPublicationPopup.html',
-      controller: editInternationalPublicationPopupController,
-      resolve: {
-        publicationId: function() {
-          return id;
-        }
-      }
-    });
-  };
+                  $scope.editInternationalPublication = function(id) {
+                    $modal.open({
+                      templateUrl: 'editInternationalPublicationPopup.html',
+                      controller: editInternationalPublicationPopupController,
+                      resolve: {
+                        publicationId: function() {
+                          return id;
+                        }
+                      }
+                    });
+                  };
 
-  $scope.createNewInternationalPublication = function() {
-    $modal.open({
-      templateUrl: 'createNewInternationalPublicationPopup.html',
-      controller: createNewInternationalPublicationController,
-    });
-  };
+                  $scope.createNewInternationalPublication = function() {
+                    $modal
+                            .open({
+                              templateUrl: 'createNewInternationalPublicationPopup.html',
+                              controller: createNewInternationalPublicationController,
+                            });
+                  };
 
-});
+                });
 
 var editInternationalPublicationPopupController = function($scope,
         $modalInstance, $routeParams, $http, $route, publicationId, PctService) {
@@ -154,9 +171,10 @@ var editInternationalPublicationPopupController = function($scope,
 
   $scope.createPageRangesArray = function() {
     var array = [];
-    for (var i = 0; i < $scope.internationalPublication.pagesWithQuotes.split(";").length; i++) {
-      var oneRangeString = $scope.internationalPublication.pagesWithQuotes.split(";")[i]
-              .trim();
+    for (var i = 0; i < $scope.internationalPublication.pagesWithQuotes
+            .split(";").length; i++) {
+      var oneRangeString = $scope.internationalPublication.pagesWithQuotes
+              .split(";")[i].trim();
       var oneRangeObject = {
         "startPage": parseInt(oneRangeString.split("-")[0].trim(), 10),
         "endPage": parseInt(oneRangeString.split("-")[1].trim(), 10)
@@ -421,23 +439,16 @@ var createNewInternationalPublicationController = function($scope,
   };
 
   $scope.loadProfessorNameAndSurname = function() {
-    PctService
-            .loadProfesor(
-                    $routeParams.professorId,
-                    function(data) {
-                      if (angular.isObject(data)) {
-                        $scope.professor = data;
-                        $scope.professorNameAndSurname = $scope.professor.name
-                                + " " + $scope.professor.surname;
-                        $scope.publicationAuthorsArray
-                                .push($scope.professorNameAndSurname);
-                        $scope
-                                .constructPublicationAuthorsString($scope.publicationAuthorsArray);
-                        $scope.noResultsFound = false;
-                      } else {
-                        $scope.noResultsFound = true;
-                      }
-                    });
+    PctService.loadProfesor($routeParams.professorId, function(data) {
+      if (angular.isObject(data)) {
+        $scope.professor = data;
+        $scope.professorNameAndSurname = $scope.professor.name + " "
+                + $scope.professor.surname;
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
   };
 
   $scope.createAuthorsArray = function() {
@@ -450,9 +461,10 @@ var createNewInternationalPublicationController = function($scope,
 
   $scope.createPageRangesArray = function() {
     var array = [];
-    for (var i = 0; i < $scope.internationalPublication.pagesWithQuotes.split(";").length; i++) {
-      var oneRangeString = $scope.internationalPublication.pagesWithQuotes.split(";")[i]
-              .trim();
+    for (var i = 0; i < $scope.internationalPublication.pagesWithQuotes
+            .split(";").length; i++) {
+      var oneRangeString = $scope.internationalPublication.pagesWithQuotes
+              .split(";")[i].trim();
       var oneRangeObject = {
         "startPage": parseInt(oneRangeString.split("-")[0].trim(), 10),
         "endPage": parseInt(oneRangeString.split("-")[1].trim(), 10)
