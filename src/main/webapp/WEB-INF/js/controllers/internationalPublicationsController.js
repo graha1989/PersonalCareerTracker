@@ -1,8 +1,8 @@
 app.controller("InternationalPublicationsController", function($scope,
         $routeParams, $http, $location, $modal, PctService) {
 
-  $scope.publications = [];
-  $scope.publication = {};
+  $scope.internationalPublications = [];
+  $scope.internationalPublication = {};
 
   $scope.noResultsFound = true;
   $scope.resources = {};
@@ -24,7 +24,7 @@ app.controller("InternationalPublicationsController", function($scope,
     return PctService.loadInternationalPublications(professorId).then(
             function(response) {
               if (angular.isObject(response) && response.length > 0) {
-                $scope.publications = response;
+                $scope.internationalPublications = response;
                 $scope.noResultsFound = false;
               } else {
                 $scope.noResultsFound = true;
@@ -49,13 +49,13 @@ app.controller("InternationalPublicationsController", function($scope,
         $scope.errorStatus = data.status;
       } else {
         $scope.successStatus = "Successfully deleted professor publication.";
-        $scope.publications.splice(index, 1);
-        $scope.loadProfessorsPublications($routeParams.professorId);
+        $scope.internationalPublications.splice(index, 1);
+        $scope.loadInternationalPublications($routeParams.professorId);
       }
     });
   };
 
-  $scope.editProfessorPublication = function(id) {
+  $scope.editInternationalPublication = function(id) {
     $modal.open({
       templateUrl: 'editInternationalPublicationPopup.html',
       controller: editInternationalPublicationPopupController,
@@ -67,19 +67,19 @@ app.controller("InternationalPublicationsController", function($scope,
     });
   };
 
-  $scope.createNewProfessorPublication = function() {
+  $scope.createNewInternationalPublication = function() {
     $modal.open({
       templateUrl: 'createNewInternationalPublicationPopup.html',
-      controller: createInternationalNewPublicationController,
+      controller: createNewInternationalPublicationController,
     });
   };
 
 });
 
-var editInternationalPublicationPopupController = function($scope, $modalInstance,
-        $routeParams, $http, $route, publicationId, PctService) {
+var editInternationalPublicationPopupController = function($scope,
+        $modalInstance, $routeParams, $http, $route, publicationId, PctService) {
 
-  $scope.publication = {};
+  $scope.internationalPublication = {};
   $scope.master = {};
   $scope.allPublicationTypes = [];
   $scope.allPublicationCategories = [];
@@ -146,16 +146,17 @@ var editInternationalPublicationPopupController = function($scope, $modalInstanc
 
   $scope.createAuthorsArray = function() {
     var array = [];
-    for (var i = 0; i < $scope.publication.authors.split(";").length; i++) {
-      array.push($scope.publication.authors.split(";")[i].trim());
+    for (var i = 0; i < $scope.internationalPublication.authors.split(";").length; i++) {
+      array.push($scope.internationalPublication.authors.split(";")[i].trim());
     }
     return array;
   }
 
   $scope.createPageRangesArray = function() {
     var array = [];
-    for (var i = 0; i < $scope.publication.pageRange.split(";").length; i++) {
-      var oneRangeString = $scope.publication.pageRange.split(";")[i].trim();
+    for (var i = 0; i < $scope.internationalPublication.pagesWithQuotes.split(";").length; i++) {
+      var oneRangeString = $scope.internationalPublication.pagesWithQuotes.split(";")[i]
+              .trim();
       var oneRangeObject = {
         "startPage": parseInt(oneRangeString.split("-")[0].trim(), 10),
         "endPage": parseInt(oneRangeString.split("-")[1].trim(), 10)
@@ -166,18 +167,19 @@ var editInternationalPublicationPopupController = function($scope, $modalInstanc
   }
 
   $scope.constructPublicationAuthorsString = function(array) {
-    $scope.publication.authors = "";
+    $scope.internationalPublication.authors = "";
     for (var i = 0; i < array.length; i++) {
-      $scope.publication.authors = $scope.publication.authors
+      $scope.internationalPublication.authors = $scope.internationalPublication.authors
               + ((i > 0 && i < array.length) ? "; " : "") + array[i];
     }
   };
 
   $scope.constructPublicationPageRangesString = function(array) {
-    $scope.publication.pageRange = "";
+    $scope.internationalPublication.pagesWithQuotes = "";
     for (var i = 0; i < array.length; i++) {
-      $scope.publication.pageRange = $scope.publication.pageRange
-              + ((i > 0 && i < array.length) ? "; " : "") + array[i].startPage
+      $scope.internationalPublication.pagesWithQuotes = $scope.internationalPublication.pagesWithQuotes
+              + ((i > 0 && i < array.length) ? "; " : "")
+              + array[i].startPage
               + "-" + array[i].endPage;
     }
   };
@@ -193,14 +195,15 @@ var editInternationalPublicationPopupController = function($scope, $modalInstanc
     return index;
   };
 
-  $scope.loadSelectedPublication = function(id) {
+  $scope.loadSelectedInternationalPublication = function(id) {
     PctService
-            .loadSelectedPublication(
+            .loadSelectedInternationalPublication(
                     id,
                     function(data) {
                       if (angular.isObject(data)) {
-                        $scope.publication = data;
-                        $scope.master = angular.copy($scope.publication);
+                        $scope.internationalPublication = data;
+                        $scope.master = angular
+                                .copy($scope.internationalPublication);
                         $scope.publicationAuthorsArray = $scope
                                 .createAuthorsArray();
                         $scope.masterPublicationAuthorsArray = angular
@@ -223,7 +226,7 @@ var editInternationalPublicationPopupController = function($scope, $modalInstanc
   $scope.init = function() {
     $scope.loadAllPublicationTypes();
     $scope.loadAllPublicationCategories();
-    $scope.loadSelectedPublication(publicationId);
+    $scope.loadSelectedInternationalPublication(publicationId);
     $scope.loadProfessorNameAndSurname();
     $scope.status = $routeParams.status;
     $scope.loadResources();
@@ -257,11 +260,11 @@ var editInternationalPublicationPopupController = function($scope, $modalInstanc
     $scope.constructPublicationPageRangesString($scope.publicationPageRanges);
   };
 
-  $scope.saveProfessorPublication = function() {
+  $scope.saveInternationalPublication = function() {
     $http({
       method: 'PUT',
-      url: "api/publications",
-      data: $scope.publication
+      url: "api/publications/internationalPublication",
+      data: $scope.internationalPublication
     }).success(function(data, status) {
       $("html, body").animate({
         scrollTop: 0
@@ -307,14 +310,19 @@ var editInternationalPublicationPopupController = function($scope, $modalInstanc
     return pom;
   };
 
-  $scope.isUnchanged = function(publication) {
-    if (angular.equals(publication.isbn, $scope.master.isbn)
-            && angular.equals(publication.title, $scope.master.title)
-            && angular.equals(publication.publisher, $scope.master.publisher)
-            && angular.equals(publication.publicationType,
+  $scope.isUnchanged = function(internationalPublication) {
+    if (angular.equals(internationalPublication.isbn, $scope.master.isbn)
+            && angular.equals(internationalPublication.title,
+                    $scope.master.title)
+            && angular.equals(internationalPublication.journalTitle,
+                    $scope.master.journalTitle)
+            && angular.equals(internationalPublication.publisher,
+                    $scope.master.publisher)
+            && angular.equals(internationalPublication.publicationType,
                     $scope.master.publicationType)
-            && angular.equals(publication.quoted, $scope.master.quoted)
-            && angular.equals(publication.publicationCategory,
+            && angular
+                    .equals(internationalPublication.year, $scope.master.year)
+            && angular.equals(internationalPublication.publicationCategory,
                     $scope.master.publicationCategory)
             && $scope.testArrays($scope.publicationAuthorsArray,
                     $scope.masterPublicationAuthorsArray)
@@ -341,15 +349,15 @@ var editInternationalPublicationPopupController = function($scope, $modalInstanc
   };
 
   $scope.scientificPublicationNotSelected = function() {
-    if (angular.isUndefined($scope.publication.publicationType)
-            || $scope.publication.publicationType === null
-            || $scope.publication.publicationType === '') {
-      $scope.publication.publicationCategory = null;
+    if (angular.isUndefined($scope.internationalPublication.publicationType)
+            || $scope.internationalPublication.publicationType === null
+            || $scope.internationalPublication.publicationType === '') {
+      $scope.internationalPublication.publicationCategory = null;
       return true;
-    } else if ($scope.publication.publicationType.name == "SCIENTIFIC") {
+    } else if ($scope.internationalPublication.publicationType.name == "SCIENTIFIC") {
       return false;
     } else {
-      $scope.publication.publicationCategory = null;
+      $scope.internationalPublication.publicationCategory = null;
       return true;
     }
   };
@@ -360,10 +368,10 @@ var editInternationalPublicationPopupController = function($scope, $modalInstanc
 
 };
 
-var createNewInternationalPublicationController = function($scope, $modalInstance,
-        $routeParams, $http, $route, PctService) {
+var createNewInternationalPublicationController = function($scope,
+        $modalInstance, $routeParams, $http, $route, PctService) {
 
-  $scope.publication = {};
+  $scope.internationalPublication = {};
   $scope.allPublicationTypes = [];
   $scope.allPublicationCategories = [];
   $scope.professor = {};
@@ -434,16 +442,17 @@ var createNewInternationalPublicationController = function($scope, $modalInstanc
 
   $scope.createAuthorsArray = function() {
     var array = [];
-    for (var i = 0; i < $scope.publication.authors.split(";").length; i++) {
-      array.push($scope.publication.authors.split(";")[i].trim());
+    for (var i = 0; i < $scope.internationalPublication.authors.split(";").length; i++) {
+      array.push($scope.internationalPublication.authors.split(";")[i].trim());
     }
     return array;
   }
 
   $scope.createPageRangesArray = function() {
     var array = [];
-    for (var i = 0; i < $scope.publication.pageRange.split(";").length; i++) {
-      var oneRangeString = $scope.publication.pageRange.split(";")[i].trim();
+    for (var i = 0; i < $scope.internationalPublication.pagesWithQuotes.split(";").length; i++) {
+      var oneRangeString = $scope.internationalPublication.pagesWithQuotes.split(";")[i]
+              .trim();
       var oneRangeObject = {
         "startPage": parseInt(oneRangeString.split("-")[0].trim(), 10),
         "endPage": parseInt(oneRangeString.split("-")[1].trim(), 10)
@@ -454,18 +463,19 @@ var createNewInternationalPublicationController = function($scope, $modalInstanc
   }
 
   $scope.constructPublicationAuthorsString = function(array) {
-    $scope.publication.authors = "";
+    $scope.internationalPublication.authors = "";
     for (var i = 0; i < array.length; i++) {
-      $scope.publication.authors = $scope.publication.authors
+      $scope.internationalPublication.authors = $scope.internationalPublication.authors
               + ((i > 0 && i < array.length) ? "; " : "") + array[i];
     }
   };
 
   $scope.constructPublicationPageRangesString = function(array) {
-    $scope.publication.pageRange = "";
+    $scope.internationalPublication.pagesWithQuotes = "";
     for (var i = 0; i < array.length; i++) {
-      $scope.publication.pageRange = $scope.publication.pageRange
-              + ((i > 0 && i < array.length) ? "; " : "") + array[i].startPage
+      $scope.internationalPublication.pagesWithQuotes = $scope.internationalPublication.pagesWithQuotes
+              + ((i > 0 && i < array.length) ? "; " : "")
+              + array[i].startPage
               + "-" + array[i].endPage;
     }
   };
@@ -517,12 +527,12 @@ var createNewInternationalPublicationController = function($scope, $modalInstanc
     $scope.constructPublicationPageRangesString($scope.publicationPageRanges);
   };
 
-  $scope.saveProfessorPublication = function() {
-    $scope.publication.professorId = $routeParams.professorId;
+  $scope.saveInternationalPublication = function() {
+    $scope.internationalPublication.professorId = $routeParams.professorId;
     $http({
       method: 'POST',
-      url: "api/publications",
-      data: $scope.publication
+      url: "api/publications/internationalPublication",
+      data: $scope.internationalPublication
     }).success(function(data, status) {
       $("html, body").animate({
         scrollTop: 0
@@ -568,26 +578,27 @@ var createNewInternationalPublicationController = function($scope, $modalInstanc
     return pom;
   };
 
-  $scope.validateForm = function() {
-    if ($scope.publication.isbn != null && $scope.publication.isbn != ''
-            && $scope.publication.title != null
-            && $scope.publication.title != ''
-            && $scope.publication.authors != null
-            && $scope.publication.authors != ''
-            && $scope.publication.publisher != null
-            && $scope.publication.publisher != ''
-            && $scope.publication.pageRange != null
-            && $scope.publication.pageRange != ''
-            && $scope.publication.quoted != null
-            && $scope.publication.quoted != ''
-            && $scope.publication.publicationType != null
-            && $scope.publication.publicationType != '') {
-      if ($scope.publication.publicationType.name === "SCIENTIFIC"
-              && $scope.publication.publicationCategory != null
-              && $scope.publication.publicationCategory != '') {
+  $scope.validateNewInternationalPublicationForm = function() {
+    if ($scope.internationalPublication.isbn != null
+            && $scope.internationalPublication.isbn != ''
+            && $scope.internationalPublication.title != null
+            && $scope.internationalPublication.title != ''
+            && $scope.internationalPublication.authors != null
+            && $scope.internationalPublication.authors != ''
+            && $scope.internationalPublication.publisher != null
+            && $scope.internationalPublication.publisher != ''
+            && $scope.internationalPublication.pagesWithQuotes != null
+            && $scope.internationalPublication.pagesWithQuotes != ''
+            && $scope.internationalPublication.year != null
+            && $scope.internationalPublication.year != ''
+            && $scope.internationalPublication.publicationType != null
+            && $scope.internationalPublication.publicationType != '') {
+      if ($scope.internationalPublication.publicationType.name === "SCIENTIFIC"
+              && $scope.internationalPublication.publicationCategory != null
+              && $scope.internationalPublication.publicationCategory != '') {
         return true;
-      } else if ($scope.publication.publicationType.name === "SCIENTIFIC"
-              && ($scope.publication.publicationCategory == null || $scope.publication.publicationCategory == '')) {
+      } else if ($scope.internationalPublication.publicationType.name === "SCIENTIFIC"
+              && ($scope.internationalPublication.publicationCategory == null || $scope.internationalPublication.publicationCategory == '')) {
         return false;
       } else {
         return true;
@@ -603,15 +614,15 @@ var createNewInternationalPublicationController = function($scope, $modalInstanc
   };
 
   $scope.scientificPublicationNotSelected = function() {
-    if (angular.isUndefined($scope.publication.publicationType)
-            || $scope.publication.publicationType === null
-            || $scope.publication.publicationType === '') {
-      $scope.publication.publicationCategory = null;
+    if (angular.isUndefined($scope.internationalPublication.publicationType)
+            || $scope.internationalPublication.publicationType === null
+            || $scope.internationalPublication.publicationType === '') {
+      $scope.internationalPublication.publicationCategory = null;
       return true;
-    } else if ($scope.publication.publicationType.name === "SCIENTIFIC") {
+    } else if ($scope.internationalPublication.publicationType.name === "SCIENTIFIC") {
       return false;
     } else {
-      $scope.publication.publicationCategory = null;
+      $scope.internationalPublication.publicationCategory = null;
       return true;
     }
   };

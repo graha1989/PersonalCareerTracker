@@ -23,7 +23,6 @@ import com.pct.domain.dto.ProfessorPublicationDto;
 import com.pct.domain.enums.PublicationType;
 import com.pct.service.PublicationService;
 import com.pct.validation.ProfessorNotFoundException;
-import com.pct.validation.ProjectExperienceNotFoundException;
 import com.pct.validation.PublicationCategoryNotFoundException;
 import com.pct.validation.PublicationNotFoundException;
 
@@ -35,7 +34,7 @@ public class PublicationsController {
 
 	@Autowired
 	PublicationService publicationService;
-	
+
 	@RequestMapping(value = "allProfessorPublications", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProfessorPublicationDto>> showAllProfessorPublications(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
@@ -51,7 +50,7 @@ public class PublicationsController {
 
 		return new ResponseEntity<List<ProfessorPublicationDto>>(publications, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "allInternationalPublications", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<InternationalPublicationDto>> showAllInternationalPublications(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
@@ -86,25 +85,41 @@ public class PublicationsController {
 		return new ResponseEntity<List<PublicationCategory>>(publicationCategories, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedPublication", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<ProfessorPublicationDto> showPublication(
-			@RequestParam(value = RequestMappings.ID, required = true) Long id)
-			throws ProjectExperienceNotFoundException {
+	@RequestMapping(value = "selectedProfessorPublication", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<ProfessorPublicationDto> showProfessorPublication(
+			@RequestParam(value = RequestMappings.ID, required = true) Long id) {
 
 		ProfessorPublicationDto professorPublicationDto = null;
 		try {
-			professorPublicationDto = publicationService.findPublicationById(id);
+			professorPublicationDto = publicationService.findProfessorPublicationById(id);
 		} catch (PublicationNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		logger.debug("Successfully loaded publication: " + professorPublicationDto.getTitle() + ".");
+		logger.debug("Successfully loaded professor publication: " + professorPublicationDto.getTitle() + ".");
 
 		return new ResponseEntity<ProfessorPublicationDto>(professorPublicationDto, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<String> persistProfessorPublication(@Valid @RequestBody ProfessorPublicationDto professorPublicationDto) {
+	@RequestMapping(value = "selectedInternationalPublication", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<InternationalPublicationDto> showInternationalPublication(
+			@RequestParam(value = RequestMappings.ID, required = true) Long id) {
+
+		InternationalPublicationDto internationalPublicationDto = null;
+		try {
+			internationalPublicationDto = publicationService.findInternationalPublicationById(id);
+		} catch (PublicationNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		logger.debug("Successfully loaded international publication: " + internationalPublicationDto.getTitle() + ".");
+
+		return new ResponseEntity<InternationalPublicationDto>(internationalPublicationDto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "professorPublication", method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<String> persistProfessorPublication(
+			@Valid @RequestBody ProfessorPublicationDto professorPublicationDto) {
 
 		try {
 			publicationService.saveProfessorPublication(professorPublicationDto);
@@ -116,15 +131,33 @@ public class PublicationsController {
 			e.printStackTrace();
 		}
 
-		logger.debug("Publication: " + professorPublicationDto.getTitle() + " successfully saved.");
+		logger.debug("Professor publication: " + professorPublicationDto.getTitle() + " successfully saved.");
+
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "internationalPublication", method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<String> persistInternationalPublication(
+			@Valid @RequestBody InternationalPublicationDto internationalPublicationDto) {
+
+		try {
+			publicationService.saveInternationalPublication(internationalPublicationDto);
+		} catch (PublicationNotFoundException e) {
+			e.printStackTrace();
+		} catch (ProfessorNotFoundException e) {
+			e.printStackTrace();
+		} catch (PublicationCategoryNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		logger.debug("International publication: " + internationalPublicationDto.getTitle() + " successfully saved.");
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public ResponseEntity<ProfessorPublicationDto> deleteProfessorPublication(
-			@RequestParam(value = RequestMappings.ID, required = true) Long id)
-			throws PublicationNotFoundException {
+			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws PublicationNotFoundException {
 		publicationService.deleteProfessorPublication(id);
 
 		return new ResponseEntity<ProfessorPublicationDto>(HttpStatus.OK);

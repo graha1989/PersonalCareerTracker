@@ -208,8 +208,12 @@ app.factory("PctService", [
           $http.get('api/publications/allPublicationCategories').success(
                   callback);
         },
-        loadSelectedPublication: function(id, callback) {
-          $http.get('api/publications/selectedPublication?id=' + id).success(
+        loadSelectedProfessorPublication: function(id, callback) {
+          $http.get('api/publications/selectedProfessorPublication?id=' + id).success(
+                  callback).error(callback);
+        },
+        loadSelectedInternationalPublication: function(id, callback) {
+          $http.get('api/publications/selectedInternationalPublication?id=' + id).success(
                   callback).error(callback);
         },
         deleteProfessorPublication: function(id, callback) {

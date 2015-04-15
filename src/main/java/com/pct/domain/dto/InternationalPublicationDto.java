@@ -51,6 +51,11 @@ public class InternationalPublicationDto implements Serializable {
 	@SafeHtml
 	private String pagesWithQuotes;
 
+	@NotEmpty
+	@Length(max = 4, min = 4)
+	@SafeHtml
+	private String year;
+
 	private PublicationCategory publicationCategory;
 
 	protected Long professorId;
@@ -62,7 +67,7 @@ public class InternationalPublicationDto implements Serializable {
 	}
 
 	public InternationalPublicationDto(PublicationType publicationType, String isbn, String title, String journalTitle,
-			String authors, String publisher, String pagesWithQuotes, Integer quoted,
+			String authors, String publisher, String pagesWithQuotes, String year, Integer quoted,
 			PublicationCategory publicationCategory, Long professorId, Long id) {
 		super();
 		this.publicationType = publicationType;
@@ -72,6 +77,7 @@ public class InternationalPublicationDto implements Serializable {
 		this.authors = authors;
 		this.publisher = publisher;
 		this.pagesWithQuotes = pagesWithQuotes;
+		this.year = year;
 		this.publicationCategory = publicationCategory;
 		this.professorId = professorId;
 		this.id = id;
@@ -86,6 +92,7 @@ public class InternationalPublicationDto implements Serializable {
 		this.authors = p.getAuthors();
 		this.publisher = p.getPublisher();
 		this.pagesWithQuotes = p.getPagesWithQuotes();
+		this.year = p.getYear();
 		this.publicationCategory = p.getPublicationCategory();
 		this.professorId = p.getProfessor().getId();
 		this.id = p.getId();
@@ -145,6 +152,14 @@ public class InternationalPublicationDto implements Serializable {
 
 	public void setPagesWithQuotes(String pagesWithQuotes) {
 		this.pagesWithQuotes = pagesWithQuotes;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 	public PublicationCategory getPublicationCategory() {

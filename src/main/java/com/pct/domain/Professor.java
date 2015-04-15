@@ -70,6 +70,10 @@ public class Professor extends AbstractEntity {
 	@JsonManagedReference(value = "professor")
 	private Set<ProfessorPublication> professorPublications = new HashSet<ProfessorPublication>();
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "professor")
+	private Set<InternationalPublication> internationalPublications = new HashSet<InternationalPublication>();
+
 	@OneToOne
 	@JoinColumn(name = "ulogaId")
 	private Uloga uloga;
@@ -344,6 +348,74 @@ public class Professor extends AbstractEntity {
 		}
 
 		return professorPublication;
+	}
+
+	public Set<InternationalPublication> getInternationalPublications() {
+		return internationalPublications;
+	}
+
+	public void setInternationalPublications(Set<InternationalPublication> internationalPublications) {
+		this.internationalPublications.clear();
+
+		if (internationalPublications != null) {
+			this.internationalPublications.addAll(internationalPublications);
+		}
+	}
+
+	public InternationalPublication getInternationalPublicationById(Long id) {
+		Iterator<InternationalPublication> it = internationalPublications.iterator();
+		while (it.hasNext()) {
+			InternationalPublication internationalPublication = (InternationalPublication) it.next();
+			if (internationalPublication.getId().equals(id)) {
+				return internationalPublication;
+			}
+		}
+		return null;
+	}
+
+	public void addInternationalPublications(InternationalPublication internationalPublication) {
+		if (internationalPublication != null) {
+			internationalPublication.setProfessor(this);
+			this.internationalPublications.add(internationalPublication);
+		}
+	}
+
+	public InternationalPublication creatreNewInternationalPublication(PublicationCategory category, String isbn,
+			String title, String journalTitle, String authors, String publisher, String pagesWithQuotes,
+			PublicationType publicationType, String year) {
+
+		InternationalPublication internationalPublication = new InternationalPublication(isbn, title, journalTitle,
+				authors, publisher, pagesWithQuotes, year, publicationType, category, this);
+		if (category != null) {
+			category.addInternationalPublication(internationalPublication);
+		}
+		this.internationalPublications.add(internationalPublication);
+
+		return internationalPublication;
+
+	}
+
+	public InternationalPublication editInternationalPublication(PublicationCategory category, String isbn,
+			String title, String journalTitle, String authors, String publisher, String pagesWithQuotes, String year,
+			PublicationType publicationType, Long id) {
+
+		InternationalPublication internationalPublication = getInternationalPublicationById(id);
+		internationalPublication.setIsbn(isbn);
+		internationalPublication.setTitle(title);
+		internationalPublication.setJournalTitle(journalTitle);
+		internationalPublication.setAuthors(authors);
+		internationalPublication.setPublisher(publisher);
+		internationalPublication.setPagesWithQuotes(pagesWithQuotes);
+		internationalPublication.setPublicationType(publicationType);
+		internationalPublication.setPublicationCategory(category);
+		internationalPublication.setYear(year);
+
+		if (category != null) {
+			category.addInternationalPublication(internationalPublication);
+		}
+
+		return internationalPublication;
+
 	}
 
 }

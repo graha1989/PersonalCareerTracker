@@ -36,7 +36,7 @@ public class PublicationServiceImpl implements PublicationService {
 
 	@Autowired
 	private ProfesorRepository professorRepository;
-	
+
 	@Autowired
 	private InternationalPublicationsRepository internationalPublicationsRepository;
 
@@ -73,7 +73,7 @@ public class PublicationServiceImpl implements PublicationService {
 
 	@Override
 	@Transactional
-	public ProfessorPublicationDto findPublicationById(Long id) throws PublicationNotFoundException {
+	public ProfessorPublicationDto findProfessorPublicationById(Long id) throws PublicationNotFoundException {
 
 		ProfessorPublicationDto professorPublicationDto;
 
@@ -85,6 +85,22 @@ public class PublicationServiceImpl implements PublicationService {
 		}
 
 		return professorPublicationDto;
+	}
+
+	@Override
+	@Transactional
+	public InternationalPublicationDto findInternationalPublicationById(Long id) throws PublicationNotFoundException {
+
+		InternationalPublicationDto internationalPublicationDto;
+
+		if (id == null || internationalPublicationsRepository.findOne(id) == null) {
+			throw new PublicationNotFoundException();
+		} else {
+			InternationalPublication publication = internationalPublicationsRepository.findOne(id);
+			internationalPublicationDto = new InternationalPublicationDto(publication);
+		}
+
+		return internationalPublicationDto;
 	}
 
 	@Override
@@ -110,8 +126,37 @@ public class PublicationServiceImpl implements PublicationService {
 			category = publicationCategoryRepository.findOne(professorPublicationDto.getPublicationCategory().getId());
 		}
 
-		professorRepository.save(PublicationUtil.createOrUpdatePublicationInstanceFromPublicationDto(
+		professorRepository.save(PublicationUtil.createOrUpdateProfessorPublicationInstanceFromPublicationDto(
 				professorPublicationDto, professor, category));
+
+	}
+
+	@Override
+	@Transactional
+	public void saveInternationalPublication(InternationalPublicationDto internationalPublicationDto)
+			throws PublicationNotFoundException, ProfessorNotFoundException, PublicationCategoryNotFoundException {
+
+		Professor professor;
+		PublicationCategory category;
+
+		if (internationalPublicationDto.getProfessorId() == null
+				|| !professorRepository.exists(internationalPublicationDto.getProfessorId())) {
+			throw new ProfessorNotFoundException();
+		} else {
+			professor = professorRepository.findOne(internationalPublicationDto.getProfessorId());
+		}
+
+		if (internationalPublicationDto.getPublicationCategory() == null
+				|| internationalPublicationDto.getPublicationCategory().getId() == null
+				|| publicationCategoryRepository.findOne(internationalPublicationDto.getPublicationCategory().getId()) == null) {
+			category = null;
+		} else {
+			category = publicationCategoryRepository.findOne(internationalPublicationDto.getPublicationCategory()
+					.getId());
+		}
+
+		professorRepository.save(PublicationUtil.createOrUpdateInternationalPublicationInstanceFromPublicationDto(
+				internationalPublicationDto, professor, category));
 
 	}
 

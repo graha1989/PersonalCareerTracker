@@ -193,9 +193,9 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
     return index;
   };
 
-  $scope.loadSelectedPublication = function(id) {
+  $scope.loadSelectedProfessorPublication = function(id) {
     PctService
-            .loadSelectedPublication(
+            .loadSelectedProfessorPublication(
                     id,
                     function(data) {
                       if (angular.isObject(data)) {
@@ -223,7 +223,7 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
   $scope.init = function() {
     $scope.loadAllPublicationTypes();
     $scope.loadAllPublicationCategories();
-    $scope.loadSelectedPublication(publicationId);
+    $scope.loadSelectedProfessorPublication(publicationId);
     $scope.loadProfessorNameAndSurname();
     $scope.status = $routeParams.status;
     $scope.loadResources();
@@ -260,7 +260,7 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
   $scope.saveProfessorPublication = function() {
     $http({
       method: 'PUT',
-      url: "api/publications",
+      url: "api/publications/professorPublication",
       data: $scope.publication
     }).success(function(data, status) {
       $("html, body").animate({
@@ -524,7 +524,7 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
     $scope.publication.professorId = $routeParams.professorId;
     $http({
       method: 'POST',
-      url: "api/publications",
+      url: "api/publications/professorPublication",
       data: $scope.publication
     }).success(function(data, status) {
       $("html, body").animate({
@@ -571,7 +571,7 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
     return pom;
   };
 
-  $scope.validateForm = function() {
+  $scope.validateNewProfessorPublicationForm = function() {
     if ($scope.publication.isbn != null && $scope.publication.isbn != ''
             && $scope.publication.title != null
             && $scope.publication.title != ''

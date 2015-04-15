@@ -18,12 +18,19 @@ public interface PublicationService {
 
 	List<PublicationCategory> findAllPublicationCategories();
 
-	ProfessorPublicationDto findPublicationById(Long id) throws PublicationNotFoundException;
+	ProfessorPublicationDto findProfessorPublicationById(Long id) throws PublicationNotFoundException;
 
-	void saveProfessorPublication(ProfessorPublicationDto professorPublicationDto) throws PublicationNotFoundException, ProfessorNotFoundException, PublicationCategoryNotFoundException;
+	InternationalPublicationDto findInternationalPublicationById(Long id) throws PublicationNotFoundException;
+
+	void saveProfessorPublication(ProfessorPublicationDto professorPublicationDto) throws PublicationNotFoundException,
+			ProfessorNotFoundException, PublicationCategoryNotFoundException;
 
 	void deleteProfessorPublication(Long id) throws PublicationNotFoundException;
 
-	List<InternationalPublicationDto> findAllInternationalPublications(Long professorId) throws PublicationNotFoundException;
-	
+	List<InternationalPublicationDto> findAllInternationalPublications(Long professorId)
+			throws PublicationNotFoundException;
+
+	void saveInternationalPublication(InternationalPublicationDto internationalPublicationDto)
+			throws PublicationNotFoundException, ProfessorNotFoundException, PublicationCategoryNotFoundException;
+
 }

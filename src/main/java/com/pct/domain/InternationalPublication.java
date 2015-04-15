@@ -41,6 +41,9 @@ public class InternationalPublication extends AbstractEntity {
 	@Column(name = "pagesWithQuotes", length = 100)
 	private String pagesWithQuotes;
 
+	@Column(name = "year", length = 4)
+	private String year;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "publicationType")
 	@JsonDeserialize(using = PublicationTypeEnumDeserializer.class)
@@ -61,8 +64,8 @@ public class InternationalPublication extends AbstractEntity {
 	}
 
 	public InternationalPublication(String isbn, String title, String jurnalTitle, String authors, String publisher,
-			String pagesWithQuotes, PublicationType publicationType, PublicationCategory publicationCategory,
-			Professor professor) {
+			String pagesWithQuotes, String year, PublicationType publicationType,
+			PublicationCategory publicationCategory, Professor professor) {
 		super();
 		this.isbn = isbn;
 		this.title = title;
@@ -70,6 +73,7 @@ public class InternationalPublication extends AbstractEntity {
 		this.authors = authors;
 		this.publisher = publisher;
 		this.pagesWithQuotes = pagesWithQuotes;
+		this.year = year;
 		this.publicationType = publicationType;
 		this.publicationCategory = publicationCategory;
 		this.professor = professor;
@@ -121,6 +125,14 @@ public class InternationalPublication extends AbstractEntity {
 
 	public void setPagesWithQuotes(String pagesWithQuotes) {
 		this.pagesWithQuotes = pagesWithQuotes;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 	public PublicationType getPublicationType() {

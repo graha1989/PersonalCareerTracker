@@ -173,7 +173,8 @@
         "authors": "Autori",
         "publisher": "Izdavač",
         "pagesWithQuotes": "Stranice",
-        "category": "Kategorija"
+        "category": "Kategorija",
+        "year": "Godina"
     },
     "publicationPopupLabels": {
     	"publicationIsbn": "ISBN",

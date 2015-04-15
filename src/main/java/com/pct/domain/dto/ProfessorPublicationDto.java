@@ -57,7 +57,7 @@ public class ProfessorPublicationDto implements Serializable {
 	private Integer quoted;
 
 	@NotEmpty
-	@Length(max = 4)
+	@Length(max = 4, min = 4)
 	@SafeHtml
 	private String year;
 

@@ -40,6 +40,10 @@ public class PublicationCategory extends AbstractEntity {
 	@JsonManagedReference(value = "publicationCategory")
 	private Set<ProfessorPublication> professorPublications = new HashSet<ProfessorPublication>();
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "publicationCategory", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "publicationCategory")
+	private Set<InternationalPublication> internationalPublications = new HashSet<InternationalPublication>();
+
 	public PublicationCategory() {
 		super();
 	}
@@ -108,9 +112,28 @@ public class PublicationCategory extends AbstractEntity {
 	}
 
 	public void addProfessorPublication(ProfessorPublication professorPublication) {
-		if (professorPublications != null) {
+		if (professorPublication != null) {
 			professorPublication.setPublicationCategory(this);
 			this.professorPublications.add(professorPublication);
+		}
+	}
+
+	public Set<InternationalPublication> getInternationalPublications() {
+		return internationalPublications;
+	}
+
+	public void setInternationalPublications(Set<InternationalPublication> internationalPublications) {
+		this.internationalPublications.clear();
+
+		if (internationalPublications != null) {
+			this.internationalPublications.addAll(internationalPublications);
+		}
+	}
+
+	public void addInternationalPublication(InternationalPublication internationalPublication) {
+		if (internationalPublications != null) {
+			internationalPublication.setPublicationCategory(this);
+			this.internationalPublications.add(internationalPublication);
 		}
 	}
 
