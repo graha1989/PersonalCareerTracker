@@ -2,6 +2,7 @@ package com.pct.service;
 
 import java.util.List;
 
+import com.pct.domain.Institution;
 import com.pct.domain.dto.WorkExperienceDto;
 import com.pct.domain.enums.InstitutionType;
 import com.pct.validation.InstitutionNotFoundException;
@@ -17,5 +18,7 @@ public interface WorkExperienceService {
 	void saveWorkExperience(WorkExperienceDto workExperienceDto) throws WorkExperienceNotFoundException, ProfessorNotFoundException, InstitutionNotFoundException;
 
 	List<InstitutionType> findAllInstitutionTypes();
+
+	List<Institution> findInstitutionsStartsWith(String value, List<Long> institutionIds);
 
 }

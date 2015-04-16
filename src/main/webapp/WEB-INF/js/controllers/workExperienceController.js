@@ -54,18 +54,18 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
     });
   };
 
-  /*
-   * $scope.deleteProfessorPublication = function(id, index) {
-   * PctService.deleteProfessorPublication(id, function(data) { if
-   * (angular.isObject(data) && data.length > 0) { $scope.errorStatus =
-   * data.status; } else { $scope.successStatus = "Successfully deleted
-   * professor publication."; $scope.publications.splice(index, 1);
-   * $scope.loadProfessorsPublications($routeParams.professorId); } }); };
-   * 
-   * $scope.createNewProfessorPublication = function() { $modal.open({
-   * templateUrl: 'createNewProfessorPublicationPopup.html', controller:
-   * createNewProfessorPublicationController, }); };
-   */
+  $scope.createNewWorkExperience = function() {
+    $modal.open({
+      templateUrl: 'createNewWorkExperiencePopup.html',
+      controller: createNewWorkExperienceController,
+      resolve: {
+        workExperiences: function() {
+          return $scope.workExperiences;
+        }
+      }
+    });
+  };
+
 });
 
 var editWorkExperiencePopupController = function($scope, $modalInstance,
@@ -175,6 +175,154 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
 
   $scope.cancel = function() {
     $modalInstance.dismiss('cancel');
+  };
+
+};
+
+var createNewWorkExperienceController = function($scope, $modalInstance,
+        $routeParams, $http, $route, $templateCache, workExperiences,
+        PctService) {
+
+  $scope.workExperience = {};
+  $scope.allInstitutionTypes = [];
+  $scope.selectedInstitution = [];
+  $scope.isExistingInstitution = false;
+
+  $scope.patterns = {
+    onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
+    onlyNumbers: /^[0-9 ]*$/
+  };
+
+  /* Date picker functions for start date */
+  $scope.openWorkStartDate = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.inputWorkStartDateOpened = true;
+  };
+
+  /* Date picker functions for end date */
+  $scope.openWorkEndDate = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.inputWorkEndDateOpened = true;
+  };
+
+  $scope.loadResources = function() {
+    var locale = document.getElementById('localeCode');
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
+            function(response) {
+              $scope.resources = angular.fromJson(response);
+            });
+    $http.get('messages/errors_' + locale.value + '.json').success(
+            function(response) {
+              $scope.errorMessages = angular.fromJson(response);
+            });
+  };
+
+  $scope.loadAllInstitutionTypes = function() {
+    PctService.loadAllInstitutionTypes($routeParams, function(data) {
+      if (angular.isObject(data) && data.length > 0) {
+        $scope.allInstitutionTypes = data;
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
+  };
+
+  $scope.getInstitutionsIds = function(selectedWorkExperiences) {
+    var institutionsIdsArray = [];
+    for (var i = 0; i < selectedWorkExperiences.length; i++) {
+      institutionsIdsArray.push(selectedWorkExperiences[i].institutionId);
+    }
+    return institutionsIdsArray;
+  };
+
+  $scope.init = function() {
+    $scope.loadAllInstitutionTypes();
+    $scope.status = $routeParams.status;
+    $scope.loadResources();
+  };
+
+  $scope.init();
+
+  $scope.getInstitutions = function(val) {
+    var workExperienceIdsList = $scope.getInstitutionsIds(workExperiences);
+
+    return PctService.findInstutionsStartsWith(val, workExperienceIdsList)
+            .then(function(response) {
+              var institutions = [];
+              for (var i = 0; i < response.length; i++) {
+                institutions.push(response[i]);
+              }
+              return institutions;
+            });
+  };
+
+  $scope.onSelectInstitution = function() {
+    $scope.isExistingInstitution = true;
+    $scope.workExperience.institutionType = $scope.selectedInstitution.institutionType;
+    $scope.workExperience.institutionName = $scope.selectedInstitution.name;
+    $scope.workExperience.institutionCity = $scope.selectedInstitution.city;
+    $scope.workExperience.institutionCountry = $scope.selectedInstitution.country;
+    $scope.workExperience.institutionId = $scope.selectedInstitution.id;
+  };
+
+  $scope.saveWorkExperience = function() {
+    if (!$scope.isExistingInstitution) {
+      $scope.workExperience.institutionName = $scope.selectedInstitution;
+    }
+    $scope.workExperience.professorId = $routeParams.professorId;
+    $http({
+      method: 'POST',
+      url: "api/workExperiences",
+      data: $scope.workExperience,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).success(function(data, status) {
+      $("html, body").animate({
+        scrollTop: 0
+      }, "slow");
+      $modalInstance.close();
+      $route.reload();
+    }).error(function(data, status) {
+      if (angular.isObject(data.fieldErrors)) {
+        $scope.fieldErrors = angular.fromJson(data.fieldErrors);
+      }
+      $scope.status = status;
+      $("html, body").animate({
+        scrollTop: 0
+      }, "slow");
+    });
+  };
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
+
+  $scope.validateForm = function() {
+    if ((($scope.workExperience.institutionName != null
+            && $scope.workExperience.institutionName != '') || ($scope.selectedInstitution != null
+            && $scope.selectedInstitution != ''))
+            && $scope.workExperience.institutionType != null
+            && $scope.workExperience.institutionType != ''
+            && $scope.workExperience.institutionCity != null
+            && $scope.workExperience.institutionCity != ''
+            && $scope.workExperience.institutionCountry != null
+            && $scope.workExperience.institutionCountry != ''
+            && $scope.workExperience.workStartDate != null
+            && $scope.workExperience.workStartDate != ''
+            && $scope.workExperience.workEndDate != null
+            && $scope.workExperience.workEndDate != ''
+            && $scope.workExperience.title != null
+            && $scope.workExperience.title != '') {
+      return true;
+    } else {
+      return false;
+    }
   };
 
 };

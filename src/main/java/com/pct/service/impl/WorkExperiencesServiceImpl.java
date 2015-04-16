@@ -100,4 +100,10 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 		return new ArrayList<InstitutionType>(Arrays.asList(InstitutionType.values()));
 	}
 
+	@Override
+	@Transactional
+	public List<Institution> findInstitutionsStartsWith(String value, List<Long> institutionIds) {
+		return institutionRepository.findByNameLike(value, institutionIds);
+	}
+
 }

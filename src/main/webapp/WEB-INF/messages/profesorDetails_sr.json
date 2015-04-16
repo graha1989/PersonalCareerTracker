@@ -23,7 +23,8 @@
         "editPublicationPopupTitle": "Izmena publikacije",
         "newPublicationPopupTitle": "Unos nove publikacije",
         "workExperiencesTitle": "Kretanje u profesionalnom radu",
-        "editWorkExperiencePopupTitle": "Izmena radnog iskustva"
+        "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
+        "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",

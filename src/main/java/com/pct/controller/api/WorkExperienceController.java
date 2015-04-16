@@ -1,5 +1,6 @@
 package com.pct.controller.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
+import com.pct.domain.Institution;
 import com.pct.domain.dto.WorkExperienceDto;
 import com.pct.domain.enums.InstitutionType;
 import com.pct.service.WorkExperienceService;
@@ -80,6 +82,20 @@ public class WorkExperienceController {
 		logger.debug("Work experience in:" + workExperienceDto.getInstitutionName() + " successfully saved.");
 
 		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "findInstitutionStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<List<Institution>> findInstitutionStartsWith(
+			@RequestParam(value = "value", required = true) String value,
+			@RequestParam(value = "institutionIds", required = false) List<Long> institutionIds)
+			throws InstitutionNotFoundException {
+
+		List<Institution> institutions = new ArrayList<Institution>();
+		if (value.length() >= 3) {
+			institutions = workExperienceService.findInstitutionsStartsWith(value, institutionIds);
+		}
+
+		return new ResponseEntity<List<Institution>>(institutions, HttpStatus.OK);
 	}
 
 }

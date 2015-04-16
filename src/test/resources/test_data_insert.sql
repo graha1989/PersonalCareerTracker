@@ -122,7 +122,8 @@ INSERT INTO international_publication (isbn, title, journalTitle, authors, publi
 	
 INSERT INTO institution (institutionType, name, country, city, adress) VALUES
 	('UNIVERSITY', 'Univerzitet u Novom Sadu, Prirodno-matematički fakultet', 'Srbija', 'Novi Sad', 'Trg Zorana Đinđića 6'),
-	('UNIVERSITY', 'Univerzitet u Beogradu, ETF', 'Srbija', 'Beograd', 'Dositeja Obradovića 23')
+	('UNIVERSITY', 'Univerzitet u Beogradu, ETF', 'Srbija', 'Beograd', 'Dositeja Obradovića 23'),
+	('UNIVERSITY', 'Univerzitet u Nišu, Prirodno-matematički fakultet', 'Srbija', 'Niš', 'Vojvođanska 33')
 	ON DUPLICATE KEY UPDATE institutionType=VALUES(institutionType), name=VALUES(name), country=VALUES(country), city=VALUES(city), adress=VALUES(adress);
 	
 INSERT INTO work_experience (institutionId, professorId, workStartDate, workEndDate, title) VALUES

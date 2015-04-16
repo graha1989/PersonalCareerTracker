@@ -243,11 +243,26 @@ app.factory("PctService", [
           return deferred.promise;
         },
         loadSelectedWorkExperience: function(id, callback) {
-          $http.get('api/workExperiences/selectedWorkExperience?id=' + id).success(callback)
-                  .error(callback);
+          $http.get('api/workExperiences/selectedWorkExperience?id=' + id)
+                  .success(callback).error(callback);
         },
         loadAllInstitutionTypes: function(params, callback) {
-          $http.get('api/workExperiences/allInstitutionTypes').success(callback);
+          $http.get('api/workExperiences/allInstitutionTypes')
+                  .success(callback);
+        },
+        findInstutionsStartsWith: function(value, institutionIds) {
+          var deferred = $q.defer();
+          $http.get("api/workExperiences/findInstitutionStartsWith", {
+            params: {
+              value: value,
+              institutionIds: institutionIds
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
         },
       };
     }]);
