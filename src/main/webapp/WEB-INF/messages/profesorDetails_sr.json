@@ -21,7 +21,9 @@
         "professorPublicationsTitle": "Sve lične publikacije",
         "internationalPublicationsTitle": "Sve međunarodne publikacije",
         "editPublicationPopupTitle": "Izmena publikacije",
-        "newPublicationPopupTitle": "Unos nove publikacije"
+        "newPublicationPopupTitle": "Unos nove publikacije",
+        "workExperiencesTitle": "Kretanje u profesionalnom radu",
+        "editWorkExperiencePopupTitle": "Izmena radnog iskustva"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -100,6 +102,14 @@
             "delete": "Izbriši",
             "edit": "Izmeni",
             "add": "Dodaj novu publikaciju",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
+        "workExperienceButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novo zaposlenje",
             "close": "Zatvori",
             "save": "Sačuvaj",
             "cancel": "Odustani"
@@ -189,5 +199,23 @@
     	"publicationType": "Tip publikacije",
     	"publicationCategory": "Kategorija",
     	"publicationYear": "Godina"
+    },
+    "workExperienceTableLabels": {
+    	"institutionType": "Tip ustanove",
+        "institutionName": "Ustanova",
+        "institutionCity": "Grad",
+        "institutionCountry": "Država",
+        "workStartDate": "Početak zaposlenja",
+        "workEndDate": "Kraj zaposlenja",
+        "title": "Zvanje"
+    },
+    "workExperiencePopupLabels": {
+    	"institutionType": "Tip ustanove",
+        "institutionName": "Naziv ustanove",
+        "institutionCity": "Grad",
+        "institutionCountry": "Država",
+        "workStartDate": "Početak zaposlenja",
+        "workEndDate": "Kraj zaposlenja",
+        "title": "Zvanje"
     }
 }

@@ -1,0 +1,288 @@
+<div>
+
+	<form
+		name="form"
+		id="showProfessorWorkExperienceForm"
+		novalidate
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		ng-model="workExperience">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.workExperiencesTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+
+				<table
+					ng-show="workExperiences != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr class="info ng-binding">
+							<td>{{ resources.workExperienceTableLabels.institutionType }}</td>
+							<td>{{ resources.workExperienceTableLabels.institutionName }}</td>
+							<td>{{ resources.workExperienceTableLabels.institutionCity }}</td>
+							<td>{{ resources.workExperienceTableLabels.institutionCountry }}</td>
+							<td>{{ resources.workExperienceTableLabels.workStartDate }}</td>
+							<td>{{ resources.workExperienceTableLabels.workEndDate }}</td>
+							<td>{{ resources.workExperienceTableLabels.title }}</td>
+							<td colspan="2"></td>
+						</tr>
+						<tr
+							class="active ng-scope"
+							ng-repeat="workExperience in workExperiences">
+							<td>{{ workExperience.institutionType.title }}</td>
+							<td>{{ workExperience.institutionName }}</td>
+							<td>{{ workExperience.institutionCity }}</td>
+							<td>{{ workExperience.institutionCountry }}</td>
+							<td>{{ workExperience.workStartDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ workExperience.workEndDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ workExperience.title }}</td>
+							<td class="delete"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteWorkExperience(workExperience.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.workExperienceButtons.delete }}
+								</button></td>
+							<td class="edit"><button
+									class="btn btn-link btn-xs"
+									ng-click="editWorkExperience(workExperience.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.workExperienceButtons.edit }}
+								</button></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td colspan="9">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
+				ng-click="createNewWorkExperience()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.workExperienceButtons.add }}
+			</button>
+		</div>
+	</form>
+
+	<script
+		type="text/ng-template"
+		id="editWorkExperiencePopup.html">
+		<form
+			name="form"
+			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+			role="form"
+			ng-model="workExperience">
+			<div class="modal-header">
+				<h3 class="modal-title">{{ resources.text.editWorkExperiencePopupTitle }}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label
+						for="inputInstitutionType"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionType }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputInstitutionType"
+							name="inputInstitutionType"
+							ng-model="workExperience.institutionType"
+							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
+							required><option value="">{{ resources.workExperiencePopupLabels.institutionType }}</option></select>
+						<div
+							ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
+							class="institutionTypeFieldError">
+							<span
+								ng-show="form.inputInstitutionType.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionName"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionName"
+							name="inputInstitutionName"
+							ng-model="workExperience.institutionName"
+							ng-maxlength="100"
+							required />
+						<div
+							ng-show="form.inputInstitutionName.$dirty && form.inputInstitutionName.$invalid"
+							class="institutionNameFieldError">
+							<span
+								ng-show="form.inputInstitutionName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputInstitutionName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionNameMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionCity"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCity }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCity"
+							name="inputInstitutionCity"
+							ng-model="workExperience.institutionCity"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
+							class="institutionCityFieldError">
+							<span
+								ng-show="form.inputInstitutionCity.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputInstitutionCity.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionCountry"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCountry"
+							name="inputInstitutionCountry"
+							ng-model="workExperience.institutionCountry"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
+							class="institutionCountryFieldError">
+							<span
+								ng-show="form.inputInstitutionCountry.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputInstitutionCountry.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputWorkStartDate"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.workStartDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputWorkStartDate"
+								name="inputWorkStartDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputWorkStartDateOpened"
+								show-button-bar="false"
+								ng-model="workExperience.workStartDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openWorkStartDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputWorkStartDate.$dirty && form.inputWorkStartDate.$invalid"
+							class="workStartDateFieldError">
+							<span
+								ng-show="form.inputWorkStartDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputWorkEndDate"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.workEndDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputWorkEndDate"
+								name="inputWorkEndDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputWorkEndDateOpened"
+								show-button-bar="false"
+								ng-model="workExperience.workEndDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openWorkEndDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputWorkEndDate.$dirty && form.inputWorkEndDate.$invalid"
+							class="workEndDateFieldError">
+							<span
+								ng-show="form.inputWorkEndDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputTitle"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputTitle"
+							name="inputTitle"
+							ng-model="workExperience.title"
+							ng-maxlength="30"
+							required />
+						<div
+							ng-show="form.inputTitle.$dirty && form.inputTitle.$invalid"
+							class="titleFieldError">
+							<span
+								ng-show="form.inputTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputTitle.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidTitleMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer action">
+				<button
+					id="submit_button"
+					type="submit"
+					class="btn btn-success btn-sm"
+					ng-disabled="$parent.form.$invalid || isUnchanged(workExperience)"
+					ng-click="saveWorkExperience()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.workExperienceButtons.edit }}
+				</button>
+				<button
+					id="cancel_button"
+					class="btn btn-sm"
+					ng-click="cancel()">{{ resources.buttons.workExperienceButtons.close }}</button>
+			</div>
+		</form>
+	</script>
+
+</div>

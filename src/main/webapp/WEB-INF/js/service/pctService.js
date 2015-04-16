@@ -209,12 +209,13 @@ app.factory("PctService", [
                   callback);
         },
         loadSelectedProfessorPublication: function(id, callback) {
-          $http.get('api/publications/selectedProfessorPublication?id=' + id).success(
-                  callback).error(callback);
+          $http.get('api/publications/selectedProfessorPublication?id=' + id)
+                  .success(callback).error(callback);
         },
         loadSelectedInternationalPublication: function(id, callback) {
-          $http.get('api/publications/selectedInternationalPublication?id=' + id).success(
-                  callback).error(callback);
+          $http.get(
+                  'api/publications/selectedInternationalPublication?id=' + id)
+                  .success(callback).error(callback);
         },
         deleteProfessorPublication: function(id, callback) {
           $http({
@@ -227,6 +228,26 @@ app.factory("PctService", [
             method: 'DELETE',
             url: 'api/publications/internationalPublication?id=' + id
           }).success(callback).error(callback);
+        },
+        loadWorkExperiences: function(professorId) {
+          var deferred = $q.defer();
+          $http.get("api/workExperiences/allWorkExperiences", {
+            params: {
+              professorId: professorId
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
+        loadSelectedWorkExperience: function(id, callback) {
+          $http.get('api/workExperiences/selectedWorkExperience?id=' + id).success(callback)
+                  .error(callback);
+        },
+        loadAllInstitutionTypes: function(params, callback) {
+          $http.get('api/workExperiences/allInstitutionTypes').success(callback);
         },
       };
     }]);

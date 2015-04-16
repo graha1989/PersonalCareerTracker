@@ -1,11 +1,18 @@
 package com.pct.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.enums.InstitutionType;
 import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
@@ -33,17 +40,23 @@ public class Institution extends AbstractEntity {
 	@Column(name = "adress", length = 50)
 	private String adress;
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "institution", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "institution")
+	private Set<WorkExperience> workExperiences = new HashSet<WorkExperience>();
+
 	public Institution() {
 		super();
 	}
 
-	public Institution(String name, InstitutionType institutionType, String country, String city, String adress) {
+	public Institution(String name, InstitutionType institutionType, String country, String city, String adress,
+			Set<WorkExperience> workExperiences) {
 		super();
 		this.name = name;
 		this.institutionType = institutionType;
 		this.country = country;
 		this.city = city;
 		this.adress = adress;
+		this.workExperiences = workExperiences;
 	}
 
 	public String getName() {
@@ -84,6 +97,25 @@ public class Institution extends AbstractEntity {
 
 	public void setAdress(String adress) {
 		this.adress = adress;
+	}
+
+	public Set<WorkExperience> getWorkExperiences() {
+		return workExperiences;
+	}
+
+	public void setWorkExperiences(Set<WorkExperience> workExperiences) {
+		this.workExperiences.clear();
+
+		if (workExperiences != null) {
+			this.workExperiences.addAll(workExperiences);
+		}
+	}
+
+	public void addWorkExperiences(WorkExperience workExperience) {
+		if (workExperience != null) {
+			workExperience.setInstitution(this);
+			this.workExperiences.add(workExperience);
+		}
 	}
 
 }

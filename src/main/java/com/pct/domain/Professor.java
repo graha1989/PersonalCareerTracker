@@ -74,6 +74,10 @@ public class Professor extends AbstractEntity {
 	@JsonManagedReference(value = "professor")
 	private Set<InternationalPublication> internationalPublications = new HashSet<InternationalPublication>();
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "professor")
+	private Set<WorkExperience> workExperiences = new HashSet<WorkExperience>();
+
 	@OneToOne
 	@JoinColumn(name = "ulogaId")
 	private Uloga uloga;
@@ -84,7 +88,9 @@ public class Professor extends AbstractEntity {
 
 	public Professor(String userName, String password, String email, String name, String surname, String fathersName,
 			Date dateOfBirth, String placeOfBirth, String countryOfBirth, String scientificArea,
-			String specialScientificArea, Uloga uloga) {
+			String specialScientificArea, Set<LanguageExperience> languageExperiences, Set<Award> awards,
+			Set<ProjectExperience> projectExperiences, Set<ProfessorPublication> professorPublications,
+			Set<InternationalPublication> internationalPublications, Set<WorkExperience> workExperiences, Uloga uloga) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -97,6 +103,12 @@ public class Professor extends AbstractEntity {
 		this.countryOfBirth = countryOfBirth;
 		this.scientificArea = scientificArea;
 		this.specialScientificArea = specialScientificArea;
+		this.languageExperiences = languageExperiences;
+		this.awards = awards;
+		this.projectExperiences = projectExperiences;
+		this.professorPublications = professorPublications;
+		this.internationalPublications = internationalPublications;
+		this.workExperiences = workExperiences;
 		this.uloga = uloga;
 	}
 
@@ -392,7 +404,6 @@ public class Professor extends AbstractEntity {
 		this.internationalPublications.add(internationalPublication);
 
 		return internationalPublication;
-
 	}
 
 	public InternationalPublication editInternationalPublication(PublicationCategory category, String isbn,
@@ -415,7 +426,58 @@ public class Professor extends AbstractEntity {
 		}
 
 		return internationalPublication;
+	}
 
+	public Set<WorkExperience> getWorkExperiences() {
+		return workExperiences;
+	}
+
+	public void setWorkExperiences(Set<WorkExperience> workExperiences) {
+		this.workExperiences.clear();
+
+		if (workExperiences != null) {
+			this.workExperiences.addAll(workExperiences);
+		}
+	}
+
+	public WorkExperience getWorkExperienceById(Long id) {
+		Iterator<WorkExperience> it = workExperiences.iterator();
+		while (it.hasNext()) {
+			WorkExperience workExperience = (WorkExperience) it.next();
+			if (workExperience.getId().equals(id)) {
+				return workExperience;
+			}
+		}
+		return null;
+	}
+
+	public void addWorkExperiences(WorkExperience workExperience) {
+		if (workExperience != null) {
+			workExperience.setProfessor(this);
+			this.workExperiences.add(workExperience);
+		}
+	}
+
+	public WorkExperience creatreNewWorkExperience(Institution institution, Date workStartDate, Date workEndDate,
+			String title) {
+
+		WorkExperience workExperience = new WorkExperience(institution, this, workStartDate, workEndDate, title);
+		institution.addWorkExperiences(workExperience);
+		this.workExperiences.add(workExperience);
+		return workExperience;
+	}
+
+	public WorkExperience editWorkExperience(Institution institution, Date workStartDate, Date workEndDate,
+			String title, Long id) {
+
+		WorkExperience workExperience = getWorkExperienceById(id);
+		workExperience.setWorkStartDate(workStartDate);
+		workExperience.setWorkEndDate(workEndDate);
+		workExperience.setTitle(title);
+
+		institution.addWorkExperiences(workExperience);
+
+		return workExperience;
 	}
 
 }

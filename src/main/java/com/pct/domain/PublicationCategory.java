@@ -49,14 +49,15 @@ public class PublicationCategory extends AbstractEntity {
 	}
 
 	public PublicationCategory(String code, String description, Double nsmPoints, Double ttbtPoints, Double shPoints,
-			Set<ProfessorPublication> publications) {
+			Set<ProfessorPublication> professorPublications, Set<InternationalPublication> internationalPublications) {
 		super();
 		this.code = code;
 		this.description = description;
 		this.nsmPoints = nsmPoints;
 		this.ttbtPoints = ttbtPoints;
 		this.shPoints = shPoints;
-		this.professorPublications = publications;
+		this.professorPublications = professorPublications;
+		this.internationalPublications = internationalPublications;
 	}
 
 	public String getCode() {

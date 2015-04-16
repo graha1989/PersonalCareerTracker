@@ -6,6 +6,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public enum InstitutionType {
 
 	COMPANY("Firma"),
+	
+	SCHOOL("Škola"),
+	
+	FACULTY("Fakultet"),
 
 	UNIVERSITY("Univerzitet"),
 

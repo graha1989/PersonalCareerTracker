@@ -124,3 +124,8 @@ INSERT INTO institution (institutionType, name, country, city, adress) VALUES
 	('UNIVERSITY', 'Univerzitet u Novom Sadu, Prirodno-matematički fakultet', 'Srbija', 'Novi Sad', 'Trg Zorana Đinđića 6'),
 	('UNIVERSITY', 'Univerzitet u Beogradu, ETF', 'Srbija', 'Beograd', 'Dositeja Obradovića 23')
 	ON DUPLICATE KEY UPDATE institutionType=VALUES(institutionType), name=VALUES(name), country=VALUES(country), city=VALUES(city), adress=VALUES(adress);
+	
+INSERT INTO work_experience (institutionId, professorId, workStartDate, workEndDate, title) VALUES
+	('1', '3', '2012-04-14 00:00:00', '2014-08-04 00:00:00', 'asistent pripravnik'),
+	('1', '3', '2014-10-07 00:00:00', '2015-02-07 00:00:00', 'asistent')
+	ON DUPLICATE KEY UPDATE institutionId=VALUES(institutionId), professorId=VALUES(professorId), workStartDate=VALUES(workStartDate), workEndDate=VALUES(workEndDate), title=VALUES(title);
