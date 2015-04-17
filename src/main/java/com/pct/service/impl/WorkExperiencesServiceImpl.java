@@ -106,4 +106,24 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 		return institutionRepository.findByNameLike(value, institutionIds);
 	}
 
+	@Override
+	@Transactional
+	public void deleteWorkExperience(Long id) throws WorkExperienceNotFoundException {
+
+		WorkExperience workExperience = workExperienceRepository.findOne(id);
+
+		if (id == null || workExperience == null) {
+			throw new WorkExperienceNotFoundException();
+		}
+
+		workExperience.getInstitution().getWorkExperiences().remove(workExperience);
+		workExperience.getProfessor().getProjectExperiences().remove(workExperience);
+
+		workExperience.setInstitution(null);
+		workExperience.setProfessor(null);
+
+		workExperienceRepository.delete(workExperience);
+
+	}
+
 }

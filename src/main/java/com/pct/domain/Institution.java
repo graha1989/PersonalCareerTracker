@@ -1,6 +1,8 @@
 package com.pct.domain;
 
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -37,9 +39,6 @@ public class Institution extends AbstractEntity {
 	@Column(name = "city", length = 50)
 	private String city;
 
-	@Column(name = "adress", length = 50)
-	private String adress;
-
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "institution", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "institution")
 	private Set<WorkExperience> workExperiences = new HashSet<WorkExperience>();
@@ -48,14 +47,13 @@ public class Institution extends AbstractEntity {
 		super();
 	}
 
-	public Institution(String name, InstitutionType institutionType, String country, String city, String adress,
+	public Institution(String name, InstitutionType institutionType, String country, String city,
 			Set<WorkExperience> workExperiences) {
 		super();
 		this.name = name;
 		this.institutionType = institutionType;
 		this.country = country;
 		this.city = city;
-		this.adress = adress;
 		this.workExperiences = workExperiences;
 	}
 
@@ -91,14 +89,6 @@ public class Institution extends AbstractEntity {
 		this.city = city;
 	}
 
-	public String getAdress() {
-		return adress;
-	}
-
-	public void setAdress(String adress) {
-		this.adress = adress;
-	}
-
 	public Set<WorkExperience> getWorkExperiences() {
 		return workExperiences;
 	}
@@ -111,11 +101,44 @@ public class Institution extends AbstractEntity {
 		}
 	}
 
+	public WorkExperience getWorkExperienceById(Long id) {
+		Iterator<WorkExperience> it = workExperiences.iterator();
+		while (it.hasNext()) {
+			WorkExperience workExperience = (WorkExperience) it.next();
+			if (workExperience.getId().equals(id)) {
+				return workExperience;
+			}
+		}
+		return null;
+	}
+
 	public void addWorkExperiences(WorkExperience workExperience) {
 		if (workExperience != null) {
 			workExperience.setInstitution(this);
 			this.workExperiences.add(workExperience);
 		}
+	}
+
+	public WorkExperience creatreNewWorkExperience(Professor professor, Date workStartDate, Date workEndDate,
+			String title) {
+
+		WorkExperience workExperience = new WorkExperience(this, professor, workStartDate, workEndDate, title);
+		professor.addWorkExperiences(workExperience);
+		this.workExperiences.add(workExperience);
+		return workExperience;
+	}
+
+	public WorkExperience editWorkExperience(Professor professor, Date workStartDate, Date workEndDate, String title,
+			Long id) {
+
+		WorkExperience workExperience = getWorkExperienceById(id);
+		workExperience.setWorkStartDate(workStartDate);
+		workExperience.setWorkEndDate(workEndDate);
+		workExperience.setTitle(title);
+
+		professor.addWorkExperiences(workExperience);
+
+		return workExperience;
 	}
 
 }

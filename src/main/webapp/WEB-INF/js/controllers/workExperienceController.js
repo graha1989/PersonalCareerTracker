@@ -42,6 +42,18 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
     window.history.back();
   };
 
+  $scope.deleteWorkExperience = function(id, index) {
+    PctService.deleteWorkExperience(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.errorStatus = data.status;
+      } else {
+        $scope.successStatus = "Successfully deleted work experience.";
+        $scope.workExperiences.splice(index, 1);
+        $scope.loadWorkExperiences($routeParams.professorId);
+      }
+    });
+  };
+
   $scope.editWorkExperience = function(id) {
     $modal.open({
       templateUrl: 'editWorkExperiencePopup.html',
@@ -304,9 +316,7 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
   };
 
   $scope.validateForm = function() {
-    if ((($scope.workExperience.institutionName != null
-            && $scope.workExperience.institutionName != '') || ($scope.selectedInstitution != null
-            && $scope.selectedInstitution != ''))
+    if ((($scope.workExperience.institutionName != null && $scope.workExperience.institutionName != '') || ($scope.selectedInstitution != null && $scope.selectedInstitution != ''))
             && $scope.workExperience.institutionType != null
             && $scope.workExperience.institutionType != ''
             && $scope.workExperience.institutionCity != null

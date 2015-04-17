@@ -21,4 +21,6 @@ public interface WorkExperienceService {
 
 	List<Institution> findInstitutionsStartsWith(String value, List<Long> institutionIds);
 
+	void deleteWorkExperience(Long id) throws WorkExperienceNotFoundException;
+
 }

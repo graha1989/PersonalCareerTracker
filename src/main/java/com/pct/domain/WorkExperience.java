@@ -3,6 +3,7 @@ package com.pct.domain;
 import java.util.Date;
 
 import javax.annotation.Nullable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -17,7 +18,7 @@ public class WorkExperience extends AbstractEntity {
 
 	private static final long serialVersionUID = 1803668535106768471L;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "institutionId")
 	@JsonBackReference(value = "institution")
 	private Institution institution;

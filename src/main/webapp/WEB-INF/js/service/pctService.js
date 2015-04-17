@@ -264,5 +264,11 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        deleteWorkExperience: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/workExperiences?id=' + id
+          }).success(callback).error(callback);
+        },
       };
     }]);

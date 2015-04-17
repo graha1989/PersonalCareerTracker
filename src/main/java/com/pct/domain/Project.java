@@ -46,11 +46,10 @@ public class Project extends AbstractEntity {
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade= CascadeType.ALL)
 	@JsonManagedReference(value = "project")
-	private Set<ProjectExperience> projectExperiences;
+	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 	
 	public Project() {
 		super();
-		this.projectExperiences = new HashSet<ProjectExperience>();
 	}
 
 	public String getName() {

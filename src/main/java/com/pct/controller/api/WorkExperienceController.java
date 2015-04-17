@@ -98,4 +98,12 @@ public class WorkExperienceController {
 		return new ResponseEntity<List<Institution>>(institutions, HttpStatus.OK);
 	}
 
+	@RequestMapping(method = RequestMethod.DELETE)
+	public ResponseEntity<WorkExperienceDto> deleteWorkExperience(
+			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws WorkExperienceNotFoundException {
+		workExperienceService.deleteWorkExperience(id);
+
+		return new ResponseEntity<WorkExperienceDto>(HttpStatus.OK);
+	}
+
 }
