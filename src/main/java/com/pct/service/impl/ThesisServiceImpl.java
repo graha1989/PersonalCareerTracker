@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pct.domain.Professor;
 import com.pct.domain.Student;
 import com.pct.domain.Thesis;
-import com.pct.domain.ThesisType;
+import com.pct.domain.StudiesThesisType;
 import com.pct.domain.dto.ThesisDto;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.StudentRepository;
@@ -54,9 +54,9 @@ public class ThesisServiceImpl implements ThesisService {
 
 	@Override
 	@Transactional
-	public List<ThesisType> findAllThesisType() {
+	public List<StudiesThesisType> findAllThesisType() {
 
-		List<ThesisType> thesisTypesList = new ArrayList<ThesisType>();
+		List<StudiesThesisType> thesisTypesList = new ArrayList<StudiesThesisType>();
 		thesisTypesList = thesisTypeRepository.findAll();
 		return thesisTypesList;
 	}
@@ -70,7 +70,7 @@ public class ThesisServiceImpl implements ThesisService {
 		Professor mentor = new Professor();
 		Professor commissionPresident = new Professor();
 		Professor commissionMember = new Professor();
-		ThesisType thesisType = new ThesisType();
+		StudiesThesisType studiesThesisType = new StudiesThesisType();
 		
 		if (thesisDto.getStudentId() == null || studentRepository.findOne(thesisDto.getStudentId()) == null) {
 			throw new StudentNotFoundException();
@@ -99,13 +99,13 @@ public class ThesisServiceImpl implements ThesisService {
 		if (thesisDto.getThesisTypeId() == null || thesisTypeRepository.findOne(thesisDto.getThesisTypeId()) == null) {
 			throw new ThesisTypeNotFoundException();
 		} else {
-			thesisType = thesisTypeRepository.findOne(thesisDto.getThesisTypeId());
+			studiesThesisType = thesisTypeRepository.findOne(thesisDto.getThesisTypeId());
 		}
 		
 		if (thesisDto.getId() != null) {
-			thesis = ThesisUtil.createThesisInstanceFromThesisDto(thesisDto, student, mentor, commissionPresident, commissionMember, thesisType);
+			thesis = ThesisUtil.createThesisInstanceFromThesisDto(thesisDto, student, mentor, commissionPresident, commissionMember, studiesThesisType);
 		} else {
-			thesis = ThesisUtil.createNewThesisInstanceFromThesisiDto(thesisDto, student, mentor, commissionPresident, commissionMember, thesisType);
+			thesis = ThesisUtil.createNewThesisInstanceFromThesisiDto(thesisDto, student, mentor, commissionPresident, commissionMember, studiesThesisType);
 		}
 		
 		return new ThesisDto(thesisRepository.save(thesis));
@@ -113,17 +113,17 @@ public class ThesisServiceImpl implements ThesisService {
 
 	@Override
 	@Transactional
-	public ThesisType findThesisTypeById(Long id) throws ThesisTypeNotFoundException {
+	public StudiesThesisType findThesisTypeById(Long id) throws ThesisTypeNotFoundException {
 		
-		ThesisType thesisType;
+		StudiesThesisType studiesThesisType;
 
 		if (id == null || thesisTypeRepository.findOne(id) == null) {
 			throw new ThesisTypeNotFoundException();
 		} else {
-			thesisType = thesisTypeRepository.findOne(id);
+			studiesThesisType = thesisTypeRepository.findOne(id);
 		}
 
-		return thesisType;
+		return studiesThesisType;
 	}
 
 	@Override

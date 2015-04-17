@@ -16,12 +16,12 @@ INSERT INTO student (name, surname, transcriptNumber) VALUES
 	('Zorana', 'Milić', '99/09')
 	ON DUPLICATE KEY UPDATE name=VALUES(name), surname=VALUES(surname), transcriptNumber=VALUES(transcriptNumber);
 	
-INSERT INTO thesis_type (finalPaperTypeName) VALUES
+INSERT INTO studies_thesis_type (type) VALUES
 	('Bachelor'),
 	('Master'),
 	('Specijalističke'),
 	('Doktorske')
-	ON DUPLICATE KEY UPDATE finalPaperTypeName=VALUES(finalPaperTypeName);
+	ON DUPLICATE KEY UPDATE type=VALUES(type);
 	
 INSERT INTO language (name) VALUES
 	('Srpski jezik'),
@@ -51,12 +51,12 @@ INSERT INTO professor (userName, password, email, name, surname, fathersName, da
 	('admin2', 'admin456', 'admin2@email.com', 'Jova', 'Jović', 'Jovan', '1987-08-18 00:00:00', 'Beograd', 'Srbija', 'Fizika', 'Atomska fizika')
 	ON DUPLICATE KEY UPDATE userName=VALUES(userName), password=VALUES(password), email=VALUES(email), name=VALUES(name), surname=VALUES(surname), fathersName=VALUES(fathersName), dateOfBirth=VALUES(dateOfBirth), placeOfBirth=VALUES(placeOfBirth), countryOfBirth=VALUES(countryOfBirth), scientificArea=VALUES(scientificArea), specialScientificArea=VALUES(specialScientificArea);
 	
-INSERT INTO thesis (title, paperScientificArea, dateOfGraduation, universityName, finalPaperTypeId, studentId, mentorId, commissionMemberId, commissionPresidentId) VALUES
+INSERT INTO thesis (title, paperScientificArea, dateOfGraduation, universityName, studiesThesisTypeId, studentId, mentorId, commissionMemberId, commissionPresidentId) VALUES
 	('Bachelor teza 1', 'Informatika', '2014-04-04 00:00:00', 'Univerzitet Novi Sad', '1', '1', '3', '2', '1'),
 	('Master teza 1', 'Informatika', '2012-04-14 00:00:00', 'Univerzitet Niš', '2', '2', '3', '3', '2'),
 	('Specijalistička teza 1', 'Informatika', '2010-11-11 00:00:00', 'Univerzitet Beograd', '3', '7', '3', '4', '5'),
 	('Doktorska teza 1', 'Informatika', '2010-11-11 00:00:00', 'Univerzitet Beograd', '4', '10', '3', '5', '6')
-	ON DUPLICATE KEY UPDATE title=VALUES(title), paperScientificArea=VALUES(paperScientificArea), dateOfGraduation=VALUES(dateOfGraduation), universityName=VALUES(universityName), finalPaperTypeId=VALUES(finalPaperTypeId), studentId=VALUES(studentId), mentorId=VALUES(mentorId), commissionMemberId=VALUES(commissionMemberId), commissionPresidentId=VALUES(commissionPresidentId);
+	ON DUPLICATE KEY UPDATE title=VALUES(title), paperScientificArea=VALUES(paperScientificArea), dateOfGraduation=VALUES(dateOfGraduation), universityName=VALUES(universityName), studiesThesisTypeId=VALUES(studiesThesisTypeId), studentId=VALUES(studentId), mentorId=VALUES(mentorId), commissionMemberId=VALUES(commissionMemberId), commissionPresidentId=VALUES(commissionPresidentId);
 	
 INSERT INTO language_experience (profesorId, languageId, writing, reading, pronouncing) VALUES
 	('3', '1', '1', '1', '1'),

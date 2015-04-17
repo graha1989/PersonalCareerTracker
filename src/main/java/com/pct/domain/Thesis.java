@@ -29,8 +29,8 @@ public class Thesis extends AbstractEntity {
 	private String universityName;
 	
 	@OneToOne
-	@JoinColumn(name = "finalPaperTypeId")
-	private ThesisType thesisType;
+	@JoinColumn(name = "studiesThesisTypeId")
+	private StudiesThesisType studiesThesisType;
 	
 	@OneToOne
 	@JoinColumn(name = "studentId")
@@ -87,12 +87,12 @@ public class Thesis extends AbstractEntity {
 		this.universityName = universityName;
 	}
 
-	public ThesisType getThesisType() {
-		return thesisType;
+	public StudiesThesisType getThesisType() {
+		return studiesThesisType;
 	}
 
-	public void setThesisType(ThesisType thesisType) {
-		this.thesisType = thesisType;
+	public void setThesisType(StudiesThesisType studiesThesisType) {
+		this.studiesThesisType = studiesThesisType;
 	}
 
 	public Student getStudent() {

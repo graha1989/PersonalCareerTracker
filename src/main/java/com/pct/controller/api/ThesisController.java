@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
-import com.pct.domain.ThesisType;
+import com.pct.domain.StudiesThesisType;
 import com.pct.domain.dto.ThesisDto;
 import com.pct.service.ThesisService;
 import com.pct.validation.ProfessorNotFoundException;
@@ -44,10 +44,10 @@ public class ThesisController {
 	}
 
 	@RequestMapping(value = "allThesisTypes", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<List<ThesisType>> showAllThesisTypes() {
-		List<ThesisType> thesisTypes = thesisService.findAllThesisType();
+	public ResponseEntity<List<StudiesThesisType>> showAllThesisTypes() {
+		List<StudiesThesisType> studiesThesisTypes = thesisService.findAllThesisType();
 
-		return new ResponseEntity<List<ThesisType>>(thesisTypes, HttpStatus.OK);
+		return new ResponseEntity<List<StudiesThesisType>>(studiesThesisTypes, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
@@ -70,15 +70,15 @@ public class ThesisController {
 	}
 
 	@RequestMapping(value = "loadThesisTypeDetails", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<ThesisType> getThesisTypeById(@RequestParam(value = "id", required = true) Long id) {
-		ThesisType thesisType = new ThesisType();
+	public ResponseEntity<StudiesThesisType> getThesisTypeById(@RequestParam(value = "id", required = true) Long id) {
+		StudiesThesisType studiesThesisType = new StudiesThesisType();
 		try {
-			thesisType = thesisService.findThesisTypeById(id);
+			studiesThesisType = thesisService.findThesisTypeById(id);
 		} catch (ThesisTypeNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ResponseEntity<ThesisType>(thesisType, HttpStatus.OK);
+		return new ResponseEntity<StudiesThesisType>(studiesThesisType, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
