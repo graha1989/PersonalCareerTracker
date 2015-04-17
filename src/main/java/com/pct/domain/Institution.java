@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -39,7 +38,7 @@ public class Institution extends AbstractEntity {
 	@Column(name = "city", length = 50)
 	private String city;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "institution", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "institution")
 	@JsonManagedReference(value = "institution")
 	private Set<WorkExperience> workExperiences = new HashSet<WorkExperience>();
 
