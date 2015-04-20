@@ -90,7 +90,7 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 			institution = institutionRepository.findOne(workExperienceDto.getInstitutionId());
 		}
 
-		workExperienceRepository.save(WorkExperienceUtil.createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(
+		institutionRepository.save(WorkExperienceUtil.createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(
 				workExperienceDto, professor, institution));
 	}
 
@@ -102,22 +102,22 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 
 	@Override
 	@Transactional
-	public List<Institution> findInstitutionsStartsWith(String value, List<Long> institutionIds) {
-		return institutionRepository.findByNameLike(value, institutionIds);
+	public List<Institution> findInstitutionsStartsWith(String value) {
+		return institutionRepository.findByNameLike(value);
 	}
 
 	@Override
 	@Transactional
 	public void deleteWorkExperience(Long id) throws WorkExperienceNotFoundException {
 
-		WorkExperience workExperience = workExperienceRepository.findOne(id);
-
-		if (id == null || workExperience == null) {
+		if (id == null || workExperienceRepository.findOne(id) == null) {
 			throw new WorkExperienceNotFoundException();
 		}
-
+		
+		WorkExperience workExperience = workExperienceRepository.findOne(id);
+		
 		workExperience.getInstitution().getWorkExperiences().remove(workExperience);
-		workExperience.getProfessor().getProjectExperiences().remove(workExperience);
+		workExperience.getProfessor().getWorkExperiences().remove(workExperience);
 
 		workExperience.setInstitution(null);
 		workExperience.setProfessor(null);

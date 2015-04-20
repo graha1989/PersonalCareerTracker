@@ -14,6 +14,6 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
 	Institution findByNameLikeAndCityLikeAndCountryLike(@Param("name") String name, @Param("city") String city,
 			@Param("country") String country);
 
-	@Query("SELECT i FROM Institution i WHERE i.id NOT IN :institutionIds AND i.name LIKE %:value%")
-	List<Institution> findByNameLike(@Param("value") String value, @Param("institutionIds") List<Long> institutionIds);
+	@Query("SELECT i FROM Institution i WHERE i.name LIKE %:value%")
+	List<Institution> findByNameLike(@Param("value") String value);
 }

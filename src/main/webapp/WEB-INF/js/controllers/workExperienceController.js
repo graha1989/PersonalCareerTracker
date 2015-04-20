@@ -244,14 +244,6 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
     });
   };
 
-  $scope.getInstitutionsIds = function(selectedWorkExperiences) {
-    var institutionsIdsArray = [];
-    for (var i = 0; i < selectedWorkExperiences.length; i++) {
-      institutionsIdsArray.push(selectedWorkExperiences[i].institutionId);
-    }
-    return institutionsIdsArray;
-  };
-
   $scope.init = function() {
     $scope.loadAllInstitutionTypes();
     $scope.status = $routeParams.status;
@@ -261,9 +253,7 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
   $scope.init();
 
   $scope.getInstitutions = function(val) {
-    var workExperienceIdsList = $scope.getInstitutionsIds(workExperiences);
-
-    return PctService.findInstutionsStartsWith(val, workExperienceIdsList)
+    return PctService.findInstutionsStartsWith(val)
             .then(function(response) {
               var institutions = [];
               for (var i = 0; i < response.length; i++) {

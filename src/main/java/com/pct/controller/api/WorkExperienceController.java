@@ -86,13 +86,12 @@ public class WorkExperienceController {
 
 	@RequestMapping(value = "findInstitutionStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<Institution>> findInstitutionStartsWith(
-			@RequestParam(value = "value", required = true) String value,
-			@RequestParam(value = "institutionIds", required = false) List<Long> institutionIds)
+			@RequestParam(value = "value", required = true) String value)
 			throws InstitutionNotFoundException {
 
 		List<Institution> institutions = new ArrayList<Institution>();
 		if (value.length() >= 3) {
-			institutions = workExperienceService.findInstitutionsStartsWith(value, institutionIds);
+			institutions = workExperienceService.findInstitutionsStartsWith(value);
 		}
 
 		return new ResponseEntity<List<Institution>>(institutions, HttpStatus.OK);
