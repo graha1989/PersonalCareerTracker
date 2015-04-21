@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +19,6 @@ import com.pct.repository.InstitutionRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.WorkExperienceRepository;
 import com.pct.service.WorkExperienceService;
-import com.pct.service.util.WorkExperienceUtil;
 import com.pct.validation.InstitutionNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.WorkExperienceNotFoundException;
@@ -25,14 +26,20 @@ import com.pct.validation.WorkExperienceNotFoundException;
 @Service
 public class WorkExperiencesServiceImpl implements WorkExperienceService {
 
-	@Autowired
 	private WorkExperienceRepository workExperienceRepository;
 
-	@Autowired
 	private ProfesorRepository professorRepository;
 
-	@Autowired
 	private InstitutionRepository institutionRepository;
+
+	@Autowired
+	public WorkExperiencesServiceImpl(WorkExperienceRepository workExperienceRepository,
+			ProfesorRepository professorRepository, InstitutionRepository institutionRepository) {
+		super();
+		this.workExperienceRepository = workExperienceRepository;
+		this.professorRepository = professorRepository;
+		this.institutionRepository = institutionRepository;
+	}
 
 	@Override
 	@Transactional
@@ -73,25 +80,37 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 	public void saveWorkExperience(WorkExperienceDto workExperienceDto) throws WorkExperienceNotFoundException,
 			ProfessorNotFoundException, InstitutionNotFoundException {
 
-		Professor professor;
-		Institution institution;
-
-		if (workExperienceDto.getProfessorId() == null
-				|| !professorRepository.exists(workExperienceDto.getProfessorId())) {
+		Professor professor = professorRepository.findOne(workExperienceDto.getProfessorId());
+		if (professor == null) {
 			throw new ProfessorNotFoundException();
-		} else {
-			professor = professorRepository.findOne(workExperienceDto.getProfessorId());
 		}
 
-		if (workExperienceDto.getInstitutionId() == null
-				|| !institutionRepository.exists(workExperienceDto.getInstitutionId())) {
-			institution = new Institution();
-		} else {
-			institution = institutionRepository.findOne(workExperienceDto.getInstitutionId());
-		}
-
-		institutionRepository.save(WorkExperienceUtil.createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(
+		Institution institution = initializeInstitution(workExperienceDto);
+		institutionRepository.save(institution);
+		workExperienceRepository.saveAndFlush(createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(
 				workExperienceDto, professor, institution));
+	}
+
+	/**
+	 * Creates new Institution entity object or retrieves existing from the database and sets field values from
+	 * WorkExperienceDto.
+	 * 
+	 * @param workExperienceDto
+	 * @return
+	 */
+	public Institution initializeInstitution(@Nonnull WorkExperienceDto workExperienceDto) {
+		Institution institution = null;
+		if (workExperienceDto.getInstitutionId() != null) {
+			institution = institutionRepository.findOne(workExperienceDto.getInstitutionId());
+		} else {
+			institution = new Institution();
+		}
+		institution.setCity(workExperienceDto.getInstitutionCity());
+		institution.setCountry(workExperienceDto.getInstitutionCountry());
+		institution.setName(workExperienceDto.getInstitutionName());
+		institution.setInstitutionType(workExperienceDto.getInstitutionType());
+
+		return institution;
 	}
 
 	@Override
@@ -108,22 +127,30 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 
 	@Override
 	@Transactional
-	public void deleteWorkExperience(Long id) throws WorkExperienceNotFoundException {
-
-		if (id == null || workExperienceRepository.findOne(id) == null) {
+	public void deleteWorkExperience(@Nonnull Long id) throws WorkExperienceNotFoundException {
+		WorkExperience workExperience = workExperienceRepository.findOne(id);
+		if (workExperience == null) {
 			throw new WorkExperienceNotFoundException();
 		}
-		
-		WorkExperience workExperience = workExperienceRepository.findOne(id);
-		
-		workExperience.getInstitution().getWorkExperiences().remove(workExperience);
-		workExperience.getProfessor().getWorkExperiences().remove(workExperience);
-
-		workExperience.setInstitution(null);
-		workExperience.setProfessor(null);
-
 		workExperienceRepository.delete(workExperience);
+	}
 
+	public WorkExperience createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(
+			@Nonnull WorkExperienceDto workExperienceDto, @Nonnull Professor professor, @Nonnull Institution institution) {
+
+		WorkExperience workExperience = null;
+		if (workExperienceDto.getId() == null) {
+			workExperience = new WorkExperience();
+			workExperience.setProfessor(professor);
+		} else {
+			workExperience = workExperienceRepository.findOne(workExperienceDto.getId());
+		}
+		workExperience.setInstitution(institution);
+		workExperience.setTitle(workExperienceDto.getTitle());
+		workExperience.setWorkStartDate(workExperienceDto.getWorkStartDate());
+		workExperience.setWorkEndDate(workExperienceDto.getWorkEndDate());
+
+		return workExperience;
 	}
 
 }

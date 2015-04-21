@@ -81,31 +81,6 @@
 			<div class="modal-body">
 				<div class="form-group">
 					<label
-						for="inputInstitutionName"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionName }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputInstitutionName"
-							name="inputInstitutionName"
-							ng-model="workExperience.institutionName"
-							ng-maxlength="100"
-							required />
-						<div
-							ng-show="form.inputInstitutionName.$dirty && form.inputInstitutionName.$invalid"
-							class="institutionNameFieldError">
-							<span
-								ng-show="form.inputInstitutionName.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionName.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionNameMaxLength }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
 						for="inputInstitutionType"
 						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionType }} <span class="required">*</span>
 					</label>
@@ -122,6 +97,32 @@
 							class="institutionTypeFieldError">
 							<span
 								ng-show="form.inputInstitutionType.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionName"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputInstitutionName"
+							name="inputInstitutionName"
+							ng-model="$parent.selectedInstitution"
+							typeahead="institution as institution.name for institution in getInstitutions($viewValue) | limitTo:8"
+							typeahead-on-select="onSelectInstitution()"
+							placeholder="{{ resources.workExperiencePopupLabels.institutionName }}"
+							autocomplete="off"
+							required />
+						<div
+							ng-show="form.inputInstitutionName.$dirty && form.inputInstitutionName.$invalid"
+							class="institutionNameFieldError">
+							<span
+								ng-show="form.inputInstitutionName.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span>
 						</div>
 					</div>
@@ -273,7 +274,7 @@
 					id="submit_button"
 					type="submit"
 					class="btn btn-success btn-sm"
-					ng-disabled="$parent.form.$invalid || isUnchanged(workExperience)"
+					ng-disabled="form.$invalid || isUnchanged(workExperience)"
 					ng-click="saveWorkExperience()">
 					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.workExperienceButtons.edit }}
 				</button>
@@ -293,7 +294,29 @@
     			<h3 class="modal-title">{{ resources.text.addNewWorkExperiencePopupTitle }}</h3>
    	 		</div>
     		<div class="modal-body">
-  				<div class="form-group">
+				<div class="form-group">
+					<label
+						for="inputInstitutionType"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionType }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputInstitutionType"
+							name="inputInstitutionType"
+							ng-model="workExperience.institutionType"
+							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
+							required><option value="">{{ resources.workExperiencePopupLabels.institutionType }}</option></select>
+						<div
+							ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
+							class="institutionTypeFieldError">
+							<span
+								ng-show="form.inputInstitutionType.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
 					<label
 						for="inputInstitutionName"
 						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionName }} <span class="required">*</span>
@@ -315,28 +338,6 @@
 							class="institutionNameFieldError">
 							<span
 								ng-show="form.inputInstitutionName.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
-						for="inputInstitutionType"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionType }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<select
-							class="ng-binding form-control"
-							id="inputInstitutionType"
-							name="inputInstitutionType"
-							ng-model="workExperience.institutionType"
-							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
-							required><option value="">{{ resources.workExperiencePopupLabels.institutionType }}</option></select>
-						<div
-							ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
-							class="institutionTypeFieldError">
-							<span
-								ng-show="form.inputInstitutionType.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span>
 						</div>
 					</div>

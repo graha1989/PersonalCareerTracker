@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pct.domain.enums.PublicationType;
 
@@ -74,7 +76,8 @@ public class Professor extends AbstractEntity {
 	@JsonManagedReference(value = "professor")
 	private Set<InternationalPublication> internationalPublications = new HashSet<InternationalPublication>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
 	private Set<WorkExperience> workExperiences = new HashSet<WorkExperience>();
 
@@ -83,7 +86,6 @@ public class Professor extends AbstractEntity {
 	private Uloga uloga;
 
 	public Professor() {
-		super();
 	}
 
 	public Professor(String userName, String password, String email, String name, String surname, String fathersName,
@@ -438,46 +440,6 @@ public class Professor extends AbstractEntity {
 		if (workExperiences != null) {
 			this.workExperiences.addAll(workExperiences);
 		}
-	}
-
-	public WorkExperience getWorkExperienceById(Long id) {
-		Iterator<WorkExperience> it = workExperiences.iterator();
-		while (it.hasNext()) {
-			WorkExperience workExperience = (WorkExperience) it.next();
-			if (workExperience.getId().equals(id)) {
-				return workExperience;
-			}
-		}
-		return null;
-	}
-
-	public void addWorkExperiences(WorkExperience workExperience) {
-		if (workExperience != null) {
-			workExperience.setProfessor(this);
-			this.workExperiences.add(workExperience);
-		}
-	}
-
-	public WorkExperience creatreNewWorkExperience(Institution institution, Date workStartDate, Date workEndDate,
-			String title) {
-
-		WorkExperience workExperience = new WorkExperience(institution, this, workStartDate, workEndDate, title);
-		institution.addWorkExperiences(workExperience);
-		this.workExperiences.add(workExperience);
-		return workExperience;
-	}
-
-	public WorkExperience editWorkExperience(Institution institution, Date workStartDate, Date workEndDate,
-			String title, Long id) {
-
-		WorkExperience workExperience = getWorkExperienceById(id);
-		workExperience.setWorkStartDate(workStartDate);
-		workExperience.setWorkEndDate(workEndDate);
-		workExperience.setTitle(title);
-
-		institution.addWorkExperiences(workExperience);
-
-		return workExperience;
 	}
 
 }

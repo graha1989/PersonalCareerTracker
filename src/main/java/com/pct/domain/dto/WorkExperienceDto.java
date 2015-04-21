@@ -3,6 +3,7 @@ package com.pct.domain.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -23,9 +24,14 @@ public class WorkExperienceDto implements Serializable {
 	private InstitutionType institutionType;
 
 	@NotEmpty
-	@Length(max = 100)
+	@Length(max = 50)
 	@SafeHtml
 	private String institutionName;
+	
+	@Nullable
+	@Length(max = 50)
+	@SafeHtml
+	private String universityName;
 
 	@NotEmpty
 	@Length(max = 50)
@@ -37,6 +43,7 @@ public class WorkExperienceDto implements Serializable {
 	@SafeHtml
 	private String institutionCountry;
 
+	@NotNull
 	private Date workStartDate;
 
 	private Date workEndDate;
@@ -46,6 +53,7 @@ public class WorkExperienceDto implements Serializable {
 	@SafeHtml
 	private String title;
 
+	@NotNull
 	protected Long professorId;
 
 	protected Long institutionId;
@@ -53,15 +61,15 @@ public class WorkExperienceDto implements Serializable {
 	protected Long id;
 
 	public WorkExperienceDto() {
-		super();
 	}
 
-	public WorkExperienceDto(InstitutionType institutionType, String institutionName, String institutionCity,
-			String institutionCountry, Date workStartDate, Date workEndDate, String title, Long professorId,
-			Long institutionId, Long id) {
+	public WorkExperienceDto(InstitutionType institutionType, String institutionName, String universityName,
+			String institutionCity, String institutionCountry, Date workStartDate, Date workEndDate, String title,
+			Long professorId, Long institutionId, Long id) {
 		super();
 		this.institutionType = institutionType;
 		this.institutionName = institutionName;
+		this.universityName = universityName;
 		this.institutionCity = institutionCity;
 		this.institutionCountry = institutionCountry;
 		this.workStartDate = workStartDate;
@@ -76,6 +84,7 @@ public class WorkExperienceDto implements Serializable {
 		super();
 		this.institutionType = workExperience.getInstitution().getInstitutionType();
 		this.institutionName = workExperience.getInstitution().getName();
+		this.universityName = workExperience.getInstitution().getUniversity();
 		this.institutionCity = workExperience.getInstitution().getCity();
 		this.institutionCountry = workExperience.getInstitution().getCountry();
 		this.workStartDate = workExperience.getWorkStartDate();
@@ -100,6 +109,14 @@ public class WorkExperienceDto implements Serializable {
 
 	public void setInstitutionName(String institutionName) {
 		this.institutionName = institutionName;
+	}
+
+	public String getUniversityName() {
+		return universityName;
+	}
+
+	public void setUniversityName(String universityName) {
+		this.universityName = universityName;
 	}
 
 	public String getInstitutionCity() {

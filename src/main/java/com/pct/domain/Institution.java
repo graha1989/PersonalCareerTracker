@@ -1,11 +1,9 @@
 package com.pct.domain;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -30,8 +30,11 @@ public class Institution extends AbstractEntity {
 	@JsonDeserialize(using = InstitutionTypeEnumDeserializer.class)
 	private InstitutionType institutionType;
 
-	@Column(name = "name", length = 100)
+	@Column(name = "name", length = 50)
 	private String name;
+
+	@Column(name = "university", length = 50)
+	private String university;
 
 	@Column(name = "country", length = 50)
 	private String country;
@@ -39,18 +42,19 @@ public class Institution extends AbstractEntity {
 	@Column(name = "city", length = 50)
 	private String city;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "institution", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "institution")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "institution")
 	private Set<WorkExperience> workExperiences = new HashSet<WorkExperience>();
 
 	public Institution() {
-		super();
 	}
 
-	public Institution(String name, InstitutionType institutionType, String country, String city,
+	public Institution(String name, String university, InstitutionType institutionType, String country, String city,
 			Set<WorkExperience> workExperiences) {
 		super();
 		this.name = name;
+		this.university = university;
 		this.institutionType = institutionType;
 		this.country = country;
 		this.city = city;
@@ -63,6 +67,14 @@ public class Institution extends AbstractEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(String university) {
+		this.university = university;
 	}
 
 	public InstitutionType getInstitutionType() {
@@ -117,28 +129,6 @@ public class Institution extends AbstractEntity {
 			workExperience.setInstitution(this);
 			this.workExperiences.add(workExperience);
 		}
-	}
-
-	public WorkExperience creatreNewWorkExperience(Professor professor, Date workStartDate, Date workEndDate,
-			String title) {
-
-		WorkExperience workExperience = new WorkExperience(this, professor, workStartDate, workEndDate, title);
-		professor.addWorkExperiences(workExperience);
-		this.workExperiences.add(workExperience);
-		return workExperience;
-	}
-
-	public WorkExperience editWorkExperience(Professor professor, Date workStartDate, Date workEndDate, String title,
-			Long id) {
-
-		WorkExperience workExperience = getWorkExperienceById(id);
-		workExperience.setWorkStartDate(workStartDate);
-		workExperience.setWorkEndDate(workEndDate);
-		workExperience.setTitle(title);
-
-		professor.addWorkExperiences(workExperience);
-
-		return workExperience;
 	}
 
 }

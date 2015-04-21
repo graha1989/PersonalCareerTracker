@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -18,11 +21,13 @@ public class WorkExperience extends AbstractEntity {
 	private static final long serialVersionUID = 1803668535106768471L;
 	
 	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "institutionId")
 	@JsonBackReference(value = "institution")
 	private Institution institution;
 	
 	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "professorId")
 	@JsonBackReference(value = "professor")
 	private Professor professor;
