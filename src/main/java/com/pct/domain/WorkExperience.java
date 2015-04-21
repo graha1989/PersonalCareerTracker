@@ -19,31 +19,30 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class WorkExperience extends AbstractEntity {
 
 	private static final long serialVersionUID = 1803668535106768471L;
-	
+
 	@ManyToOne
 	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "institutionId")
 	@JsonBackReference(value = "institution")
 	private Institution institution;
-	
+
 	@ManyToOne
 	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "professorId")
 	@JsonBackReference(value = "professor")
 	private Professor professor;
-	
+
 	@Column(name = "workStartDate")
 	private Date workStartDate;
-	
+
 	@Column(name = "workEndDate")
 	@Nullable
 	private Date workEndDate;
-	
+
 	@Column(name = "title", length = 30)
 	private String title;
 
 	public WorkExperience() {
-		super();
 	}
 
 	public WorkExperience(Institution institution, Professor professor, Date workStartDate, Date workEndDate,
@@ -95,5 +94,5 @@ public class WorkExperience extends AbstractEntity {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 }
