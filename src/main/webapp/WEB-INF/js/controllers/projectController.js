@@ -98,6 +98,10 @@ var editProjectExperienceController = function($scope, $modalInstance,
     onlyNumbers: /^[0-9 ]*$/
   };
 
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
   /* Date picker functions for start date */
   $scope.openProjectStartDate = function($event) {
     $event.preventDefault();
@@ -204,6 +208,12 @@ var editProjectExperienceController = function($scope, $modalInstance,
     });
   };
 
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
+
   $scope.init = function() {
     $scope.loadAllProjectTypes();
     $scope.loadSelectedProject(projectId);
@@ -285,6 +295,10 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
+  };
+
+  $scope.dateOptions = {
+    "starting-day": "1"
   };
 
   /* Date picker functions for start date */
@@ -387,6 +401,12 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
     return projectsIdsArray;
   };
 
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
+
   $scope.init = function() {
     $scope.loadAllProjectTypes();
     $scope.loadProfessorNameAndSurname();
@@ -468,11 +488,16 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
 
   $scope.validateForm = function() {
     if ((($scope.project.projectName != null && $scope.project.projectName != '') || ($scope.selectedProject != null && $scope.selectedProject != ''))
-            && $scope.project.projectFinancedBy != null && $scope.project.projectFinancedBy != ''
-            && $scope.project.projectStartDate != null && $scope.project.projectStartDate != ''
-            && $scope.project.projectEndDate != null && $scope.project.projectEndDate != ''
-            && $scope.project.projectLeader != null && $scope.project.projectLeader != ''
-            && $scope.project.projectType != null && $scope.project.projectType != '') {
+            && $scope.project.projectFinancedBy != null
+            && $scope.project.projectFinancedBy != ''
+            && $scope.project.projectStartDate != null
+            && $scope.project.projectStartDate != ''
+            && $scope.project.projectEndDate != null
+            && $scope.project.projectEndDate != ''
+            && $scope.project.projectLeader != null
+            && $scope.project.projectLeader != ''
+            && $scope.project.projectType != null
+            && $scope.project.projectType != '') {
       return true;
     } else {
       return false;

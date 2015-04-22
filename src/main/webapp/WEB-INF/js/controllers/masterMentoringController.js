@@ -115,6 +115,10 @@ var editMasterThesisController = function($scope, $modalInstance, $routeParams,
     onlyNumbers: /^[0-9 ]*$/
   };
 
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
   /* Load resources from .json properties file */
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -175,6 +179,12 @@ var editMasterThesisController = function($scope, $modalInstance, $routeParams,
       }
     });
   };
+
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
 
   $scope.init = function() {
     $scope.loadSelectedThesis(thesisId);
@@ -381,6 +391,10 @@ var createNewMasterThesisController = function($scope, $modalInstance,
     onlyNumbers: /^[0-9 ]*$/
   };
 
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
   /* Load resources from .json properties file */
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -401,6 +415,12 @@ var createNewMasterThesisController = function($scope, $modalInstance,
 
     $scope.opened = true;
   };
+
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
 
   $scope.init = function() {
     $scope.status = $routeParams.status;

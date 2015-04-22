@@ -11,6 +11,10 @@ app.controller("RegisterProfesorController", function($scope, $routeParams,
     onlyNumbers: /^[0-9 ]*$/
   };
 
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
     $http.get('messages/profesorDetails_' + locale.value + '.json').success(
@@ -30,6 +34,12 @@ app.controller("RegisterProfesorController", function($scope, $routeParams,
 
     $scope.opened = true;
   };
+
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
 
   $scope.init = function() {
     $scope.status = $routeParams.status;

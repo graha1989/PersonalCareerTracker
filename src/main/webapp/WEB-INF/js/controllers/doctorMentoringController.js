@@ -36,6 +36,12 @@ app.controller("DoctorMentoringController", function($scope, $routeParams,
     });
   };
 
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
+
   $scope.init = function() {
     $scope.thesis = {};
     $scope.loadThesis($routeParams.mentorId, $routeParams.thesisTypeId);
@@ -115,6 +121,10 @@ var editDoctorThesisController = function($scope, $modalInstance, $routeParams,
     onlyNumbers: /^[0-9 ]*$/
   };
 
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
   /* Load resources from .json properties file */
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -175,6 +185,12 @@ var editDoctorThesisController = function($scope, $modalInstance, $routeParams,
       }
     });
   };
+
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
 
   $scope.init = function() {
     $scope.loadSelectedThesis(thesisId);
@@ -381,6 +397,10 @@ var createNewDoctorThesisController = function($scope, $modalInstance,
     onlyNumbers: /^[0-9 ]*$/
   };
 
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
   /* Load resources from .json properties file */
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -401,6 +421,12 @@ var createNewDoctorThesisController = function($scope, $modalInstance,
 
     $scope.opened = true;
   };
+
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
 
   $scope.init = function() {
     $scope.status = $routeParams.status;

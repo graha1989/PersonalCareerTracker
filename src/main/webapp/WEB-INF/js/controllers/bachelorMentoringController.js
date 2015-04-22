@@ -115,6 +115,10 @@ var editBachelorThesisController = function($scope, $modalInstance,
     onlyNumbers: /^[0-9 ]*$/
   };
 
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
   /* Load resources from .json properties file */
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -175,6 +179,12 @@ var editBachelorThesisController = function($scope, $modalInstance,
       }
     });
   };
+
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
 
   $scope.init = function() {
     $scope.loadSelectedThesis(thesisId);
@@ -376,6 +386,10 @@ var createNewBachelorThesisController = function($scope, $modalInstance,
 
   $scope.opened = false;
 
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
@@ -401,6 +415,12 @@ var createNewBachelorThesisController = function($scope, $modalInstance,
 
     $scope.opened = true;
   };
+
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
 
   $scope.init = function() {
     $scope.status = $routeParams.status;
