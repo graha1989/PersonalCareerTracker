@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +19,6 @@ import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProjectExperienceRepository;
 import com.pct.repository.ProjectRepository;
 import com.pct.service.ProjectService;
-import com.pct.service.util.ProjectUtil;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.ProjectExperienceNotFoundException;
 import com.pct.validation.ProjectNotFoundException;
@@ -25,14 +26,20 @@ import com.pct.validation.ProjectNotFoundException;
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
-	@Autowired
 	private ProjectExperienceRepository projectExperienceRepository;
 
-	@Autowired
 	private ProfesorRepository professorRepository;
 
-	@Autowired
 	private ProjectRepository projectRepository;
+
+	@Autowired
+	public ProjectServiceImpl(ProjectExperienceRepository projectExperienceRepository,
+			ProfesorRepository professorRepository, ProjectRepository projectRepository) {
+		super();
+		this.projectExperienceRepository = projectExperienceRepository;
+		this.professorRepository = professorRepository;
+		this.projectRepository = projectRepository;
+	}
 
 	@Override
 	@Transactional
@@ -80,25 +87,55 @@ public class ProjectServiceImpl implements ProjectService {
 	public void saveProjectExperience(ProjectExperienceDto projectExperienceDto)
 			throws ProjectExperienceNotFoundException, ProfessorNotFoundException, ProjectNotFoundException {
 
-		Professor professor;
-		Project project;
-
-		if (projectExperienceDto.getProfessorId() == null
-				|| !professorRepository.exists(projectExperienceDto.getProfessorId())) {
+		Professor professor = professorRepository.findOne(projectExperienceDto.getProfessorId());
+		if (professor == null) {
 			throw new ProfessorNotFoundException();
-		} else {
-			professor = professorRepository.findOne(projectExperienceDto.getProfessorId());
 		}
 
-		if (projectExperienceDto.getProjectId() == null
-				|| projectRepository.findOne(projectExperienceDto.getProjectId()) == null) {
-			project = new Project();
-		} else {
+		Project project = initializeProject(projectExperienceDto);
+		projectRepository.save(project);
+		projectExperienceRepository.saveAndFlush(createOrUpdateProjectExperienceInstanceFromProjectExperienceDto(
+				projectExperienceDto, professor, project));
+	}
+
+	/**
+	 * Creates new Project entity object or retrieves existing from the database and sets field values from
+	 * ProjectExperienceDto.
+	 * 
+	 * @param projectExperienceDto
+	 * @return
+	 */
+	public Project initializeProject(@Nonnull ProjectExperienceDto projectExperienceDto) {
+		Project project = null;
+		if (projectExperienceDto.getProjectId() != null) {
 			project = projectRepository.findOne(projectExperienceDto.getProjectId());
+		} else {
+			project = new Project();
 		}
+		project.setName(projectExperienceDto.getProjectName());
+		project.setProjectType(projectExperienceDto.getProjectType());
+		project.setFinancedBy(projectExperienceDto.getProjectFinancedBy());
+		project.setProjectStartDate(projectExperienceDto.getProjectStartDate());
+		project.setProjectEndDate(projectExperienceDto.getProjectEndDate());
+		project.setProjectLeader(projectExperienceDto.getProjectLeader());
 
-		projectRepository.save(ProjectUtil.createOrUpdateProjectInstanceFromProjectExperienceDto(projectExperienceDto,
-				professor, project));
+		return project;
+	}
+
+	public ProjectExperience createOrUpdateProjectExperienceInstanceFromProjectExperienceDto(
+			@Nonnull ProjectExperienceDto projectExperienceDto, @Nonnull Professor professor, @Nonnull Project project) {
+
+		ProjectExperience projectExperience = null;
+		if (projectExperienceDto.getId() == null) {
+			projectExperience = new ProjectExperience();
+			projectExperience.setProfessor(professor);
+		} else {
+			projectExperience = projectExperienceRepository.findOne(projectExperienceDto.getId());
+		}
+		projectExperience.setProject(project);
+		projectExperience.setProfessorLeader(projectExperienceDto.isProfessorLeader());
+
+		return projectExperience;
 	}
 
 	@Override
@@ -118,19 +155,19 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	@Transactional
 	public void deleteProjectExperience(Long id) throws ProjectExperienceNotFoundException {
-		
+
 		ProjectExperience projectExperience = projectExperienceRepository.findOne(id);
-		
+
 		if (id == null || projectExperience == null) {
 			throw new ProjectExperienceNotFoundException();
 		}
-		
+
 		projectExperience.getProject().getProjectExperiences().remove(projectExperience);
 		projectExperience.getProfessor().getProjectExperiences().remove(projectExperience);
-		
+
 		projectExperience.setProject(null);
 		projectExperience.setProfessor(null);
-		
+
 		projectExperienceRepository.delete(projectExperience);
 
 	}

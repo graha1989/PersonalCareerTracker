@@ -72,7 +72,8 @@ public class Professor extends AbstractEntity {
 	@JsonManagedReference(value = "professor")
 	private Set<ProfessorPublication> professorPublications = new HashSet<ProfessorPublication>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
 	private Set<InternationalPublication> internationalPublications = new HashSet<InternationalPublication>();
 
@@ -258,43 +259,6 @@ public class Professor extends AbstractEntity {
 		if (projectExperiences != null) {
 			this.projectExperiences.addAll(projectExperiences);
 		}
-	}
-
-	public ProjectExperience getProjectExperienceById(Long id) {
-		Iterator<ProjectExperience> it = projectExperiences.iterator();
-		while (it.hasNext()) {
-			ProjectExperience projectExperience = (ProjectExperience) it.next();
-			if (projectExperience.getId().equals(id)) {
-				return projectExperience;
-			}
-		}
-		return null;
-	}
-
-	public void addProjectExperiences(ProjectExperience projectExperience) {
-		if (projectExperiences != null) {
-			projectExperience.setProfessor(this);
-			this.projectExperiences.add(projectExperience);
-		}
-	}
-
-	public ProjectExperience creatreNewProjectExperience(Project project, boolean professorLeader, Long id) {
-
-		ProjectExperience projectExperience = new ProjectExperience(this, project, professorLeader);
-		projectExperience.setId(id);
-		project.addProjectExperiences(projectExperience);
-		this.projectExperiences.add(projectExperience);
-
-		return projectExperience;
-	}
-
-	public ProjectExperience editProjectExperience(Project project, boolean professorLeader, Long id) {
-
-		ProjectExperience projectExperience = getProjectExperienceById(id);
-		projectExperience.setProfessorLeader(professorLeader);
-		project.addProjectExperiences(projectExperience);
-
-		return projectExperience;
 	}
 
 	public Set<ProfessorPublication> getProfessorPublications() {

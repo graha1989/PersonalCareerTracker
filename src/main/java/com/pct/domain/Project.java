@@ -2,10 +2,8 @@ package com.pct.domain;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pct.domain.enums.ProjectType;
@@ -44,7 +44,8 @@ public class Project extends AbstractEntity {
 	@Lob
 	private String projectLeader;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade= CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "project")
 	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 	
@@ -110,42 +111,6 @@ public class Project extends AbstractEntity {
 		if (projectExperiences != null) {
 			this.projectExperiences.addAll(projectExperiences);
 		}
-	}
-	
-	public ProjectExperience getProjectExperienceById(Long id) {
-		Iterator<ProjectExperience> it = projectExperiences.iterator();
-		while (it.hasNext()) {
-			ProjectExperience projectExperience = (ProjectExperience) it.next();
-			if (projectExperience.getId().equals(id)) {
-				return projectExperience;
-			}
-		}
-		return null;
-	}
-	
-	public void addProjectExperiences(ProjectExperience projectExperience) {
-		if (projectExperiences != null) {
-			projectExperience.setProject(this);
-			this.projectExperiences.add(projectExperience);
-		}
-	}
-
-	public ProjectExperience creatreNewProjectExperience(Professor professor, boolean professorLeader) {
-		
-		ProjectExperience projectExperience = new ProjectExperience(professor, this, professorLeader);
-		professor.addProjectExperiences(projectExperience);
-		this.projectExperiences.add(projectExperience);
-		
-		return projectExperience;
-	}
-	
-	public ProjectExperience editProjectExperience(Professor professor, boolean professorLeader, Long id) {
-		
-		ProjectExperience projectExperience = getProjectExperienceById(id);
-		projectExperience.setProfessorLeader(professorLeader);
-		professor.addProjectExperiences(projectExperience);
-		
-		return projectExperience;
 	}
 	
 }
