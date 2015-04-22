@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
 import com.pct.domain.Institution;
 import com.pct.domain.dto.WorkExperienceDto;
 import com.pct.domain.enums.InstitutionType;
+import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
 import com.pct.service.WorkExperienceService;
 import com.pct.validation.InstitutionNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
@@ -86,12 +88,13 @@ public class WorkExperienceController {
 
 	@RequestMapping(value = "findInstitutionStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<Institution>> findInstitutionStartsWith(
-			@RequestParam(value = "value", required = true) String value)
+			@RequestParam(value = "value", required = true) String value,
+			@RequestParam(value = "institutionType", required = false) @JsonDeserialize(using = InstitutionTypeEnumDeserializer.class) InstitutionType institutionType)
 			throws InstitutionNotFoundException {
 
 		List<Institution> institutions = new ArrayList<Institution>();
 		if (value.length() >= 3) {
-			institutions = workExperienceService.findInstitutionsStartsWith(value);
+			institutions = workExperienceService.findInstitutionsStartsWith(value, institutionType);
 		}
 
 		return new ResponseEntity<List<Institution>>(institutions, HttpStatus.OK);

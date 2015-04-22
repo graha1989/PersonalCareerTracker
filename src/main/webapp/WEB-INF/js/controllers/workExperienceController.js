@@ -95,6 +95,10 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
     onlyNumbers: /^[0-9 ]*$/
   };
 
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
   /* Date picker functions for start date */
   $scope.openWorkStartDate = function($event) {
     $event.preventDefault();
@@ -149,6 +153,12 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
     });
   };
 
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
+
   $scope.init = function() {
     $scope.loadAllInstitutionTypes();
     $scope.loadSelectedWorkExperience(workExperienceId);
@@ -158,23 +168,35 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
 
   $scope.init();
 
-  $scope.getInstitutions = function(val) {
-    return PctService.findInstutionsStartsWith(val).then(function(response) {
-      var institutions = [];
-      for (var i = 0; i < response.length; i++) {
-        institutions.push(response[i]);
-      }
-      return institutions;
-    });
+  $scope.getInstitutions = function(val, type) {
+    return PctService.findInstutionsStartsWith(val, type).then(
+            function(response) {
+              var institutions = [];
+              for (var i = 0; i < response.length; i++) {
+                institutions.push(response[i]);
+              }
+              return institutions;
+            });
   };
 
   $scope.onSelectInstitution = function() {
     $scope.isExistingInstitution = true;
     $scope.workExperience.institutionType = $scope.selectedInstitution.institutionType;
     $scope.workExperience.institutionName = $scope.selectedInstitution.name;
+    $scope.workExperience.universityName = $scope.selectedInstitution.university;
     $scope.workExperience.institutionCity = $scope.selectedInstitution.city;
     $scope.workExperience.institutionCountry = $scope.selectedInstitution.country;
     $scope.workExperience.institutionId = $scope.selectedInstitution.id;
+  };
+
+  $scope.restartInsitutionData = function() {
+    $scope.selectedInstitution = null;
+    $scope.isExistingInstitution = false;
+    $scope.workExperience.institutionName = null;
+    $scope.workExperience.universityName = null;
+    $scope.workExperience.institutionCity = null;
+    $scope.workExperience.institutionCountry = null;
+    $scope.workExperience.institutionId = null;
   };
 
   $scope.saveWorkExperience = function() {
@@ -233,6 +255,10 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
     onlyNumbers: /^[0-9 ]*$/
   };
 
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
   /* Date picker functions for start date */
   $scope.openWorkStartDate = function($event) {
     $event.preventDefault();
@@ -272,6 +298,12 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
     });
   };
 
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
+
   $scope.init = function() {
     $scope.loadAllInstitutionTypes();
     $scope.status = $routeParams.status;
@@ -280,23 +312,35 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
 
   $scope.init();
 
-  $scope.getInstitutions = function(val) {
-    return PctService.findInstutionsStartsWith(val).then(function(response) {
-      var institutions = [];
-      for (var i = 0; i < response.length; i++) {
-        institutions.push(response[i]);
-      }
-      return institutions;
-    });
+  $scope.getInstitutions = function(val, type) {
+    return PctService.findInstutionsStartsWith(val, type).then(
+            function(response) {
+              var institutions = [];
+              for (var i = 0; i < response.length; i++) {
+                institutions.push(response[i]);
+              }
+              return institutions;
+            });
   };
 
   $scope.onSelectInstitution = function() {
     $scope.isExistingInstitution = true;
     $scope.workExperience.institutionType = $scope.selectedInstitution.institutionType;
     $scope.workExperience.institutionName = $scope.selectedInstitution.name;
+    $scope.workExperience.universityName = $scope.selectedInstitution.university;
     $scope.workExperience.institutionCity = $scope.selectedInstitution.city;
     $scope.workExperience.institutionCountry = $scope.selectedInstitution.country;
     $scope.workExperience.institutionId = $scope.selectedInstitution.id;
+  };
+
+  $scope.restartInsitutionData = function() {
+    $scope.selectedInstitution = null;
+    $scope.isExistingInstitution = false;
+    $scope.workExperience.institutionName = null;
+    $scope.workExperience.universityName = null;
+    $scope.workExperience.institutionCity = null;
+    $scope.workExperience.institutionCountry = null;
+    $scope.workExperience.institutionId = null;
   };
 
   $scope.saveWorkExperience = function() {
@@ -336,6 +380,9 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
     if ((($scope.workExperience.institutionName != null && $scope.workExperience.institutionName != '') || ($scope.selectedInstitution != null && $scope.selectedInstitution != ''))
             && $scope.workExperience.institutionType != null
             && $scope.workExperience.institutionType != ''
+            && ($scope.workExperience.institutionType == 'FACULTY'
+                    ? ($scope.workExperience.universityName != null && $scope.workExperience.universityName != '')
+                    : true)
             && $scope.workExperience.institutionCity != null
             && $scope.workExperience.institutionCity != ''
             && $scope.workExperience.institutionCountry != null

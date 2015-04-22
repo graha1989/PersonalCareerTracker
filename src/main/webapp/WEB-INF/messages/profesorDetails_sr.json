@@ -204,6 +204,7 @@
     "workExperienceTableLabels": {
     	"institutionType": "Tip ustanove",
         "institutionName": "Ustanova",
+        "universityName": "Univerzitet",
         "institutionCity": "Grad",
         "institutionCountry": "Država",
         "workStartDate": "Početak zaposlenja",
@@ -213,6 +214,7 @@
     "workExperiencePopupLabels": {
     	"institutionType": "Tip ustanove",
         "institutionName": "Naziv ustanove",
+        "universityName": "Naziv univerziteta",
         "institutionCity": "Grad",
         "institutionCountry": "Država",
         "workStartDate": "Početak zaposlenja",

@@ -108,6 +108,7 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 		institution.setCity(workExperienceDto.getInstitutionCity());
 		institution.setCountry(workExperienceDto.getInstitutionCountry());
 		institution.setName(workExperienceDto.getInstitutionName());
+		institution.setUniversity(workExperienceDto.getUniversityName());
 		institution.setInstitutionType(workExperienceDto.getInstitutionType());
 
 		return institution;
@@ -121,8 +122,12 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 
 	@Override
 	@Transactional
-	public List<Institution> findInstitutionsStartsWith(String value) {
-		return institutionRepository.findByNameLike(value);
+	public List<Institution> findInstitutionsStartsWith(String value, InstitutionType institutionType) {
+		if (institutionType != null) {
+			return institutionRepository.findByNameAndInstitutionTypeLike(value, institutionType);
+		} else {
+			return institutionRepository.findByNameLike(value);
+		}
 	}
 
 	@Override

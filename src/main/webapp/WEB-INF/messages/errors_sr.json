@@ -16,6 +16,7 @@
 		"invalidInstitutionNameMaxLength" : "Max. 100 characters.",
 		"invalidInstitutionCityMaxLength" : "Max. 50 characters.",
 		"invalidInstitutionCountryMaxLength" : "Max. 50 characters.",
+		"invalidUniversityNameMaxLength" : "Max. 50 characters.",
 		"invalidTitleMaxLength" : "Max. 30 characters.",
 		"onlyNumbers" : "Only numbers.",
 		"onlyLetters" : "Only letters.",

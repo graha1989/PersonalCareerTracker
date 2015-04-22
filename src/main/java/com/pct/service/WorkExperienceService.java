@@ -19,7 +19,7 @@ public interface WorkExperienceService {
 
 	List<InstitutionType> findAllInstitutionTypes();
 
-	List<Institution> findInstitutionsStartsWith(String value);
+	List<Institution> findInstitutionsStartsWith(String value, InstitutionType institutionType);
 
 	void deleteWorkExperience(Long id) throws WorkExperienceNotFoundException;
 

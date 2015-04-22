@@ -250,11 +250,12 @@ app.factory("PctService", [
           $http.get('api/workExperiences/allInstitutionTypes')
                   .success(callback);
         },
-        findInstutionsStartsWith: function(value) {
+        findInstutionsStartsWith: function(value, type) {
           var deferred = $q.defer();
           $http.get("api/workExperiences/findInstitutionStartsWith", {
             params: {
-              value: value
+              value: value,
+              institutionType: type
             }
           }).success(function(response) {
             deferred.resolve(response);
