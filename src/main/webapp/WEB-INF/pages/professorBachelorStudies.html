@@ -1,0 +1,265 @@
+<div>
+
+	<form
+		name="form"
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+		role="form"
+		ng-model="bachelorStudies">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.professorBachelorStudiesTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset ng-repeat="bachelorStudies in allBachelorStudies">
+				<div class="form-group">
+					<label
+						for="inputStudyProgram"
+						class="col-sm-2 control-label">{{ resources.professorBachelorStudies.studyProgram }} </label>
+					<div class="col-sm-4">
+						<select
+							class="ng-binding form-control"
+							id="inputStudyProgram"
+							name="inputStudyProgram"
+							ng-model="bachelorStudies.studyProgram.title"
+							ng-options="studyProgram.title for studyProgram in allStudyPrograms track by studyProgram.name"
+							ng-disabled="!editMode"><option value="">{{ resources.professorBachelorStudies.studyProgram }}</option></select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputStudyArea"
+						class="col-sm-2 control-label">{{ resources.professorBachelorStudies.studyArea }} <span
+						class="required"
+						ng-show="editMode">*</span></label>
+					<div class="col-sm-4">
+						<input
+							type="text"
+							class="form-control"
+							id="inputStudyArea"
+							name="inputStudyArea"
+							ng-model="bachelorStudies.studyArea"
+							ng-maxlength="100"
+							ng-disabled="!editMode"
+							required />
+						<div
+							ng-show="form.inputStudyArea.$dirty && form.inputStudyArea.$invalid"
+							class="inputStudyAreaError">
+							<span
+								ng-show="form.inputStudyArea.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputStudyArea.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidStudyAreaMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputStudyStartDate"
+						class="col-sm-2 control-label">{{ resources.professorBachelorStudies.studyStartDate }} <span
+						class="required"
+						ng-show="editMode">*</span></label>
+					<div class="col-sm-4">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputStudyStartDate"
+								name="inputStudyStartDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="opened"
+								min-date="minDate"
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="bachelorStudies.studyStartDate"
+								ng-disabled="!editMode"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="open($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputStudyStartDate.$dirty && form.inputStudyStartDate.$invalid"
+							class="StudyStartDateFieldError">
+							<span
+								ng-show="form.inputStudyStartDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputStudyEndDate"
+						class="col-sm-2 control-label">{{ resources.professorBachelorStudies.studyEndDate }} <span
+						class="required"
+						ng-show="editMode">*</span></label>
+					<div class="col-sm-4">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputStudyEndDate"
+								name="inputStudyEndDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="opened"
+								min-date="minDate"
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="bachelorStudies.studyEndDate"
+								ng-disabled="!editMode"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="open($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputStudyEndDate.$dirty && form.inputStudyEndDate.$invalid"
+							class="StudyEndDateFieldError">
+							<span
+								ng-show="form.inputStudyEndDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputAverageGrade"
+						class="col-sm-2 control-label">{{ resources.professorBachelorStudies.averageGrade }} <span
+						class="required"
+						ng-show="editMode">*</span></label>
+					<div class="col-sm-4">
+						<input
+							type="number"
+							class="form-control"
+							id="inputAverageGrade"
+							name="inputAverageGrade"
+							ng-model="bachelorStudies.averageGrade"
+							ng-disabled="!editMode"
+							required />
+						<div
+							ng-show="form.inputAverageGrade.$dirty && form.inputAverageGrade.$invalid"
+							class="averageGradeFieldError">
+							<span
+								ng-show="form.inputAverageGrade.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputThesisTitle"
+						class="col-sm-2 control-label">{{ resources.professorBachelorStudies.thesisTitle }} <span
+						class="required"
+						ng-show="editMode">*</span></label>
+					<div class="col-sm-4">
+						<input
+							type="text"
+							class="form-control"
+							id="inputThesisTitle"
+							name="inputThesisTitle"
+							ng-model="bachelorStudies.thesisTitle"
+							ng-disabled="!editMode"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputThesisTitle.$dirty && form.inputThesisTitle.$invalid"
+							class="thesisTitleFieldError">
+							<span
+								ng-show="form.inputThesisTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputThesisTitle.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidThesisTitleMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputAcquiredTitle"
+						class="col-sm-2 control-label">{{ resources.professorBachelorStudies.acquiredTitle }} <span
+						class="required"
+						ng-show="editMode">*</span></label>
+					<div class="col-sm-4">
+						<input
+							type="text"
+							class="form-control"
+							id="inputAcquiredTitle"
+							name="inputAcquiredTitle"
+							ng-model="bachelorStudies.acquiredTitle"
+							ng-disabled="!editMode"
+							ng-pattern="patterns.onlyLetters"
+							ng-maxlength="30"
+							required />
+						<div
+							ng-show="form.inputAcquiredTitle.$dirty && form.inputAcquiredTitle.$invalid"
+							class="acquiredTitleFieldError">
+							<span
+								ng-show="form.inputAcquiredTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputAcquiredTitle.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidAcquiredTitleMaxLength }}</span> <span
+								ng-show="form.inputAcquiredTitle.$error.pattern"
+								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+						</div>
+					</div>
+				</div>
+				<!-- 
+				<div class="form-group">
+					<label
+						for="inputSpecialisticStudiesStayPurpose"
+						class="col-sm-2 control-label">{{ resources.professorBachelorStudies.specialisticStudiesStayPurpose }}</label>
+					<div class="col-sm-4">
+						<input
+							type="text"
+							class="form-control"
+							id="inputSpecialisticStudiesStayPurpose"
+							name="inputSpecialisticStudiesStayPurpose"
+							ng-model="bachelorStudies.specialisticStudiesStayPurpose"
+							ng-disabled="!editMode"
+							ng-pattern="patterns.onlyLetters"
+							ng-maxlength="200" />
+						<div
+							ng-show="form.inputSpecialisticStudiesStayPurpose.$dirty && form.inputSpecialisticStudiesStayPurpose.$invalid"
+							class="birthPlaceFieldError">
+							<span
+								ng-show="form.inputBirthPlace.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidSpecialisticStudiesStayPurposeMaxLength }}</span> <span
+								ng-show="form.inputBirthPlace.$error.pattern"
+								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+						</div>
+					</div>
+				</div>
+				 -->
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="edit_button"
+				type="edit"
+				class="btn btn-success btn-sm"
+				ng-show="!editMode"
+				ng-click="editProfesorBachelorStudies(profesor.id)">
+				<span class="glyphicon glyphicon-pencil"></span> {{ resources.form.edit }}
+			</button>
+			<button
+				id="submit_button"
+				type="submit"
+				class="btn btn-success btn-sm"
+				ng-show="editMode"
+				ng-click="updateProfesorBachelorStudies()">
+				<span class="glyphicon glyphicon-save"></span> {{ resources.form.save }}
+			</button>
+			<button
+				id="cancel_button"
+				class="btn btn-sm"
+				ng-click="cancel()">{{ resources.form.close }}</button>
+		</div>
+	</form>
+
+</div>

@@ -2,6 +2,10 @@
 "error" : {
 		"invalidInput" : "Invalid input.",
 		"invalidMaxLength" : "Max. 50 characters.",
+		"invalidThesisTitleMaxLength" : "Max. 200 characters.",
+		"invalidStudyAreaMaxLength" : "Max. 100 characters.",
+		"invalidSpecialisticStudiesStayPurposeMaxLength" : "Max. 200 characters.",
+		"invalidAcquiredTitleMaxLength" : "Max. 30 characters.",
 		"invalidTranscriptNumberMaxLength" : "Max. 10 characters.",
 		"invalidThesisTitleMaxLength" : "Max. 200 characters.",
 		"invalidAwardNameAndAwardedByMaxLength" : "Max. 200 characters.",

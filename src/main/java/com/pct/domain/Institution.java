@@ -1,7 +1,6 @@
 package com.pct.domain;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -47,11 +46,16 @@ public class Institution extends AbstractEntity {
 	@JsonManagedReference(value = "institution")
 	private Set<WorkExperience> workExperiences = new HashSet<WorkExperience>();
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "institution")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "institution")
+	private Set<Studies> studies = new HashSet<Studies>();
+
 	public Institution() {
 	}
 
 	public Institution(String name, String university, InstitutionType institutionType, String country, String city,
-			Set<WorkExperience> workExperiences) {
+			Set<WorkExperience> workExperiences, Set<Studies> studies) {
 		super();
 		this.name = name;
 		this.university = university;
@@ -59,6 +63,7 @@ public class Institution extends AbstractEntity {
 		this.country = country;
 		this.city = city;
 		this.workExperiences = workExperiences;
+		this.studies = studies;
 	}
 
 	public String getName() {
@@ -113,21 +118,15 @@ public class Institution extends AbstractEntity {
 		}
 	}
 
-	public WorkExperience getWorkExperienceById(Long id) {
-		Iterator<WorkExperience> it = workExperiences.iterator();
-		while (it.hasNext()) {
-			WorkExperience workExperience = (WorkExperience) it.next();
-			if (workExperience.getId().equals(id)) {
-				return workExperience;
-			}
-		}
-		return null;
+	public Set<Studies> getStudies() {
+		return studies;
 	}
 
-	public void addWorkExperiences(WorkExperience workExperience) {
-		if (workExperience != null) {
-			workExperience.setInstitution(this);
-			this.workExperiences.add(workExperience);
+	public void setStudies(Set<Studies> studies) {
+		this.studies.clear();
+
+		if (studies != null) {
+			this.studies.addAll(studies);
 		}
 	}
 

@@ -24,7 +24,8 @@
         "newPublicationPopupTitle": "Unos nove publikacije",
         "workExperiencesTitle": "Kretanje u profesionalnom radu",
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
-        "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva"
+        "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva",
+        "professorBachelorStudiesTitle": "Osnovne (bachelor) studije"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -38,6 +39,16 @@
         "countryOfBirthLabel": "Zemlja rođenja",
         "scientificAreaLabel": "Naučna oblast",
         "specialScientificAreaLabel": "Uža naučna oblast"
+    },
+    "professorBachelorStudies": {
+        "studyProgram": "Studijski program",
+        "studyArea": "Naučna oblast",
+        "studyStartDate": "Datum upisa",
+        "studyEndDate": "Datum završetka",
+        "averageGrade": "Prosečna ocena",
+        "thesisTitle": "Naslov teze",
+        "acquiredTitle": "Zvanje",
+        "specialisticStudiesStayPurpose": "Vrsta (cilj) boravka"
     },
     "thesisPopupLabels": {
         "title": "Naziv teze",

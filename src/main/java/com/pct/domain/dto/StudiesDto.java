@@ -10,22 +10,28 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.pct.domain.Studies;
+import com.pct.domain.enums.StudyProgram;
+import com.pct.domain.enums.deserializers.StudyProgramEnumDeserializer;
+
 public class StudiesDto implements Serializable {
 
 	private static final long serialVersionUID = 7796970503021149480L;
-
-	@NotEmpty
-	@Length(max = 100)
-	@SafeHtml
-	private String studyProgram;
+	
+	@Nullable
+	@JsonDeserialize(using = StudyProgramEnumDeserializer.class)
+	private StudyProgram studyProgram;
 
 	@NotEmpty
 	@Length(max = 100)
 	@SafeHtml
 	private String studyArea;
 
+	@NotNull
 	private Date studyStartDate;
 
+	@NotNull
 	private Date studyEndDate;
 
 	@NotNull
@@ -41,11 +47,17 @@ public class StudiesDto implements Serializable {
 	@SafeHtml
 	private String acquiredTitle;
 
-	@Nullable
-	@Length(max = 200)
+	@NotEmpty
+	@Length(max = 50)
 	@SafeHtml
-	private String specialisticStudiesStayPurpose;
+	private String facultyName;
 
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private String universityName;
+
+	@NotNull
 	protected Long professorId;
 
 	protected Long institutionId;
@@ -53,12 +65,11 @@ public class StudiesDto implements Serializable {
 	protected Long thesisTypeId;
 
 	public StudiesDto() {
-		super();
 	}
 
-	public StudiesDto(String studyProgram, String studyArea, Date studyStartDate, Date studyEndDate,
+	public StudiesDto(StudyProgram studyProgram, String studyArea, Date studyStartDate, Date studyEndDate,
 			Double averageGrade, String thesisTitle, String acquiredTitle, String specialisticStudiesStayPurpose,
-			Long professorId, Long institutionId, Long thesisTypeId) {
+			String facultyName, String universityName, Long professorId, Long institutionId, Long thesisTypeId) {
 		super();
 		this.studyProgram = studyProgram;
 		this.studyArea = studyArea;
@@ -67,17 +78,34 @@ public class StudiesDto implements Serializable {
 		this.averageGrade = averageGrade;
 		this.thesisTitle = thesisTitle;
 		this.acquiredTitle = acquiredTitle;
-		this.specialisticStudiesStayPurpose = specialisticStudiesStayPurpose;
+		this.facultyName = facultyName;
+		this.universityName = universityName;
 		this.professorId = professorId;
 		this.institutionId = institutionId;
 		this.thesisTypeId = thesisTypeId;
 	}
 
-	public String getStudyProgram() {
+	public StudiesDto(Studies studies) {
+		super();
+		this.studyProgram = studies.getStudyProgram();
+		this.studyArea = studies.getStudyArea();
+		this.studyStartDate = studies.getStudyStartDate();
+		this.studyEndDate = studies.getStudyEndDate();
+		this.averageGrade = studies.getAverageGrade();
+		this.thesisTitle = studies.getThesisTitle();
+		this.acquiredTitle = studies.getAcquiredTitle();
+		this.facultyName = studies.getInstitution().getName();
+		this.universityName = studies.getInstitution().getUniversity();
+		this.professorId = studies.getProfessor().getId();
+		this.institutionId = studies.getInstitution().getId();
+		this.thesisTypeId = studies.getStudiesThesisType().getId();
+	}
+
+	public StudyProgram getStudyProgram() {
 		return studyProgram;
 	}
 
-	public void setStudyProgram(String studyProgram) {
+	public void setStudyProgram(StudyProgram studyProgram) {
 		this.studyProgram = studyProgram;
 	}
 
@@ -129,12 +157,20 @@ public class StudiesDto implements Serializable {
 		this.acquiredTitle = acquiredTitle;
 	}
 
-	public String getSpecialisticStudiesStayPurpose() {
-		return specialisticStudiesStayPurpose;
+	public String getFacultyName() {
+		return facultyName;
 	}
 
-	public void setSpecialisticStudiesStayPurpose(String specialisticStudiesStayPurpose) {
-		this.specialisticStudiesStayPurpose = specialisticStudiesStayPurpose;
+	public void setFacultyName(String facultyName) {
+		this.facultyName = facultyName;
+	}
+
+	public String getUniversityName() {
+		return universityName;
+	}
+
+	public void setUniversityName(String universityName) {
+		this.universityName = universityName;
 	}
 
 	public Long getProfessorId() {
@@ -160,5 +196,5 @@ public class StudiesDto implements Serializable {
 	public void setThesisTypeId(Long thesisTypeId) {
 		this.thesisTypeId = thesisTypeId;
 	}
-	
+
 }

@@ -81,6 +81,11 @@ public class Professor extends AbstractEntity {
 	@JsonManagedReference(value = "professor")
 	private Set<WorkExperience> workExperiences = new HashSet<WorkExperience>();
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "professor")
+	private Set<Studies> studies = new HashSet<Studies>();
+
 	@OneToOne
 	@JoinColumn(name = "ulogaId")
 	private Uloga uloga;
@@ -92,7 +97,8 @@ public class Professor extends AbstractEntity {
 			Date dateOfBirth, String placeOfBirth, String countryOfBirth, String scientificArea,
 			String specialScientificArea, Set<LanguageExperience> languageExperiences, Set<Award> awards,
 			Set<ProjectExperience> projectExperiences, Set<ProfessorPublication> professorPublications,
-			Set<InternationalPublication> internationalPublications, Set<WorkExperience> workExperiences, Uloga uloga) {
+			Set<InternationalPublication> internationalPublications, Set<WorkExperience> workExperiences,
+			Set<Studies> studies, Uloga uloga) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -111,6 +117,7 @@ public class Professor extends AbstractEntity {
 		this.professorPublications = professorPublications;
 		this.internationalPublications = internationalPublications;
 		this.workExperiences = workExperiences;
+		this.studies = studies;
 		this.uloga = uloga;
 	}
 
@@ -291,6 +298,18 @@ public class Professor extends AbstractEntity {
 
 		if (workExperiences != null) {
 			this.workExperiences.addAll(workExperiences);
+		}
+	}
+
+	public Set<Studies> getStudies() {
+		return studies;
+	}
+
+	public void setStudies(Set<Studies> studies) {
+		this.studies.clear();
+
+		if (studies != null) {
+			this.studies.addAll(studies);
 		}
 	}
 

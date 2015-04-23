@@ -270,5 +270,19 @@ app.factory("PctService", [
             url: 'api/workExperiences?id=' + id
           }).success(callback).error(callback);
         },
+        loadProfessorsBachelorStudies: function(professorId, thesisTypeId) {
+          var deferred = $q.defer();
+          $http.get("api/studies/professorBachelorStudies/allProfessorBachelorStudies", {
+            params: {
+              professorId: professorId,
+              thesisTypeId: thesisTypeId
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
       };
     }]);
