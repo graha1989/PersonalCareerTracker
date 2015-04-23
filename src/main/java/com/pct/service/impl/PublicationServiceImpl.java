@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +23,6 @@ import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProfessorPublicationsRepository;
 import com.pct.repository.PublicationCategoryRepository;
 import com.pct.service.PublicationService;
-import com.pct.service.util.PublicationUtil;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.PublicationCategoryNotFoundException;
 import com.pct.validation.PublicationNotFoundException;
@@ -108,26 +110,52 @@ public class PublicationServiceImpl implements PublicationService {
 	public void saveProfessorPublication(ProfessorPublicationDto professorPublicationDto)
 			throws PublicationNotFoundException, ProfessorNotFoundException, PublicationCategoryNotFoundException {
 
-		Professor professor;
-		PublicationCategory category;
-
-		if (professorPublicationDto.getProfessorId() == null
-				|| !professorRepository.exists(professorPublicationDto.getProfessorId())) {
+		Professor professor = professorRepository.findOne(professorPublicationDto.getProfessorId());
+		if (professor == null) {
 			throw new ProfessorNotFoundException();
-		} else {
-			professor = professorRepository.findOne(professorPublicationDto.getProfessorId());
 		}
 
-		if (professorPublicationDto.getPublicationCategory() == null
-				|| professorPublicationDto.getPublicationCategory().getId() == null
-				|| publicationCategoryRepository.findOne(professorPublicationDto.getPublicationCategory().getId()) == null) {
-			category = null;
-		} else {
+		PublicationCategory category = initializeProfessorPublicationCategory(professorPublicationDto);
+		professorPublicationsRepository
+				.saveAndFlush(createOrUpdateProfessorPublicationInstanceFromProfessorPublicationDto(
+						professorPublicationDto, professor, category));
+	}
+
+	public PublicationCategory initializeProfessorPublicationCategory(
+			@Nonnull ProfessorPublicationDto professorPublicationDto) {
+		PublicationCategory category = null;
+		if (professorPublicationDto.getPublicationCategory() != null
+				&& professorPublicationDto.getPublicationCategory().getId() != null
+				&& publicationCategoryRepository.findOne(professorPublicationDto.getPublicationCategory().getId()) != null) {
 			category = publicationCategoryRepository.findOne(professorPublicationDto.getPublicationCategory().getId());
 		}
 
-		professorRepository.save(PublicationUtil.createOrUpdateProfessorPublicationInstanceFromPublicationDto(
-				professorPublicationDto, professor, category));
+		return category;
+	}
+
+	public ProfessorPublication createOrUpdateProfessorPublicationInstanceFromProfessorPublicationDto(
+			@Nonnull ProfessorPublicationDto professorPublicationDto, @Nonnull Professor professor,
+			@Nullable PublicationCategory category) {
+
+		ProfessorPublication professorPublication = null;
+		if (professorPublicationDto.getId() == null) {
+			professorPublication = new ProfessorPublication();
+			professorPublication.setProfessor(professor);
+		} else {
+			professorPublication = professorPublicationsRepository.findOne(professorPublicationDto.getId());
+		}
+		professorPublication.setPublicationCategory(category);
+		professorPublication.setIsbn(professorPublicationDto.getIsbn());
+		professorPublication.setTitle(professorPublicationDto.getTitle());
+		professorPublication.setJournalTitle(professorPublicationDto.getJournalTitle());
+		professorPublication.setAuthors(professorPublicationDto.getAuthors());
+		professorPublication.setPublisher(professorPublicationDto.getPublisher());
+		professorPublication.setPageRange(professorPublicationDto.getPageRange());
+		professorPublication.setPublicationType(professorPublicationDto.getPublicationType());
+		professorPublication.setQuoted(professorPublicationDto.getQuoted());
+		professorPublication.setYear(professorPublicationDto.getYear());
+
+		return professorPublication;
 	}
 
 	@Override
@@ -135,27 +163,52 @@ public class PublicationServiceImpl implements PublicationService {
 	public void saveInternationalPublication(InternationalPublicationDto internationalPublicationDto)
 			throws PublicationNotFoundException, ProfessorNotFoundException, PublicationCategoryNotFoundException {
 
-		Professor professor;
-		PublicationCategory category;
-
-		if (internationalPublicationDto.getProfessorId() == null
-				|| !professorRepository.exists(internationalPublicationDto.getProfessorId())) {
+		Professor professor = professorRepository.findOne(internationalPublicationDto.getProfessorId());
+		if (professor == null) {
 			throw new ProfessorNotFoundException();
-		} else {
-			professor = professorRepository.findOne(internationalPublicationDto.getProfessorId());
 		}
 
-		if (internationalPublicationDto.getPublicationCategory() == null
-				|| internationalPublicationDto.getPublicationCategory().getId() == null
-				|| publicationCategoryRepository.findOne(internationalPublicationDto.getPublicationCategory().getId()) == null) {
-			category = null;
-		} else {
+		PublicationCategory category = initializeInternationalPublicationCategory(internationalPublicationDto);
+		internationalPublicationsRepository
+				.saveAndFlush(createOrUpdateInternationalPublicationInstanceFromInternationalPublicationDto(
+						internationalPublicationDto, professor, category));
+	}
+
+	public PublicationCategory initializeInternationalPublicationCategory(
+			@Nonnull InternationalPublicationDto internationalPublicationDto) {
+		PublicationCategory category = null;
+		if (internationalPublicationDto.getPublicationCategory() != null
+				&& internationalPublicationDto.getPublicationCategory().getId() != null
+				&& publicationCategoryRepository.findOne(internationalPublicationDto.getPublicationCategory().getId()) != null) {
 			category = publicationCategoryRepository.findOne(internationalPublicationDto.getPublicationCategory()
 					.getId());
 		}
 
-		professorRepository.save(PublicationUtil.createOrUpdateInternationalPublicationInstanceFromPublicationDto(
-				internationalPublicationDto, professor, category));
+		return category;
+	}
+
+	public InternationalPublication createOrUpdateInternationalPublicationInstanceFromInternationalPublicationDto(
+			@Nonnull InternationalPublicationDto internationalPublicationDto, @Nonnull Professor professor,
+			@Nullable PublicationCategory category) {
+
+		InternationalPublication internationalPublication = null;
+		if (internationalPublicationDto.getId() == null) {
+			internationalPublication = new InternationalPublication();
+			internationalPublication.setProfessor(professor);
+		} else {
+			internationalPublication = internationalPublicationsRepository.findOne(internationalPublicationDto.getId());
+		}
+		internationalPublication.setPublicationCategory(category);
+		internationalPublication.setIsbn(internationalPublicationDto.getIsbn());
+		internationalPublication.setTitle(internationalPublicationDto.getTitle());
+		internationalPublication.setJournalTitle(internationalPublicationDto.getJournalTitle());
+		internationalPublication.setAuthors(internationalPublicationDto.getAuthors());
+		internationalPublication.setPublisher(internationalPublicationDto.getPublisher());
+		internationalPublication.setPagesWithQuotes(internationalPublicationDto.getPagesWithQuotes());
+		internationalPublication.setPublicationType(internationalPublicationDto.getPublicationType());
+		internationalPublication.setYear(internationalPublicationDto.getYear());
+
+		return internationalPublication;
 	}
 
 	@Override
@@ -211,7 +264,8 @@ public class PublicationServiceImpl implements PublicationService {
 		}
 
 		if (internationalPublication.getPublicationCategory() != null) {
-			internationalPublication.getPublicationCategory().getProfessorPublications().remove(internationalPublication);
+			internationalPublication.getPublicationCategory().getProfessorPublications()
+					.remove(internationalPublication);
 		}
 
 		internationalPublication.getProfessor().getProfessorPublications().remove(internationalPublication);

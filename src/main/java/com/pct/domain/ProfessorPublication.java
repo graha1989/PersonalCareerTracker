@@ -10,6 +10,9 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.enums.PublicationType;
@@ -50,12 +53,14 @@ public class ProfessorPublication extends AbstractEntity {
 	private Integer quoted;
 
 	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "publicationCategoryId")
 	@JsonBackReference(value = "publicationCategory")
 	@Nullable
 	private PublicationCategory publicationCategory;
 
 	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "professorId")
 	@JsonBackReference(value = "professor")
 	private Professor professor;

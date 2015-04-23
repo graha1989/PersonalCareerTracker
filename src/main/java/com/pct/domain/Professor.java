@@ -2,10 +2,8 @@ package com.pct.domain;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +15,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.pct.domain.enums.PublicationType;
 
 @Entity
 @Table(name = "professor")
@@ -64,11 +61,13 @@ public class Professor extends AbstractEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	private Set<Award> awards = new HashSet<Award>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
 	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
 	private Set<ProfessorPublication> professorPublications = new HashSet<ProfessorPublication>();
 
@@ -212,7 +211,6 @@ public class Professor extends AbstractEntity {
 	}
 
 	public void setLanguageExperiences(Set<LanguageExperience> languageExperiences) {
-
 		this.languageExperiences.clear();
 
 		if (languageExperiences != null) {
@@ -231,7 +229,6 @@ public class Professor extends AbstractEntity {
 	}
 
 	public void setAwards(Set<Award> awards) {
-
 		this.awards.clear();
 
 		if (awards != null) {
@@ -273,61 +270,6 @@ public class Professor extends AbstractEntity {
 		}
 	}
 
-	public ProfessorPublication getProfessorPublicationById(Long id) {
-		Iterator<ProfessorPublication> it = professorPublications.iterator();
-		while (it.hasNext()) {
-			ProfessorPublication professorPublication = (ProfessorPublication) it.next();
-			if (professorPublication.getId().equals(id)) {
-				return professorPublication;
-			}
-		}
-		return null;
-	}
-
-	public void addProfessorPublications(ProfessorPublication professorPublication) {
-		if (professorPublication != null) {
-			professorPublication.setProfessor(this);
-			this.professorPublications.add(professorPublication);
-		}
-	}
-
-	public ProfessorPublication creatreNewProfessorPublication(PublicationCategory category, String isbn, String title,
-			String journalTitle, String authors, String publisher, String pageRange, PublicationType publicationType,
-			Integer quoted, String year) {
-
-		ProfessorPublication professorPublication = new ProfessorPublication(isbn, title, journalTitle, authors,
-				publisher, pageRange, publicationType, quoted, category, this, year);
-		if (category != null) {
-			category.addProfessorPublication(professorPublication);
-		}
-		this.professorPublications.add(professorPublication);
-
-		return professorPublication;
-	}
-
-	public ProfessorPublication editProfessorPublication(PublicationCategory category, String isbn, String title,
-			String journalTitle, String authors, String publisher, String pageRange, Integer quoted, String year,
-			PublicationType publicationType, Long id) {
-
-		ProfessorPublication professorPublication = getProfessorPublicationById(id);
-		professorPublication.setIsbn(isbn);
-		professorPublication.setTitle(title);
-		professorPublication.setJournalTitle(journalTitle);
-		professorPublication.setAuthors(authors);
-		professorPublication.setPublisher(publisher);
-		professorPublication.setPageRange(pageRange);
-		professorPublication.setPublicationType(publicationType);
-		professorPublication.setQuoted(quoted);
-		professorPublication.setPublicationCategory(category);
-		professorPublication.setYear(year);
-
-		if (category != null) {
-			category.addProfessorPublication(professorPublication);
-		}
-
-		return professorPublication;
-	}
-
 	public Set<InternationalPublication> getInternationalPublications() {
 		return internationalPublications;
 	}
@@ -338,60 +280,6 @@ public class Professor extends AbstractEntity {
 		if (internationalPublications != null) {
 			this.internationalPublications.addAll(internationalPublications);
 		}
-	}
-
-	public InternationalPublication getInternationalPublicationById(Long id) {
-		Iterator<InternationalPublication> it = internationalPublications.iterator();
-		while (it.hasNext()) {
-			InternationalPublication internationalPublication = (InternationalPublication) it.next();
-			if (internationalPublication.getId().equals(id)) {
-				return internationalPublication;
-			}
-		}
-		return null;
-	}
-
-	public void addInternationalPublications(InternationalPublication internationalPublication) {
-		if (internationalPublication != null) {
-			internationalPublication.setProfessor(this);
-			this.internationalPublications.add(internationalPublication);
-		}
-	}
-
-	public InternationalPublication creatreNewInternationalPublication(PublicationCategory category, String isbn,
-			String title, String journalTitle, String authors, String publisher, String pagesWithQuotes,
-			PublicationType publicationType, String year) {
-
-		InternationalPublication internationalPublication = new InternationalPublication(isbn, title, journalTitle,
-				authors, publisher, pagesWithQuotes, year, publicationType, category, this);
-		if (category != null) {
-			category.addInternationalPublication(internationalPublication);
-		}
-		this.internationalPublications.add(internationalPublication);
-
-		return internationalPublication;
-	}
-
-	public InternationalPublication editInternationalPublication(PublicationCategory category, String isbn,
-			String title, String journalTitle, String authors, String publisher, String pagesWithQuotes, String year,
-			PublicationType publicationType, Long id) {
-
-		InternationalPublication internationalPublication = getInternationalPublicationById(id);
-		internationalPublication.setIsbn(isbn);
-		internationalPublication.setTitle(title);
-		internationalPublication.setJournalTitle(journalTitle);
-		internationalPublication.setAuthors(authors);
-		internationalPublication.setPublisher(publisher);
-		internationalPublication.setPagesWithQuotes(pagesWithQuotes);
-		internationalPublication.setPublicationType(publicationType);
-		internationalPublication.setPublicationCategory(category);
-		internationalPublication.setYear(year);
-
-		if (category != null) {
-			category.addInternationalPublication(internationalPublication);
-		}
-
-		return internationalPublication;
 	}
 
 	public Set<WorkExperience> getWorkExperiences() {

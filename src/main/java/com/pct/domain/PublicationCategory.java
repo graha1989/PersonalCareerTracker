@@ -3,12 +3,13 @@ package com.pct.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -36,11 +37,13 @@ public class PublicationCategory extends AbstractEntity {
 	@Column(name = "shPoints", nullable = true, columnDefinition = "Decimal(4,2)")
 	private Double shPoints;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "publicationCategory", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "publicationCategory")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "publicationCategory")
 	private Set<ProfessorPublication> professorPublications = new HashSet<ProfessorPublication>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "publicationCategory", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "publicationCategory")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "publicationCategory")
 	private Set<InternationalPublication> internationalPublications = new HashSet<InternationalPublication>();
 
@@ -112,13 +115,6 @@ public class PublicationCategory extends AbstractEntity {
 		}
 	}
 
-	public void addProfessorPublication(ProfessorPublication professorPublication) {
-		if (professorPublication != null) {
-			professorPublication.setPublicationCategory(this);
-			this.professorPublications.add(professorPublication);
-		}
-	}
-
 	public Set<InternationalPublication> getInternationalPublications() {
 		return internationalPublications;
 	}
@@ -128,13 +124,6 @@ public class PublicationCategory extends AbstractEntity {
 
 		if (internationalPublications != null) {
 			this.internationalPublications.addAll(internationalPublications);
-		}
-	}
-
-	public void addInternationalPublication(InternationalPublication internationalPublication) {
-		if (internationalPublications != null) {
-			internationalPublication.setPublicationCategory(this);
-			this.internationalPublications.add(internationalPublication);
 		}
 	}
 
