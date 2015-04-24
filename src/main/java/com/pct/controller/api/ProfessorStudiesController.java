@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.domain.dto.StudiesDto;
+import com.pct.domain.enums.StudyProgram;
 import com.pct.service.ProfessorStudiesService;
 import com.pct.validation.ProfessorStudiesNotFoundException;
 
@@ -41,6 +42,13 @@ public class ProfessorStudiesController {
 		logger.debug("Professor got: " + studiesDtos.size() + " studies.");
 
 		return new ResponseEntity<List<StudiesDto>>(studiesDtos, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "allStudyPrograms", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<List<StudyProgram>> showAllStudyPrograms() {
+		List<StudyProgram> studyPrograms = professorStudiesService.findAllStudyPrograms();
+
+		return new ResponseEntity<List<StudyProgram>>(studyPrograms, HttpStatus.OK);
 	}
 
 }

@@ -284,5 +284,9 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        loadAllStudyPrograms: function(params, callback) {
+          $http.get('api/studies/allStudyPrograms')
+                  .success(callback);
+        },
       };
     }]);

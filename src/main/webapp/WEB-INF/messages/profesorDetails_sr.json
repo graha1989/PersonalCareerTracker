@@ -48,7 +48,9 @@
         "averageGrade": "Prosečna ocena",
         "thesisTitle": "Naslov teze",
         "acquiredTitle": "Zvanje",
-        "specialisticStudiesStayPurpose": "Vrsta (cilj) boravka"
+        "specialisticStudiesStayPurpose": "Vrsta (cilj) boravka",
+        "universityName": "Univerzitet",
+        "facultyName": "Fakultet"
     },
     "thesisPopupLabels": {
         "title": "Naziv teze",
@@ -69,7 +71,9 @@
         "register": "Registruj se",
         "save": "Sačuvaj",
         "close": "Zatvori",
-        "edit": "Izmeni"
+        "edit": "Izmeni",
+        "delete": "Izbriši",
+        "add": "Dodaj"
     },
     "buttons": {
         "mentorButton": "Mentorstva",
