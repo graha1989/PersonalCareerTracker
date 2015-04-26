@@ -1,13 +1,13 @@
 package com.pct.validation;
 
-public class ThesisTypeNotFoundException extends Exception {
+public class StudiesThesisTypeNotFoundException extends Exception {
 	
 	private static final long serialVersionUID = 5551129679593877195L;
 
 	/**
 	 * Constructor.
 	 */
-	public ThesisTypeNotFoundException() {
+	public StudiesThesisTypeNotFoundException() {
 		super();
 	}
 
@@ -16,7 +16,7 @@ public class ThesisTypeNotFoundException extends Exception {
 	 * 
 	 * @param message
 	 */
-	public ThesisTypeNotFoundException(String message) {
+	public StudiesThesisTypeNotFoundException(String message) {
 		super(message);
 	}
 
@@ -25,7 +25,7 @@ public class ThesisTypeNotFoundException extends Exception {
 	 * 
 	 * @param cause
 	 */
-	public ThesisTypeNotFoundException(Throwable cause) {
+	public StudiesThesisTypeNotFoundException(Throwable cause) {
 		super(cause);
 	}
 	

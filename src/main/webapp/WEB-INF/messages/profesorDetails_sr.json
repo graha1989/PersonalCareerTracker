@@ -25,6 +25,7 @@
         "workExperiencesTitle": "Kretanje u profesionalnom radu",
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
         "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva",
+        "addNewBachelorStudiesTitle": "Dodavanje novih osnovnih studija",
         "professorBachelorStudiesTitle": "Osnovne (bachelor) studije"
     },
     "profesorLabels": {
@@ -126,6 +127,14 @@
             "delete": "Izbriši",
             "edit": "Izmeni",
             "add": "Dodaj novo zaposlenje",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
+        "professorStudiesButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj",
             "close": "Zatvori",
             "save": "Sačuvaj",
             "cancel": "Odustani"
@@ -235,5 +244,19 @@
         "workStartDate": "Početak zaposlenja",
         "workEndDate": "Kraj zaposlenja",
         "title": "Zvanje"
+    },
+    "bachelorStudiesPopupLabels": {
+    	"facultyName": "Naziv fakulteta",
+        "universityName": "Univerzitet",
+        "studyProgram": "Studijski program",
+        "studyArea": "Naučna oblast",
+        "studyStartDate": "Početak studija",
+        "studyEndDate": "Kraj studija",
+        "averageGrade": "Prosečna ocena",
+        "thesisTitle": "Naslov teze",
+        "acquiredTitle": "Dobijeno zvanje",
+        "facultyCity": "Grad",
+        "facultyCountry": "Država"
+        
     }
 }

@@ -288,5 +288,11 @@ app.factory("PctService", [
           $http.get('api/studies/allStudyPrograms')
                   .success(callback);
         },
+        deleteProfessorBachelorStudies: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/studies?id=' + id
+          }).success(callback).error(callback);
+        },
       };
     }]);

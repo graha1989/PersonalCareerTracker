@@ -7,7 +7,7 @@ import com.pct.domain.dto.ThesisDto;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.StudentNotFoundException;
 import com.pct.validation.ThesisNotFoundException;
-import com.pct.validation.ThesisTypeNotFoundException;
+import com.pct.validation.StudiesThesisTypeNotFoundException;
 
 public interface ThesisService {
 	
@@ -15,9 +15,9 @@ public interface ThesisService {
 
 	List<StudiesThesisType> findAllThesisType();
 
-	ThesisDto saveThesis(ThesisDto thesisDto) throws ProfessorNotFoundException, ThesisTypeNotFoundException, StudentNotFoundException;
+	ThesisDto saveThesis(ThesisDto thesisDto) throws ProfessorNotFoundException, StudiesThesisTypeNotFoundException, StudentNotFoundException;
 
-	StudiesThesisType findThesisTypeById(Long id) throws ThesisTypeNotFoundException;
+	StudiesThesisType findThesisTypeById(Long id) throws StudiesThesisTypeNotFoundException;
 
 	void deleteThesis(Long id) throws ThesisNotFoundException;
 

@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.pct.domain.StudiesThesisType;
 
-public interface ThesisTypeRepository extends JpaRepository<StudiesThesisType, Long> {
+public interface StudiesThesisTypeRepository extends JpaRepository<StudiesThesisType, Long> {
 	
 }

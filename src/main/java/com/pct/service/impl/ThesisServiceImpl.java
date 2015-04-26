@@ -15,13 +15,13 @@ import com.pct.domain.dto.ThesisDto;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.StudentRepository;
 import com.pct.repository.ThesisRepository;
-import com.pct.repository.ThesisTypeRepository;
+import com.pct.repository.StudiesThesisTypeRepository;
 import com.pct.service.ThesisService;
 import com.pct.service.util.ThesisUtil;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.StudentNotFoundException;
 import com.pct.validation.ThesisNotFoundException;
-import com.pct.validation.ThesisTypeNotFoundException;
+import com.pct.validation.StudiesThesisTypeNotFoundException;
 
 @Service
 public class ThesisServiceImpl implements ThesisService {
@@ -30,7 +30,7 @@ public class ThesisServiceImpl implements ThesisService {
 	private ThesisRepository thesisRepository;
 	
 	@Autowired
-	private ThesisTypeRepository thesisTypeRepository;
+	private StudiesThesisTypeRepository studiesThesisTypeRepository;
 	
 	@Autowired
 	private ProfesorRepository professorRepository;
@@ -57,13 +57,13 @@ public class ThesisServiceImpl implements ThesisService {
 	public List<StudiesThesisType> findAllThesisType() {
 
 		List<StudiesThesisType> thesisTypesList = new ArrayList<StudiesThesisType>();
-		thesisTypesList = thesisTypeRepository.findAll();
+		thesisTypesList = studiesThesisTypeRepository.findAll();
 		return thesisTypesList;
 	}
 
 	@Override
 	@Transactional
-	public ThesisDto saveThesis(ThesisDto thesisDto) throws StudentNotFoundException, ProfessorNotFoundException, ThesisTypeNotFoundException {
+	public ThesisDto saveThesis(ThesisDto thesisDto) throws StudentNotFoundException, ProfessorNotFoundException, StudiesThesisTypeNotFoundException {
 		
 		Thesis thesis = new Thesis();
 		Student student = new Student();
@@ -96,10 +96,10 @@ public class ThesisServiceImpl implements ThesisService {
 			commissionMember = professorRepository.findOne(thesisDto.getCommissionMemberId());
 		}
 		
-		if (thesisDto.getThesisTypeId() == null || thesisTypeRepository.findOne(thesisDto.getThesisTypeId()) == null) {
-			throw new ThesisTypeNotFoundException();
+		if (thesisDto.getThesisTypeId() == null || studiesThesisTypeRepository.findOne(thesisDto.getThesisTypeId()) == null) {
+			throw new StudiesThesisTypeNotFoundException();
 		} else {
-			studiesThesisType = thesisTypeRepository.findOne(thesisDto.getThesisTypeId());
+			studiesThesisType = studiesThesisTypeRepository.findOne(thesisDto.getThesisTypeId());
 		}
 		
 		if (thesisDto.getId() != null) {
@@ -113,14 +113,14 @@ public class ThesisServiceImpl implements ThesisService {
 
 	@Override
 	@Transactional
-	public StudiesThesisType findThesisTypeById(Long id) throws ThesisTypeNotFoundException {
+	public StudiesThesisType findThesisTypeById(Long id) throws StudiesThesisTypeNotFoundException {
 		
 		StudiesThesisType studiesThesisType;
 
-		if (id == null || thesisTypeRepository.findOne(id) == null) {
-			throw new ThesisTypeNotFoundException();
+		if (id == null || studiesThesisTypeRepository.findOne(id) == null) {
+			throw new StudiesThesisTypeNotFoundException();
 		} else {
-			studiesThesisType = thesisTypeRepository.findOne(id);
+			studiesThesisType = studiesThesisTypeRepository.findOne(id);
 		}
 
 		return studiesThesisType;

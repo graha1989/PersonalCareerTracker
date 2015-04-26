@@ -23,7 +23,7 @@ import com.pct.service.ThesisService;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.StudentNotFoundException;
 import com.pct.validation.ThesisNotFoundException;
-import com.pct.validation.ThesisTypeNotFoundException;
+import com.pct.validation.StudiesThesisTypeNotFoundException;
 
 @RestController
 @RequestMapping("/api/thesis")
@@ -58,7 +58,7 @@ public class ThesisController {
 			thesis = thesisService.saveThesis(thesisDto);
 		} catch (ProfessorNotFoundException e) {
 			e.printStackTrace();
-		} catch (ThesisTypeNotFoundException e) {
+		} catch (StudiesThesisTypeNotFoundException e) {
 			e.printStackTrace();
 		} catch (StudentNotFoundException e) {
 			e.printStackTrace();
@@ -74,7 +74,7 @@ public class ThesisController {
 		StudiesThesisType studiesThesisType = new StudiesThesisType();
 		try {
 			studiesThesisType = thesisService.findThesisTypeById(id);
-		} catch (ThesisTypeNotFoundException e) {
+		} catch (StudiesThesisTypeNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
