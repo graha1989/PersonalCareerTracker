@@ -2,7 +2,6 @@ package com.pct.domain;
 
 import java.util.Date;
 
-import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -65,24 +64,6 @@ public class Studies extends AbstractEntity {
 	@Column(name = "acquiredTitle", length = 30)
 	private String acquiredTitle;
 
-	@Nullable
-	@Column(name = "specialisticStudiesStayPurpose", length = 200)
-	private String specialisticStudiesStayPurpose;
-
-	@Nullable
-	@Column(name = "specialisticStudiesAbroadStartDate")
-	private Date specialisticStudiesAbroadStartDate;
-
-	@Nullable
-	@Column(name = "specialisticStudiesAbroadEndDate")
-	private Date specialisticStudiesAbroadEndDate;
-
-	@Column(name = "specialisticStudiesAbroadCity", length = 50)
-	private String specialisticStudiesAbroadCity;
-
-	@Column(name = "specialisticStudiesAbroadCountry", length = 50)
-	private String specialisticStudiesAbroadCountry;
-
 	public Studies() {
 	}
 
@@ -102,11 +83,6 @@ public class Studies extends AbstractEntity {
 		this.averageGrade = averageGrade;
 		this.thesisTitle = thesisTitle;
 		this.acquiredTitle = acquiredTitle;
-		this.specialisticStudiesStayPurpose = specialisticStudiesStayPurpose;
-		this.specialisticStudiesAbroadStartDate = specialisticStudiesAbroadStartDate;
-		this.specialisticStudiesAbroadEndDate = specialisticStudiesAbroadEndDate;
-		this.specialisticStudiesAbroadCity = specialisticStudiesAbroadCity;
-		this.specialisticStudiesAbroadCountry = specialisticStudiesAbroadCountry;
 	}
 
 	public Professor getProfessor() {
@@ -187,46 +163,6 @@ public class Studies extends AbstractEntity {
 
 	public void setAcquiredTitle(String acquiredTitle) {
 		this.acquiredTitle = acquiredTitle;
-	}
-
-	public String getSpecialisticStudiesStayPurpose() {
-		return specialisticStudiesStayPurpose;
-	}
-
-	public void setSpecialisticStudiesStayPurpose(String specialisticStudiesStayPurpose) {
-		this.specialisticStudiesStayPurpose = specialisticStudiesStayPurpose;
-	}
-
-	public Date getSpecialisticStudiesAbroadStartDate() {
-		return specialisticStudiesAbroadStartDate;
-	}
-
-	public void setSpecialisticStudiesAbroadStartDate(Date specialisticStudiesAbroadStartDate) {
-		this.specialisticStudiesAbroadStartDate = specialisticStudiesAbroadStartDate;
-	}
-
-	public Date getSpecialisticStudiesAbroadEndDate() {
-		return specialisticStudiesAbroadEndDate;
-	}
-
-	public void setSpecialisticStudiesAbroadEndDate(Date specialisticStudiesAbroadEndDate) {
-		this.specialisticStudiesAbroadEndDate = specialisticStudiesAbroadEndDate;
-	}
-
-	public String getSpecialisticStudiesAbroadCity() {
-		return specialisticStudiesAbroadCity;
-	}
-
-	public void setSpecialisticStudiesAbroadCity(String specialisticStudiesAbroadCity) {
-		this.specialisticStudiesAbroadCity = specialisticStudiesAbroadCity;
-	}
-
-	public String getSpecialisticStudiesAbroadCountry() {
-		return specialisticStudiesAbroadCountry;
-	}
-
-	public void setSpecialisticStudiesAbroadCountry(String specialisticStudiesAbroadCountry) {
-		this.specialisticStudiesAbroadCountry = specialisticStudiesAbroadCountry;
 	}
 
 }

@@ -35,7 +35,6 @@ public class StudentDto implements Serializable {
 	protected Long id;
 	
 	public StudentDto() {
-		// EMPTY CONSTRUCTOR.
 	}
 
 	public StudentDto(Student student) {
