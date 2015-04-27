@@ -1,0 +1,583 @@
+<div>
+
+	<form
+		name="form"
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+		role="form"
+		novalidate
+		ng-model="specialization">
+	
+		<table>
+			<tbody>
+				<tr ng-repeat="specialization in allSpecializations">
+					<td>
+						<div class="modal-header">
+							<h3 class="modal-title">{{ resources.text.specializationTitle }} {{ $index + 1 }}</h3>
+						</div>
+						<div class="modal-body">
+							<fieldset>
+								<div class="row form-group">
+									<label
+										for="inputSpecializationInstitution"
+										class="col-sm-2 control-label">{{ resources.professorSpecializationsAbroad.specializationInstitutionName }} <span
+										class="required"
+										ng-show="editMode[$index]">*</span></label>
+									<div class="col-sm-4">
+										<input
+											type="text"
+											class="form-control"
+											id="inputSpecializationInstitution"
+											name="inputSpecializationInstitution"
+											ng-model="specialization.institutionName"
+											placeholder="{{ resources.professorSpecializationsAbroad.specializationInstitutionName }}"
+											ng-disabled="!editMode[$index]"
+											ng-maxlength="50"
+											required />
+										<div
+											ng-show="form.inputSpecializationInstitution.$dirty && form.inputSpecializationInstitution.$invalid"
+											class="institutionNameFieldError">
+											<span
+												ng-show="form.inputSpecializationInstitution.$error.required"
+												class="ng-binding">{{ errorMessages.error.required }}</span> <span
+												ng-show="form.inputSpecializationInstitution.$error.maxlength"
+												class="ng-binding">{{ errorMessages.error.invalidInstitutionNameMaxLength }}</span>
+										</div>
+									</div>
+									<label
+										for="inputCityName"
+										class="col-sm-1 control-label">{{ resources.professorSpecializationsAbroad.cityName }} <span
+										class="required"
+										ng-show="editMode[$index]">*</span></label>
+									<div class="col-sm-2">
+										<input
+											type="text"
+											class="form-control"
+											id="inputCityName"
+											name="inputCityName"
+											ng-model="specialization.city"
+											placeholder="{{ resources.professorSpecializationsAbroad.cityName }}"
+											ng-maxlength="50"
+											ng-disabled="!editMode[$index]"
+											required />
+										<div
+											ng-show="form.inputCityName.$dirty && form.inputCityName.$invalid"
+											class="cityNameFieldError">
+											<span
+												ng-show="form.inputCityName.$error.required"
+												class="ng-binding">{{ errorMessages.error.required }}</span> <span
+												ng-show="form.inputCityName.$error.maxlength"
+												class="ng-binding">{{ errorMessages.error.invalidCityNameMaxLength }}</span>
+										</div>
+									</div>
+									<label
+										for="inputCountryName"
+										class="col-sm-1 control-label">{{ resources.professorSpecializationsAbroad.countryName }} <span
+										class="required"
+										ng-show="editMode[$index]">*</span></label>
+									<div class="col-sm-2">
+										<input
+											type="text"
+											class="form-control"
+											id="inputCountryName"
+											name="inputCountryName"
+											ng-model="specialization.country"
+											placeholder="{{ resources.professorSpecializationsAbroad.countryName }}"
+											ng-maxlength="50"
+											ng-disabled="!editMode[$index]"
+											required />
+										<div
+											ng-show="form.inputCountryName.$dirty && form.inputCountryName.$invalid"
+											class="countryNameFieldError">
+											<span
+												ng-show="form.inputCountryName.$error.required"
+												class="ng-binding">{{ errorMessages.error.required }}</span> <span
+												ng-show="form.inputCountryName.$error.maxlength"
+												class="ng-binding">{{ errorMessages.error.invalidCountryNameMaxLength }}</span>
+										</div>
+									</div>
+								</div>
+								<div class="row form-group">
+									<label
+										for="inputSpecializationPurpose"
+										class="col-sm-2 control-label">{{ resources.professorSpecializationsAbroad.specializationPurpose }} <span
+										class="required"
+										ng-show="editMode[$index]">*</span></label>
+									<div class="col-sm-4">
+										<input
+											type="text"
+											class="form-control"
+											id="inputSpecializationPurpose"
+											name="inputSpecializationPurpose"
+											ng-model="specialization.purpose"
+											placeholder="{{ resources.professorSpecializationsAbroad.specializationPurpose }}"
+											ng-disabled="!editMode[$index]"
+											ng-maxlength="200"
+											required />
+										<div
+											ng-show="form.inputSpecializationPurpose.$dirty && form.inputSpecializationPurpose.$invalid"
+											class="specializationPurposeFieldError">
+											<span
+												ng-show="form.inputSpecializationPurpose.$error.required"
+												class="ng-binding">{{ errorMessages.error.required }}</span> <span
+												ng-show="form.inputSpecializationPurpose.$error.maxlength"
+												class="ng-binding">{{ errorMessages.error.invalidSpecializationPurposeMaxLength }}</span>
+										</div>
+									</div>
+									<label
+										for="inputSpecializationStartDate"
+										class="col-sm-1 control-label">{{ resources.professorSpecializationsAbroad.startDate }} <span
+										class="required"
+										ng-show="editMode[$index]">*</span></label>
+									<div class="col-sm-2">
+										<div
+											class="input-group date"
+											id="datepicker">
+											<input
+												type="text"
+												class="form-control"
+												id="inputSpecializationStartDate"
+												name="inputSpecializationStartDate"
+												placeholder="DD-MM-GGGG"
+												datepicker-popup="dd-MM-yyyy"
+												is-open="inputStartDateOpened[$index]"
+												min-date="minDate"
+												max-date="maxDate"
+												datepicker-options="dateOptions"
+												show-button-bar="false"
+												ng-model="specialization.startDate"
+												ng-disabled="!editMode[$index]"
+												required /> <span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"
+												ng-click="openStartDate($event, $index)"></span>
+											</span>
+										</div>
+										<div
+											ng-show="form.inputSpecializationStartDate.$dirty && form.inputSpecializationStartDate.$invalid"
+											class="specializationStartDateFieldError">
+											<span
+												ng-show="form.inputSpecializationStartDate.$error.required"
+												class="ng-binding">{{ errorMessages.error.required }}</span>
+										</div>
+									</div>
+									<label
+										for="inputSpecializationEndDate"
+										class="col-sm-1 control-label">{{ resources.professorSpecializationsAbroad.endDate }} <span
+										class="required"
+										ng-show="editMode[$index]">*</span></label>
+									<div class="col-sm-2">
+										<div
+											class="input-group date"
+											id="datepicker">
+											<input
+												type="text"
+												class="form-control"
+												id="inputSpecializationEndDate"
+												name="inputSpecializationEndDate"
+												placeholder="DD-MM-GGGG"
+												datepicker-popup="dd-MM-yyyy"
+												is-open="inputEndDateOpened[$index]"
+												min-date="minDate"
+												max-date="maxDate"
+												datepicker-options="dateOptions"
+												show-button-bar="false"
+												ng-model="specialization.endDate"
+												ng-disabled="!editMode[$index]"
+												required /> <span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"
+												ng-click="openEndDate($event, $index)"></span>
+											</span>
+										</div>
+										<div
+											ng-show="form.inputSpecializationEndDate.$dirty && form.inputSpecializationEndDate.$invalid"
+											class="specializationEndDateFieldError">
+											<span
+												ng-show="form.inputSpecializationEndDate.$error.required"
+												class="ng-binding">{{ errorMessages.error.required }}</span>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="modal-footer action">
+							<button
+								id="edit_button"
+								type="edit"
+								class="btn btn-link btn-sm"
+								ng-show="!editMode[$index]"
+								ng-click="editProfesorSpecialization($index)">
+								<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.professorStudiesButtons.edit }}
+							</button>
+							<button
+								id="submit_button"
+								type="submit"
+								class="btn btn-link btn-sm"
+								ng-show="editMode[$index]"
+								ng-disabled="form.$invalid || isUnchanged($index)"
+								ng-click="updateProfessorSpecialization(specialization, $index)">
+								<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.professorStudiesButtons.save }}
+							</button>
+							<button
+								id="cancel_button"
+								class="btn btn-link btn-sm"
+								ng-show="editMode[$index]"
+								ng-click="close($index)">
+								{{ resources.buttons.professorStudiesButtons.close }}
+							</button>
+							<button
+								id="delete_button"
+								class="btn btn-link btn-sm"
+								ng-show="!editMode[$index]"
+								ng-click="deleteProfessorSpecialization(specialization.id, $index)">
+								<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.professorStudiesButtons.delete }}
+							</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="text-center" ng-show="allSpecializations.length == 0">{{ errorMessages.error.emptyTable }}</div>	
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="text-center">
+							<button
+								id="addNewButton"
+								class="btn btn-success btn-large"
+								ng-disabled="isInEditMode()"
+								ng-click="createNewSpecialization()">
+								<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.professorStudiesButtons.add }}
+							</button>
+						</div>	
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	
+	<script
+		type="text/ng-template"
+		id="createNewSpecializationPopup.html">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="bachelorStudies">
+			<div class="modal-header">
+    			<h3 class="modal-title">{{ resources.text.addNewBachelorStudiesTitle }}</h3>
+   	 		</div>
+    		<div class="modal-body">
+				<div class="form-group">
+					<label
+						for="inputFacultyName"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.facultyName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputFacultyName"
+							name="inputFacultyName"
+							ng-model="$parent.selectedFaculty"
+							typeahead="faculty as faculty.name for faculty in getFaculties($viewValue) | limitTo:8"
+							typeahead-on-select="onSelectFaculty()"
+							placeholder="{{ resources.bachelorStudiesPopupLabels.facultyName }}"
+							autocomplete="off"
+							required />
+						<div
+							ng-show="form.inputFacultyName.$dirty && form.inputFacultyName.$invalid"
+							class="facultyNameFieldError">
+							<span
+								ng-show="form.inputFacultyName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputUniversityName"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.universityName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputUniversityName"
+							name="inputUniversityName"
+							ng-model="bachelorStudies.universityName"
+							placeholder="{{ resources.bachelorStudiesPopupLabels.universityName }}"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
+							class="universityNameFieldError">
+							<span
+								ng-show="form.inputUniversityName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputUniversityName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidUniversityNameMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-show="!isExistingFaculty">
+					<label
+						for="inputFacultyCity"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.facultyCity }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputFacultyCity"
+							name="inputFacultyCity"
+							ng-model="bachelorStudies.facultyCity"
+							placeholder="{{ resources.bachelorStudiesPopupLabels.facultyCity }}"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputFacultyCity.$dirty && form.inputFacultyCity.$invalid"
+							class="facultyCityFieldError">
+							<span
+								ng-show="form.inputFacultyCity.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputFacultyCity.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-show="!isExistingFaculty">
+					<label
+						for="inputFacultyCountry"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.facultyCountry }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputFacultyCountry"
+							name="inputFacultyCountry"
+							ng-model="bachelorStudies.facultyCountry"
+							placeholder="{{ resources.bachelorStudiesPopupLabels.facultyCountry }}"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputFacultyCountry.$dirty && form.inputFacultyCountry.$invalid"
+							class="facultyCountryFieldError">
+							<span
+								ng-show="form.inputFacultyCountry.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputFacultyCountry.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputStudyProgram"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.studyProgram }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputStudyProgram"
+							name="inputStudyProgram"
+							ng-model="bachelorStudies.studyProgram"
+							ng-options="studyProgram.title for studyProgram in allStudyPrograms track by studyProgram.name"
+							required><option value="">{{ resources.bachelorStudiesPopupLabels.studyProgram }}</option></select> 
+						<div
+							ng-show="form.inputStudyProgram.$dirty && form.inputStudyProgram.$invalid"
+							class="studyProgramFieldError">
+							<span
+								ng-show="form.inputStudyProgram.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputStudyArea"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.studyArea }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputStudyArea"
+							name="inputStudyArea"
+							ng-model="bachelorStudies.studyArea"
+							placeholder="{{ resources.bachelorStudiesPopupLabels.studyArea }}"
+							ng-maxlength="100"
+							required />
+						<div
+							ng-show="form.inputStudyArea.$dirty && form.inputStudyArea.$invalid"
+							class="inputStudyAreaError">
+							<span
+								ng-show="form.inputStudyArea.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputStudyArea.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidStudyAreaMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputStudyStartDate"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.studyStartDate }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputStudyStartDate"
+								name="inputStudyStartDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputStudyStartDateOpened"
+								min-date="minDate"
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="bachelorStudies.studyStartDate"
+								required />
+							<span class="input-group-addon"> 
+								<span
+									class="glyphicon glyphicon-calendar"
+									ng-click="openStudyStartDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputStudyStartDate.$dirty && form.inputStudyStartDate.$invalid"
+							class="studyStartDateFieldError">
+							<span
+								ng-show="form.inputStudyStartDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputStudyEndDate"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.studyEndDate }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputStudyEndDate"
+								name="inputStudyEndDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputStudyEndDateOpened"
+								min-date="minDate"
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="bachelorStudies.studyEndDate"
+								required />
+							<span class="input-group-addon"> 
+								<span
+									class="glyphicon glyphicon-calendar"
+									ng-click="openStudyEndDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputStudyEndDate.$dirty && form.inputStudyEndDate.$invalid"
+							class="studyEndDateFieldError">
+							<span
+								ng-show="form.inputStudyEndDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputAverageGrade"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.averageGrade }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control"
+							id="inputAverageGrade"
+							name="inputAverageGrade"
+							ng-model="bachelorStudies.averageGrade"
+							placeholder="{{ resources.bachelorStudiesPopupLabels.averageGrade }}"
+							step="0.01"
+							min="5"
+							max="10"
+							ng-maxlength="5"
+							required />
+						<div
+							ng-show="form.inputAverageGrade.$dirty && form.inputAverageGrade.$invalid"
+							class="averageGradeFieldError">
+							<span
+								ng-show="form.inputAverageGrade.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputAverageGrade.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxGradeLength }}</span> <span
+								ng-show="form.inputAverageGrade.$error.min"
+								class="ng-binding">{{ errorMessages.error.minAverageNumber }}</span> <span
+								ng-show="form.inputAverageGrade.$error.max"
+								class="ng-binding">{{ errorMessages.error.maxAverageNumber }}</span>
+						</div>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label
+						for="inputThesisTitle"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.thesisTitle }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputThesisTitle"
+							name="inputThesisTitle"
+							ng-model="bachelorStudies.thesisTitle"
+							placeholder="{{ resources.bachelorStudiesPopupLabels.thesisTitle }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputThesisTitle.$dirty && form.inputThesisTitle.$invalid"
+							class="thesisTitleFieldError">
+							<span
+								ng-show="form.inputThesisTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputThesisTitle.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidThesisTitleMaxLength }}</span>
+						</div>
+					</div>
+   				</div>
+				<div class="form-group">
+					<label
+						for="inputAcquiredTitle"
+						class="col-sm-4 control-label">{{ resources.bachelorStudiesPopupLabels.acquiredTitle }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputAcquiredTitle"
+							name="inputAcquiredTitle"
+							ng-model="bachelorStudies.acquiredTitle"
+							placeholder="{{ resources.bachelorStudiesPopupLabels.acquiredTitle }}"
+							ng-pattern="patterns.onlyLetters"
+							ng-maxlength="30"
+							required />
+						<div
+							ng-show="form.inputAcquiredTitle.$dirty && form.inputAcquiredTitle.$invalid"
+							class="acquiredTitleFieldError">
+							<span
+								ng-show="form.inputAcquiredTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputAcquiredTitle.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidAcquiredTitleMaxLength }}</span> <span
+								ng-show="form.inputAcquiredTitle.$error.pattern"
+								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+						</div>
+					</div>
+   				</div>
+			</div>
+   			<div class="modal-footer action">
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="!validateForm()" ng-click="saveNewProfessorBachelorStudies()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.professorStudiesButtons.save }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.professorStudiesButtons.close }}</button>
+  			</div>
+		</form>
+	</script>
+
+</div>

@@ -32,7 +32,8 @@
         "professorBachelorStudiesTitle": "Osnovne (bachelor) studije",
         "professorMasterStudiesTitle": "Master studije",
         "professorSpecialisticStudiesTitle": "Specijalističke studije",
-        "professorDoctorStudiesTitle": "Doktorske studije"
+        "professorDoctorStudiesTitle": "Doktorske studije",
+        "specializationTitle": "Specijalizacija i studijski boravak u inostranstvu"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -94,6 +95,14 @@
         "specialisticStudiesStayPurpose": "Vrsta (cilj) boravka",
         "universityName": "Univerzitet",
         "facultyName": "Fakultet"
+    },
+    "professorSpecializationsAbroad": {
+        "cityName": "Grad",
+        "countryName": "Država",
+        "startDate": "Od",
+        "endDate": "do",
+        "specializationPurpose": "Vrsta (cilj) boravka",
+        "specializationInstitutionName": "Institucija"
     },
     "thesisPopupLabels": {
         "title": "Naziv teze",

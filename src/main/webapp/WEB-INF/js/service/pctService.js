@@ -294,5 +294,18 @@ app.factory("PctService", [
             url: 'api/studies?id=' + id
           }).success(callback).error(callback);
         },
+        loadProfessorsSpecializationsAbroad: function(professorId) {
+          var deferred = $q.defer();
+          $http.get("api/specialization/allProfessorSpecializations", {
+            params: {
+              professorId: professorId
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
       };
     }]);

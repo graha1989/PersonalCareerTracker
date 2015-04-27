@@ -137,3 +137,7 @@ INSERT INTO studies (professorId, institutionId, studiesThesisTypeId, studyProgr
 	('3', '3', '3', 'MATHEMATICS_AND_INFORMATICS', 'Informatika', '2012-04-14 00:00:00', '2014-08-04 00:00:00', '9.88', 'Specialistička teza 1', 'asistent'),
 	('3', '3', '4', 'MATHEMATICS_AND_INFORMATICS', 'Informatika', '2012-04-14 00:00:00', '2014-08-04 00:00:00', '9.88', 'Doktorska teza 1', 'asistent')
 	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), institutionId=VALUES(institutionId), studiesThesisTypeId=VALUES(studiesThesisTypeId), studyProgram=VALUES(studyProgram), studyArea=VALUES(studyArea), studyStartDate=VALUES(studyStartDate), studyEndDate=VALUES(studyEndDate), averageGrade=VALUES(averageGrade), thesisTitle=VALUES(thesisTitle), acquiredTitle=VALUES(acquiredTitle);
+	
+INSERT INTO specialization_abroad (professorId, institutionId, city, country, startDate, endDate, purpose) VALUES
+	('3', '1', 'Sofija', 'Bugarska', '2012-04-14 00:00:00', '2014-08-04 00:00:00', 'usavrsavanje')
+	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), institutionId=VALUES(institutionId), startDate=VALUES(startDate), endDate=VALUES(endDate), purpose=VALUES(purpose);

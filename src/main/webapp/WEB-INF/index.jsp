@@ -61,6 +61,7 @@
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorMasterStudiesController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorSpecialisticStudiesController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorDoctorStudiesController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/professorSpecializationAbroadController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/service/pctService.js' />"></script>
 </body>
 </html>
