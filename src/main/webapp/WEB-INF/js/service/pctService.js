@@ -270,9 +270,9 @@ app.factory("PctService", [
             url: 'api/workExperiences?id=' + id
           }).success(callback).error(callback);
         },
-        loadProfessorsBachelorStudies: function(professorId, thesisTypeId) {
+        loadProfessorStudies: function(professorId, thesisTypeId) {
           var deferred = $q.defer();
-          $http.get("api/studies/professorBachelorStudies/allProfessorBachelorStudies", {
+          $http.get("api/studies/allProfessorStudies", {
             params: {
               professorId: professorId,
               thesisTypeId: thesisTypeId
@@ -288,7 +288,7 @@ app.factory("PctService", [
           $http.get('api/studies/allStudyPrograms')
                   .success(callback);
         },
-        deleteProfessorBachelorStudies: function(id, callback) {
+        deleteProfessorStudies: function(id, callback) {
           $http({
             method: 'DELETE',
             url: 'api/studies?id=' + id

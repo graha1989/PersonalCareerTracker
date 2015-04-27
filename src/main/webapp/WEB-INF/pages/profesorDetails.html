@@ -375,36 +375,6 @@
 				class="btn btn-sm"
 				ng-click="cancel()">{{ resources.form.close }}</button>
 		</div>
-
-		<!-- Mentorstva -->
-		<div class="btn-group">
-			<button
-				type="button"
-				class="btn btn-default dropdown-toggle btn-sm"
-				data-toggle="dropdown"
-				aria-expanded="false"
-				ng-disabled="editMode">
-				{{ resources.buttons.mentorButton }} <span class="caret"></span>
-			</button>
-			<ul
-				class="dropdown-menu"
-				role="menu">
-				<li
-					ng-repeat="type in thesisTypes"
-					ng-click="openMentoring(profesor.id, type)"><a
-					id="type.finalPaperTypeName"
-					class="btn btn-sm">{{ type.finalPaperTypeName }}</a></li>
-			</ul>
-		</div>
-		
-		<!-- Languages -->
-		<div>
-			<button
-				type="button"
-				class="btn btn-default btn-sm"
-				ng-disabled="editMode"
-				ng-click="openLanguageExperience(profesor.id)">{{ resources.buttons.languageButton }}</button>
-		</div>
 	</form>
 
 </div>

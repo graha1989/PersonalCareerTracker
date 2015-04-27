@@ -1,9 +1,9 @@
-app.controller("ProfessorBachelorStudiesController", function($scope,
+app.controller("ProfessorDoctorStudiesController", function($scope,
         $routeParams, $http, $location, $modal, PctService) {
 
-  $scope.bachelorStudies = {};
-  $scope.allBachelorStudies = [];
-  $scope.allBachelorStudiesMaster = [];
+  $scope.doctorStudies = {};
+  $scope.allDoctorStudies = [];
+  $scope.allDoctorStudiesMaster = [];
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
@@ -53,32 +53,32 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
     return new Date(time);
   };
 
-  $scope.loadProfessorsBachelorStudies = function(professorId, thesisTypeId) {
+  $scope.loadProfessorsDoctorStudies = function(professorId, thesisTypeId) {
     return PctService.loadProfessorStudies(professorId, thesisTypeId)
             .then(function(response) {
               if (angular.isObject(response) && response.length > 0) {
-                $scope.allBachelorStudies = response;
+                $scope.allDoctorStudies = response;
                 
-                for (var i = 0; i < $scope.allBachelorStudies.length; i++) {
-                  $scope.allBachelorStudies[i].studyStartDate = $scope.convertTimeToDate(response[i].studyStartDate);
-                  $scope.allBachelorStudies[i].studyEndDate = $scope.convertTimeToDate(response[i].studyEndDate);
+                for (var i = 0; i < $scope.allDoctorStudies.length; i++) {
+                  $scope.allDoctorStudies[i].studyStartDate = $scope.convertTimeToDate(response[i].studyStartDate);
+                  $scope.allDoctorStudies[i].studyEndDate = $scope.convertTimeToDate(response[i].studyEndDate);
                 }
                 
-                $scope.editMode = new Array($scope.allBachelorStudies.length);
-                for (var i = 0; i < $scope.allBachelorStudies.length; i++) {
+                $scope.editMode = new Array($scope.allDoctorStudies.length);
+                for (var i = 0; i < $scope.allDoctorStudies.length; i++) {
                   $scope.editMode.splice(i, 1, false);
                 }
                 
-                $scope.inputStudyStartDateOpened = new Array($scope.allBachelorStudies.length);
-                for (var i = 0; i < $scope.allBachelorStudies.length; i++) {
+                $scope.inputStudyStartDateOpened = new Array($scope.allDoctorStudies.length);
+                for (var i = 0; i < $scope.allDoctorStudies.length; i++) {
                   $scope.inputStudyStartDateOpened.splice(i, 1, false);
                 }
                 
-                $scope.inputStudyEndDateOpened = new Array($scope.allBachelorStudies.length);
-                for (var i = 0; i < $scope.allBachelorStudies.length; i++) {
+                $scope.inputStudyEndDateOpened = new Array($scope.allDoctorStudies.length);
+                for (var i = 0; i < $scope.allDoctorStudies.length; i++) {
                   $scope.inputStudyEndDateOpened.splice(i, 1, false);
                 }
-                $scope.allBachelorStudiesMaster = angular.copy($scope.allBachelorStudies);
+                $scope.allDoctorStudiesMaster = angular.copy($scope.allDoctorStudies);
                 $scope.noResultsFound = false;
               } else {
                 $scope.noResultsFound = true;
@@ -104,7 +104,7 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
   $scope.setMaxDate();
 
   $scope.init = function() {
-    $scope.loadProfessorsBachelorStudies($routeParams.professorId,
+    $scope.loadProfessorsDoctorStudies($routeParams.professorId,
             $routeParams.thesisTypeId);
     $scope.loadAllStudyPrograms();
     $scope.loadResources();
@@ -112,18 +112,18 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
 
   $scope.init();
 
-  $scope.editProfesorBachelorStudies = function(index) {
+  $scope.editProfesorDoctorStudies = function(index) {
     $scope.editMode.splice(index, 1, true);
     for (var i = 0; i < $scope.editMode.length; i++) {
       if (i != index) {
-        $scope.allBachelorStudies[i] = angular.copy($scope.allBachelorStudiesMaster[i]);
+        $scope.allDoctorStudies[i] = angular.copy($scope.allDoctorStudiesMaster[i]);
         $scope.editMode.splice(i, 1, false);
       }
     }
   };
   
   $scope.close = function(index) {
-    $scope.allBachelorStudies[index] = angular.copy($scope.allBachelorStudiesMaster[index]);
+    $scope.allDoctorStudies[index] = angular.copy($scope.allDoctorStudiesMaster[index]);
     $scope.editMode.splice(index, 1, false);
   };
   
@@ -136,7 +136,7 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
     return false;
   };
   
-  $scope.updateProfessorBachelorStudies = function(studies, index) {
+  $scope.updateProfessorDoctorStudies = function(studies, index) {
     $http({
       method: 'PUT',
       url: "api/studies",
@@ -162,38 +162,38 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
   };
   
   $scope.isUnchanged = function(index) {
-    return angular.equals($scope.allBachelorStudies[index], $scope.allBachelorStudiesMaster[index]);
+    return angular.equals($scope.allDoctorStudies[index], $scope.allDoctorStudiesMaster[index]);
   };
 
   $scope.goBack = function() {
     window.history.back();
   };
   
-  $scope.deleteProfessorBachelorStudies = function(id, index) {
+  $scope.deleteProfessorDoctorStudies = function(id, index) {
     PctService.deleteProfessorStudies(id, function(data) {
       if (angular.isObject(data)) {
         $scope.errorStatus = data.status;
       } else {
-        $scope.successStatus = "Successfully deleted bachelor studies.";
-        $scope.allBachelorStudies.splice(index, 1);
-        $scope.loadProfessorsBachelorStudies($routeParams.professorId, $routeParams.thesisTypeId);
+        $scope.successStatus = "Successfully deleted doctor studies.";
+        $scope.allDoctorStudies.splice(index, 1);
+        $scope.loadProfessorsDoctorStudies($routeParams.professorId, $routeParams.thesisTypeId);
       }
     });
   };
   
-  $scope.createNewBachelorStudies = function() {
+  $scope.createNewDoctorStudies = function() {
     $modal.open({
-      templateUrl: 'createNewBachelorStudiesPopup.html',
-      controller: createNewBachelorStudiesController,
+      templateUrl: 'createNewDoctorStudiesPopup.html',
+      controller: createNewDoctorStudiesController,
     });
   };
   
 });
 
-var createNewBachelorStudiesController = function($scope, $modalInstance,
+var createNewDoctorStudiesController = function($scope, $modalInstance,
         $routeParams, $http, $route, $templateCache, PctService) {
 
-  $scope.bachelorStudies = {};
+  $scope.doctorStudies = {};
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
@@ -286,23 +286,23 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
 
   $scope.onSelectFaculty = function() {
     $scope.isExistingFaculty = true;
-    $scope.bachelorStudies.facultyName = $scope.selectedFaculty.name;
-    $scope.bachelorStudies.universityName = $scope.selectedFaculty.university;
-    $scope.bachelorStudies.facultyCity = $scope.selectedFaculty.city;
-    $scope.bachelorStudies.facultyCountry = $scope.selectedFaculty.country;
-    $scope.bachelorStudies.institutionId = $scope.selectedFaculty.id;
+    $scope.doctorStudies.facultyName = $scope.selectedFaculty.name;
+    $scope.doctorStudies.universityName = $scope.selectedFaculty.university;
+    $scope.doctorStudies.facultyCity = $scope.selectedFaculty.city;
+    $scope.doctorStudies.facultyCountry = $scope.selectedFaculty.country;
+    $scope.doctorStudies.institutionId = $scope.selectedFaculty.id;
   };
 
-  $scope.saveNewProfessorBachelorStudies = function() {
+  $scope.saveNewProfessorDoctorStudies = function() {
     if (!$scope.isExistingFaculty) {
-      $scope.bachelorStudies.facultyName = $scope.selectedFaculty;
+      $scope.doctorStudies.facultyName = $scope.selectedFaculty;
     }
-    $scope.bachelorStudies.professorId = $routeParams.professorId;
-    $scope.bachelorStudies.thesisTypeId = $routeParams.thesisTypeId;
+    $scope.doctorStudies.professorId = $routeParams.professorId;
+    $scope.doctorStudies.thesisTypeId = $routeParams.thesisTypeId;
     $http({
       method: 'POST',
       url: "api/studies",
-      data: $scope.bachelorStudies,
+      data: $scope.doctorStudies,
       headers: {
         'Content-Type': 'application/json'
       }
@@ -328,25 +328,25 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
   };
 
   $scope.validateForm = function() {
-    if ((($scope.bachelorStudies.facultyName != null && $scope.bachelorStudies.facultyName != '') || ($scope.selectedFaculty != null && $scope.selectedFaculty != ''))
-            && $scope.bachelorStudies.universityName != null
-            && $scope.bachelorStudies.universityName != ''
-            && (!$scope.isExistingFaculty ? ($scope.bachelorStudies.facultyCity != null && $scope.bachelorStudies.facultyCity != '') : true)
-            && (!$scope.isExistingFaculty ? ($scope.bachelorStudies.facultyCountry != null && $scope.bachelorStudies.facultyCountry != '') : true)   
-            && $scope.bachelorStudies.studyProgram != null
-            && $scope.bachelorStudies.studyProgram != ''
-            && $scope.bachelorStudies.studyArea != null
-            && $scope.bachelorStudies.studyArea != ''
-            && $scope.bachelorStudies.studyStartDate != null
-            && $scope.bachelorStudies.studyStartDate != ''
-            && $scope.bachelorStudies.studyEndDate != null
-            && $scope.bachelorStudies.studyEndDate != ''
-            && $scope.bachelorStudies.averageGrade != null
-            && $scope.bachelorStudies.averageGrade != ''
-            && $scope.bachelorStudies.thesisTitle != null
-            && $scope.bachelorStudies.thesisTitle != ''
-            && $scope.bachelorStudies.acquiredTitle != null
-            && $scope.bachelorStudies.acquiredTitle != '') {
+    if ((($scope.doctorStudies.facultyName != null && $scope.doctorStudies.facultyName != '') || ($scope.selectedFaculty != null && $scope.selectedFaculty != ''))
+            && $scope.doctorStudies.universityName != null
+            && $scope.doctorStudies.universityName != ''
+            && (!$scope.isExistingFaculty ? ($scope.doctorStudies.facultyCity != null && $scope.doctorStudies.facultyCity != '') : true)
+            && (!$scope.isExistingFaculty ? ($scope.doctorStudies.facultyCountry != null && $scope.doctorStudies.facultyCountry != '') : true)   
+            && $scope.doctorStudies.studyProgram != null
+            && $scope.doctorStudies.studyProgram != ''
+            && $scope.doctorStudies.studyArea != null
+            && $scope.doctorStudies.studyArea != ''
+            && $scope.doctorStudies.studyStartDate != null
+            && $scope.doctorStudies.studyStartDate != ''
+            && $scope.doctorStudies.studyEndDate != null
+            && $scope.doctorStudies.studyEndDate != ''
+            && $scope.doctorStudies.averageGrade != null
+            && $scope.doctorStudies.averageGrade != ''
+            && $scope.doctorStudies.thesisTitle != null
+            && $scope.doctorStudies.thesisTitle != ''
+            && $scope.doctorStudies.acquiredTitle != null
+            && $scope.doctorStudies.acquiredTitle != '') {
       return true;
     } else {
       return false;

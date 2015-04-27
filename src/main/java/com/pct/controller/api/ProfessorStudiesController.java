@@ -34,7 +34,7 @@ public class ProfessorStudiesController {
 	@Autowired
 	ProfessorStudiesService professorStudiesService;
 
-	@RequestMapping(value = "professorBachelorStudies/allProfessorBachelorStudies", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = "allProfessorStudies", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<StudiesDto>> showAllProfessorStudies(
 			@RequestParam(value = "professorId", required = true) Long professorId,
 			@RequestParam(value = "thesisTypeId", required = true) Long thesisTypeId) {
@@ -78,10 +78,11 @@ public class ProfessorStudiesController {
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.DELETE)
 	public ResponseEntity<StudiesDto> deleteProfessorStudies(
-			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws ProfessorStudiesNotFoundException {
+			@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws ProfessorStudiesNotFoundException {
 		professorStudiesService.deleteStudies(id);
 
 		return new ResponseEntity<StudiesDto>(HttpStatus.OK);

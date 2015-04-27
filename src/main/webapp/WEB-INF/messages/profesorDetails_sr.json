@@ -26,7 +26,13 @@
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
         "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva",
         "addNewBachelorStudiesTitle": "Dodavanje novih osnovnih studija",
-        "professorBachelorStudiesTitle": "Osnovne (bachelor) studije"
+        "addNewMasterStudiesTitle": "Dodavanje novih master studija",
+        "addNewSpecialisticStudiesTitle": "Dodavanje novih specijalističkih studija",
+        "addNewDoctorStudiesTitle": "Dodavanje novih doktorskih studija",
+        "professorBachelorStudiesTitle": "Osnovne (bachelor) studije",
+        "professorMasterStudiesTitle": "Master studije",
+        "professorSpecialisticStudiesTitle": "Specijalističke studije",
+        "professorDoctorStudiesTitle": "Doktorske studije"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -42,6 +48,42 @@
         "specialScientificAreaLabel": "Uža naučna oblast"
     },
     "professorBachelorStudies": {
+        "studyProgram": "Studijski program",
+        "studyArea": "Naučna oblast",
+        "studyStartDate": "Datum upisa",
+        "studyEndDate": "Datum završetka",
+        "averageGrade": "Prosečna ocena",
+        "thesisTitle": "Naslov teze",
+        "acquiredTitle": "Zvanje",
+        "specialisticStudiesStayPurpose": "Vrsta (cilj) boravka",
+        "universityName": "Univerzitet",
+        "facultyName": "Fakultet"
+    },
+    "professorMasterStudies": {
+        "studyProgram": "Studijski program",
+        "studyArea": "Naučna oblast",
+        "studyStartDate": "Datum upisa",
+        "studyEndDate": "Datum završetka",
+        "averageGrade": "Prosečna ocena",
+        "thesisTitle": "Naslov teze",
+        "acquiredTitle": "Zvanje",
+        "specialisticStudiesStayPurpose": "Vrsta (cilj) boravka",
+        "universityName": "Univerzitet",
+        "facultyName": "Fakultet"
+    },
+    "professorSpecialisticStudies": {
+        "studyProgram": "Studijski program",
+        "studyArea": "Naučna oblast",
+        "studyStartDate": "Datum upisa",
+        "studyEndDate": "Datum završetka",
+        "averageGrade": "Prosečna ocena",
+        "thesisTitle": "Naslov teze",
+        "acquiredTitle": "Zvanje",
+        "specialisticStudiesStayPurpose": "Vrsta (cilj) boravka",
+        "universityName": "Univerzitet",
+        "facultyName": "Fakultet"
+    },
+    "professorDoctorStudies": {
         "studyProgram": "Studijski program",
         "studyArea": "Naučna oblast",
         "studyStartDate": "Datum upisa",
@@ -257,6 +299,44 @@
         "acquiredTitle": "Dobijeno zvanje",
         "facultyCity": "Grad",
         "facultyCountry": "Država"
-        
+    },
+    "masterStudiesPopupLabels": {
+    	"facultyName": "Naziv fakulteta",
+        "universityName": "Univerzitet",
+        "studyProgram": "Studijski program",
+        "studyArea": "Naučna oblast",
+        "studyStartDate": "Početak studija",
+        "studyEndDate": "Kraj studija",
+        "averageGrade": "Prosečna ocena",
+        "thesisTitle": "Naslov teze",
+        "acquiredTitle": "Dobijeno zvanje",
+        "facultyCity": "Grad",
+        "facultyCountry": "Država"
+    },
+    "specialisticStudiesPopupLabels": {
+    	"facultyName": "Naziv fakulteta",
+        "universityName": "Univerzitet",
+        "studyProgram": "Studijski program",
+        "studyArea": "Naučna oblast",
+        "studyStartDate": "Početak studija",
+        "studyEndDate": "Kraj studija",
+        "averageGrade": "Prosečna ocena",
+        "thesisTitle": "Naslov teze",
+        "acquiredTitle": "Dobijeno zvanje",
+        "facultyCity": "Grad",
+        "facultyCountry": "Država"
+    },
+    "doctorStudiesPopupLabels": {
+    	"facultyName": "Naziv fakulteta",
+        "universityName": "Univerzitet",
+        "studyProgram": "Studijski program",
+        "studyArea": "Naučna oblast",
+        "studyStartDate": "Početak studija",
+        "studyEndDate": "Kraj studija",
+        "averageGrade": "Prosečna ocena",
+        "thesisTitle": "Naslov teze",
+        "acquiredTitle": "Dobijeno zvanje",
+        "facultyCity": "Grad",
+        "facultyCountry": "Država"
     }
 }
