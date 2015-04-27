@@ -26,7 +26,7 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
     $event.preventDefault();
     $event.stopPropagation();
 
-    $scope.inputStudyStartDateOpened[index] = true;
+    $scope.inputStudyStartDateOpened[index] = $scope.editMode[index];
   };
 
   /* Date picker functions for end date */
@@ -34,7 +34,7 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
     $event.preventDefault();
     $event.stopPropagation();
 
-    $scope.inputStudyEndDateOpened[index] = true;
+    $scope.inputStudyEndDateOpened[index] = $scope.editMode[index];
   };
 
   $scope.loadResources = function() {
