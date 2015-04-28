@@ -155,37 +155,36 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
     window.history.back();
   };
   
-  $scope.deleteProfessorBachelorStudies = function(id, index) {
-    PctService.deleteProfessorStudies(id, function(data) {
+  $scope.deleteProfessorSpecializationAbroad = function(id, index) {
+    PctService.deleteProfessorSpecializationAbroad(id, function(data) {
       if (angular.isObject(data)) {
         $scope.errorStatus = data.status;
       } else {
         $scope.successStatus = "Successfully deleted specialization.";
-        $scope.allBachelorStudies.splice(index, 1);
-        $scope.loadProfessorsBachelorStudies($routeParams.professorId, $routeParams.thesisTypeId);
+        $scope.allSpecializations.splice(index, 1);
+        $scope.loadProfessorsSpecializationsAbroad($routeParams.professorId);
       }
     });
   };
   
-  $scope.createNewBachelorStudies = function() {
+  $scope.createNewSpecialization = function() {
     $modal.open({
-      templateUrl: 'createNewBachelorStudiesPopup.html',
-      controller: createNewBachelorStudiesController,
+      templateUrl: 'createNewSpecializationPopup.html',
+      controller: createNewSpecializationController,
     });
   };
   
 });
 
-var createNewBachelorStudiesController = function($scope, $modalInstance,
+var createNewSpecializationController = function($scope, $modalInstance,
         $routeParams, $http, $route, $templateCache, PctService) {
 
-  $scope.bachelorStudies = {};
+  $scope.specialization = {};
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
-  $scope.allStudyPrograms = [];
-  $scope.isExistingFaculty = false;
-  $scope.selectedFaculty = [];
+  $scope.isExistingInstitution = false;
+  $scope.selectedInstitution = [];
   
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -197,7 +196,7 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
   };
 
   /* Date picker functions for start date */
-  $scope.openStudyStartDate = function($event) {
+  $scope.openStartDate = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
 
@@ -205,7 +204,7 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
   };
 
   /* Date picker functions for end date */
-  $scope.openStudyEndDate = function($event) {
+  $scope.openEndDate = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
 
@@ -228,17 +227,6 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
     return new Date(time);
   };
 
-  $scope.loadAllStudyPrograms = function() {
-    PctService.loadAllStudyPrograms($routeParams, function(data) {
-      if (angular.isObject(data) && data.length > 0) {
-        $scope.allStudyPrograms = data;
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
-  };
-
   $scope.setMaxDate = function() {
     $scope.maxDate = new Date();
   };
@@ -246,49 +234,46 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
   $scope.setMaxDate();
 
   $scope.init = function() {
-    $scope.loadAllStudyPrograms();
     $scope.status = $routeParams.status;
     $scope.loadResources();
   };
 
   $scope.init();
 
-  $scope.getFaculties = function(val) {
-    return PctService.findInstutionsStartsWith(val, 'FACULTY').then(
+  $scope.getInstitutions = function(val) {
+    return PctService.findInstutionsStartsWith(val, 'OTHER').then(
             function(response) {
-              var faculties = [];
+              var institutions = [];
               for (var i = 0; i < response.length; i++) {
-                faculties.push(response[i]);
+                institutions.push(response[i]);
               }
-              return faculties;
+              return institutions;
             });
   };
   
-  $scope.$watch('selectedFaculty', function() {
-    if ($scope.selectedFaculty === null || $scope.selectedFaculty == '' || angular.isUndefined($scope.selectedFaculty)) {
-      $scope.isExistingFaculty = false;
+  $scope.$watch('selectedInstitution', function() {
+    if ($scope.selectedInstitution === null || $scope.selectedInstitution == '' || angular.isUndefined($scope.selectedInstitution)) {
+      $scope.isExistingInstitution = false;
     }
   });
 
-  $scope.onSelectFaculty = function() {
-    $scope.isExistingFaculty = true;
-    $scope.bachelorStudies.facultyName = $scope.selectedFaculty.name;
-    $scope.bachelorStudies.universityName = $scope.selectedFaculty.university;
-    $scope.bachelorStudies.facultyCity = $scope.selectedFaculty.city;
-    $scope.bachelorStudies.facultyCountry = $scope.selectedFaculty.country;
-    $scope.bachelorStudies.institutionId = $scope.selectedFaculty.id;
+  $scope.onSelectInstitution = function() {
+    $scope.isExistingInstitution = true;
+    $scope.specialization.institutionName = $scope.selectedInstitution.name;
+    $scope.specialization.city = $scope.selectedInstitution.city;
+    $scope.specialization.country = $scope.selectedInstitution.country;
+    $scope.specialization.institutionId = $scope.selectedInstitution.id;
   };
 
-  $scope.saveNewProfessorBachelorStudies = function() {
-    if (!$scope.isExistingFaculty) {
-      $scope.bachelorStudies.facultyName = $scope.selectedFaculty;
+  $scope.saveNewProfessorSpecializationAbroad = function() {
+    if (!$scope.isExistingInstitution) {
+      $scope.specialization.institutionName = $scope.selectedInstitution;
     }
-    $scope.bachelorStudies.professorId = $routeParams.professorId;
-    $scope.bachelorStudies.thesisTypeId = $routeParams.thesisTypeId;
+    $scope.specialization.professorId = $routeParams.professorId;
     $http({
       method: 'POST',
-      url: "api/studies",
-      data: $scope.bachelorStudies,
+      url: "api/specialization",
+      data: $scope.specialization,
       headers: {
         'Content-Type': 'application/json'
       }
@@ -314,25 +299,15 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
   };
 
   $scope.validateForm = function() {
-    if ((($scope.bachelorStudies.facultyName != null && $scope.bachelorStudies.facultyName != '') || ($scope.selectedFaculty != null && $scope.selectedFaculty != ''))
-            && $scope.bachelorStudies.universityName != null
-            && $scope.bachelorStudies.universityName != ''
-            && (!$scope.isExistingFaculty ? ($scope.bachelorStudies.facultyCity != null && $scope.bachelorStudies.facultyCity != '') : true)
-            && (!$scope.isExistingFaculty ? ($scope.bachelorStudies.facultyCountry != null && $scope.bachelorStudies.facultyCountry != '') : true)   
-            && $scope.bachelorStudies.studyProgram != null
-            && $scope.bachelorStudies.studyProgram != ''
-            && $scope.bachelorStudies.studyArea != null
-            && $scope.bachelorStudies.studyArea != ''
-            && $scope.bachelorStudies.studyStartDate != null
-            && $scope.bachelorStudies.studyStartDate != ''
-            && $scope.bachelorStudies.studyEndDate != null
-            && $scope.bachelorStudies.studyEndDate != ''
-            && $scope.bachelorStudies.averageGrade != null
-            && $scope.bachelorStudies.averageGrade != ''
-            && $scope.bachelorStudies.thesisTitle != null
-            && $scope.bachelorStudies.thesisTitle != ''
-            && $scope.bachelorStudies.acquiredTitle != null
-            && $scope.bachelorStudies.acquiredTitle != '') {
+    if ((($scope.specialization.institutionName != null && $scope.specialization.institutionName != '') || ($scope.selectedInstitution != null && $scope.selectedInstitution != ''))
+            && (!$scope.isExistingInstitution ? ($scope.specialization.city != null && $scope.specialization.city != '') : true)
+            && (!$scope.isExistingInstitution ? ($scope.specialization.country != null && $scope.specialization.country != '') : true)   
+            && $scope.specialization.startDate != null
+            && $scope.specialization.startDate != ''
+            && $scope.specialization.endDate != null
+            && $scope.specialization.endDate != ''
+            && $scope.specialization.purpose != null
+            && $scope.specialization.purpose != '') {
       return true;
     } else {
       return false;

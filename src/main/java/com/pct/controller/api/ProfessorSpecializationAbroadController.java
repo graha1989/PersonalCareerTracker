@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
+import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.SpecializationAbroadDto;
 import com.pct.service.ProfessorSpecializationService;
 import com.pct.validation.InstitutionNotFoundException;
@@ -66,12 +67,14 @@ public class ProfessorSpecializationAbroadController {
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
-	/*
-	 * @RequestMapping(method = RequestMethod.DELETE) public ResponseEntity<StudiesDto> deleteProfessorStudies(
-	 * 
-	 * @RequestParam(value = RequestMappings.ID, required = true) Long id) throws ProfessorStudiesNotFoundException {
-	 * professorStudiesService.deleteStudies(id);
-	 * 
-	 * return new ResponseEntity<StudiesDto>(HttpStatus.OK); }
-	 */
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public ResponseEntity<SpecializationAbroadDto> deleteProfessorStudies(
+
+	@RequestParam(value = RequestMappings.ID, required = true) Long id) throws ProfessorSpecializationNotFoundException {
+		professorSpecializationService.deleteSpecialization(id);
+
+		return new ResponseEntity<SpecializationAbroadDto>(HttpStatus.OK);
+	}
+
 }

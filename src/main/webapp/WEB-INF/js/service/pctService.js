@@ -307,5 +307,11 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        deleteProfessorSpecializationAbroad: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/specialization?id=' + id
+          }).success(callback).error(callback);
+        },
       };
     }]);

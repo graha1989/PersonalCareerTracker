@@ -24,14 +24,20 @@ import com.pct.validation.ProfessorSpecializationNotFoundException;
 @Service
 public class ProfessorSpecializationServiceImpl implements ProfessorSpecializationService {
 
-	@Autowired
 	private ProfessorSpecializationRepository professorSpecializationRepository;
 
-	@Autowired
 	private ProfesorRepository professorRepository;
 
-	@Autowired
 	private InstitutionRepository institutionRepository;
+
+	@Autowired
+	public ProfessorSpecializationServiceImpl(ProfessorSpecializationRepository professorSpecializationRepository,
+			ProfesorRepository professorRepository, InstitutionRepository institutionRepository) {
+		super();
+		this.professorSpecializationRepository = professorSpecializationRepository;
+		this.professorRepository = professorRepository;
+		this.institutionRepository = institutionRepository;
+	}
 
 	@Override
 	@Transactional
@@ -84,13 +90,11 @@ public class ProfessorSpecializationServiceImpl implements ProfessorSpecializati
 		} else {
 			institution = new Institution();
 		}
-		/*
-		 * institution.setCity(specializationAbroadDto.getFacultyCity());
-		 * institution.setCountry(specializationAbroadDto.getFacultyCountry());
-		 * institution.setName(specializationAbroadDto.getFacultyName());
-		 * institution.setUniversity(specializationAbroadDto.getUniversityName());
-		 * institution.setInstitutionType(specializationAbroadDto.getInstitutionType());
-		 */
+		institution.setCity(specializationAbroadDto.getCity());
+		institution.setCountry(specializationAbroadDto.getCountry());
+		institution.setName(specializationAbroadDto.getInstitutionName());
+		institution.setInstitutionType(specializationAbroadDto.getInstitutionType());
+
 		return institution;
 	}
 
@@ -113,6 +117,17 @@ public class ProfessorSpecializationServiceImpl implements ProfessorSpecializati
 		specialization.setPurpose(specializationAbroadDto.getPurpose());
 
 		return specialization;
+	}
+
+	@Override
+	@Transactional
+	public void deleteSpecialization(Long id) throws ProfessorSpecializationNotFoundException {
+
+		SpecializationAbroad specializationAbroad = professorSpecializationRepository.findOne(id);
+		if (specializationAbroad == null) {
+			throw new ProfessorSpecializationNotFoundException();
+		}
+		professorSpecializationRepository.delete(specializationAbroad);
 	}
 
 }

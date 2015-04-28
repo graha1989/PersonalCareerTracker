@@ -29,6 +29,7 @@
         "addNewMasterStudiesTitle": "Dodavanje novih master studija",
         "addNewSpecialisticStudiesTitle": "Dodavanje novih specijalističkih studija",
         "addNewDoctorStudiesTitle": "Dodavanje novih doktorskih studija",
+        "addNewSpecialization": "Dodavanje nove specijalizacije u inostranstvu",
         "professorBachelorStudiesTitle": "Osnovne (bachelor) studije",
         "professorMasterStudiesTitle": "Master studije",
         "professorSpecialisticStudiesTitle": "Specijalističke studije",
@@ -347,5 +348,13 @@
         "acquiredTitle": "Dobijeno zvanje",
         "facultyCity": "Grad",
         "facultyCountry": "Država"
+    },
+    "specializationPopupLabels": {
+    	"institutionName": "Naziv ustanove",
+        "startDate": "Početak boravka",
+        "endDate": "Kraj boravka",
+        "institutionCity": "Grad",
+        "institutionCountry": "Država",
+        "purpose": "Vrsta (cilj) boravka"
     }
 }

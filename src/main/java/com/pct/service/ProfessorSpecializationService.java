@@ -15,4 +15,6 @@ public interface ProfessorSpecializationService {
 	void saveProfessorSpecialization(SpecializationAbroadDto specializationAbroadDto)
 			throws ProfessorSpecializationNotFoundException, ProfessorNotFoundException, InstitutionNotFoundException;
 
+	void deleteSpecialization(Long id) throws ProfessorSpecializationNotFoundException;
+
 }
