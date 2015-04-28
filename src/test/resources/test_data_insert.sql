@@ -141,3 +141,11 @@ INSERT INTO studies (professorId, institutionId, studiesThesisTypeId, studyProgr
 INSERT INTO specialization_abroad (professorId, institutionId, city, country, startDate, endDate, purpose) VALUES
 	('3', '1', 'Sofija', 'Bugarska', '2012-04-14 00:00:00', '2014-08-04 00:00:00', 'usavrsavanje')
 	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), institutionId=VALUES(institutionId), startDate=VALUES(startDate), endDate=VALUES(endDate), purpose=VALUES(purpose);
+
+INSERT INTO subject (name, program, numberOfTheoreticalLessons, numberOfPracticalLessons, numberOfTeachingLessons, institutionId, professorId, studiesThesisTypeId) VALUES
+	('Paralelno programiranje', 'Informacione tehnologije', '3', '3', '0', '1', '3', '2')
+	ON DUPLICATE KEY UPDATE name=VALUES(name), program=VALUES(program), numberOfTheoreticalLessons=VALUES(numberOfTheoreticalLessons), numberOfPracticalLessons=VALUES(numberOfPracticalLessons), numberOfTeachingLessons=VALUES(numberOfTeachingLessons), institutionId=VALUES(institutionId), professorId=VALUES(professorId), studiesThesisTypeId=VALUES(studiesThesisTypeId);
+	
+INSERT INTO teaching_experience (subjectId, professorId) VALUES
+	('1', '3')
+	ON DUPLICATE KEY UPDATE subjectId=VALUES(subjectId), professorId=VALUES(professorId);

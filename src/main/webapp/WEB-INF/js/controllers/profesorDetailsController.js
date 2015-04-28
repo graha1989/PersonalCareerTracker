@@ -118,13 +118,13 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
   };
 
   $scope.openMentoring = function(mentorId, type) {
-    if (type.finalPaperTypeName == 'Bachelor') {
+    if (type.type == 'Bachelor') {
       $location.path('/bachelorMentoring/mentorId/' + mentorId
               + '/thesisTypeId/' + type.id);
-    } else if (type.finalPaperTypeName == 'Master') {
+    } else if (type.type == 'Master') {
       $location.path('/masterMentoring/mentorId/' + mentorId + '/thesisTypeId/'
               + type.id);
-    } else if (type.finalPaperTypeName == 'Specijalističke') {
+    } else if (type.type == 'Specijalističke') {
       $location.path('/specialisticMentoring/mentorId/' + mentorId
               + '/thesisTypeId/' + type.id);
     } else {

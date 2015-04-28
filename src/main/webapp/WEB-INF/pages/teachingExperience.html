@@ -1,0 +1,72 @@
+<div>
+
+	<form
+		name="form"
+		id="showProfessorTeachingExperienceForm"
+		novalidate
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		ng-model="teachingExperience">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.teachingExperiencesTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+
+				<table
+					ng-show="teachingExperiences != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr class="info ng-binding">
+							<td>{{ resources.teachingExperienceTableLabels.subjectName }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.studyProgram }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.facultyName }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.universityName }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.facultyCity }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.facultyCountry }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.studyType }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.lessonsNumber }}</td>
+							<td colspan="2"></td>
+						</tr>
+						<tr
+							class="active ng-scope"
+							ng-repeat="teachingExperience in teachingExperiences">
+							<td>{{ teachingExperience.subjectName }}</td>
+							<td>{{ teachingExperience.studyProgram }}</td>
+							<td>{{ teachingExperience.facultyName }}</td>
+							<td>{{ teachingExperience.universityName }}</td>
+							<td>{{ teachingExperience.facultyCity }}</td>
+							<td>{{ teachingExperience.facultyCountry }}</td>
+							<td>{{ teachingExperience.studiesThesisType.type }}</td>
+							<td>{{ teachingExperience.numberOfTeachingLessons }} + {{ teachingExperience.numberOfTheoreticalLessons }} + {{ teachingExperience.numberOfPracticalLessons }}</td>
+							<td class="delete"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteTeachingExperience(teachingExperience.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.teachingExperienceButtons.delete }}
+								</button></td>
+							<td class="edit"><button
+									class="btn btn-link btn-xs"
+									ng-click="editTeachingExperience(teachingExperience.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.teachingExperienceButtons.edit }}
+								</button></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td colspan="10">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
+				ng-click="createNewTeachingExperience()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.teachingExperienceButtons.add }}
+			</button>
+		</div>
+	</form>
+
+</div>

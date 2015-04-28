@@ -23,6 +23,7 @@
         "editPublicationPopupTitle": "Izmena publikacije",
         "newPublicationPopupTitle": "Unos nove publikacije",
         "workExperiencesTitle": "Kretanje u profesionalnom radu",
+        "teachingExperiencesTitle": "Izvođenje nastave",
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
         "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva",
         "addNewBachelorStudiesTitle": "Dodavanje novih osnovnih studija",
@@ -183,6 +184,14 @@
             "save": "Sačuvaj",
             "cancel": "Odustani"
         },
+        "teachingExperienceButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novi predmet",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
         "professorStudiesButtons": {
             "delete": "Izbriši",
             "edit": "Izmeni",
@@ -286,6 +295,16 @@
         "workStartDate": "Početak zaposlenja",
         "workEndDate": "Kraj zaposlenja",
         "title": "Zvanje"
+    },
+    "teachingExperienceTableLabels": {
+    	"subjectName": "Naziv predmeta",
+        "studyProgram": "Studijski program",
+        "facultyName": "Fakultet",
+        "universityName": "Univerzitet",
+        "facultyCity": "Grad",
+        "facultyCountry": "Država",
+        "studyType": "Stepen studija",
+        "lessonsNumber": "Fond časova"
     },
     "workExperiencePopupLabels": {
     	"institutionType": "Tip ustanove",

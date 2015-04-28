@@ -313,5 +313,18 @@ app.factory("PctService", [
             url: 'api/specialization?id=' + id
           }).success(callback).error(callback);
         },
+        loadTeachingExperiences: function(professorId) {
+          var deferred = $q.defer();
+          $http.get("api/teachingExperiences/allTeachingExperiences", {
+            params: {
+              professorId: professorId
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
       };
     }]);

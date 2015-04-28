@@ -17,17 +17,17 @@ public class StudiesThesisType extends AbstractEntity {
 		super();
 	}
 
-	public StudiesThesisType(String finalPaperTypeName) {
+	public StudiesThesisType(String type) {
 		super();
-		this.type = finalPaperTypeName;
+		this.type = type;
 	}
 
-	public String getFinalPaperTypeName() {
+	public String getType() {
 		return type;
 	}
 
-	public void setFinalPaperTypeName(String finalPaperTypeName) {
-		this.type = finalPaperTypeName;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }
