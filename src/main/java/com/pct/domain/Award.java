@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pct.domain.enums.AwardField;
@@ -29,7 +32,8 @@ public class Award extends AbstractEntity {
 	@Column(name = "dateOfAward")
 	private Date dateOfAward;
 	
-	@OneToOne
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "professorId")
 	@JsonBackReference(value = "professor")
 	private Professor professor;

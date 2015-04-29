@@ -7,9 +7,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -55,10 +53,14 @@ public class Professor extends AbstractEntity {
 	@Column(name = "specialScientificArea", length = 50)
 	private String specialScientificArea;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "professor")
 	private Set<LanguageExperience> languageExperiences = new HashSet<LanguageExperience>();
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "professor")
 	private Set<Award> awards = new HashSet<Award>();
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
@@ -85,15 +87,11 @@ public class Professor extends AbstractEntity {
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
 	private Set<Studies> studies = new HashSet<Studies>();
-	
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
 	private Set<TeachingExperience> teachingExperiences = new HashSet<TeachingExperience>();
-
-	@OneToOne
-	@JoinColumn(name = "ulogaId")
-	private Uloga uloga;
 
 	public Professor() {
 	}
@@ -103,7 +101,7 @@ public class Professor extends AbstractEntity {
 			String specialScientificArea, Set<LanguageExperience> languageExperiences, Set<Award> awards,
 			Set<ProjectExperience> projectExperiences, Set<ProfessorPublication> professorPublications,
 			Set<InternationalPublication> internationalPublications, Set<WorkExperience> workExperiences,
-			Set<Studies> studies, Set<TeachingExperience> teachingExperiences, Uloga uloga) {
+			Set<Studies> studies, Set<TeachingExperience> teachingExperiences) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -124,7 +122,6 @@ public class Professor extends AbstractEntity {
 		this.workExperiences = workExperiences;
 		this.studies = studies;
 		this.teachingExperiences = teachingExperiences;
-		this.uloga = uloga;
 	}
 
 	public String getUserName() {
@@ -149,14 +146,6 @@ public class Professor extends AbstractEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Uloga getUloga() {
-		return uloga;
-	}
-
-	public void setUloga(Uloga uloga) {
-		this.uloga = uloga;
 	}
 
 	public String getName() {
@@ -325,7 +314,7 @@ public class Professor extends AbstractEntity {
 
 	public void setTeachingExperiences(Set<TeachingExperience> teachingExperiences) {
 		this.teachingExperiences.clear();
-		
+
 		if (teachingExperiences != null) {
 			this.teachingExperiences.addAll(teachingExperiences);
 		}

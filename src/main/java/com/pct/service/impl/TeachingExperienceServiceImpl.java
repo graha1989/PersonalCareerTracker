@@ -38,4 +38,20 @@ public class TeachingExperienceServiceImpl implements TeachingExperienceService 
 		return teachingExperienceDtos;
 	}
 
+	@Override
+	@Transactional
+	public TeachingExperienceDto findTeachingExperienceById(Long id) throws TeachingExperienceNotFoundException {
+
+		TeachingExperienceDto teachingExperienceDto;
+
+		if (id == null || teachingExperienceRepository.findOne(id) == null) {
+			throw new TeachingExperienceNotFoundException();
+		} else {
+			TeachingExperience teachingExperience = teachingExperienceRepository.findOne(id);
+			teachingExperienceDto = new TeachingExperienceDto(teachingExperience);
+		}
+
+		return teachingExperienceDto;
+	}
+
 }

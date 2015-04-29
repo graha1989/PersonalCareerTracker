@@ -326,5 +326,23 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        loadSelectedTeachingExperience: function(id, callback) {
+          $http.get('api/teachingExperiences/selectedTeachingExperience?id=' + id)
+                  .success(callback).error(callback);
+        },
+        findSubjectsStartsWith: function(value, subjectIds) {
+          var deferred = $q.defer();
+          $http.get("api/teachingExperiences/findSubjectsStartsWith", {
+            params: {
+              value: value,
+              subjectIds: subjectIds
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
       };
     }]);

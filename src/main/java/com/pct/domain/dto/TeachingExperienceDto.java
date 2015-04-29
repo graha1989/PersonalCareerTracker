@@ -9,23 +9,29 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.StudiesThesisType;
 import com.pct.domain.TeachingExperience;
+import com.pct.domain.enums.InstitutionType;
+import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
 
 public class TeachingExperienceDto implements Serializable {
 
 	private static final long serialVersionUID = 3146290914337422784L;
-	
+
 	@NotEmpty
 	@Length(max = 100)
 	@SafeHtml
 	private String subjectName;
-	
+
 	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	private String studyProgram;
-	
+
+	@JsonDeserialize(using = InstitutionTypeEnumDeserializer.class)
+	private final InstitutionType institutionType = InstitutionType.FACULTY;
+
 	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
@@ -35,7 +41,7 @@ public class TeachingExperienceDto implements Serializable {
 	@Length(max = 50)
 	@SafeHtml
 	private String universityName;
-	
+
 	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
@@ -45,23 +51,27 @@ public class TeachingExperienceDto implements Serializable {
 	@Length(max = 50)
 	@SafeHtml
 	private String facultyCountry;
-	
+
+	@NotNull
 	private StudiesThesisType studiesThesisType;
-	
-	@Nullable
+
+	@NotNull
 	private Integer numberOfTheoreticalLessons;
-	
-	@Nullable
+
+	@NotNull
 	private Integer numberOfPracticalLessons;
 
-	@Nullable
+	@NotNull
 	private Integer numberOfTeachingLessons;
-	
+
 	@NotNull
 	protected Long professorId;
-	
+
 	@Nullable
 	protected Long institutionId;
+
+	@Nullable
+	protected Long subjectId;
 
 	@Nullable
 	protected Long id;
@@ -72,7 +82,7 @@ public class TeachingExperienceDto implements Serializable {
 	public TeachingExperienceDto(String subjectName, String studyProgram, String facultyName, String universityName,
 			String facultyCity, String facultyCountry, StudiesThesisType studiesThesisType,
 			Integer numberOfTheoreticalLessons, Integer numberOfPracticalLessons, Integer numberOfTeachingLessons,
-			Long professorId, Long institutionId, Long id) {
+			Long professorId, Long institutionId, Long subjectId, Long id) {
 		super();
 		this.subjectName = subjectName;
 		this.studyProgram = studyProgram;
@@ -86,9 +96,10 @@ public class TeachingExperienceDto implements Serializable {
 		this.numberOfTeachingLessons = numberOfTeachingLessons;
 		this.professorId = professorId;
 		this.institutionId = institutionId;
+		this.subjectId = subjectId;
 		this.id = id;
 	}
-	
+
 	public TeachingExperienceDto(TeachingExperience teachingExperience) {
 		super();
 		this.subjectName = teachingExperience.getSubject().getName();
@@ -103,6 +114,7 @@ public class TeachingExperienceDto implements Serializable {
 		this.numberOfTeachingLessons = teachingExperience.getSubject().getNumberOfTeachingLessons();
 		this.professorId = teachingExperience.getProfessor().getId();
 		this.institutionId = teachingExperience.getSubject().getInstitution().getId();
+		this.subjectId = teachingExperience.getSubject().getId();
 		this.id = teachingExperience.getId();
 	}
 
@@ -120,6 +132,10 @@ public class TeachingExperienceDto implements Serializable {
 
 	public void setStudyProgram(String studyProgram) {
 		this.studyProgram = studyProgram;
+	}
+
+	public InstitutionType getInstitutionType() {
+		return institutionType;
 	}
 
 	public String getFacultyName() {
@@ -202,6 +218,14 @@ public class TeachingExperienceDto implements Serializable {
 		this.institutionId = institutionId;
 	}
 
+	public Long getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(Long subjectId) {
+		this.subjectId = subjectId;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -209,5 +233,5 @@ public class TeachingExperienceDto implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 }

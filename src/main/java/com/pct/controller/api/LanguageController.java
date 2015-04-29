@@ -55,20 +55,19 @@ public class LanguageController {
 	}
 	
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<LanguageExperienceDto> persistLanguageExperience(@Valid @RequestBody LanguageExperienceDto languageExperienceDto) {
+	public ResponseEntity<String> persistLanguageExperience(@Valid @RequestBody LanguageExperienceDto languageExperienceDto) {
 
-		LanguageExperienceDto language = new LanguageExperienceDto();
 		try {
-			language = languageService.saveLanguageExperience(languageExperienceDto);
+			languageService.saveLanguageExperience(languageExperienceDto);
 		} catch (LanguageNotFoundException e) {
 			e.printStackTrace();
 		} catch (ProfessorNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		logger.debug("Language experience for:" + language.getLanguageName() + " language successfully saved.");
+		logger.debug("Language experience for:" + languageExperienceDto.getLanguageName() + " language successfully saved.");
 
-		return new ResponseEntity<LanguageExperienceDto>(language, HttpStatus.OK);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "selectedLanguage", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)

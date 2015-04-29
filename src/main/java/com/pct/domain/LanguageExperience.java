@@ -1,11 +1,13 @@
 package com.pct.domain;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Column;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -24,12 +26,14 @@ public class LanguageExperience extends AbstractEntity {
 	@Column(name = "pronouncing")
 	private boolean pronouncing;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "profesorId")
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "professorId")
 	@JsonBackReference(value = "professor")
 	private Professor professor;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "languageId")
 	@JsonBackReference(value = "language")
 	private Language language;
@@ -72,11 +76,11 @@ public class LanguageExperience extends AbstractEntity {
 		this.pronouncing = pronouncing;
 	}
 
-	public Professor getProfesor() {
+	public Professor getProfessor() {
 		return professor;
 	}
 
-	public void setProfesor(Professor professor) {
+	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
 

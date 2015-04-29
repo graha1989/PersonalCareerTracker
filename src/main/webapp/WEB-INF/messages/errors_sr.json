@@ -39,6 +39,8 @@
 		"minAverageNumber" : "Min. number is 5",
 		"maxAverageNumber" : "Max. number is 10",
 		"minQuotedNumber" : "Min. number is 0",
-		"invalidMaxGradeLength" : "Max. 5 characters."
+		"invalidMaxGradeLength" : "Max. 5 characters.",
+		"invalidLessonsNumberLength" : "Max. 2 characters.",
+		"minLessonsNumber" : "Min. number is 0."
 	}
 }

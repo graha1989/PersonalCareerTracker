@@ -13,7 +13,7 @@ public interface LanguageService {
 	
 	List<LanguageExperienceDto> findAllLanguageExperiences(Long mentorId);
 
-	LanguageExperienceDto saveLanguageExperience(LanguageExperienceDto languageExperienceDto) throws LanguageNotFoundException, ProfessorNotFoundException;
+	void saveLanguageExperience(LanguageExperienceDto languageExperienceDto) throws LanguageNotFoundException, ProfessorNotFoundException;
 
 	Language findLanguageById(Long id) throws LanguageNotFoundException;
 

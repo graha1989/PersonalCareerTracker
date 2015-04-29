@@ -30,11 +30,10 @@ public class ProfesorServiceImpl implements ProfessorService {
 			throw new ProfessorNotFoundException();
 		} else {
 			Professor professor = profesorRepository.findByUserName(userName);
-			professorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(),
-					professor.getEmail(), professor.getUloga(), professor.getName(), professor.getSurname(),
-					professor.getFathersName(), professor.getDateOfBirth(), professor.getPlaceOfBirth(),
-					professor.getCountryOfBirth(), professor.getScientificArea(), professor.getSpecialScientificArea(),
-					professor.getId());
+			professorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(), professor.getEmail(),
+					professor.getName(), professor.getSurname(), professor.getFathersName(),
+					professor.getDateOfBirth(), professor.getPlaceOfBirth(), professor.getCountryOfBirth(),
+					professor.getScientificArea(), professor.getSpecialScientificArea(), professor.getId());
 		}
 
 		return professorDto;
@@ -50,11 +49,10 @@ public class ProfesorServiceImpl implements ProfessorService {
 			throw new ProfessorNotFoundException();
 		} else {
 			Professor professor = profesorRepository.findOne(id);
-			ProfessorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(),
-					professor.getEmail(), professor.getUloga(), professor.getName(), professor.getSurname(),
-					professor.getFathersName(), professor.getDateOfBirth(), professor.getPlaceOfBirth(),
-					professor.getCountryOfBirth(), professor.getScientificArea(), professor.getSpecialScientificArea(),
-					professor.getId());
+			ProfessorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(), professor.getEmail(),
+					professor.getName(), professor.getSurname(), professor.getFathersName(),
+					professor.getDateOfBirth(), professor.getPlaceOfBirth(), professor.getCountryOfBirth(),
+					professor.getScientificArea(), professor.getSpecialScientificArea(), professor.getId());
 		}
 
 		return ProfessorDto;
@@ -73,17 +71,16 @@ public class ProfesorServiceImpl implements ProfessorService {
 		}
 
 		profesorRepository.saveAndFlush(professor);
-
 	}
 
 	@Override
 	@Transactional
 	public List<ProfessorDto> findProfessorsStartsWith(String value, Long idProf, Long idMentor)
 			throws ProfessorNotFoundException {
-		
+
 		List<ProfessorDto> professorsDtoList = new ArrayList<ProfessorDto>();
 		List<Professor> professorsList = new ArrayList<Professor>();
-		
+
 		if (idProf == null) {
 			professorsList = profesorRepository.findByNameLikeOrSurnameLike(value, idMentor);
 		} else {
@@ -94,7 +91,7 @@ public class ProfesorServiceImpl implements ProfessorService {
 			professorDto.setId(p.getId());
 			professorsDtoList.add(professorDto);
 		}
-		
+
 		return professorsDtoList;
 	}
 

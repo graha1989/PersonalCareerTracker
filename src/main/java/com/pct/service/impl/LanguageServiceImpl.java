@@ -3,6 +3,8 @@ package com.pct.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,6 @@ import com.pct.repository.LanguageExperienceRepository;
 import com.pct.repository.LanguageRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.service.LanguageService;
-import com.pct.service.util.LanguageExperienceUtil;
 import com.pct.validation.LanguageExperienceNotFoundException;
 import com.pct.validation.LanguageNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
@@ -49,42 +50,43 @@ public class LanguageServiceImpl implements LanguageService {
 		}
 
 		return languageDtoList;
-
 	}
 
 	@Override
 	@Transactional
-	public LanguageExperienceDto saveLanguageExperience(LanguageExperienceDto languageExperienceDto)
-			throws LanguageNotFoundException, ProfessorNotFoundException {
+	public void saveLanguageExperience(LanguageExperienceDto languageExperienceDto) throws LanguageNotFoundException,
+			ProfessorNotFoundException {
 
-		LanguageExperience languageExperience = new LanguageExperience();
-		Language language = new Language();
-		Professor professor = new Professor();
-
-		if (languageExperienceDto.getLanguageId() == null
-				|| languageRepo.findOne(languageExperienceDto.getLanguageId()) == null) {
-			throw new LanguageNotFoundException();
-		} else {
-			language = languageRepo.findOne(languageExperienceDto.getLanguageId());
-		}
-
-		if (languageExperienceDto.getProfessorId() == null
-				|| professorRepository.findOne(languageExperienceDto.getProfessorId()) == null) {
+		Professor professor = professorRepository.findOne(languageExperienceDto.getProfessorId());
+		if (professor == null) {
 			throw new ProfessorNotFoundException();
-		} else {
-			professor = professorRepository.findOne(languageExperienceDto.getProfessorId());
+		}
+		Language language = languageRepo.findOne(languageExperienceDto.getLanguageId());
+		if (language == null) {
+			throw new LanguageNotFoundException();
 		}
 
-		if (languageExperienceDto.getId() != null) {
-			languageExperience = LanguageExperienceUtil.createLanguageExperienceInstanceFromLanguageExperienceDto(
-					languageExperienceDto, language, professor);
+		languageRepository.saveAndFlush(createOrUpdateLanguageExperienceInstanceFromLanguageExperienceDto(
+				languageExperienceDto, professor, language));
+	}
+
+	public LanguageExperience createOrUpdateLanguageExperienceInstanceFromLanguageExperienceDto(
+			@Nonnull LanguageExperienceDto languageExperienceDto, @Nonnull Professor professor,
+			@Nonnull Language language) {
+
+		LanguageExperience languageExperience = null;
+		if (languageExperienceDto.getId() == null) {
+			languageExperience = new LanguageExperience();
+			languageExperience.setProfessor(professor);
+			languageExperience.setLanguage(language);
 		} else {
-			languageExperience = LanguageExperienceUtil.createNewLanguageExperienceInstanceFromLanguageExperienceDto(
-					languageExperienceDto, language, professor);
+			languageExperience = languageRepository.findOne(languageExperienceDto.getId());
 		}
+		languageExperience.setReading(languageExperienceDto.isReading());
+		languageExperience.setWriting(languageExperienceDto.isWriting());
+		languageExperience.setPronouncing(languageExperienceDto.isPronouncing());
 
-		return new LanguageExperienceDto(languageRepository.save(languageExperience));
-
+		return languageExperience;
 	}
 
 	@Override
@@ -100,12 +102,12 @@ public class LanguageServiceImpl implements LanguageService {
 		}
 
 		return language;
-
 	}
 
 	@Override
 	@Transactional
-	public List<LanguageDto> findAllNotListedLanguages(List<Long> languageExperienceIdsList) throws LanguageNotFoundException {
+	public List<LanguageDto> findAllNotListedLanguages(List<Long> languageExperienceIdsList)
+			throws LanguageNotFoundException {
 
 		List<LanguageDto> languageDtoList = new ArrayList<LanguageDto>();
 
@@ -115,20 +117,20 @@ public class LanguageServiceImpl implements LanguageService {
 			languageDto.setId(l.getId());
 			languageDtoList.add(languageDto);
 		}
-		return languageDtoList;
 
+		return languageDtoList;
 	}
 
 	@Override
 	@Transactional
-	public void deleteLanguageExperience(Long id) throws LanguageExperienceNotFoundException {
+	public void deleteLanguageExperience(@Nonnull Long id) throws LanguageExperienceNotFoundException {
 		
-		if (id == null || languageRepository.findOne(id) == null) {
+		LanguageExperience languageExperience = languageRepository.findOne(id);
+		if (languageExperience == null) {
 			throw new LanguageExperienceNotFoundException();
 		}
-
-		languageRepository.delete(id);
 		
+		languageRepository.delete(languageExperience);
 	}
 
 }

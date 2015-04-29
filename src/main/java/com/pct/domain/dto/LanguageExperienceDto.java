@@ -28,7 +28,6 @@ public class LanguageExperienceDto implements Serializable {
 	protected Long id;
 
 	public LanguageExperienceDto() {
-		super();
 	}
 
 	public LanguageExperienceDto(Long professorId, Long languageId, String languageName, boolean writing, boolean reading,
@@ -44,7 +43,7 @@ public class LanguageExperienceDto implements Serializable {
 	}
 
 	public LanguageExperienceDto(LanguageExperience languageExperience) {
-		this.professorId = languageExperience.getProfesor().getId();
+		this.professorId = languageExperience.getProfessor().getId();
 		this.languageId = languageExperience.getLanguage().getId();
 		this.languageName = languageExperience.getLanguage().getName();
 		this.writing = languageExperience.isWriting();

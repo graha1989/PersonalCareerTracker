@@ -9,6 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "language")
 public class Language extends AbstractEntity {
@@ -18,17 +22,18 @@ public class Language extends AbstractEntity {
 	@Column(name = "name", length = 20)
 	private String name;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "language")
-	private Set<LanguageExperience> languageExperiences;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "language")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "language")
+	private Set<LanguageExperience> languageExperiences = new HashSet<LanguageExperience>();
 	
 	public Language() {
-		super();
 	}
 
-	public Language(String name) {
+	public Language(String name, Set<LanguageExperience> languageExperiences) {
 		super();
 		this.name = name;
-		this.languageExperiences = new HashSet<LanguageExperience>();
+		this.languageExperiences = languageExperiences;
 	}
 
 	public String getName() {
@@ -44,17 +49,10 @@ public class Language extends AbstractEntity {
 	}
 
 	public void setLanguageExperiences(Set<LanguageExperience> languageExperiences) {
-		
 		this.languageExperiences.clear();
 
 		if (languageExperiences != null) {
 			this.languageExperiences.addAll(languageExperiences);
-		}
-	}
-	
-	public void addLanguageExperience(LanguageExperience languageExperiences) {
-		if (languageExperiences != null) {
-			this.languageExperiences.add(languageExperiences);
 		}
 	}
 	

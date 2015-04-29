@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import com.pct.domain.Professor;
-import com.pct.domain.Uloga;
 
 public class ProfessorDto implements Serializable {
 
@@ -29,8 +28,6 @@ public class ProfessorDto implements Serializable {
 	@SafeHtml
 	private String email;
 
-	private Uloga uloga;
-	
 	@Length(max = 50)
 	@SafeHtml
 	private String name;
@@ -60,21 +57,20 @@ public class ProfessorDto implements Serializable {
 	@Length(max = 50)
 	@SafeHtml
 	private String specialScientificArea;
-	
+
 	protected Long id;
-	
+
 	public ProfessorDto() {
 		super();
 	}
 
-	public ProfessorDto(String userName, String password, String email, Uloga uloga,
-			String name, String surname, String fathersName, Date dateOfBirth, String placeOfBirth,
-			String countryOfBirth, String scientificArea, String specialScientificArea, Long id) {
+	public ProfessorDto(String userName, String password, String email, String name, String surname,
+			String fathersName, Date dateOfBirth, String placeOfBirth, String countryOfBirth, String scientificArea,
+			String specialScientificArea, Long id) {
 		super();
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
-		this.uloga = uloga;
 		this.name = name;
 		this.surname = surname;
 		this.fathersName = fathersName;
@@ -85,13 +81,12 @@ public class ProfessorDto implements Serializable {
 		this.specialScientificArea = specialScientificArea;
 		this.id = id;
 	}
-	
+
 	public ProfessorDto(Professor p) {
 		super();
 		this.userName = p.getUserName();
 		this.password = p.getPassword();
 		this.email = p.getEmail();
-		this.uloga = p.getUloga();
 		this.name = p.getName();
 		this.surname = p.getSurname();
 		this.fathersName = p.getFathersName();
@@ -125,14 +120,6 @@ public class ProfessorDto implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Uloga getUloga() {
-		return uloga;
-	}
-
-	public void setUloga(Uloga uloga) {
-		this.uloga = uloga;
 	}
 
 	public String getName() {
@@ -198,7 +185,7 @@ public class ProfessorDto implements Serializable {
 	public void setSpecialScientificArea(String specialScientificArea) {
 		this.specialScientificArea = specialScientificArea;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -206,6 +193,5 @@ public class ProfessorDto implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 }

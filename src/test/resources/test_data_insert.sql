@@ -58,13 +58,13 @@ INSERT INTO thesis (title, paperScientificArea, dateOfGraduation, universityName
 	('Doktorska teza 1', 'Informatika', '2010-11-11 00:00:00', 'Univerzitet Beograd', '4', '10', '3', '5', '6')
 	ON DUPLICATE KEY UPDATE title=VALUES(title), paperScientificArea=VALUES(paperScientificArea), dateOfGraduation=VALUES(dateOfGraduation), universityName=VALUES(universityName), studiesThesisTypeId=VALUES(studiesThesisTypeId), studentId=VALUES(studentId), mentorId=VALUES(mentorId), commissionMemberId=VALUES(commissionMemberId), commissionPresidentId=VALUES(commissionPresidentId);
 	
-INSERT INTO language_experience (profesorId, languageId, writing, reading, pronouncing) VALUES
+INSERT INTO language_experience (professorId, languageId, writing, reading, pronouncing) VALUES
 	('3', '1', '1', '1', '1'),
 	('3', '3', '1', '0', '0'),
 	('3', '4', '0', '1', '1'),
 	('3', '7', '1', '0', '1'),
 	('3', '15', '0', '0', '1')
-	ON DUPLICATE KEY UPDATE profesorId=VALUES(profesorId), languageId=VALUES(languageId), writing=VALUES(writing), reading=VALUES(reading), pronouncing=VALUES(pronouncing);
+	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), languageId=VALUES(languageId), writing=VALUES(writing), reading=VALUES(reading), pronouncing=VALUES(pronouncing);
 	
 INSERT INTO award (awardName, awardedBy, dateOfAward, professorId, awardType, awardField) VALUES
 	('Mileva Marić Anštajn', 'Univerzitet Novi Sad', '2006-09-15', '3', 'PRIZE', 'SCIENTIFIC_FIELD'),

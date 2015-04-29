@@ -25,6 +25,7 @@
         "workExperiencesTitle": "Kretanje u profesionalnom radu",
         "teachingExperiencesTitle": "Izvođenje nastave",
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
+        "editTeachingExperiencePopupTitle": "Izmena rada u nastavi",
         "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva",
         "addNewBachelorStudiesTitle": "Dodavanje novih osnovnih studija",
         "addNewMasterStudiesTitle": "Dodavanje novih master studija",
@@ -315,6 +316,19 @@
         "workStartDate": "Početak zaposlenja",
         "workEndDate": "Kraj zaposlenja",
         "title": "Zvanje"
+    },
+    "teachingExperiencePopupLabels": {
+    	"subjectName": "Naziv predmeta",
+        "studyProgram": "Studijski program",
+        "facultyName": "Naziv fakulteta",
+        "universityName": "Naziv univerziteta",
+        "facultyCity": "Grad",
+        "facultyCountry": "Država",
+        "studyType": "Stepen studija",
+        "numberOfLessons": "Fond časova",
+        "teachingLessons": "Predavanja",
+        "practicalLessons": "Praktične vežbe",
+        "theoreticalLessons": "Teorijske vežbe"
     },
     "bachelorStudiesPopupLabels": {
     	"facultyName": "Naziv fakulteta",
