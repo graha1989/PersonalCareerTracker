@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,6 @@ import com.pct.domain.enums.AwardType;
 import com.pct.repository.AwardRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.service.AwardService;
-import com.pct.service.util.AwardUtil;
 import com.pct.validation.AwardNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
 
@@ -58,24 +59,32 @@ public class AwardServiceImpl implements AwardService {
 
 	@Override
 	@Transactional
-	public AwardDto saveAward(AwardDto awardDto) throws ProfessorNotFoundException {
+	public void saveAward(AwardDto awardDto) throws ProfessorNotFoundException {
 
-		Award award = new Award();
-		Professor mentor = new Professor();
-
-		if (awardDto.getMentorId() == null || professorRepository.findOne(awardDto.getMentorId()) == null) {
+		Professor professor = professorRepository.findOne(awardDto.getMentorId());
+		if (professor == null) {
 			throw new ProfessorNotFoundException();
-		} else {
-			mentor = professorRepository.findOne(awardDto.getMentorId());
 		}
 
-		if (awardDto.getId() != null) {
-			award = AwardUtil.createAwardInstanceFromAwardDto(awardDto, mentor);
-		} else {
-			award = AwardUtil.createNewAwardInstanceFromAwardDto(awardDto, mentor);
-		}
+		awardRepository.saveAndFlush(createOrUpdateAwardInstanceFromAwardDto(awardDto, professor));
+	}
 
-		return new AwardDto(awardRepository.save(award));
+	public Award createOrUpdateAwardInstanceFromAwardDto(@Nonnull AwardDto awardDto, @Nonnull Professor professor) {
+
+		Award award = null;
+		if (awardDto.getId() == null) {
+			award = new Award();
+			award.setProfessor(professor);
+		} else {
+			award = awardRepository.findOne(awardDto.getId());
+		}
+		award.setAwardName(awardDto.getAwardName());
+		award.setAwardedBy(awardDto.getAwardedBy());
+		award.setAwardType(awardDto.getAwardType());
+		award.setAwardField(awardDto.getAwardField());
+		award.setDateOfAward(awardDto.getDateOfAward());
+
+		return award;
 	}
 
 	@Override

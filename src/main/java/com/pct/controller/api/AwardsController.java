@@ -67,18 +67,17 @@ public class AwardsController {
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<AwardDto> persistAward(@Valid @RequestBody AwardDto awardDto) {
+	public ResponseEntity<String> persistAward(@Valid @RequestBody AwardDto awardDto) {
 
-		AwardDto award = null;
 		try {
-			award = awardService.saveAward(awardDto);
+			awardService.saveAward(awardDto);
 		} catch (ProfessorNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		logger.debug("Award:" + award.getAwardName() + " successfully saved.");
+		logger.debug("Award:" + awardDto.getAwardName() + " successfully saved.");
 
-		return new ResponseEntity<AwardDto>(award, HttpStatus.OK);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "selectedAward", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)

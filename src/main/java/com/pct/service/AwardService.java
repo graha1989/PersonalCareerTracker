@@ -16,7 +16,7 @@ public interface AwardService {
 
 	List<AwardField> findAllAwardFields();
 
-	AwardDto saveAward(AwardDto awardDto) throws ProfessorNotFoundException;
+	void saveAward(AwardDto awardDto) throws ProfessorNotFoundException;
 
 	AwardDto findAwardById(Long id) throws AwardNotFoundException;
 
