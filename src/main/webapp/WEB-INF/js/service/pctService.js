@@ -344,5 +344,8 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        loadAllInstitutions: function(params, callback) {
+          $http.get('api/institutions/allInstitutions').success(callback);
+        },
       };
     }]);

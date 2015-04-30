@@ -23,8 +23,10 @@
         "editPublicationPopupTitle": "Izmena publikacije",
         "newPublicationPopupTitle": "Unos nove publikacije",
         "workExperiencesTitle": "Kretanje u profesionalnom radu",
+        "institutionsTitle": "Sve institucije",
         "teachingExperiencesTitle": "Izvođenje nastave",
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
+        "editInstitutionPopupTitle": "Izmena institucije",
         "editTeachingExperiencePopupTitle": "Izmena rada u nastavi",
         "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva",
         "addNewBachelorStudiesTitle": "Dodavanje novih osnovnih studija",
@@ -185,6 +187,14 @@
             "save": "Sačuvaj",
             "cancel": "Odustani"
         },
+        "institutionButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novu instituciju",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
         "teachingExperienceButtons": {
             "delete": "Izbriši",
             "edit": "Izmeni",
@@ -297,6 +307,13 @@
         "workEndDate": "Kraj zaposlenja",
         "title": "Zvanje"
     },
+    "institutionsTableLabels": {
+    	"institutionType": "Tip ustanove",
+        "institutionName": "Ustanova",
+        "universityName": "Univerzitet",
+        "institutionCity": "Grad",
+        "institutionCountry": "Država"
+    },
     "teachingExperienceTableLabels": {
     	"subjectName": "Naziv predmeta",
         "studyProgram": "Studijski program",
@@ -316,6 +333,13 @@
         "workStartDate": "Početak zaposlenja",
         "workEndDate": "Kraj zaposlenja",
         "title": "Zvanje"
+    },
+    "institutionPopupLabels": {
+    	"institutionType": "Tip ustanove",
+        "institutionName": "Naziv ustanove",
+        "universityName": "Naziv univerziteta",
+        "institutionCity": "Grad",
+        "institutionCountry": "Država"
     },
     "teachingExperiencePopupLabels": {
     	"subjectName": "Naziv predmeta",

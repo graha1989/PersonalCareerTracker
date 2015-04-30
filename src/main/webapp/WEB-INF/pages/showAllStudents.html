@@ -31,8 +31,16 @@
 							<td>{{ student.transcriptNumber }}</td>
 							<td>{{ student.name }}</td>
 							<td>{{ student.surname }}</td>
-							<td class="delete"><a ng-click="deleteStudent(student.id, $index)"><span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.delete }}</a></td>
-							<td class="edit"><a ng-click="editStudent(student.id)"><span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.edit }}</a></td>
+							<td class="delete"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteStudent(student.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.delete }}
+								</button></td>
+							<td class="edit"><button
+									class="btn btn-link btn-xs"
+									ng-click="editStudent(student.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.edit }}
+								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
 							<td colspan="5">{{ errorMessages.error.emptyTable }}</td>
@@ -44,7 +52,7 @@
 		<div class="modal-footer action">
 			<button
 				id="addNewButton"
-				class="btn btn-success"
+				class="btn btn-success btn-sm"
 				ng-click="createNewStudent()">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.add }}
 			</button>
@@ -56,7 +64,7 @@
 <script
 	type="text/ng-template"
 	id="editStudentPopup.html">
-	<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="student">
+	<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required novalidate" role="form" ng-model="student">
 		<div class="modal-header">
     		<h3 class="modal-title">{{ resources.text.editPopupTitle }}</h3>
    	 	</div>
@@ -127,7 +135,7 @@
 <script
 	type="text/ng-template"
 	id="createNewStudentPopup.html">
-	<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="student">
+	<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required novalidate" role="form" ng-model="student">
 		<div class="modal-header">
     		<h3 class="modal-title">{{ resources.text.newPopupTitle }}</h3>
    	 	</div>
@@ -189,8 +197,8 @@
   			</div>
    		</div>
    		<div class="modal-footer action">
-		 	<button id="submit_button" type="submit" class="btn btn-success" ng-disabled="form.$invalid" ng-click="saveNewStudent()"><span class="glyphicon glyphicon-save"></span> {{ resources.studentPopupButtons.add }}</button>
-		 	<button id="cancel_button" class="btn" ng-click="cancel()">{{ resources.studentPopupButtons.close }}</button>
+		 	<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="form.$invalid" ng-click="saveNewStudent()"><span class="glyphicon glyphicon-save"></span> {{ resources.studentPopupButtons.add }}</button>
+		 	<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.studentPopupButtons.close }}</button>
   		</div>
 	</form>
 </script>
