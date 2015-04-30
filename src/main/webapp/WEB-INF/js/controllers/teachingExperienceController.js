@@ -80,7 +80,6 @@ var editTeachingExperiencePopupController = function($scope, $modalInstance,
   $scope.master = {};
   $scope.allStudiesThesisTypes = [];
   $scope.selectedFaculty = [];
-  $scope.selectedSubject = [];
   $scope.isExistingFaculty = false;
 
   $scope.patterns = {
@@ -116,7 +115,6 @@ var editTeachingExperiencePopupController = function($scope, $modalInstance,
       if (angular.isObject(data)) {
         $scope.teachingExperience = data;
         $scope.selectedFaculty = $scope.teachingExperience.facultyName;
-        $scope.selectedSubject = $scope.teachingExperience.subjectName;
         $scope.master = angular.copy($scope.workExperience);
         $scope.noResultsFound = false;
       } else {

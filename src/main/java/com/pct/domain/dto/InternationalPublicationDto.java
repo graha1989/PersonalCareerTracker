@@ -10,7 +10,6 @@ import org.hibernate.validator.constraints.SafeHtml;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.InternationalPublication;
-import com.pct.domain.PublicationCategory;
 import com.pct.domain.enums.PublicationType;
 import com.pct.domain.enums.deserializers.PublicationTypeEnumDeserializer;
 
@@ -56,7 +55,7 @@ public class InternationalPublicationDto implements Serializable {
 	@SafeHtml
 	private String year;
 
-	private PublicationCategory publicationCategory;
+	private PublicationCategoryDto publicationCategoryDto;
 
 	protected Long professorId;
 
@@ -68,7 +67,7 @@ public class InternationalPublicationDto implements Serializable {
 
 	public InternationalPublicationDto(PublicationType publicationType, String isbn, String title, String journalTitle,
 			String authors, String publisher, String pagesWithQuotes, String year, Integer quoted,
-			PublicationCategory publicationCategory, Long professorId, Long id) {
+			PublicationCategoryDto publicationCategoryDto, Long professorId, Long id) {
 		super();
 		this.publicationType = publicationType;
 		this.isbn = isbn;
@@ -78,7 +77,7 @@ public class InternationalPublicationDto implements Serializable {
 		this.publisher = publisher;
 		this.pagesWithQuotes = pagesWithQuotes;
 		this.year = year;
-		this.publicationCategory = publicationCategory;
+		this.publicationCategoryDto = publicationCategoryDto;
 		this.professorId = professorId;
 		this.id = id;
 	}
@@ -93,7 +92,7 @@ public class InternationalPublicationDto implements Serializable {
 		this.publisher = p.getPublisher();
 		this.pagesWithQuotes = p.getPagesWithQuotes();
 		this.year = p.getYear();
-		this.publicationCategory = p.getPublicationCategory();
+		this.publicationCategoryDto = (p.getPublicationCategory() != null ? new PublicationCategoryDto(p.getPublicationCategory()):null);
 		this.professorId = p.getProfessor().getId();
 		this.id = p.getId();
 	}
@@ -162,12 +161,12 @@ public class InternationalPublicationDto implements Serializable {
 		this.year = year;
 	}
 
-	public PublicationCategory getPublicationCategory() {
-		return publicationCategory;
+	public PublicationCategoryDto getPublicationCategoryDto() {
+		return publicationCategoryDto;
 	}
 
-	public void setPublicationCategory(PublicationCategory publicationCategory) {
-		this.publicationCategory = publicationCategory;
+	public void setPublicationCategoryDto(PublicationCategoryDto publicationCategoryDto) {
+		this.publicationCategoryDto = publicationCategoryDto;
 	}
 
 	public Long getProfessorId() {

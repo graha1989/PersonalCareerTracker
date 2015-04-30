@@ -317,8 +317,8 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
                     $scope.master.publicationType)
             && angular.equals(publication.quoted, $scope.master.quoted)
             && angular.equals(publication.year, $scope.master.year)
-            && angular.equals(publication.publicationCategory,
-                    $scope.master.publicationCategory)
+            && angular.equals(publication.publicationCategoryDto,
+                    $scope.master.publicationCategoryDto)
             && $scope.testArrays($scope.publicationAuthorsArray,
                     $scope.masterPublicationAuthorsArray)
             && $scope.testArrays($scope.publicationPageRanges,
@@ -347,12 +347,12 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
     if (angular.isUndefined($scope.publication.publicationType)
             || $scope.publication.publicationType === null
             || $scope.publication.publicationType === '') {
-      $scope.publication.publicationCategory = null;
+      $scope.publication.publicationCategoryDto = null;
       return true;
     } else if ($scope.publication.publicationType.name == "SCIENTIFIC") {
       return false;
     } else {
-      $scope.publication.publicationCategory = null;
+      $scope.publication.publicationCategoryDto = null;
       return true;
     }
   };
@@ -588,11 +588,11 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
             && $scope.publication.publicationType != null
             && $scope.publication.publicationType != '') {
       if ($scope.publication.publicationType.name === "SCIENTIFIC"
-              && $scope.publication.publicationCategory != null
-              && $scope.publication.publicationCategory != '') {
+              && $scope.publication.publicationCategoryDto != null
+              && $scope.publication.publicationCategoryDto != '') {
         return true;
       } else if ($scope.publication.publicationType.name === "SCIENTIFIC"
-              && ($scope.publication.publicationCategory == null || $scope.publication.publicationCategory == '')) {
+              && ($scope.publication.publicationCategoryDto == null || $scope.publication.publicationCategoryDto == '')) {
         return false;
       } else {
         return true;
@@ -611,12 +611,12 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
     if (angular.isUndefined($scope.publication.publicationType)
             || $scope.publication.publicationType === null
             || $scope.publication.publicationType === '') {
-      $scope.publication.publicationCategory = null;
+      $scope.publication.publicationCategoryDto = null;
       return true;
     } else if ($scope.publication.publicationType.name === "SCIENTIFIC") {
       return false;
     } else {
-      $scope.publication.publicationCategory = null;
+      $scope.publication.publicationCategoryDto = null;
       return true;
     }
   };

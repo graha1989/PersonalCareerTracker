@@ -24,11 +24,16 @@ import com.pct.validation.ProfessorNotFoundException;
 @Service
 public class AwardServiceImpl implements AwardService {
 
-	@Autowired
 	private AwardRepository awardRepository;
 
-	@Autowired
 	private ProfesorRepository professorRepository;
+
+	@Autowired
+	public AwardServiceImpl(AwardRepository awardRepository, ProfesorRepository professorRepository) {
+		super();
+		this.awardRepository = awardRepository;
+		this.professorRepository = professorRepository;
+	}
 
 	@Override
 	@Transactional
@@ -92,15 +97,14 @@ public class AwardServiceImpl implements AwardService {
 	public AwardDto findAwardById(Long id) throws AwardNotFoundException {
 
 		AwardDto awardDto;
-
-		if (id == null || awardRepository.findOne(id) == null) {
-			throw new AwardNotFoundException();
-		} else {
-			Award award = awardRepository.findOne(id);
-			awardDto = new AwardDto(award);
+		if (id != null) {
+			Award a = awardRepository.findOne(id);
+			if (a != null) {
+				awardDto = new AwardDto(a);
+				return awardDto;
+			}
 		}
-
-		return awardDto;
+		throw new AwardNotFoundException();
 	}
 
 	@Override

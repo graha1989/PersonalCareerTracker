@@ -17,6 +17,7 @@ import com.pct.domain.ProfessorPublication;
 import com.pct.domain.PublicationCategory;
 import com.pct.domain.dto.InternationalPublicationDto;
 import com.pct.domain.dto.ProfessorPublicationDto;
+import com.pct.domain.dto.PublicationCategoryDto;
 import com.pct.domain.enums.PublicationType;
 import com.pct.repository.InternationalPublicationsRepository;
 import com.pct.repository.ProfesorRepository;
@@ -30,17 +31,24 @@ import com.pct.validation.PublicationNotFoundException;
 @Service
 public class PublicationServiceImpl implements PublicationService {
 
-	@Autowired
 	private ProfessorPublicationsRepository professorPublicationsRepository;
 
-	@Autowired
 	private PublicationCategoryRepository publicationCategoryRepository;
 
-	@Autowired
 	private ProfesorRepository professorRepository;
 
-	@Autowired
 	private InternationalPublicationsRepository internationalPublicationsRepository;
+
+	@Autowired
+	public PublicationServiceImpl(ProfessorPublicationsRepository professorPublicationsRepository,
+			PublicationCategoryRepository publicationCategoryRepository, ProfesorRepository professorRepository,
+			InternationalPublicationsRepository internationalPublicationsRepository) {
+		super();
+		this.professorPublicationsRepository = professorPublicationsRepository;
+		this.publicationCategoryRepository = publicationCategoryRepository;
+		this.professorRepository = professorRepository;
+		this.internationalPublicationsRepository = internationalPublicationsRepository;
+	}
 
 	@Override
 	@Transactional
@@ -69,8 +77,15 @@ public class PublicationServiceImpl implements PublicationService {
 
 	@Override
 	@Transactional
-	public List<PublicationCategory> findAllPublicationCategories() {
-		return publicationCategoryRepository.findAll();
+	public List<PublicationCategoryDto> findAllPublicationCategories() {
+
+		List<PublicationCategoryDto> publicationCategoryDtos = new ArrayList<PublicationCategoryDto>();
+		List<PublicationCategory> publicationCategories = publicationCategoryRepository.findAll();
+		for (PublicationCategory publicationCategory : publicationCategories) {
+			publicationCategoryDtos.add(new PublicationCategoryDto(publicationCategory));
+		}
+
+		return publicationCategoryDtos;
 	}
 
 	@Override
@@ -78,31 +93,31 @@ public class PublicationServiceImpl implements PublicationService {
 	public ProfessorPublicationDto findProfessorPublicationById(Long id) throws PublicationNotFoundException {
 
 		ProfessorPublicationDto professorPublicationDto;
-
-		if (id == null || professorPublicationsRepository.findOne(id) == null) {
-			throw new PublicationNotFoundException();
-		} else {
+		if (id != null) {
 			ProfessorPublication publication = professorPublicationsRepository.findOne(id);
-			professorPublicationDto = new ProfessorPublicationDto(publication);
+			if (publication != null) {
+				professorPublicationDto = new ProfessorPublicationDto(publication);
+				return professorPublicationDto;
+			}
 		}
-
-		return professorPublicationDto;
+		
+		throw new PublicationNotFoundException();
 	}
 
 	@Override
 	@Transactional
 	public InternationalPublicationDto findInternationalPublicationById(Long id) throws PublicationNotFoundException {
 
-		InternationalPublicationDto internationalPublicationDto;
-
-		if (id == null || internationalPublicationsRepository.findOne(id) == null) {
-			throw new PublicationNotFoundException();
-		} else {
+		InternationalPublicationDto internationalPublicationDto = null;
+		if (id != null) {
 			InternationalPublication publication = internationalPublicationsRepository.findOne(id);
-			internationalPublicationDto = new InternationalPublicationDto(publication);
+			if (publication != null) {
+				internationalPublicationDto = new InternationalPublicationDto(publication);
+				return internationalPublicationDto;
+			}
 		}
-
-		return internationalPublicationDto;
+		
+		throw new PublicationNotFoundException();
 	}
 
 	@Override
@@ -123,11 +138,12 @@ public class PublicationServiceImpl implements PublicationService {
 
 	public PublicationCategory initializeProfessorPublicationCategory(
 			@Nonnull ProfessorPublicationDto professorPublicationDto) {
+		
 		PublicationCategory category = null;
-		if (professorPublicationDto.getPublicationCategory() != null
-				&& professorPublicationDto.getPublicationCategory().getId() != null
-				&& publicationCategoryRepository.findOne(professorPublicationDto.getPublicationCategory().getId()) != null) {
-			category = publicationCategoryRepository.findOne(professorPublicationDto.getPublicationCategory().getId());
+		if (professorPublicationDto.getPublicationCategoryDto() != null
+				&& professorPublicationDto.getPublicationCategoryDto().getId() != null) {
+			category = publicationCategoryRepository.findOne(professorPublicationDto.getPublicationCategoryDto()
+					.getId());
 		}
 
 		return category;
@@ -176,11 +192,11 @@ public class PublicationServiceImpl implements PublicationService {
 
 	public PublicationCategory initializeInternationalPublicationCategory(
 			@Nonnull InternationalPublicationDto internationalPublicationDto) {
+		
 		PublicationCategory category = null;
-		if (internationalPublicationDto.getPublicationCategory() != null
-				&& internationalPublicationDto.getPublicationCategory().getId() != null
-				&& publicationCategoryRepository.findOne(internationalPublicationDto.getPublicationCategory().getId()) != null) {
-			category = publicationCategoryRepository.findOne(internationalPublicationDto.getPublicationCategory()
+		if (internationalPublicationDto.getPublicationCategoryDto() != null
+				&& internationalPublicationDto.getPublicationCategoryDto().getId() != null) {
+			category = publicationCategoryRepository.findOne(internationalPublicationDto.getPublicationCategoryDto()
 					.getId());
 		}
 
@@ -216,19 +232,9 @@ public class PublicationServiceImpl implements PublicationService {
 	public void deleteProfessorPublication(Long id) throws PublicationNotFoundException {
 
 		ProfessorPublication professorPublication = professorPublicationsRepository.findOne(id);
-
-		if (id == null || professorPublication == null) {
+		if (professorPublication == null) {
 			throw new PublicationNotFoundException();
 		}
-
-		if (professorPublication.getPublicationCategory() != null) {
-			professorPublication.getPublicationCategory().getProfessorPublications().remove(professorPublication);
-		}
-
-		professorPublication.getProfessor().getProfessorPublications().remove(professorPublication);
-
-		professorPublication.setPublicationCategory(null);
-		professorPublication.setProfessor(null);
 
 		professorPublicationsRepository.delete(professorPublication);
 	}
@@ -258,20 +264,9 @@ public class PublicationServiceImpl implements PublicationService {
 	public void deleteInternationalPublication(Long id) throws PublicationNotFoundException {
 
 		InternationalPublication internationalPublication = internationalPublicationsRepository.findOne(id);
-
-		if (id == null || internationalPublication == null) {
+		if (internationalPublication == null) {
 			throw new PublicationNotFoundException();
 		}
-
-		if (internationalPublication.getPublicationCategory() != null) {
-			internationalPublication.getPublicationCategory().getProfessorPublications()
-					.remove(internationalPublication);
-		}
-
-		internationalPublication.getProfessor().getProfessorPublications().remove(internationalPublication);
-
-		internationalPublication.setPublicationCategory(null);
-		internationalPublication.setProfessor(null);
 
 		internationalPublicationsRepository.delete(internationalPublication);
 	}

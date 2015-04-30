@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.enums.InstitutionType;
@@ -41,14 +42,16 @@ public class Institution extends AbstractEntity {
 	@Column(name = "city", length = 50)
 	private String city;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "institution")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institution")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "institution")
+	@JsonIgnore
 	private Set<WorkExperience> workExperiences = new HashSet<WorkExperience>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "institution")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institution")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "institution")
+	@JsonIgnore
 	private Set<Studies> studies = new HashSet<Studies>();
 
 	public Institution() {

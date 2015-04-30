@@ -44,7 +44,7 @@
 							<td>{{ publication.pageRange }}</td>
 							<td>{{ publication.year }}</td>
 							<td>{{ publication.quoted }}</td>
-							<td>{{ publication.publicationCategory.code }}</td>
+							<td>{{ publication.publicationCategoryDto.code }}</td>
 							<td class="delete"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteProfessorPublication(publication.id, $index)">
@@ -483,7 +483,7 @@
 							class="ng-binding form-control"
 							id="inputPublicationCategory"
 							name="inputPublicationCategory"
-							ng-model="publication.publicationCategory"
+							ng-model="publication.publicationCategoryDto"
 							ng-disabled="scientificPublicationNotSelected()"
 							ng-options="publicationCategory.code for publicationCategory in allPublicationCategories track by publicationCategory.id"
 							ng-required="!scientificPublicationNotSelected()"><option value="">{{ resources.publicationPopupLabels.publicationCategory }}</option></select>
@@ -924,7 +924,7 @@
 							class="ng-binding form-control"
 							id="inputPublicationCategory"
 							name="inputPublicationCategory"
-							ng-model="publication.publicationCategory"
+							ng-model="publication.publicationCategoryDto"
 							ng-disabled="scientificPublicationNotSelected()"
 							ng-options="publicationCategory.code for publicationCategory in allPublicationCategories track by publicationCategory.id"
 							ng-required="!scientificPublicationNotSelected()"><option value="">{{ resources.publicationPopupLabels.publicationCategory }}</option></select>

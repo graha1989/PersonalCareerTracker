@@ -92,7 +92,7 @@
 							class="ng-binding form-control"
 							id="inputSubjectName"
 							name="inputSubjectName"
-							ng-model="$parent.selectedSubject"
+							ng-model="teachingExperience.subjectName"
 							typeahead="subject as subject.name for subject in getSubjects($viewValue) | limitTo:8"
 							typeahead-on-select="onSelectSubject()"
 							placeholder="{{ resources.teachingExperiencePopupLabels.subjectName }}"

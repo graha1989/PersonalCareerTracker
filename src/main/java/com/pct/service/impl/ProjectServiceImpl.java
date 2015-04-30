@@ -70,16 +70,16 @@ public class ProjectServiceImpl implements ProjectService {
 	@Transactional
 	public ProjectExperienceDto findProjectExperienceById(Long id) throws ProjectExperienceNotFoundException {
 
-		ProjectExperienceDto projectExperienceDto;
-
-		if (id == null || projectExperienceRepository.findOne(id) == null) {
-			throw new ProjectExperienceNotFoundException();
-		} else {
-			ProjectExperience project = projectExperienceRepository.findOne(id);
-			projectExperienceDto = new ProjectExperienceDto(project);
+		ProjectExperienceDto projectExperienceDto = null;
+		if (id != null) {
+			ProjectExperience projectExperience = projectExperienceRepository.findOne(id);
+			if (projectExperience != null) {
+				projectExperienceDto = new ProjectExperienceDto(projectExperience);
+				return projectExperienceDto;
+			}
 		}
-
-		return projectExperienceDto;
+		
+		throw new ProjectExperienceNotFoundException();
 	}
 
 	@Override
@@ -155,21 +155,13 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	@Transactional
 	public void deleteProjectExperience(Long id) throws ProjectExperienceNotFoundException {
-
+		
 		ProjectExperience projectExperience = projectExperienceRepository.findOne(id);
-
-		if (id == null || projectExperience == null) {
+		if (projectExperience == null) {
 			throw new ProjectExperienceNotFoundException();
 		}
 
-		projectExperience.getProject().getProjectExperiences().remove(projectExperience);
-		projectExperience.getProfessor().getProjectExperiences().remove(projectExperience);
-
-		projectExperience.setProject(null);
-		projectExperience.setProfessor(null);
-
 		projectExperienceRepository.delete(projectExperience);
-
 	}
 
 }

@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pct.domain.enums.ProjectType;
 
@@ -44,9 +45,10 @@ public class Project extends AbstractEntity {
 	@Lob
 	private String projectLeader;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "project")
+	@JsonIgnore
 	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 	
 	public Project() {

@@ -46,15 +46,15 @@ public class StudentServiceImpl implements StudentService {
 	public StudentDto findStudentById(Long id) throws StudentNotFoundException {
 
 		StudentDto studentDto;
-
-		if (id == null || studentRepository.findOne(id) == null) {
-			throw new StudentNotFoundException();
-		} else {
+		if (id != null) {
 			Student student = studentRepository.findOne(id);
-			studentDto = new StudentDto(student);
+			if (student != null) {
+				studentDto = new StudentDto(student);
+				return studentDto;
+			}
 		}
-
-		return studentDto;
+		
+		throw new StudentNotFoundException();
 	}
 
 	@Override
@@ -87,15 +87,15 @@ public class StudentServiceImpl implements StudentService {
 	public StudentDto findStudentByTranscriptNumber(String transcriptNumber) throws StudentNotFoundException {
 		
 		StudentDto studentDto;
-
-		if (transcriptNumber == null || studentRepository.findByTranscriptNumber(transcriptNumber) == null) {
-			throw new StudentNotFoundException();
-		} else {
+		if (transcriptNumber != null) {
 			Student student = studentRepository.findByTranscriptNumber(transcriptNumber);
-			studentDto = new StudentDto(student);
+			if (student != null) {
+				studentDto = new StudentDto(student);
+				return studentDto;
+			}
 		}
-
-		return studentDto;
+		
+		throw new StudentNotFoundException();
 	}
 
 	@Override

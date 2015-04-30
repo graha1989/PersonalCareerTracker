@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -53,44 +54,51 @@ public class Professor extends AbstractEntity {
 	@Column(name = "specialScientificArea", length = 50)
 	private String specialScientificArea;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
 	private Set<LanguageExperience> languageExperiences = new HashSet<LanguageExperience>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
+	@JsonIgnore
 	private Set<Award> awards = new HashSet<Award>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
+	@JsonIgnore
 	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
+	@JsonIgnore
 	private Set<ProfessorPublication> professorPublications = new HashSet<ProfessorPublication>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
+	@JsonIgnore
 	private Set<InternationalPublication> internationalPublications = new HashSet<InternationalPublication>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
+	@JsonIgnore
 	private Set<WorkExperience> workExperiences = new HashSet<WorkExperience>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
+	@JsonIgnore
 	private Set<Studies> studies = new HashSet<Studies>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
+	@JsonIgnore
 	private Set<TeachingExperience> teachingExperiences = new HashSet<TeachingExperience>();
 
 	public Professor() {

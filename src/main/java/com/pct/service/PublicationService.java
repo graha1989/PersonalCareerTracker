@@ -2,9 +2,9 @@ package com.pct.service;
 
 import java.util.List;
 
-import com.pct.domain.PublicationCategory;
 import com.pct.domain.dto.InternationalPublicationDto;
 import com.pct.domain.dto.ProfessorPublicationDto;
+import com.pct.domain.dto.PublicationCategoryDto;
 import com.pct.domain.enums.PublicationType;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.PublicationCategoryNotFoundException;
@@ -16,7 +16,7 @@ public interface PublicationService {
 
 	List<PublicationType> findAllPublicationTypes();
 
-	List<PublicationCategory> findAllPublicationCategories();
+	List<PublicationCategoryDto> findAllPublicationCategories();
 
 	ProfessorPublicationDto findProfessorPublicationById(Long id) throws PublicationNotFoundException;
 

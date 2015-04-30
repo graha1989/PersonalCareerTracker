@@ -340,8 +340,8 @@ var editInternationalPublicationPopupController = function($scope,
                     $scope.master.publicationType)
             && angular
                     .equals(internationalPublication.year, $scope.master.year)
-            && angular.equals(internationalPublication.publicationCategory,
-                    $scope.master.publicationCategory)
+            && angular.equals(internationalPublication.publicationCategoryDto,
+                    $scope.master.publicationCategoryDto)
             && $scope.testArrays($scope.publicationAuthorsArray,
                     $scope.masterPublicationAuthorsArray)
             && $scope.testArrays($scope.publicationPageRanges,
@@ -370,12 +370,12 @@ var editInternationalPublicationPopupController = function($scope,
     if (angular.isUndefined($scope.internationalPublication.publicationType)
             || $scope.internationalPublication.publicationType === null
             || $scope.internationalPublication.publicationType === '') {
-      $scope.internationalPublication.publicationCategory = null;
+      $scope.internationalPublication.publicationCategoryDto = null;
       return true;
     } else if ($scope.internationalPublication.publicationType.name == "SCIENTIFIC") {
       return false;
     } else {
-      $scope.internationalPublication.publicationCategory = null;
+      $scope.internationalPublication.publicationCategoryDto = null;
       return true;
     }
   };
@@ -606,11 +606,11 @@ var createNewInternationalPublicationController = function($scope,
             && $scope.internationalPublication.publicationType != null
             && $scope.internationalPublication.publicationType != '') {
       if ($scope.internationalPublication.publicationType.name === "SCIENTIFIC"
-              && $scope.internationalPublication.publicationCategory != null
-              && $scope.internationalPublication.publicationCategory != '') {
+              && $scope.internationalPublication.publicationCategoryDto != null
+              && $scope.internationalPublication.publicationCategoryDto != '') {
         return true;
       } else if ($scope.internationalPublication.publicationType.name === "SCIENTIFIC"
-              && ($scope.internationalPublication.publicationCategory == null || $scope.internationalPublication.publicationCategory == '')) {
+              && ($scope.internationalPublication.publicationCategoryDto == null || $scope.internationalPublication.publicationCategoryDto == '')) {
         return false;
       } else {
         return true;
@@ -629,12 +629,12 @@ var createNewInternationalPublicationController = function($scope,
     if (angular.isUndefined($scope.internationalPublication.publicationType)
             || $scope.internationalPublication.publicationType === null
             || $scope.internationalPublication.publicationType === '') {
-      $scope.internationalPublication.publicationCategory = null;
+      $scope.internationalPublication.publicationCategoryDto = null;
       return true;
     } else if ($scope.internationalPublication.publicationType.name === "SCIENTIFIC") {
       return false;
     } else {
-      $scope.internationalPublication.publicationCategory = null;
+      $scope.internationalPublication.publicationCategoryDto = null;
       return true;
     }
   };

@@ -29,17 +29,24 @@ import com.pct.validation.StudiesThesisTypeNotFoundException;
 @Service
 public class ProfessorStudiesServiceImpl implements ProfessorStudiesService {
 
-	@Autowired
 	private ProfessorStudiesRepository professorStudiesRepository;
 
-	@Autowired
 	private ProfesorRepository professorRepository;
 
-	@Autowired
 	private InstitutionRepository institutionRepository;
 
-	@Autowired
 	private StudiesThesisTypeRepository studiesRepository;
+	
+	@Autowired
+	public ProfessorStudiesServiceImpl(ProfessorStudiesRepository professorStudiesRepository,
+			ProfesorRepository professorRepository, InstitutionRepository institutionRepository,
+			StudiesThesisTypeRepository studiesRepository) {
+		super();
+		this.professorStudiesRepository = professorStudiesRepository;
+		this.professorRepository = professorRepository;
+		this.institutionRepository = institutionRepository;
+		this.studiesRepository = studiesRepository;
+	}
 
 	@Override
 	@Transactional

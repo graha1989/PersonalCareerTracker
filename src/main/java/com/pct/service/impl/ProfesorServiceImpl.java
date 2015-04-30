@@ -25,18 +25,19 @@ public class ProfesorServiceImpl implements ProfessorService {
 	public ProfessorDto findProfesorByUserName(String userName) throws ProfessorNotFoundException {
 
 		ProfessorDto professorDto;
-
-		if (userName == null || profesorRepository.findByUserName(userName) == null) {
-			throw new ProfessorNotFoundException();
-		} else {
+		if (userName != null) {
 			Professor professor = profesorRepository.findByUserName(userName);
-			professorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(), professor.getEmail(),
-					professor.getName(), professor.getSurname(), professor.getFathersName(),
-					professor.getDateOfBirth(), professor.getPlaceOfBirth(), professor.getCountryOfBirth(),
-					professor.getScientificArea(), professor.getSpecialScientificArea(), professor.getId());
+			if (professor != null) {
+				professorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(), professor.getEmail(),
+						professor.getName(), professor.getSurname(), professor.getFathersName(),
+						professor.getDateOfBirth(), professor.getPlaceOfBirth(), professor.getCountryOfBirth(),
+						professor.getScientificArea(), professor.getSpecialScientificArea(), professor.getId());
+
+				return professorDto;
+			}
 		}
 
-		return professorDto;
+		throw new ProfessorNotFoundException();
 	}
 
 	@Override
@@ -44,18 +45,18 @@ public class ProfesorServiceImpl implements ProfessorService {
 	public ProfessorDto findProfesorById(Long id) throws ProfessorNotFoundException {
 
 		ProfessorDto ProfessorDto;
-
-		if (id == null || profesorRepository.findOne(id) == null) {
-			throw new ProfessorNotFoundException();
-		} else {
+		if (id != null) {
 			Professor professor = profesorRepository.findOne(id);
-			ProfessorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(), professor.getEmail(),
-					professor.getName(), professor.getSurname(), professor.getFathersName(),
-					professor.getDateOfBirth(), professor.getPlaceOfBirth(), professor.getCountryOfBirth(),
-					professor.getScientificArea(), professor.getSpecialScientificArea(), professor.getId());
-		}
+			if (professor != null) {
+				ProfessorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(), professor.getEmail(),
+						professor.getName(), professor.getSurname(), professor.getFathersName(),
+						professor.getDateOfBirth(), professor.getPlaceOfBirth(), professor.getCountryOfBirth(),
+						professor.getScientificArea(), professor.getSpecialScientificArea(), professor.getId());
 
-		return ProfessorDto;
+				return ProfessorDto;
+			}
+		}
+		throw new ProfessorNotFoundException();
 	}
 
 	@Override

@@ -15,18 +15,19 @@ import com.pct.validation.TeachingExperienceNotFoundException;
 
 @Service
 public class TeachingExperienceServiceImpl implements TeachingExperienceService {
-	
+
 	@Autowired
 	private TeachingExperienceRepository teachingExperienceRepository;
-	
+
 	@Override
 	@Transactional
 	public List<TeachingExperienceDto> findAllTeachingExperiences(Long professorId)
 			throws TeachingExperienceNotFoundException {
-		
+
 		List<TeachingExperienceDto> teachingExperienceDtos = new ArrayList<TeachingExperienceDto>();
 		try {
-			List<TeachingExperience> teachingExperiences = teachingExperienceRepository.findAllTeachingExperiences(professorId);
+			List<TeachingExperience> teachingExperiences = teachingExperienceRepository
+					.findAllTeachingExperiences(professorId);
 			for (TeachingExperience e : teachingExperiences) {
 				TeachingExperienceDto teachingExperienceDto = new TeachingExperienceDto(e);
 				teachingExperienceDtos.add(teachingExperienceDto);
@@ -43,15 +44,15 @@ public class TeachingExperienceServiceImpl implements TeachingExperienceService 
 	public TeachingExperienceDto findTeachingExperienceById(Long id) throws TeachingExperienceNotFoundException {
 
 		TeachingExperienceDto teachingExperienceDto;
-
-		if (id == null || teachingExperienceRepository.findOne(id) == null) {
-			throw new TeachingExperienceNotFoundException();
-		} else {
+		if (id != null) {
 			TeachingExperience teachingExperience = teachingExperienceRepository.findOne(id);
-			teachingExperienceDto = new TeachingExperienceDto(teachingExperience);
+			if (teachingExperience != null) {
+				teachingExperienceDto = new TeachingExperienceDto(teachingExperience);
+				return teachingExperienceDto;
+			}
 		}
 
-		return teachingExperienceDto;
+		throw new TeachingExperienceNotFoundException();
 	}
 
 }

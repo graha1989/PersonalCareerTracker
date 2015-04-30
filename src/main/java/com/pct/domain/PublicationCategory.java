@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -37,18 +38,19 @@ public class PublicationCategory extends AbstractEntity {
 	@Column(name = "shPoints", nullable = true, columnDefinition = "Decimal(4,2)")
 	private Double shPoints;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "publicationCategory")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "publicationCategory")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "publicationCategory")
+	@JsonIgnore
 	private Set<ProfessorPublication> professorPublications = new HashSet<ProfessorPublication>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "publicationCategory")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "publicationCategory")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "publicationCategory")
+	@JsonIgnore
 	private Set<InternationalPublication> internationalPublications = new HashSet<InternationalPublication>();
 
 	public PublicationCategory() {
-		super();
 	}
 
 	public PublicationCategory(String code, String description, Double nsmPoints, Double ttbtPoints, Double shPoints,

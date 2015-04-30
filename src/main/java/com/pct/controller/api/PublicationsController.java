@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
-import com.pct.domain.PublicationCategory;
 import com.pct.domain.dto.InternationalPublicationDto;
 import com.pct.domain.dto.ProfessorPublicationDto;
+import com.pct.domain.dto.PublicationCategoryDto;
 import com.pct.domain.enums.PublicationType;
 import com.pct.service.PublicationService;
 import com.pct.validation.ProfessorNotFoundException;
@@ -77,12 +77,12 @@ public class PublicationsController {
 	}
 
 	@RequestMapping(value = "allPublicationCategories", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<List<PublicationCategory>> getAllPublicationCategories() {
-		List<PublicationCategory> publicationCategories = publicationService.findAllPublicationCategories();
+	public ResponseEntity<List<PublicationCategoryDto>> getAllPublicationCategories() {
+		List<PublicationCategoryDto> publicationCategoryDtos = publicationService.findAllPublicationCategories();
 
-		logger.debug("Successfully  loaded: " + publicationCategories.size() + " publication categories.");
+		logger.debug("Successfully  loaded: " + publicationCategoryDtos.size() + " publication categories.");
 
-		return new ResponseEntity<List<PublicationCategory>>(publicationCategories, HttpStatus.OK);
+		return new ResponseEntity<List<PublicationCategoryDto>>(publicationCategoryDtos, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "selectedProfessorPublication", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)

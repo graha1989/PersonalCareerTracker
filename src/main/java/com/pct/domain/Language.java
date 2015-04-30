@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -22,9 +23,10 @@ public class Language extends AbstractEntity {
 	@Column(name = "name", length = 20)
 	private String name;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "language")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "language")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "language")
+	@JsonIgnore
 	private Set<LanguageExperience> languageExperiences = new HashSet<LanguageExperience>();
 	
 	public Language() {

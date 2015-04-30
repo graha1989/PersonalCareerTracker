@@ -26,17 +26,24 @@ import com.pct.validation.StudiesThesisTypeNotFoundException;
 @Service
 public class ThesisServiceImpl implements ThesisService {
 
-	@Autowired
 	private ThesisRepository thesisRepository;
-	
-	@Autowired
+
 	private StudiesThesisTypeRepository studiesThesisTypeRepository;
-	
-	@Autowired
+
 	private ProfesorRepository professorRepository;
-	
-	@Autowired
+
 	private StudentRepository studentRepository;
+
+	@Autowired
+	public ThesisServiceImpl(ThesisRepository thesisRepository,
+			StudiesThesisTypeRepository studiesThesisTypeRepository, ProfesorRepository professorRepository,
+			StudentRepository studentRepository) {
+		super();
+		this.thesisRepository = thesisRepository;
+		this.studiesThesisTypeRepository = studiesThesisTypeRepository;
+		this.professorRepository = professorRepository;
+		this.studentRepository = studentRepository;
+	}
 
 	@Override
 	@Transactional
@@ -49,6 +56,7 @@ public class ThesisServiceImpl implements ThesisService {
 			ThesisDto thesisDto = new ThesisDto(t);
 			thesisDtoList.add(thesisDto);
 		}
+
 		return thesisDtoList;
 	}
 
@@ -58,101 +66,106 @@ public class ThesisServiceImpl implements ThesisService {
 
 		List<StudiesThesisType> thesisTypesList = new ArrayList<StudiesThesisType>();
 		thesisTypesList = studiesThesisTypeRepository.findAll();
+
 		return thesisTypesList;
 	}
 
 	@Override
 	@Transactional
-	public ThesisDto saveThesis(ThesisDto thesisDto) throws StudentNotFoundException, ProfessorNotFoundException, StudiesThesisTypeNotFoundException {
-		
+	public ThesisDto saveThesis(ThesisDto thesisDto) throws StudentNotFoundException, ProfessorNotFoundException,
+			StudiesThesisTypeNotFoundException {
+
 		Thesis thesis = new Thesis();
 		Student student = new Student();
 		Professor mentor = new Professor();
 		Professor commissionPresident = new Professor();
 		Professor commissionMember = new Professor();
 		StudiesThesisType studiesThesisType = new StudiesThesisType();
-		
+
 		if (thesisDto.getStudentId() == null || studentRepository.findOne(thesisDto.getStudentId()) == null) {
 			throw new StudentNotFoundException();
 		} else {
 			student = studentRepository.findOne(thesisDto.getStudentId());
 		}
-		
+
 		if (thesisDto.getMentorId() == null || professorRepository.findOne(thesisDto.getMentorId()) == null) {
 			throw new ProfessorNotFoundException();
 		} else {
 			mentor = professorRepository.findOne(thesisDto.getMentorId());
 		}
-		
-		if (thesisDto.getCommissionPresidentId() == null || professorRepository.findOne(thesisDto.getCommissionPresidentId()) == null) {
+
+		if (thesisDto.getCommissionPresidentId() == null
+				|| professorRepository.findOne(thesisDto.getCommissionPresidentId()) == null) {
 			throw new ProfessorNotFoundException();
 		} else {
 			commissionPresident = professorRepository.findOne(thesisDto.getCommissionPresidentId());
 		}
-		
-		if (thesisDto.getCommissionMemberId() == null || professorRepository.findOne(thesisDto.getCommissionMemberId()) == null) {
+
+		if (thesisDto.getCommissionMemberId() == null
+				|| professorRepository.findOne(thesisDto.getCommissionMemberId()) == null) {
 			throw new ProfessorNotFoundException();
 		} else {
 			commissionMember = professorRepository.findOne(thesisDto.getCommissionMemberId());
 		}
-		
-		if (thesisDto.getThesisTypeId() == null || studiesThesisTypeRepository.findOne(thesisDto.getThesisTypeId()) == null) {
+
+		if (thesisDto.getThesisTypeId() == null
+				|| studiesThesisTypeRepository.findOne(thesisDto.getThesisTypeId()) == null) {
 			throw new StudiesThesisTypeNotFoundException();
 		} else {
 			studiesThesisType = studiesThesisTypeRepository.findOne(thesisDto.getThesisTypeId());
 		}
-		
+
 		if (thesisDto.getId() != null) {
-			thesis = ThesisUtil.createThesisInstanceFromThesisDto(thesisDto, student, mentor, commissionPresident, commissionMember, studiesThesisType);
+			thesis = ThesisUtil.createThesisInstanceFromThesisDto(thesisDto, student, mentor, commissionPresident,
+					commissionMember, studiesThesisType);
 		} else {
-			thesis = ThesisUtil.createNewThesisInstanceFromThesisiDto(thesisDto, student, mentor, commissionPresident, commissionMember, studiesThesisType);
+			thesis = ThesisUtil.createNewThesisInstanceFromThesisiDto(thesisDto, student, mentor, commissionPresident,
+					commissionMember, studiesThesisType);
 		}
-		
+
 		return new ThesisDto(thesisRepository.save(thesis));
 	}
 
 	@Override
 	@Transactional
 	public StudiesThesisType findThesisTypeById(Long id) throws StudiesThesisTypeNotFoundException {
-		
-		StudiesThesisType studiesThesisType;
 
-		if (id == null || studiesThesisTypeRepository.findOne(id) == null) {
-			throw new StudiesThesisTypeNotFoundException();
-		} else {
+		StudiesThesisType studiesThesisType;
+		if (id != null) {
 			studiesThesisType = studiesThesisTypeRepository.findOne(id);
+			if (studiesThesisType != null) {
+				return studiesThesisType;
+			}
 		}
 
-		return studiesThesisType;
+		throw new StudiesThesisTypeNotFoundException();
 	}
 
 	@Override
 	@Transactional
 	public void deleteThesis(Long id) throws ThesisNotFoundException {
-		
+
 		if (id == null || thesisRepository.findOne(id) == null) {
 			throw new ThesisNotFoundException();
 		}
 
 		thesisRepository.delete(id);
-		
 	}
 
 	@Override
 	@Transactional
 	public ThesisDto findThesisById(Long id) throws ThesisNotFoundException {
-		
-		ThesisDto thesisDto;
 
-		if (id == null || thesisRepository.findOne(id) == null) {
-			throw new ThesisNotFoundException();
-		} else {
+		ThesisDto thesisDto;
+		if (id != null) {
 			Thesis thesis = thesisRepository.findOne(id);
-			thesisDto = new ThesisDto(thesis);
+			if (thesis != null) {
+				thesisDto = new ThesisDto(thesis);
+				return thesisDto;
+			}
 		}
 
-		return thesisDto;
-		
+		throw new ThesisNotFoundException();
 	}
 
 }

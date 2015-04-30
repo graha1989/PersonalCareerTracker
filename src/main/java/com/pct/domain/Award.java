@@ -47,7 +47,6 @@ public class Award extends AbstractEntity {
 	private AwardField awardField;
 
 	public Award() {
-		super();
 	}
 
 	public String getAwardName() {

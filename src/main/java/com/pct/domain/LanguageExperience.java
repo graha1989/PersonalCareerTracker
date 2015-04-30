@@ -39,7 +39,6 @@ public class LanguageExperience extends AbstractEntity {
 	private Language language;
 	
 	public LanguageExperience() {
-		super();
 	}
 
 	public LanguageExperience(boolean writing, boolean reading, boolean pronouncing, Professor professor,

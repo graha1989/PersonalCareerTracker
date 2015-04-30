@@ -64,15 +64,15 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 	public WorkExperienceDto findWorkExperienceById(Long id) throws WorkExperienceNotFoundException {
 
 		WorkExperienceDto workExperienceDto;
-
-		if (id == null || workExperienceRepository.findOne(id) == null) {
-			throw new WorkExperienceNotFoundException();
-		} else {
+		if (id != null) {
 			WorkExperience workExperience = workExperienceRepository.findOne(id);
-			workExperienceDto = new WorkExperienceDto(workExperience);
+			if (workExperience != null) {
+				workExperienceDto = new WorkExperienceDto(workExperience);
+				return workExperienceDto;
+			}
 		}
-
-		return workExperienceDto;
+		
+		throw new WorkExperienceNotFoundException();
 	}
 
 	@Override

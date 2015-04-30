@@ -25,14 +25,20 @@ import com.pct.validation.ProfessorNotFoundException;
 @Service
 public class LanguageServiceImpl implements LanguageService {
 
-	@Autowired
 	private LanguageExperienceRepository languageRepository;
 
-	@Autowired
 	private LanguageRepository languageRepo;
 
-	@Autowired
 	private ProfesorRepository professorRepository;
+
+	@Autowired
+	public LanguageServiceImpl(LanguageExperienceRepository languageRepository, LanguageRepository languageRepo,
+			ProfesorRepository professorRepository) {
+		super();
+		this.languageRepository = languageRepository;
+		this.languageRepo = languageRepo;
+		this.professorRepository = professorRepository;
+	}
 
 	@Override
 	@Transactional
@@ -94,14 +100,13 @@ public class LanguageServiceImpl implements LanguageService {
 	public Language findLanguageById(Long id) throws LanguageNotFoundException {
 
 		Language language;
-
-		if (id == null || languageRepo.findOne(id) == null) {
-			throw new LanguageNotFoundException();
-		} else {
+		if (id != null) {
 			language = languageRepo.findOne(id);
+			if (language != null) {
+				return language;
+			}
 		}
-
-		return language;
+		throw new LanguageNotFoundException();
 	}
 
 	@Override
@@ -124,12 +129,12 @@ public class LanguageServiceImpl implements LanguageService {
 	@Override
 	@Transactional
 	public void deleteLanguageExperience(@Nonnull Long id) throws LanguageExperienceNotFoundException {
-		
+
 		LanguageExperience languageExperience = languageRepository.findOne(id);
 		if (languageExperience == null) {
 			throw new LanguageExperienceNotFoundException();
 		}
-		
+
 		languageRepository.delete(languageExperience);
 	}
 

@@ -2,10 +2,10 @@ package com.pct.service;
 
 import java.util.List;
 
-import com.pct.domain.Subject;
+import com.pct.domain.dto.SubjectDto;
 
 public interface SubjectService {
 	
-	List<Subject> findSubjectsStartsWith(String value, List<Long> subjectIds);
+	List<SubjectDto> findSubjectsStartsWith(String value, List<Long> subjectIds);
 
 }

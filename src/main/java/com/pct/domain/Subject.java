@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -48,9 +49,10 @@ public class Subject extends AbstractEntity {
 	@JoinColumn(name = "studiesThesisTypeId")
 	private StudiesThesisType studiesThesisType;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "subject")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "subject")
+	@JsonIgnore
 	private Set<TeachingExperience> teachingExperiences = new HashSet<TeachingExperience>();
 
 	public Subject() {
