@@ -33,14 +33,14 @@
 						<tr
 							class="active ng-scope"
 							ng-repeat="teachingExperience in teachingExperiences">
-							<td>{{ teachingExperience.subjectName }}</td>
-							<td>{{ teachingExperience.studyProgram }}</td>
-							<td>{{ teachingExperience.facultyName }}</td>
-							<td>{{ teachingExperience.universityName }}</td>
-							<td>{{ teachingExperience.facultyCity }}</td>
-							<td>{{ teachingExperience.facultyCountry }}</td>
-							<td>{{ teachingExperience.studiesThesisType.type }}</td>
-							<td>{{ teachingExperience.numberOfTeachingLessons }} + {{ teachingExperience.numberOfTheoreticalLessons }} + {{ teachingExperience.numberOfPracticalLessons }}</td>
+							<td>{{ teachingExperience.subjectDto.subjectName }}</td>
+							<td>{{ teachingExperience.subjectDto.studyProgram }}</td>
+							<td>{{ teachingExperience.subjectDto.facultyName }}</td>
+							<td>{{ teachingExperience.subjectDto.universityName }}</td>
+							<td>{{ teachingExperience.subjectDto.facultyCity }}</td>
+							<td>{{ teachingExperience.subjectDto.facultyCountry }}</td>
+							<td>{{ teachingExperience.subjectDto.studiesThesisType.type }}</td>
+							<td>{{ teachingExperience.subjectDto.numberOfTeachingLessons }} + {{ teachingExperience.subjectDto.numberOfTheoreticalLessons }} + {{ teachingExperience.subjectDto.numberOfPracticalLessons }}</td>
 							<td class="delete"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteTeachingExperience(teachingExperience.id)">
@@ -92,8 +92,8 @@
 							class="ng-binding form-control"
 							id="inputSubjectName"
 							name="inputSubjectName"
-							ng-model="teachingExperience.subjectName"
-							typeahead="subject as subject.name for subject in getSubjects($viewValue) | limitTo:8"
+							ng-model="teachingExperience.subjectDto.subjectName"
+							typeahead="subject as subject.subjectName for subject in getSubjects($viewValue) | limitTo:8"
 							typeahead-on-select="onSelectSubject()"
 							placeholder="{{ resources.teachingExperiencePopupLabels.subjectName }}"
 							autocomplete="off"
@@ -118,7 +118,7 @@
 							class="form-control"
 							id="inputProgram"
 							name="inputProgram"
-							ng-model="teachingExperience.studyProgram"
+							ng-model="teachingExperience.subjectDto.studyProgram"
 							placeholder="{{ resources.teachingExperiencePopupLabels.studyProgram }}"
 							ng-maxlength="50"
 							required />
@@ -142,8 +142,8 @@
 							class="ng-binding form-control"
 							id="inputFacultyName"
 							name="inputFacultyName"
-							ng-model="$parent.selectedFaculty"
-							typeahead="faculty as faculty.name for faculty in getFaculties($viewValue) | limitTo:8"
+							ng-model="teachingExperience.subjectDto.facultyName"
+							typeahead="faculty.name for faculty in getFaculties($viewValue) | limitTo:8"
 							typeahead-on-select="onSelectFaculty()"
 							placeholder="{{ resources.teachingExperiencePopupLabels.facultyName }}"
 							autocomplete="off"
@@ -168,7 +168,7 @@
 							class="form-control"
 							id="inputUniversityName"
 							name="inputUniversityName"
-							ng-model="teachingExperience.universityName"
+							ng-model="teachingExperience.subjectDto.universityName"
 							placeholder="{{ resources.teachingExperiencePopupLabels.universityName }}"
 							ng-maxlength="50"
 							required />
@@ -194,7 +194,7 @@
 							class="form-control"
 							id="inputFacultyCity"
 							name="inputFacultyCity"
-							ng-model="teachingExperience.facultyCity"
+							ng-model="teachingExperience.subjectDto.facultyCity"
 							placeholder="{{ resources.teachingExperiencePopupLabels.facultyCity }}"
 							ng-maxlength="50"
 							required />
@@ -220,7 +220,7 @@
 							class="form-control"
 							id="inputFacultyCountry"
 							name="inputFacultyCountry"
-							ng-model="teachingExperience.facultyCountry"
+							ng-model="teachingExperience.subjectDto.facultyCountry"
 							placeholder="{{ resources.teachingExperiencePopupLabels.facultyCountry }}"
 							ng-maxlength="50"
 							required />
@@ -244,7 +244,7 @@
 							class="ng-binding form-control"
 							id="inputStudyType"
 							name="inputStudyType"
-							ng-model="teachingExperience.studiesThesisType"
+							ng-model="teachingExperience.subjectDto.studiesThesisType"
 							ng-options="studiesThesisType.type for studiesThesisType in allStudiesThesisTypes track by studiesThesisType.id"
 							required><option value="">{{ resources.teachingExperiencePopupLabels.studyType }}</option></select> 
 						<div
@@ -265,7 +265,7 @@
 							class="form-control"
 							id="inputNumberOfTeachingLessons"
 							name="inputNumberOfTeachingLessons"
-							ng-model="teachingExperience.numberOfTeachingLessons"
+							ng-model="teachingExperience.subjectDto.numberOfTeachingLessons"
 							placeholder="{{ resources.teachingExperiencePopupLabels.teachingLessons }}"
 							min="0"
 							ng-maxlength="2"
@@ -292,7 +292,7 @@
 							class="form-control"
 							id="inputNumberOfTheoreticalLessons"
 							name="inputNumberOfTheoreticalLessons"
-							ng-model="teachingExperience.numberOfTheoreticalLessons"
+							ng-model="teachingExperience.subjectDto.numberOfTheoreticalLessons"
 							placeholder="{{ resources.teachingExperiencePopupLabels.theoreticalLessons }}"
 							min="0"
 							ng-maxlength="2"
@@ -319,7 +319,7 @@
 							class="form-control"
 							id="inputNumberOfPracticalLessons"
 							name="inputNumberOfPracticalLessons"
-							ng-model="teachingExperience.numberOfPracticalLessons"
+							ng-model="teachingExperience.subjectDto.numberOfPracticalLessons"
 							placeholder="{{ resources.teachingExperiencePopupLabels.practicalLessons }}"
 							min="0"
 							ng-maxlength="2"

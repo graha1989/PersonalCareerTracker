@@ -73,14 +73,15 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
 });
 
 var editTeachingExperiencePopupController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, teachingExperienceId, teachingExperiences,
-        PctService) {
+        $routeParams, $http, $route, $templateCache, teachingExperienceId,
+        teachingExperiences, PctService) {
 
   $scope.teachingExperience = {};
   $scope.master = {};
   $scope.allStudiesThesisTypes = [];
   $scope.selectedFaculty = [];
   $scope.isExistingFaculty = false;
+  $scope.isExistingSubject = false;
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -143,17 +144,19 @@ var editTeachingExperiencePopupController = function($scope, $modalInstance,
   $scope.getSubjects = function(val) {
     var subjectIdsList = $scope.getSubjectIds(teachingExperiences);
     for (var i = 0; i < subjectIdsList.length; i++) {
-      if (angular.equals(subjectIdsList[i], $scope.teachingExperience.subjectId)) {
+      if (angular
+              .equals(subjectIdsList[i], $scope.teachingExperience.subjectId)) {
         subjectIdsList.splice(i, 1);
       }
     }
-    return PctService.findSubjectsStartsWith(val, subjectIdsList).then(function(response) {
-      var subjects = [];
-      for (var i = 0; i < response.length; i++) {
-        subjects.push(response[i]);
-      }
-      return subjects;
-    });
+    return PctService.findSubjectsStartsWith(val, subjectIdsList).then(
+            function(response) {
+              var subjects = [];
+              for (var i = 0; i < response.length; i++) {
+                subjects.push(response[i]);
+              }
+              return subjects;
+            });
   };
 
   $scope.getFaculties = function(val) {
@@ -166,5 +169,18 @@ var editTeachingExperiencePopupController = function($scope, $modalInstance,
               return faculties;
             });
   };
-
+/*
+  $scope.onSelectSubject = function() {
+    $scope.isExistingSubject = true;
+    $scope.teachingExperience.subjectName = $scope.selectedSubject.subjectName;
+    $scope.teachingExperience.studyProgram = $scope.selectedSubject.studyProgram;
+    
+    
+    $scope.workExperience.institutionName = $scope.selectedInstitution.name;
+    $scope.workExperience.universityName = $scope.selectedInstitution.university;
+    $scope.workExperience.institutionCity = $scope.selectedInstitution.city;
+    $scope.workExperience.institutionCountry = $scope.selectedInstitution.country;
+    $scope.workExperience.institutionId = $scope.selectedInstitution.id;
+  };
+*/
 };
