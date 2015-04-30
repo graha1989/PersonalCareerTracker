@@ -105,14 +105,14 @@ public class AwardServiceImpl implements AwardService {
 
 	@Override
 	@Transactional
-	public void deleteAward(Long id) throws AwardNotFoundException {
+	public void deleteAward(@Nonnull Long id) throws AwardNotFoundException {
 
-		if (id == null || awardRepository.findOne(id) == null) {
+		Award award = awardRepository.findOne(id);
+		if (award == null) {
 			throw new AwardNotFoundException();
 		}
 
-		awardRepository.delete(id);
-
+		awardRepository.delete(award);
 	}
 
 	@Override
