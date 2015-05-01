@@ -247,7 +247,7 @@ app.factory("PctService", [
                   .success(callback).error(callback);
         },
         loadAllInstitutionTypes: function(params, callback) {
-          $http.get('api/workExperiences/allInstitutionTypes')
+          $http.get('api/institutions/allInstitutionTypes')
                   .success(callback);
         },
         findInstutionsStartsWith: function(value, type) {
@@ -346,6 +346,16 @@ app.factory("PctService", [
         },
         loadAllInstitutions: function(params, callback) {
           $http.get('api/institutions/allInstitutions').success(callback);
+        },
+        loadSelectedInstitution: function(id, callback) {
+          $http.get('api/institutions/selectedInstitution?id=' + id)
+                  .success(callback).error(callback);
+        },
+        deleteInstitution: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/institutions?id=' + id
+          }).success(callback).error(callback);
         },
       };
     }]);

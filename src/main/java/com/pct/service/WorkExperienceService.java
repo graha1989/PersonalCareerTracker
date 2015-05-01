@@ -17,8 +17,6 @@ public interface WorkExperienceService {
 
 	void saveWorkExperience(WorkExperienceDto workExperienceDto) throws WorkExperienceNotFoundException, ProfessorNotFoundException, InstitutionNotFoundException;
 
-	List<InstitutionType> findAllInstitutionTypes();
-
 	List<Institution> findInstitutionsStartsWith(String value, InstitutionType institutionType);
 
 	void deleteWorkExperience(Long id) throws WorkExperienceNotFoundException;

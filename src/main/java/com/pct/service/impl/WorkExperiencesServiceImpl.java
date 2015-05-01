@@ -1,7 +1,6 @@
 package com.pct.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -71,7 +70,7 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 				return workExperienceDto;
 			}
 		}
-		
+
 		throw new WorkExperienceNotFoundException();
 	}
 
@@ -116,12 +115,6 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 
 	@Override
 	@Transactional
-	public List<InstitutionType> findAllInstitutionTypes() {
-		return new ArrayList<InstitutionType>(Arrays.asList(InstitutionType.values()));
-	}
-
-	@Override
-	@Transactional
 	public List<Institution> findInstitutionsStartsWith(String value, InstitutionType institutionType) {
 		if (institutionType != null) {
 			return institutionRepository.findByNameAndInstitutionTypeLike(value, institutionType);
@@ -133,6 +126,7 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 	@Override
 	@Transactional
 	public void deleteWorkExperience(@Nonnull Long id) throws WorkExperienceNotFoundException {
+		
 		WorkExperience workExperience = workExperienceRepository.findOne(id);
 		if (workExperience == null) {
 			throw new WorkExperienceNotFoundException();

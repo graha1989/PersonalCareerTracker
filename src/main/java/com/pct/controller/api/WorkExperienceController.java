@@ -53,13 +53,6 @@ public class WorkExperienceController {
 		return new ResponseEntity<List<WorkExperienceDto>>(experiences, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allInstitutionTypes", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<List<InstitutionType>> showAllInstitutionTypes() {
-		List<InstitutionType> institutionTypes = workExperienceService.findAllInstitutionTypes();
-
-		return new ResponseEntity<List<InstitutionType>>(institutionTypes, HttpStatus.OK);
-	}
-
 	@RequestMapping(value = "selectedWorkExperience", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<WorkExperienceDto> showWorkExperience(
 			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws WorkExperienceNotFoundException {
