@@ -5,16 +5,15 @@
 		id="showAllProjectExperiencesForm"
 		novalidate
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
-		ng-model="project">
+		ng-model="projectExperience">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ resources.text.projectsTitle }} {{ professorNameAndSurname }}</h3>
+			<h3 class="modal-title">{{ resources.text.projectExperiencesTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
-
 				<table
-					ng-show="projects != []"
+					ng-show="allProjectExperiences != []"
 					class="table table-condensed table-striped table-hover"
 					cellspacing="0"
 					cellpadding="0">
@@ -23,20 +22,20 @@
 							<td>{{ resources.projectsTableLabels.projectType }}</td>
 							<td>{{ resources.projectsTableLabels.projectName }}</td>
 							<td>{{ resources.projectsTableLabels.financedBy }}</td>
+							<td>{{ resources.projectsTableLabels.leader }}</td>
 							<td>{{ resources.projectsTableLabels.startDate }}</td>
 							<td>{{ resources.projectsTableLabels.endDate }}</td>
-							<td>{{ resources.projectsTableLabels.leader }}</td>
 							<td colspan="2"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
-							ng-repeat="project in projects">
-							<td>{{ project.projectType.title }}</td>
-							<td>{{ project.projectName }}</td>
-							<td>{{ project.projectFinancedBy }}</td>
-							<td>{{ project.projectStartDate | date:'dd-MM-yyyy' }}</td>
-							<td>{{ project.projectEndDate | date:'dd-MM-yyyy' }}</td>
-							<td>{{ project.projectLeader }}</td>
+							ng-repeat="projectExperienceData in completeProjecExperienceDataArray">
+							<td>{{ projectExperienceData.project.projectType.title }}</td>
+							<td>{{ projectExperienceData.project.name }}</td>
+							<td>{{ projectExperienceData.project.financedBy }}</td>
+							<td>{{ projectExperienceData.project.projectLeader }}</td>
+							<td>{{ projectExperienceData.projectExperience.startDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ projectExperienceData.projectExperience.endDate | date:'dd-MM-yyyy' }}</td>
 							<td class="delete"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteProjectExperience(project.id, $index)">
@@ -44,7 +43,7 @@
 								</button></td>
 							<td class="edit"><button
 									class="btn btn-link btn-xs"
-									ng-click="editProjectExperience(project.id)">
+									ng-click="editProjectExperience(projectExperienceData.projectExperience.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.projectButtons.edit }}
 								</button></td>
 						</tr>
@@ -67,20 +66,21 @@
 
 	<script
 		type="text/ng-template"
-		id="editProjectPopup.html">
+		id="editProjectExperiencePopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
 			role="form"
-			ng-model="project">
+			novalidate
+			ng-model="projectExperience">
 			<div class="modal-header">
-				<h3 class="modal-title">{{ resources.text.editProjectPopupTitle }}</h3>
+				<h3 class="modal-title">{{ resources.text.editProjectExperiencePopupTitle }}</h3>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
 					<label
 						for="inputProjectName"
-						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectName }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectName }}
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -88,46 +88,29 @@
 							class="form-control"
 							id="inputProjectName"
 							name="inputProjectName"
-							ng-model="project.projectName"
-							ng-maxlength="200"
-							required />
-						<div
-							ng-show="form.inputProjectName.$dirty && form.inputProjectName.$invalid"
-							class="projectNameFieldError">
-							<span
-								ng-show="form.inputProjectName.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputProjectName.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span>
-						</div>
+							ng-model="project.name"
+							ng-disabled="true" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label
 						for="inputProjectType"
-						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectType }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectType }}
 					</label>
 					<div class="col-sm-6">
-						<select
-							class="ng-binding form-control"
+						<input
+							type="text"
+							class="form-control"
 							id="inputProjectType"
 							name="inputProjectType"
-							ng-model="project.projectType"
-							ng-options="projectType.name as projectType.title for projectType in allProjectTypes"
-							required><option value="">{{ resources.projectPopupLabels.projectType }}</option></select>
-						<div
-							ng-show="form.inputProjectType.$dirty && form.inputProjectType.$invalid"
-							class="projectTypeFieldError">
-							<span
-								ng-show="form.inputProjectType.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
-						</div>
+							ng-model="project.projectType.title"
+							ng-disabled="true" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label
 						for="inputProjectFinancedBy"
-						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectFinancedBy }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectFinancedBy }}
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -135,20 +118,29 @@
 							class="form-control"
 							id="inputProjectFinancedBy"
 							name="inputProjectFinancedBy"
-							ng-model="project.projectFinancedBy"
-							ng-maxlength="200"
-							required />
-						<div
-							ng-show="form.inputProjectFinancedBy.$dirty && form.inputProjectFinancedBy.$invalid"
-							class="projectFinancedByFieldError">
-							<span
-							ng-show="form.inputProjectFinancedBy.$error.required"
-							class="ng-binding">{{ errorMessages.error.required }}</span> <span
-							ng-show="form.inputProjectFinancedBy.$error.maxlength"
-							class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span>
+							ng-model="project.financedBy"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div ng-repeat="leader in projectLeadersArray">
+					<div class="form-group">
+						<label
+							for="inputProjectLeader"
+							class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectLeader }} {{ $index + 1 }}
+						</label>
+						<div class="col-sm-6">
+							<input
+								type="text"
+								class="ng-binding form-control"
+								id="inputProjectLeader"
+								name="inputProjectLeader"
+								ng-model="leader"
+								ng-disabled="true" /> 
 						</div>
 					</div>
 				</div>
+
+
 				<div class="form-group">
 					<label
 						for="inputProjectStartDate"
@@ -165,15 +157,15 @@
 								name="inputProjectStartDate"
 								placeholder="DD-MM-GGGG"
 								datepicker-popup="dd-MM-yyyy"
-								is-open="$parent.inputProjectStartDateOpened"
+								is-open="$parent.inputStartDateOpened"
 								min-date="minDate" 
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="project.projectStartDate"
+								ng-model="projectExperience.startDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
-								ng-click="openProjectStartDate($event)"></span>
+								ng-click="openStartDate($event)"></span>
 							</span>
 						</div>
 						<div
@@ -201,15 +193,15 @@
 								name="inputProjectEndDate"
 								placeholder="DD-MM-GGGG"
 								datepicker-popup="dd-MM-yyyy"
-								is-open="$parent.inputProjectEndDateOpened"
+								is-open="$parent.inputEndDateOpened"
 								min-date="minDate" 
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="project.projectEndDate"
+								ng-model="projectExperience.endDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
-								ng-click="openProjectEndDate($event)"></span>
+								ng-click="openEndDate($event)"></span>
 							</span>
 						</div>
 						<div
@@ -221,94 +213,15 @@
 						</div>
 					</div>
 				</div>
-				<div ng-repeat="leader in projectLeadersArray">
-					<div class="form-group">
-						<label
-							for="inputProjectLeader"
-							class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectLeader }} {{ $index + 1 }}<span class="required">*</span>
-						</label>
-						<div class="col-sm-6">
-							<div class="input-group">
-								<input
-									type="text"
-									class="ng-binding form-control"
-									id="inputProjectLeader"
-									name="inputProjectLeader"
-									ng-disabled="true"
-									ng-model="leader"
-									ng-maxlength="400" /> 
-								<span
-									id="remove_button"
-									type="button"
-									class="btn btn-sucess btn-sm input-group-addon"
-									ng-click="removeProjectLeader($index)">
-									<span class="glyphicon glyphicon-remove" />
-								</span>
-							</div>
-							<div
-								ng-show="form.inputProjectLeader.$dirty && form.inputProjectLeader.$invalid"
-								class="projectLeaderFieldError">
-							 	<span
-									ng-show="form.inputProjectLeader.$error.maxlength"
-									class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span> 
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
-						for="inputNewProjectLeader"
-							class="col-sm-4 control-label">{{ resources.projectPopupLabels.newProjectLeader }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<div class="input-group">
-							<input
-								type="text"
-								class="ng-binding form-control"
-								id="inputNewProjectLeader"
-								name="inputNewProjectLeader"
-								ng-model="$parent.newProjectLeader"
-								ng-pattern="patterns.onlyLetters"
-								ng-maxlength="400"
-								ng-required="projectLeadersArray.length == 0" /> 
-							<span
-								id="add_button"
-								type="button"
-								class="btn btn-sm input-group-addon"
-								ng-disabled="!newProjectLeader"
-								ng-click="addProjectLeader()">
-								<span class="glyphicon glyphicon-plus" />
-							</span>
-						</div>
-						<div
-							ng-show="form.inputNewProjectLeader.$dirty && form.inputNewProjectLeader.$invalid"
-							class="projectLeaderFieldError">
-							<span
-								ng-show="form.inputNewProjectLeader.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputNewProjectLeader.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span> <span
-								ng-show="form.inputNewProjectLeader.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="row form-group">
+				<div class="row form-group" ng-show="isProfessorLeader()">
  	 				<label for="inputIsProfessorLeader" class="col-sm-10" />
-  					<div 
-						class="checkbox pull-right" 
+  					<span 
+						class="glyphicon glyphicon-check pull-right" 
 						data-toggle="tooltip"
 						data-placement="down"
 						title="{{ resources.text.IamProjectLeaderTooltip }}">
-    					<label>
-      						<input 
-								type="checkbox" 
-								ng-model="project.professorLeader" 
-								id="inputIsProfessorLeader" 
-								name="inputIsProfessorLeader"
-								ng-click="updateLeadersList($event)"> {{ resources.projectPopupLabels.IamLeaderAlso }} </input>
-    					</label>
-					</div>
+    					{{ resources.projectPopupLabels.IamLeaderAlso }} 
+					</span>
 				</div>
 			</div>
 			<div class="modal-footer action">
@@ -316,8 +229,8 @@
 					id="submit_button"
 					type="submit"
 					class="btn btn-success btn-sm"
-					ng-disabled="$parent.form.$invalid || isUnchanged(project) || projectLeadersArray.length == 0"
-					ng-click="saveProject()">
+					ng-disabled="form.$invalid || isUnchanged(projectExperience)"
+					ng-click="saveProjectExperience()">
 					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.projectButtons.edit }}
 				</button>
 				<button

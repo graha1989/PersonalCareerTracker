@@ -137,7 +137,7 @@ app.factory("PctService", [
         },
         loadProfessorProjectExperiences: function(professorId) {
           var deferred = $q.defer();
-          $http.get("api/projects/allProfessorProjecExperiences", {
+          $http.get("api/projectExperiences/allProfessorProjecExperiences", {
             params: {
               professorId: professorId
             }
@@ -149,15 +149,15 @@ app.factory("PctService", [
           return deferred.promise;
         },
         loadAllProjectTypes: function(params, callback) {
-          $http.get('api/projects/allProjectTypes').success(callback);
+          $http.get('api/projectExperiences/allProjectTypes').success(callback);
         },
-        loadSelectedProject: function(id, callback) {
-          $http.get('api/projects/selectedProject?id=' + id).success(callback)
+        loadSelectedProjectExperience: function(id, callback) {
+          $http.get('api/projectExperiences/selectedProjectExperience?id=' + id).success(callback)
                   .error(callback);
         },
         findProjectsStartsWith: function(value, projectIds) {
           var deferred = $q.defer();
-          $http.get("api/projects/findProjectStartsWith", {
+          $http.get("api/projectExperiences/findProjectStartsWith", {
             params: {
               value: value,
               projectIds: projectIds
@@ -172,7 +172,7 @@ app.factory("PctService", [
         deleteProjectExperience: function(id, callback) {
           $http({
             method: 'DELETE',
-            url: 'api/projects?id=' + id
+            url: 'api/projectExperiences?id=' + id
           }).success(callback).error(callback);
         },
         loadProfessorsPublications: function(professorId) {
@@ -355,6 +355,20 @@ app.factory("PctService", [
           $http({
             method: 'DELETE',
             url: 'api/institutions?id=' + id
+          }).success(callback).error(callback);
+        },
+        
+        loadAllProjects: function(params, callback) {
+          $http.get('api/projects/allProjects').success(callback);
+        },
+        loadSelectedProject: function(id, callback) {
+          $http.get('api/projects/selectedProject?id=' + id)
+                  .success(callback).error(callback);
+        },
+        deleteProject: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/projects?id=' + id
           }).success(callback).error(callback);
         },
       };

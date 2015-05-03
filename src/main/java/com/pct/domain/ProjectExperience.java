@@ -1,5 +1,8 @@
 package com.pct.domain;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,17 +31,21 @@ public class ProjectExperience extends AbstractEntity {
 	@JsonBackReference(value = "project")
 	private Project project;
 	
-	private boolean professorLeader;
+	@Column(name = "startDate")
+	private Date startDate;
+
+	@Column(name = "endDate")
+	private Date endDate;
 
 	public ProjectExperience() {
-		super();
 	}
-	
-	public ProjectExperience(Professor professor, Project project, boolean professorLeader) {
+
+	public ProjectExperience(Professor professor, Project project, Date startDate, Date endDate) {
 		super();
 		this.professor = professor;
 		this.project = project;
-		this.professorLeader = professorLeader;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 
 	public Professor getProfessor() {
@@ -57,12 +64,20 @@ public class ProjectExperience extends AbstractEntity {
 		this.project = project;
 	}
 
-	public boolean isProfessorLeader() {
-		return professorLeader;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setProfessorLeader(boolean professorLeader) {
-		this.professorLeader = professorLeader;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }

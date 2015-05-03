@@ -41,9 +41,9 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
 				templateUrl: 'pages/awards.html?mentorId=:mentorId',
 				controller: 'AwardController'
 			})
-			.when('/projectExperiences/mentorId/:mentorId', {
-        templateUrl: 'pages/projectExperiences.html?mentorId=:mentorId',
-        controller: 'ProjectController'
+			.when('/projectExperiences/professorId/:professorId', {
+        templateUrl: 'pages/projectExperiences.html?professorId=:professorId',
+        controller: 'ProjectExperienceController'
       })
       .when('/publications/professorPublications/professorId/:professorId', {
         templateUrl: 'pages/professorPublications.html?professorId=:professorId',
@@ -84,6 +84,10 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
       .when('/showAllInstitutions', {
         templateUrl: 'pages/showAllInstitutions.html',
         controller: 'InstitutionsController'
+      })
+      .when('/showAllProjects', {
+        templateUrl: 'pages/showAllProjects.html',
+        controller: 'ProjectsController'
       })
 			.otherwise({
 				redirectTo: '/showAllStudents'

@@ -96,7 +96,11 @@ public class InstitutionsServiceImpl implements InstitutionsService {
 
 		return institution;
 	}
-
+	
+	/* 
+	 * TODO
+	 * Not delete institution completely, just set it to inactive  from some reason
+	 */
 	@Override
 	@Transactional
 	public void deleteInstitution(Long id) throws InstitutionNotFoundException {

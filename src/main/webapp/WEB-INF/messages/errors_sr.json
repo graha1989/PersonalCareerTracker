@@ -14,6 +14,8 @@
 		"invalidInstitutionNameMaxLength" : "Max. 50 characters.",
 		"invalidAwardNameAndAwardedByMaxLength" : "Max. 200 characters.",
 		"invalidProjectNameFinancedByMaxLength" : "Max. 200 characters.",
+		"invalidProjectNameMaxLength" : "Max. 200 characters.",
+		"invalidProjectFinancedByMaxLength" : "Max. 200 characters.",
 		"invalidPublicationAuthorMaxLength" : "Max. 200 characters.",
 		"invalidPublicationPageNumberMaxLength" : "Max. 10 characters.",
 		"invalidProjectLeaderFinancedByMaxLength" : "Max. 400 characters.",

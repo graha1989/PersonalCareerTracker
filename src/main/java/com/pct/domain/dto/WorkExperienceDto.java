@@ -45,7 +45,8 @@ public class WorkExperienceDto implements Serializable {
 
 	@NotNull
 	private Date workStartDate;
-
+	
+	@Nullable
 	private Date workEndDate;
 
 	@NotEmpty

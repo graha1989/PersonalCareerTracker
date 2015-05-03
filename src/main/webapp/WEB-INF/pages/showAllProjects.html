@@ -1,0 +1,420 @@
+<div>
+
+	<form
+		name="form"
+		id="showAllProjectsForm"
+		novalidate
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		ng-model="project">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.projectsTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+
+				<table
+					ng-show="allProjects != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr class="info ng-binding">
+							<td>{{ resources.projectsTableLabels.projectType }}</td>
+							<td>{{ resources.projectsTableLabels.projectName }}</td>
+							<td>{{ resources.projectsTableLabels.projectFinancedBy }}</td>
+							<td>{{ resources.projectsTableLabels.projectLeaders }}</td>
+							<td colspan="2"></td>
+						</tr>
+						<tr
+							class="active ng-scope"
+							ng-repeat="project in allProjects">
+							<td>{{ project.projectType.title }}</td>
+							<td>{{ project.name }}</td>
+							<td>{{ project.financedBy }}</td>
+							<td>{{ project.projectLeader }}</td>
+							<td class="delete"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteProject(project.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.projectButtons.delete }}
+								</button></td>
+							<td class="edit"><button
+									class="btn btn-link btn-xs"
+									ng-click="editProject(project.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.projectButtons.edit }}
+								</button></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td colspan="8">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
+				ng-click="createNewProject()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.projectButtons.add }}
+			</button>
+		</div>
+	</form>
+
+	<script
+		type="text/ng-template"
+		id="editProjectPopup.html">
+		<form
+			name="form"
+			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+			novalidate
+			role="form"
+			ng-model="project">
+			<div class="modal-header">
+				<h3 class="modal-title">{{ resources.text.editProjectPopupTitle }}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label
+						for="inputProjectType"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectType }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputProjectType"
+							name="inputProjectType"
+							ng-model="project.projectType"
+							ng-options="projectType.title for projectType in allProjectTypes track by projectType.name"
+							required><option value="">{{ resources.projectPopupLabels.projectType }}</option></select>
+						<div
+							ng-show="form.inputProjectType.$dirty && form.inputProjectType.$invalid"
+							class="projectTypeFieldError">
+							<span
+								ng-show="form.inputProjectType.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProjectName"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputProjectName"
+							name="inputProjectName"
+							ng-model="project.name"
+							placeholder="{{ resources.projectPopupLabels.projectName }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputProjectName.$dirty && form.inputProjectName.$invalid"
+							class="projectNameFieldError">
+							<span
+								ng-show="form.inputProjectName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputProjectName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidProjectNameMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProjectFinancedBy"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectFinancedBy }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputProjectFinancedBy"
+							name="inputProjectFinancedBy"
+							ng-model="project.financedBy"
+							placeholder="{{ resources.projectPopupLabels.projectFinancedBy }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputProjectFinancedBy.$dirty && form.inputProjectFinancedBy.$invalid"
+							class="projectFinancedByFieldError">
+							<span
+								ng-show="form.inputProjectFinancedBy.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputProjectFinancedBy.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidProjectFinancedByMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div ng-repeat="leader in projectLeadersArray">
+					<div class="form-group">
+						<label
+							for="inputProjectLeader"
+							class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectLeader }} {{ $index + 1 }}<span class="required">*</span>
+						</label>
+						<div class="col-sm-6">
+							<div class="input-group">
+								<input
+									type="text"
+									class="ng-binding form-control"
+									id="inputProjectLeader"
+									name="inputProjectLeader"
+									ng-disabled="true"
+									ng-model="leader"
+									ng-maxlength="400" /> 
+								<span
+									id="remove_button"
+									type="button"
+									class="btn btn-sucess btn-sm input-group-addon"
+									ng-click="removeProjectLeader($index)">
+									<span class="glyphicon glyphicon-remove" />
+								</span>
+							</div>
+							<div
+								ng-show="form.inputProjectLeader.$dirty && form.inputProjectLeader.$invalid"
+								class="projectLeaderFieldError">
+							 	<span
+									ng-show="form.inputProjectLeader.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span> 
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputNewProjectLeader"
+							class="col-sm-4 control-label">{{ resources.projectPopupLabels.newProjectLeader }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<input
+								type="text"
+								class="ng-binding form-control"
+								id="inputNewProjectLeader"
+								name="inputNewProjectLeader"
+								ng-model="$parent.newProjectLeader"
+								ng-pattern="patterns.onlyLetters"
+								ng-maxlength="100"
+								ng-required="projectLeadersArray.length == 0" /> 
+							<span
+								id="add_button"
+								type="button"
+								class="btn btn-sm input-group-addon"
+								ng-disabled="!newProjectLeader"
+								ng-click="addProjectLeader()">
+								<span class="glyphicon glyphicon-plus" />
+							</span>
+						</div>
+						<div
+							ng-show="form.inputNewProjectLeader.$dirty && form.inputNewProjectLeader.$invalid"
+							class="projectLeaderFieldError">
+							<span
+								ng-show="form.inputNewProjectLeader.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNewProjectLeader.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span> <span
+								ng-show="form.inputNewProjectLeader.$error.pattern"
+								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer action">
+				<button
+					id="submit_button"
+					type="submit"
+					class="btn btn-success btn-sm"
+					ng-disabled="form.$invalid || isUnchanged(project) || projectLeadersArray.length == 0"
+					ng-click="saveProject()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.projectButtons.edit }}
+				</button>
+				<button
+					id="cancel_button"
+					class="btn btn-sm"
+					ng-click="cancel()">{{ resources.buttons.projectButtons.close }}</button>
+			</div>
+		</form>
+	</script>
+
+	<script
+		type="text/ng-template"
+		id="createNewProjectPopup.html">
+		<form
+			name="form"
+			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+			novalidate
+			role="form"
+			ng-model="project">
+			<div class="modal-header">
+				<h3 class="modal-title">{{ resources.text.editProjectPopupTitle }}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label
+						for="inputProjectType"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectType }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputProjectType"
+							name="inputProjectType"
+							ng-model="project.projectType"
+							ng-options="projectType.title for projectType in allProjectTypes track by projectType.name"
+							ng-change="resetProjectData()"
+							required><option value="">{{ resources.projectPopupLabels.projectType }}</option></select>
+						<div
+							ng-show="form.inputProjectType.$dirty && form.inputProjectType.$invalid"
+							class="projectTypeFieldError">
+							<span
+								ng-show="form.inputProjectType.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProjectName"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputProjectName"
+							name="inputProjectName"
+							ng-model="project.name"
+							placeholder="{{ resources.projectPopupLabels.projectName }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputProjectName.$dirty && form.inputProjectName.$invalid"
+							class="projectNameFieldError">
+							<span
+								ng-show="form.inputProjectName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputProjectName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidProjectNameMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProjectFinancedBy"
+						class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectFinancedBy }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputProjectFinancedBy"
+							name="inputProjectFinancedBy"
+							ng-model="project.financedBy"
+							placeholder="{{ resources.projectPopupLabels.projectFinancedBy }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputProjectFinancedBy.$dirty && form.inputProjectFinancedBy.$invalid"
+							class="projectFinancedByFieldError">
+							<span
+								ng-show="form.inputProjectFinancedBy.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputProjectFinancedBy.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidProjectFinancedByMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div ng-repeat="leader in projectLeadersArray">
+					<div class="form-group">
+						<label
+							for="inputProjectLeader"
+							class="col-sm-4 control-label">{{ resources.projectPopupLabels.projectLeader }} {{ $index + 1 }}<span class="required">*</span>
+						</label>
+						<div class="col-sm-6">
+							<div class="input-group">
+								<input
+									type="text"
+									class="ng-binding form-control"
+									id="inputProjectLeader"
+									name="inputProjectLeader"
+									ng-disabled="true"
+									ng-model="leader"
+									ng-maxlength="400" /> 
+								<span
+									id="remove_button"
+									type="button"
+									class="btn btn-sucess btn-sm input-group-addon"
+									ng-click="removeProjectLeader($index)">
+									<span class="glyphicon glyphicon-remove" />
+								</span>
+							</div>
+							<div
+								ng-show="form.inputProjectLeader.$dirty && form.inputProjectLeader.$invalid"
+								class="projectLeaderFieldError">
+							 	<span
+									ng-show="form.inputProjectLeader.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span> 
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputNewProjectLeader"
+							class="col-sm-4 control-label">{{ resources.projectPopupLabels.newProjectLeader }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<input
+								type="text"
+								class="ng-binding form-control"
+								id="inputNewProjectLeader"
+								name="inputNewProjectLeader"
+								ng-model="$parent.newProjectLeader"
+								ng-pattern="patterns.onlyLetters"
+								ng-maxlength="100"
+								ng-required="projectLeadersArray.length == 0" /> 
+							<span
+								id="add_button"
+								type="button"
+								class="btn btn-sm input-group-addon"
+								ng-disabled="!newProjectLeader"
+								ng-click="addProjectLeader()">
+								<span class="glyphicon glyphicon-plus" />
+							</span>
+						</div>
+						<div
+							ng-show="form.inputNewProjectLeader.$dirty && form.inputNewProjectLeader.$invalid"
+							class="projectLeaderFieldError">
+							<span
+								ng-show="form.inputNewProjectLeader.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNewProjectLeader.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span> <span
+								ng-show="form.inputNewProjectLeader.$error.pattern"
+								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer action">
+		 		<button 
+					id="submit_button" 
+					type="submit" 
+					class="btn btn-success btn-sm" 
+					ng-disabled="!validateForm()" 
+					ng-click="saveNewProject()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.projectButtons.save }}
+				</button>
+		 		<button 
+					id="cancel_button" 
+					class="btn btn-sm" 
+					ng-click="cancel()">{{ resources.buttons.projectButtons.close }}
+				</button>
+  			</div>
+		</form>
+	</script>
+
+</div>

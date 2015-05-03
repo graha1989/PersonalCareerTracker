@@ -1,6 +1,5 @@
 package com.pct.domain;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,42 +16,48 @@ import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.enums.ProjectType;
+import com.pct.domain.enums.deserializers.ProjectTypeEnumDeserializer;
 
 @Entity
 @Table(name = "project")
 public class Project extends AbstractEntity {
 
 	private static final long serialVersionUID = -8558884874336561177L;
-	
+
 	@Column(name = "name", length = 200)
 	private String name;
-	
+
 	@Column(name = "financedBy", length = 200)
 	private String financedBy;
-	
-	@Column(name = "projectStartDate")
-	private Date projectStartDate;
-	
-	@Column(name = "projectEndDate")
-	private Date projectEndDate;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "projectType")
+	@JsonDeserialize(using = ProjectTypeEnumDeserializer.class)
 	private ProjectType projectType;
-	
+
 	@Column(name = "projectLeader")
 	@Lob
 	private String projectLeader;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "project")
 	@JsonIgnore
 	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
-	
+
 	public Project() {
+	}
+
+	public Project(String name, String financedBy, ProjectType projectType, String projectLeader,
+			Set<ProjectExperience> projectExperiences) {
 		super();
+		this.name = name;
+		this.financedBy = financedBy;
+		this.projectType = projectType;
+		this.projectLeader = projectLeader;
+		this.projectExperiences = projectExperiences;
 	}
 
 	public String getName() {
@@ -71,22 +76,6 @@ public class Project extends AbstractEntity {
 		this.financedBy = financedBy;
 	}
 
-	public Date getProjectStartDate() {
-		return projectStartDate;
-	}
-
-	public void setProjectStartDate(Date projectStartDate) {
-		this.projectStartDate = projectStartDate;
-	}
-
-	public Date getProjectEndDate() {
-		return projectEndDate;
-	}
-
-	public void setProjectEndDate(Date projectEndDate) {
-		this.projectEndDate = projectEndDate;
-	}
-
 	public ProjectType getProjectType() {
 		return projectType;
 	}
@@ -94,7 +83,7 @@ public class Project extends AbstractEntity {
 	public void setProjectType(ProjectType projectType) {
 		this.projectType = projectType;
 	}
-	
+
 	public String getProjectLeader() {
 		return projectLeader;
 	}
@@ -114,5 +103,5 @@ public class Project extends AbstractEntity {
 			this.projectExperiences.addAll(projectExperiences);
 		}
 	}
-	
+
 }

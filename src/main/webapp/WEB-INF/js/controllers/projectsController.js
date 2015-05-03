@@ -1,8 +1,9 @@
-app.controller("ProjectController", function($scope, $routeParams, $http,
-        $route, $modal, PctService) {
+app.controller("ProjectsController", function($scope, $routeParams, $http,
+        $location, $modal, PctService) {
 
-  $scope.projects = [];
   $scope.project = {};
+  $scope.allProjects = [];
+
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
@@ -19,45 +20,28 @@ app.controller("ProjectController", function($scope, $routeParams, $http,
             });
   };
 
-  $scope.loadProjects = function(professorId) {
-    return PctService.loadProfessorProjectExperiences(professorId).then(
-            function(response) {
-              if (angular.isObject(response) && response.length > 0) {
-                $scope.projects = response;
-                $scope.noResultsFound = false;
-              } else {
-                $scope.noResultsFound = true;
-              }
-            });
+  $scope.loadAllProjects = function() {
+    PctService.loadAllProjects($routeParams, function(data) {
+      if (angular.isObject(data) && data.length > 0) {
+        $scope.allProjects = data;
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
   };
 
   $scope.init = function() {
-    $scope.loadProjects($routeParams.mentorId);
+    $scope.loadAllProjects();
     $scope.loadResources();
   };
 
   $scope.init();
 
-  $scope.goBack = function() {
-    window.history.back();
-  };
-
-  $scope.deleteProjectExperience = function(id, index) {
-    PctService.deleteProjectExperience(id, function(data) {
-      if (angular.isObject(data)) {
-        $scope.errorStatus = data.status;
-      } else {
-        $scope.successStatus = "Successfully deleted project experience.";
-        $scope.projects.splice(index, 1);
-        $scope.loadProjects($routeParams.mentorId);
-      }
-    });
-  };
-
-  $scope.editProjectExperience = function(id) {
+  $scope.editProject = function(id) {
     $modal.open({
       templateUrl: 'editProjectPopup.html',
-      controller: editProjectExperienceController,
+      controller: editProjectPopupController,
       resolve: {
         projectId: function() {
           return id;
@@ -66,56 +50,39 @@ app.controller("ProjectController", function($scope, $routeParams, $http,
     });
   };
 
-  $scope.createNewProjectExperience = function() {
+  $scope.createNewProject = function() {
     $modal.open({
-      templateUrl: 'createNewProjectExperiencePopup.html',
-      controller: createNewProjectExperienceController,
-      resolve: {
-        projects: function() {
-          return $scope.projects;
-        }
+      templateUrl: 'createNewProjectPopup.html',
+      controller: createNewProjectController,
+    });
+  };
+
+  $scope.deleteProject = function(id, index) {
+    PctService.deleteProject(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.errorStatus = data.status;
+      } else {
+        $scope.successStatus = "Successfully deleted project.";
+        $scope.allProjects.splice(index, 1);
+        $scope.loadAllProjects();
       }
     });
   };
 
 });
 
-var editProjectExperienceController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, projectId, PctService) {
+var editProjectPopupController = function($scope, $modalInstance, $routeParams,
+        $http, $route, $templateCache, projectId, PctService) {
 
   $scope.project = {};
   $scope.master = {};
   $scope.allProjectTypes = [];
-  $scope.professor = {};
-  $scope.professorNameAndSurname = "";
   $scope.projectLeadersArray = [];
   $scope.newProjectLeader = "";
-  $scope.checkbox = angular
-          .element($templateCache.get('editProjectPopup.html'))[0].inputIsProfessorLeader;
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
-  };
-
-  $scope.dateOptions = {
-    "starting-day": "1"
-  };
-
-  /* Date picker functions for start date */
-  $scope.openProjectStartDate = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.inputProjectStartDateOpened = true;
-  };
-
-  /* Date picker functions for end date */
-  $scope.openProjectEndDate = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.inputProjectEndDateOpened = true;
   };
 
   $scope.loadResources = function() {
@@ -141,19 +108,6 @@ var editProjectExperienceController = function($scope, $modalInstance,
     });
   };
 
-  $scope.loadProfessorNameAndSurname = function() {
-    PctService.loadProfesor($routeParams.mentorId, function(data) {
-      if (angular.isObject(data)) {
-        $scope.professor = data;
-        $scope.professorNameAndSurname = $scope.professor.name + " "
-                + $scope.professor.surname;
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
-  };
-
   $scope.createLeadersArray = function() {
     var array = [];
     for (var i = 0; i < $scope.project.projectLeader.split(";").length; i++) {
@@ -161,18 +115,6 @@ var editProjectExperienceController = function($scope, $modalInstance,
     }
     return array;
   }
-
-  $scope.updateLeadersList = function($event) {
-    $scope.checkbox = $event.target;
-    var index = $scope.arrayContainsElement($scope.projectLeadersArray,
-            $scope.professorNameAndSurname);
-    if ($scope.checkbox.checked && index == -1) {
-      $scope.projectLeadersArray.push($scope.professorNameAndSurname.trim())
-    } else if (!$scope.checkbox.checked && index !== -1) {
-      $scope.projectLeadersArray.splice(index, 1);
-    }
-    $scope.constructLeadersString($scope.projectLeadersArray);
-  };
 
   $scope.constructLeadersString = function(array) {
     $scope.project.projectLeader = "";
@@ -197,7 +139,6 @@ var editProjectExperienceController = function($scope, $modalInstance,
     PctService.loadSelectedProject(id, function(data) {
       if (angular.isObject(data)) {
         $scope.project = data;
-        $scope.project.projectType = data.projectType.name;
         $scope.master = angular.copy($scope.project);
         $scope.projectLeadersArray = $scope.createLeadersArray();
         $scope.constructLeadersString($scope.projectLeadersArray);
@@ -208,16 +149,9 @@ var editProjectExperienceController = function($scope, $modalInstance,
     });
   };
 
-  $scope.setMaxDate = function() {
-    $scope.maxDate = new Date();
-  };
-
-  $scope.setMaxDate();
-
   $scope.init = function() {
     $scope.loadAllProjectTypes();
     $scope.loadSelectedProject(projectId);
-    $scope.loadProfessorNameAndSurname();
     $scope.status = $routeParams.status;
     $scope.loadResources();
   };
@@ -232,11 +166,6 @@ var editProjectExperienceController = function($scope, $modalInstance,
 
   $scope.removeProjectLeader = function(index) {
     $scope.projectLeadersArray.splice(index, 1);
-    var index = $scope.arrayContainsElement($scope.projectLeadersArray,
-            $scope.professorNameAndSurname);
-    if (index == -1 && $scope.checkbox.checked) {
-      $scope.checkbox.checked = false;
-    }
     $scope.constructLeadersString($scope.projectLeadersArray);
   };
 
@@ -266,8 +195,6 @@ var editProjectExperienceController = function($scope, $modalInstance,
   };
 
   $scope.isUnchanged = function(project) {
-    project.projectStartDate = new Date(project.projectStartDate).getTime();
-    project.projectEndDate = new Date(project.projectEndDate).getTime();
     return angular.equals(project, $scope.master);
   };
 
@@ -277,57 +204,17 @@ var editProjectExperienceController = function($scope, $modalInstance,
 
 };
 
-var createNewProjectExperienceController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, projects, PctService) {
+var createNewProjectController = function($scope, $modalInstance, $routeParams,
+        $http, $route, $templateCache, PctService) {
 
   $scope.project = {};
-  $scope.master = {};
-  $scope.selectedProject = [];
   $scope.allProjectTypes = [];
-  $scope.professor = {};
-  $scope.professorNameAndSurname = "";
   $scope.projectLeadersArray = [];
   $scope.newProjectLeader = "";
-  $scope.isExistingProject = false;
-  $scope.checkbox = angular.element($templateCache
-          .get('createNewProjectExperiencePopup.html'))[0].inputIsProfessorLeader;
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
-  };
-
-  $scope.dateOptions = {
-    "starting-day": "1"
-  };
-
-  /* Date picker functions for start date */
-  $scope.openProjectStartDate = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.inputProjectStartDateOpened = true;
-  };
-
-  /* Date picker functions for end date */
-  $scope.openProjectEndDate = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.inputProjectEndDateOpened = true;
-  };
-
-  $scope.loadProfessorNameAndSurname = function() {
-    PctService.loadProfesor($routeParams.mentorId, function(data) {
-      if (angular.isObject(data)) {
-        $scope.professor = data;
-        $scope.professorNameAndSurname = $scope.professor.name + " "
-                + $scope.professor.surname;
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
   };
 
   $scope.createLeadersArray = function() {
@@ -337,19 +224,6 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
     }
     return array;
   }
-
-  $scope.updateLeadersList = function($event) {
-    $scope.checkbox = $event.target;
-    var index = $scope.arrayContainsElement($scope.projectLeadersArray,
-            $scope.professorNameAndSurname);
-    $scope.project.professorLeader = $scope.checkbox.checked;
-    if ($scope.checkbox.checked && index == -1) {
-      $scope.projectLeadersArray.push($scope.professorNameAndSurname.trim())
-    } else if (!$scope.checkbox.checked && index !== -1) {
-      $scope.projectLeadersArray.splice(index, 1);
-    }
-    $scope.constructLeadersString($scope.projectLeadersArray);
-  };
 
   $scope.constructLeadersString = function(array) {
     $scope.project.projectLeader = "";
@@ -393,23 +267,8 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
     });
   };
 
-  $scope.getProjectsIds = function(selectedProjects) {
-    var projectsIdsArray = [];
-    for (var i = 0; i < selectedProjects.length; i++) {
-      projectsIdsArray.push(selectedProjects[i].projectId);
-    }
-    return projectsIdsArray;
-  };
-
-  $scope.setMaxDate = function() {
-    $scope.maxDate = new Date();
-  };
-
-  $scope.setMaxDate();
-
   $scope.init = function() {
     $scope.loadAllProjectTypes();
-    $scope.loadProfessorNameAndSurname();
     $scope.status = $routeParams.status;
     $scope.loadResources();
   };
@@ -424,40 +283,10 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
 
   $scope.removeProjectLeader = function(index) {
     $scope.projectLeadersArray.splice(index, 1);
-    var index = $scope.arrayContainsElement($scope.projectLeadersArray,
-            $scope.professorNameAndSurname);
-    if (index == -1 && $scope.checkbox.checked) {
-      $scope.checkbox.checked = false;
-    }
     $scope.constructLeadersString($scope.projectLeadersArray);
   };
 
-  $scope.getProjects = function(val) {
-    var projectExperienceIdsList = $scope.getProjectsIds(projects);
-
-    return PctService.findProjectsStartsWith(val, projectExperienceIdsList)
-            .then(function(response) {
-              var projects = [];
-              for (var i = 0; i < response.length; i++) {
-                projects.push(response[i]);
-              }
-              return projects;
-            });
-  };
-
-  $scope.onSelectProject = function() {
-    $scope.isExistingProject = true;
-    $scope.project = angular.copy($scope.selectedProject);
-    $scope.master = angular.copy($scope.selectedProject);
-    $scope.project.projectType = $scope.project.projectType.name;
-    $scope.projectLeadersArray = $scope.createLeadersArray();
-  };
-
-  $scope.saveProjectExperience = function() {
-    if (!$scope.isExistingProject) {
-      $scope.project.projectName = $scope.selectedProject;
-    }
-    $scope.project.professorId = $routeParams.mentorId;
+  $scope.saveNewProject = function() {
     $http({
       method: 'POST',
       url: "api/projects",
@@ -482,18 +311,10 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
     });
   };
 
-  $scope.cancel = function() {
-    $modalInstance.dismiss('cancel');
-  };
-
   $scope.validateForm = function() {
-    if ((($scope.project.projectName != null && $scope.project.projectName != '') || ($scope.selectedProject != null && $scope.selectedProject != ''))
-            && $scope.project.projectFinancedBy != null
-            && $scope.project.projectFinancedBy != ''
-            && $scope.project.projectStartDate != null
-            && $scope.project.projectStartDate != ''
-            && $scope.project.projectEndDate != null
-            && $scope.project.projectEndDate != ''
+    if ($scope.project.name != null && $scope.project.name != ''
+            && $scope.project.financedBy != null
+            && $scope.project.financedBy != ''
             && $scope.project.projectLeader != null
             && $scope.project.projectLeader != ''
             && $scope.project.projectType != null
@@ -502,6 +323,10 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
     } else {
       return false;
     }
+  };
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
   };
 
 };
