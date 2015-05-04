@@ -65,6 +65,7 @@
 	<script type="text/javascript" src="<spring:url value='js/controllers/teachingExperienceController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/institutionsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/projectsController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/subjectsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/service/pctService.js' />"></script>
 </body>
 </html>

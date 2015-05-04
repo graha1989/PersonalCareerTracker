@@ -3,21 +3,30 @@ package com.pct.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pct.domain.Institution;
 import com.pct.domain.Subject;
 import com.pct.domain.dto.SubjectDto;
+import com.pct.repository.InstitutionRepository;
 import com.pct.repository.SubjectRepository;
 import com.pct.service.SubjectService;
+import com.pct.validation.InstitutionNotFoundException;
+import com.pct.validation.SubjectNotFoundException;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
-	
+
 	@Autowired
 	private SubjectRepository subjectRepository;
-	
+
+	@Autowired
+	private InstitutionRepository institutionRepository;
+
 	@Override
 	@Transactional
 	public List<SubjectDto> findSubjectsStartsWith(String value, List<Long> subjectIds) {
@@ -32,8 +41,74 @@ public class SubjectServiceImpl implements SubjectService {
 		for (Subject subject : subjects) {
 			subjectDtos.add(new SubjectDto(subject));
 		}
-		
+
 		return subjectDtos;
+	}
+
+	@Override
+	@Transactional
+	public List<SubjectDto> findAllSubjects() {
+
+		List<SubjectDto> subjectDtos = new ArrayList<SubjectDto>();
+		try {
+			List<Subject> subjects = subjectRepository.findAll();
+			for (Subject s : subjects) {
+				SubjectDto subjectDto = new SubjectDto(s);
+				subjectDtos.add(subjectDto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return subjectDtos;
+	}
+
+	@Override
+	@Transactional
+	public SubjectDto findSubjectById(Long id) throws SubjectNotFoundException {
+
+		SubjectDto subjectDto;
+		if (id != null) {
+			Subject subject = subjectRepository.findOne(id);
+			if (subject != null) {
+				subjectDto = new SubjectDto(subject);
+				return subjectDto;
+			}
+		}
+
+		throw new SubjectNotFoundException();
+	}
+
+	@Override
+	@Transactional
+	public void saveSubject(SubjectDto subjectDto) throws InstitutionNotFoundException, SubjectNotFoundException {
+
+		Institution institution = institutionRepository.findOne(subjectDto.getInstitutionId());
+		if (institution == null) {
+			throw new InstitutionNotFoundException();
+		}
+
+		subjectRepository.saveAndFlush(createOrUpdateSubjectInstanceFromSubjectDto(subjectDto, institution));
+	}
+
+	public Subject createOrUpdateSubjectInstanceFromSubjectDto(@Nonnull SubjectDto subjectDto,
+			@Nonnull Institution institution) {
+
+		Subject subject = null;
+		if (subjectDto.getId() == null) {
+			subject = new Subject();
+		} else {
+			subject = subjectRepository.findOne(subjectDto.getId());
+		}
+		subject.setInstitution(institution);
+		subject.setName(subjectDto.getSubjectName());
+		subject.setProgram(subjectDto.getStudyProgram());
+		subject.setStudiesThesisType(subjectDto.getStudiesThesisType());
+		subject.setNumberOfTeachingLessons(subjectDto.getNumberOfTeachingLessons());
+		subject.setNumberOfTheoreticalLessons(subjectDto.getNumberOfTheoreticalLessons());
+		subject.setNumberOfPracticalLessons(subjectDto.getNumberOfPracticalLessons());
+		
+		return subject;
 	}
 
 }

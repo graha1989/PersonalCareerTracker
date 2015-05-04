@@ -357,7 +357,6 @@ app.factory("PctService", [
             url: 'api/institutions?id=' + id
           }).success(callback).error(callback);
         },
-        
         loadAllProjects: function(params, callback) {
           $http.get('api/projects/allProjects').success(callback);
         },
@@ -370,6 +369,13 @@ app.factory("PctService", [
             method: 'DELETE',
             url: 'api/projects?id=' + id
           }).success(callback).error(callback);
+        },
+        loadAllSubjects: function(params, callback) {
+          $http.get('api/subjects/allSubjects').success(callback);
+        },
+        loadSelectedSubject: function(id, callback) {
+          $http.get('api/subjects/selectedSubject?id=' + id)
+                  .success(callback).error(callback);
         },
       };
     }]);

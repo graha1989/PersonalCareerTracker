@@ -1,0 +1,583 @@
+<div>
+
+	<form
+		name="form"
+		id="showAllProjectsForm"
+		novalidate
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		ng-model="subject">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.subjectsTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+
+				<table
+					ng-show="allSubjects != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr class="info ng-binding">
+							<td>{{ resources.subjectsTableLabels.subjectName }}</td>
+							<td>{{ resources.subjectsTableLabels.studyProgram }}</td>
+							<td>{{ resources.subjectsTableLabels.facultyName }}</td>
+							<td>{{ resources.subjectsTableLabels.facultyCity }}</td>
+							<td>{{ resources.subjectsTableLabels.studyType }}</td>
+							<td>{{ resources.subjectsTableLabels.lessonsNumber }}</td>
+							<td colspan="2"></td>
+						</tr>
+						<tr
+							class="active ng-scope"
+							ng-repeat="subjectData in completeSubjectDataArray">
+							<td>{{ subjectData.subject.subjectName }}</td>
+							<td>{{ subjectData.subject.studyProgram }}</td>
+							<td>{{ subjectData.faculty.name }}</td>
+							<td>{{ subjectData.faculty.city }}</td>
+							<td>{{ subjectData.subject.studiesThesisType.type }}</td>
+							<td>{{ subjectData.subject.numberOfTeachingLessons }} + {{ subjectData.subject.numberOfTheoreticalLessons }} + {{ subjectData.subject.numberOfPracticalLessons }}</td>
+							<td class="delete"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteSubject(subjectData.subject.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.subjectButtons.delete }}
+								</button></td>
+							<td class="edit"><button
+									class="btn btn-link btn-xs"
+									ng-click="editSubject(subjectData.subject.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.subjectButtons.edit }}
+								</button></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td colspan="8">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
+				ng-click="createNewSubject()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.subjectButtons.add }}
+			</button>
+		</div>
+	</form>
+
+	<script
+		type="text/ng-template"
+		id="editSubjectPopup.html">
+		<form
+			name="form"
+			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+			novalidate
+			role="form"
+			ng-model="subject">
+			<div class="modal-header">
+				<h3 class="modal-title">{{ resources.text.editSubjectPopupTitle }}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label
+						for="inputFacultyName"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyName }}
+					</label>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<input
+								type="text"
+								class="ng-binding form-control"
+								id="inputFacultyName"
+								name="inputFacultyName"
+								ng-model="faculty.name"
+								ng-disabled="true" /> 
+								<span class="input-group-addon"> <span
+									class="glyphicon glyphicon-expand"
+									ng-click="expandFacultyData()"
+									ng-show="!allFacultyDataShown"></span> <span
+									class="glyphicon glyphicon-collapse-down"
+									ng-click="collapseFacultyData()"
+									ng-show="allFacultyDataShown"></span>
+								</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-show="allFacultyDataShown">
+					<label
+						for="inputUniversityName"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.universityName }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputUniversityName"
+							name="inputUniversityName"
+							ng-model="faculty.university"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allFacultyDataShown">
+					<label
+						for="inputInstitutionCity"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyCity }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCity"
+							name="inputInstitutionCity"
+							ng-model="faculty.city"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allFacultyDataShown">
+					<label
+						for="inputInstitutionCountry"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyCountry }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCountry"
+							name="inputInstitutionCountry"
+							ng-model="faculty.country"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputSubjectName"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.subjectName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputSubjectName"
+							name="inputSubjectName"
+							ng-model="subject.subjectName"
+							placeholder="{{ resources.subjectPopupLabels.subjectName }}"
+							required />
+						<div
+							ng-show="form.inputSubjectName.$dirty && form.inputSubjectName.$invalid"
+							class="subjectNameFieldError">
+							<span
+								ng-show="form.inputSubjectName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProgram"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.studyProgram }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputProgram"
+							name="inputProgram"
+							ng-model="subject.studyProgram"
+							placeholder="{{ resources.subjectPopupLabels.studyProgram }}"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputProgram.$dirty && form.inputProgram.$invalid"
+							class="programFieldError">
+							<span
+								ng-show="form.inputProgram.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputStudyType"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.studyType }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputStudyType"
+							name="inputStudyType"
+							ng-model="subject.studiesThesisType"
+							ng-options="studiesThesisType.type for studiesThesisType in allStudiesThesisTypes track by studiesThesisType.id"
+							required><option value="">{{ resources.subjectPopupLabels.studyType }}</option></select> 
+						<div
+							ng-show="form.inputStudyType.$dirty && form.inputStudyType.$invalid"
+							class="studyTypeFieldError">
+							<span
+								ng-show="form.inputStudyType.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.numberOfLessons }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNumberOfTeachingLessons"
+							name="inputNumberOfTeachingLessons"
+							ng-model="subject.numberOfTeachingLessons"
+							placeholder="{{ resources.subjectPopupLabels.teachingLessons }}"
+							min="0"
+							ng-maxlength="2"
+							required />
+						<div
+							ng-show="form.inputNumberOfTeachingLessons.$dirty && form.inputNumberOfTeachingLessons.$invalid"
+							class="numberOfTeachingLessonsFieldError">
+							<span
+								ng-show="form.inputNumberOfTeachingLessons.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNumberOfTeachingLessons.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidLessonsNumberLength }}</span> <span
+								ng-show="form.inputAverageGrade.$error.min"
+								class="ng-binding">{{ errorMessages.error.minLessonsNumber }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						class="col-sm-4 control-label"></label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNumberOfTheoreticalLessons"
+							name="inputNumberOfTheoreticalLessons"
+							ng-model="subject.numberOfTheoreticalLessons"
+							placeholder="{{ resources.subjectPopupLabels.theoreticalLessons }}"
+							min="0"
+							ng-maxlength="2"
+							required />
+						<div
+							ng-show="form.inputNumberOfTheoreticalLessons.$dirty && form.inputNumberOfTheoreticalLessons.$invalid"
+							class="numberOfTheoreticalLessonsFieldError">
+							<span
+								ng-show="form.inputNumberOfTheoreticalLessons.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNumberOfTheoreticalLessons.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidLessonsNumberLength }}</span> <span
+								ng-show="form.inputNumberOfTheoreticalLessons.$error.min"
+								class="ng-binding">{{ errorMessages.error.minLessonsNumberNumber }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						class="col-sm-4 control-label"></label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNumberOfPracticalLessons"
+							name="inputNumberOfPracticalLessons"
+							ng-model="subject.numberOfPracticalLessons"
+							placeholder="{{ resources.subjectPopupLabels.practicalLessons }}"
+							min="0"
+							ng-maxlength="2"
+							required />
+						<div
+							ng-show="form.inputNumberOfPracticalLessons.$dirty && form.inputNumberOfPracticalLessons.$invalid"
+							class="numberOfPracticalLessonsFieldError">
+							<span
+								ng-show="form.inputNumberOfPracticalLessons.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNumberOfPracticalLessons.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidLessonsNumberLength }}</span> <span
+								ng-show="form.inputNumberOfPracticalLessons.$error.min"
+								class="ng-binding">{{ errorMessages.error.minLessonsNumberNumber }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer action">
+				<button
+					id="submit_button"
+					type="submit"
+					class="btn btn-success btn-sm"
+					ng-disabled="form.$invalid || isUnchanged(subject)"
+					ng-click="saveSubject()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.subjectButtons.edit }}
+				</button>
+				<button
+					id="cancel_button"
+					class="btn btn-sm"
+					ng-click="cancel()">{{ resources.buttons.subjectButtons.close }}</button>
+			</div>
+		</form>
+	</script>
+
+	<script
+		type="text/ng-template"
+		id="createNewSubjectPopup.html">
+		<form
+			name="form"
+			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+			novalidate
+			role="form"
+			ng-model="subject">
+			<div class="modal-header">
+				<h3 class="modal-title">{{ resources.text.addNewSubjectTitle }}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label
+						for="inputFacultyName"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<input
+								type="text"
+								class="ng-binding form-control"
+								id="inputFacultyName"
+								name="inputFacultyName"
+								ng-model="$parent.selectedFaculty"
+								typeahead="faculty as faculty.name for faculty in getFaculties($viewValue) | limitTo:8"
+								typeahead-on-select="onSelectFaculty()"
+								placeholder="{{ resources.subjectPopupLabels.facultyName }}"
+								autocomplete="off"
+								required /> 
+							<span class="input-group-addon"> <span
+								class="glyphicon glyphicon-expand"
+								ng-click="expandFacultyData()"
+								ng-show="!allFacultyDataShown"></span> <span
+								class="glyphicon glyphicon-collapse-down"
+								ng-click="collapseFacultyData()"
+								ng-show="allFacultyDataShown"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputFacultyName.$dirty && form.inputFacultyName.$invalid"
+							class="facultyNameFieldError">
+							<span
+								ng-show="form.inputFacultyName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-show="allFacultyDataShown">
+					<label
+						for="inputUniversityName"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.universityName }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputUniversityName"
+							name="inputUniversityName"
+							ng-model="selectedFaculty.university"
+							placeholder="{{ resources.subjectPopupLabels.universityName }}"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allFacultyDataShown">
+					<label
+						for="inputInstitutionCity"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyCity }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCity"
+							name="inputInstitutionCity"
+							ng-model="selectedFaculty.city"
+							placeholder="{{ resources.subjectPopupLabels.facultyCity }}"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allFacultyDataShown">
+					<label
+						for="inputInstitutionCountry"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyCountry }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCountry"
+							name="inputInstitutionCountry"
+							ng-model="selectedFaculty.country"
+							placeholder="{{ resources.subjectPopupLabels.facultyCountry }}"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputSubjectName"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.subjectName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputSubjectName"
+							name="inputSubjectName"
+							ng-model="subject.subjectName"
+							placeholder="{{ resources.subjectPopupLabels.subjectName }}"
+							required />
+						<div
+							ng-show="form.inputSubjectName.$dirty && form.inputSubjectName.$invalid"
+							class="subjectNameFieldError">
+							<span
+								ng-show="form.inputSubjectName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProgram"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.studyProgram }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputProgram"
+							name="inputProgram"
+							ng-model="subject.studyProgram"
+							placeholder="{{ resources.subjectPopupLabels.studyProgram }}"
+							ng-maxlength="50"
+							required />
+						<div
+							ng-show="form.inputProgram.$dirty && form.inputProgram.$invalid"
+							class="programFieldError">
+							<span
+								ng-show="form.inputProgram.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputStudyType"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.studyType }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputStudyType"
+							name="inputStudyType"
+							ng-model="subject.studiesThesisType"
+							ng-options="studiesThesisType.type for studiesThesisType in allStudiesThesisTypes track by studiesThesisType.id"
+							required><option value="">{{ resources.subjectPopupLabels.studyType }}</option></select> 
+						<div
+							ng-show="form.inputStudyType.$dirty && form.inputStudyType.$invalid"
+							class="studyTypeFieldError">
+							<span
+								ng-show="form.inputStudyType.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.numberOfLessons }} <span class="required">*</span></label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNumberOfTeachingLessons"
+							name="inputNumberOfTeachingLessons"
+							ng-model="subject.numberOfTeachingLessons"
+							placeholder="{{ resources.subjectPopupLabels.teachingLessons }}"
+							min="0"
+							ng-maxlength="2"
+							required />
+						<div
+							ng-show="form.inputNumberOfTeachingLessons.$dirty && form.inputNumberOfTeachingLessons.$invalid"
+							class="numberOfTeachingLessonsFieldError">
+							<span
+								ng-show="form.inputNumberOfTeachingLessons.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNumberOfTeachingLessons.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidLessonsNumberLength }}</span> <span
+								ng-show="form.inputAverageGrade.$error.min"
+								class="ng-binding">{{ errorMessages.error.minLessonsNumber }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						class="col-sm-4 control-label"></label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNumberOfTheoreticalLessons"
+							name="inputNumberOfTheoreticalLessons"
+							ng-model="subject.numberOfTheoreticalLessons"
+							placeholder="{{ resources.subjectPopupLabels.theoreticalLessons }}"
+							min="0"
+							ng-maxlength="2"
+							required />
+						<div
+							ng-show="form.inputNumberOfTheoreticalLessons.$dirty && form.inputNumberOfTheoreticalLessons.$invalid"
+							class="numberOfTheoreticalLessonsFieldError">
+							<span
+								ng-show="form.inputNumberOfTheoreticalLessons.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNumberOfTheoreticalLessons.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidLessonsNumberLength }}</span> <span
+								ng-show="form.inputNumberOfTheoreticalLessons.$error.min"
+								class="ng-binding">{{ errorMessages.error.minLessonsNumberNumber }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						class="col-sm-4 control-label"></label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNumberOfPracticalLessons"
+							name="inputNumberOfPracticalLessons"
+							ng-model="subject.numberOfPracticalLessons"
+							placeholder="{{ resources.subjectPopupLabels.practicalLessons }}"
+							min="0"
+							ng-maxlength="2"
+							required />
+						<div
+							ng-show="form.inputNumberOfPracticalLessons.$dirty && form.inputNumberOfPracticalLessons.$invalid"
+							class="numberOfPracticalLessonsFieldError">
+							<span
+								ng-show="form.inputNumberOfPracticalLessons.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputNumberOfPracticalLessons.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidLessonsNumberLength }}</span> <span
+								ng-show="form.inputNumberOfPracticalLessons.$error.min"
+								class="ng-binding">{{ errorMessages.error.minLessonsNumberNumber }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer action">
+		 		<button 
+					id="submit_button" 
+					type="submit" 
+					class="btn btn-success btn-sm" 
+					ng-disabled="!validateForm()" 
+					ng-click="saveNewSubject()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.subjectButtons.save }}
+				</button>
+		 		<button 
+					id="cancel_button" 
+					class="btn btn-sm" 
+					ng-click="cancel()">{{ resources.buttons.subjectButtons.close }}
+				</button>
+  			</div>
+		</form>
+	</script>
+
+</div>

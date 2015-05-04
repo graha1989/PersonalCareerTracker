@@ -9,17 +9,14 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.StudiesThesisType;
 import com.pct.domain.Subject;
-import com.pct.domain.enums.InstitutionType;
-import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
 
 public class SubjectDto implements Serializable {
 
 	private static final long serialVersionUID = 1126081919536192074L;
 
-	@NotNull
+	@Nullable
 	protected Long id;
 
 	@NotEmpty
@@ -31,29 +28,6 @@ public class SubjectDto implements Serializable {
 	@Length(max = 50)
 	@SafeHtml
 	private String studyProgram;
-
-	@JsonDeserialize(using = InstitutionTypeEnumDeserializer.class)
-	private final InstitutionType institutionType = InstitutionType.FACULTY;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String facultyName;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String universityName;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String facultyCity;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String facultyCountry;
 
 	@NotNull
 	private StudiesThesisType studiesThesisType;
@@ -73,18 +47,13 @@ public class SubjectDto implements Serializable {
 	public SubjectDto() {
 	}
 
-	public SubjectDto(Long id, String subjectName, String studyProgram, String facultyName, String universityName,
-			String facultyCity, String facultyCountry, StudiesThesisType studiesThesisType,
+	public SubjectDto(Long id, String subjectName, String studyProgram, StudiesThesisType studiesThesisType,
 			Integer numberOfTheoreticalLessons, Integer numberOfPracticalLessons, Integer numberOfTeachingLessons,
 			Long institutionId) {
 		super();
 		this.id = id;
 		this.subjectName = subjectName;
 		this.studyProgram = studyProgram;
-		this.facultyName = facultyName;
-		this.universityName = universityName;
-		this.facultyCity = facultyCity;
-		this.facultyCountry = facultyCountry;
 		this.studiesThesisType = studiesThesisType;
 		this.numberOfTheoreticalLessons = numberOfTheoreticalLessons;
 		this.numberOfPracticalLessons = numberOfPracticalLessons;
@@ -96,10 +65,6 @@ public class SubjectDto implements Serializable {
 		this.id = subject.getId();
 		this.subjectName = subject.getName();
 		this.studyProgram = subject.getProgram();
-		this.facultyName = subject.getInstitution().getName();
-		this.universityName = subject.getInstitution().getUniversity();
-		this.facultyCity = subject.getInstitution().getCity();
-		this.facultyCountry = subject.getInstitution().getCountry();
 		this.studiesThesisType = subject.getStudiesThesisType();
 		this.numberOfTheoreticalLessons = subject.getNumberOfTheoreticalLessons();
 		this.numberOfPracticalLessons = subject.getNumberOfPracticalLessons();
@@ -129,38 +94,6 @@ public class SubjectDto implements Serializable {
 
 	public void setStudyProgram(String studyProgram) {
 		this.studyProgram = studyProgram;
-	}
-
-	public String getFacultyName() {
-		return facultyName;
-	}
-
-	public void setFacultyName(String facultyName) {
-		this.facultyName = facultyName;
-	}
-
-	public String getUniversityName() {
-		return universityName;
-	}
-
-	public void setUniversityName(String universityName) {
-		this.universityName = universityName;
-	}
-
-	public String getFacultyCity() {
-		return facultyCity;
-	}
-
-	public void setFacultyCity(String facultyCity) {
-		this.facultyCity = facultyCity;
-	}
-
-	public String getFacultyCountry() {
-		return facultyCountry;
-	}
-
-	public void setFacultyCountry(String facultyCountry) {
-		this.facultyCountry = facultyCountry;
 	}
 
 	public StudiesThesisType getStudiesThesisType() {
@@ -203,8 +136,4 @@ public class SubjectDto implements Serializable {
 		this.institutionId = institutionId;
 	}
 
-	public InstitutionType getInstitutionType() {
-		return institutionType;
-	}
-	
 }

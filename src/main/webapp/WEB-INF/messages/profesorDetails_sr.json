@@ -26,10 +26,12 @@
         "workExperiencesTitle": "Kretanje u profesionalnom radu",
         "institutionsTitle": "Pregled svih institucija",
         "projectsTitle": "Pregled svih projekata",
+        "subjectsTitle": "Pregled svih predmeta",
         "teachingExperiencesTitle": "Izvođenje nastave",
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
         "editInstitutionPopupTitle": "Izmena institucije",
         "editProjectPopupTitle": "Izmena projekta",
+        "editSubjectPopupTitle": "Izmena predmeta",
         "editTeachingExperiencePopupTitle": "Izmena rada u nastavi",
         "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva",
         "addNewBachelorStudiesTitle": "Dodavanje novih osnovnih studija",
@@ -37,6 +39,7 @@
         "addNewSpecialisticStudiesTitle": "Dodavanje novih specijalističkih studija",
         "addNewDoctorStudiesTitle": "Dodavanje novih doktorskih studija",
         "addNewSpecialization": "Dodavanje nove specijalizacije u inostranstvu",
+        "addNewSubjectTitle": "Dodavanje novog predmeta",
         "professorBachelorStudiesTitle": "Osnovne (bachelor) studije",
         "professorMasterStudiesTitle": "Master studije",
         "professorSpecialisticStudiesTitle": "Specijalističke studije",
@@ -174,6 +177,14 @@
             "save": "Sačuvaj",
             "cancel": "Odustani"
         },
+        "subjectButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novi predmet",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
         "publicationsButtons": {
             "delete": "Izbriši",
             "edit": "Izmeni",
@@ -246,6 +257,16 @@
         "endDate": "Završio se",
         "leader": "Rukovodioci"
     },
+    "subjectsTableLabels": {
+        "subjectName": "Naziv predmeta",
+        "studyProgram": "Studijski program",
+        "facultyName": "Ime fakulteta",
+        "universityName": "Ime univerziteta",
+        "facultyCity": "Grad",
+        "facultyCountry": "Država",
+        "studyType": "Stepen studija",
+        "lessonsNumber": "Fond časova"
+    },
     "awardPopupLabels": {
         "awardNameLabel": "Naziv priznanja",
         "awardedByLabel": "Dodeljeno od strane",
@@ -262,6 +283,19 @@
         "projectLeader": "Rukovodilac",
         "newProjectLeader": "Novi rukovodilac",
         "IamLeaderAlso": "Rukovodilac"
+    },
+    "subjectPopupLabels": {
+        "subjectName": "Naziv predmeta",
+        "studyProgram": "Studijski program",
+        "facultyName": "Fakultet",
+        "universityName": "Univerzitet",
+        "facultyCity": "Grad",
+        "facultyCountry": "Država",
+        "studyType": "Stepen studija",
+        "numberOfLessons": "Fond časova",
+        "teachingLessons": "Predavanja",
+        "practicalLessons": "Praktične vežbe",
+        "theoreticalLessons": "Teorijske vežbe"
     },
     "professorPublicationsTableLabels": {
         "publicationType": "Tip publikacije",
