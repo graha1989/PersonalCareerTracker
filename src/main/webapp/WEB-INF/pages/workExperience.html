@@ -91,9 +91,9 @@
 							<input
 								type="text"
 								class="ng-binding form-control"
-								id="inputInstitutionType"
-								name="inputInstitutionType"
-								ng-model="workExperience.institutionType.title"
+								id="inputInstitutionName"
+								name="inputInstitutionName"
+								ng-model="workExperience.institutionName"
 								ng-disabled="true" />
 							<span class="input-group-addon"> <span
 								class="glyphicon glyphicon-expand"
@@ -115,9 +115,9 @@
 						<input
 							type="text"
 							class="ng-binding form-control"
-							id="inputInstitutionName"
-							name="inputInstitutionName"
-							ng-model="workExperience.institutionName"
+							id="inputInstitutionType"
+							name="inputInstitutionType"
+							ng-model="workExperience.institutionType.title"
 							ng-disabled="true" />
 					</div>
 				</div>
@@ -292,29 +292,6 @@
     		<div class="modal-body">
 				<div class="form-group">
 					<label
-						for="inputInstitutionType"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionType }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<select
-							class="ng-binding form-control"
-							id="inputInstitutionType"
-							name="inputInstitutionType"
-							ng-model="workExperience.institutionType"
-							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
-							ng-change="restartInsitutionData()"
-							required><option value="">{{ resources.workExperiencePopupLabels.institutionType }}</option></select>
-						<div
-							ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
-							class="institutionTypeFieldError">
-							<span
-								ng-show="form.inputInstitutionType.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
 						for="inputInstitutionName"
 						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionName }} <span class="required">*</span>
 					</label>
@@ -339,10 +316,33 @@
 						</div>
 					</div>
 				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionType"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionType }} <span class="required" ng-show="!isExistingInstitution">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputInstitutionType"
+							name="inputInstitutionType"
+							ng-model="workExperience.institutionType"
+							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
+							ng-disabled="isExistingInstitution"
+							ng-required="!isExistingInstitution" ><option value="">{{ resources.workExperiencePopupLabels.institutionType }}</option></select>
+						<div
+							ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
+							class="institutionTypeFieldError">
+							<span
+								ng-show="form.inputInstitutionType.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
 				<div class="form-group" ng-show="workExperience.institutionType.name == 'FACULTY'">
 					<label
 						for="inputUniversityName"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.universityName }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.universityName }} <span class="required" ng-show="workExperience.institutionType.name == 'FACULTY' && !isExistingInstitution">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -353,7 +353,8 @@
 							ng-model="workExperience.universityName"
 							placeholder="{{ resources.workExperiencePopupLabels.universityName }}"
 							ng-maxlength="50"
-							ng-required="workExperience.institutionType.name == 'FACULTY'" />
+							ng-required="workExperience.institutionType.name == 'FACULTY' && !isExistingInstitution"
+							ng-disabled="isExistingInstitution" />
 						<div
 							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
 							class="universityNameFieldError">
@@ -368,7 +369,7 @@
 				<div class="form-group">
 					<label
 						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCity }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCity }} <span class="required" ng-show="!isExistingInstitution">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -379,7 +380,8 @@
 							ng-model="workExperience.institutionCity"
 							placeholder="{{ resources.workExperiencePopupLabels.institutionCity }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingInstitution"
+							ng-required="!isExistingInstitution" />
 						<div
 							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
 							class="institutionCityFieldError">
@@ -394,7 +396,7 @@
 				<div class="form-group">
 					<label
 						for="inputInstitutionCountry"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }} <span class="required" ng-show="!isExistingInstitution">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -405,7 +407,8 @@
 							ng-model="workExperience.institutionCountry"
 							placeholder="{{ resources.workExperiencePopupLabels.institutionCountry }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingInstitution"
+							ng-required="!isExistingInstitution" />
 						<div
 							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
 							class="institutionCountryFieldError">

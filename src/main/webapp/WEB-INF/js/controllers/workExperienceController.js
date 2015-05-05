@@ -204,6 +204,7 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
   $scope.workExperience = {};
   $scope.allInstitutionTypes = [];
   $scope.selectedInstitution = [];
+  $scope.masterSelectedInstitution = [];
   $scope.isExistingInstitution = false;
 
   $scope.patterns = {
@@ -281,6 +282,7 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
 
   $scope.onSelectInstitution = function() {
     $scope.isExistingInstitution = true;
+    $scope.masterSelectedInstitution = angular.copy($scope.selectedInstitution);
     $scope.workExperience.institutionType = $scope.selectedInstitution.institutionType;
     $scope.workExperience.institutionName = $scope.selectedInstitution.name;
     $scope.workExperience.universityName = $scope.selectedInstitution.university;
@@ -292,12 +294,21 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
   $scope.restartInsitutionData = function() {
     $scope.selectedInstitution = null;
     $scope.isExistingInstitution = false;
+    $scope.workExperience.institutionType = null;
     $scope.workExperience.institutionName = null;
     $scope.workExperience.universityName = null;
     $scope.workExperience.institutionCity = null;
     $scope.workExperience.institutionCountry = null;
     $scope.workExperience.institutionId = null;
   };
+
+  $scope.$watch('selectedInstitution', function() {
+    if ($scope.isExistingInstitution
+            && !angular.equals($scope.selectedInstitution,
+                    $scope.masterSelectedInstitution)) {
+      $scope.restartInsitutionData();
+    }
+  });
 
   $scope.saveWorkExperience = function() {
     if (!$scope.isExistingInstitution) {
