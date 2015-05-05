@@ -82,13 +82,32 @@ public class SubjectServiceImpl implements SubjectService {
 	@Override
 	@Transactional
 	public void saveSubject(SubjectDto subjectDto) throws InstitutionNotFoundException, SubjectNotFoundException {
-
-		Institution institution = institutionRepository.findOne(subjectDto.getInstitutionId());
-		if (institution == null) {
-			throw new InstitutionNotFoundException();
-		}
-
+		Institution institution = initializeInstitution(subjectDto);
+		institutionRepository.save(institution);
 		subjectRepository.saveAndFlush(createOrUpdateSubjectInstanceFromSubjectDto(subjectDto, institution));
+	}
+
+	/**
+	 * Creates new Institution entity object or retrieves existing from the database and sets field values from
+	 * SubjectDto.
+	 * 
+	 * @param subjectDto
+	 * @return
+	 */
+	public Institution initializeInstitution(@Nonnull SubjectDto subjectDto) {
+		Institution institution = null;
+		if (subjectDto.getInstitutionId() != null) {
+			institution = institutionRepository.findOne(subjectDto.getInstitutionId());
+		} else {
+			institution = new Institution();
+		}
+		institution.setCity(subjectDto.getInstitutionCity());
+		institution.setCountry(subjectDto.getInstitutionCountry());
+		institution.setName(subjectDto.getInstitutionName());
+		institution.setUniversity(subjectDto.getUniversityName());
+		institution.setInstitutionType(subjectDto.getInstitutionType());
+
+		return institution;
 	}
 
 	public Subject createOrUpdateSubjectInstanceFromSubjectDto(@Nonnull SubjectDto subjectDto,
@@ -107,7 +126,7 @@ public class SubjectServiceImpl implements SubjectService {
 		subject.setNumberOfTeachingLessons(subjectDto.getNumberOfTeachingLessons());
 		subject.setNumberOfTheoreticalLessons(subjectDto.getNumberOfTheoreticalLessons());
 		subject.setNumberOfPracticalLessons(subjectDto.getNumberOfPracticalLessons());
-		
+
 		return subject;
 	}
 

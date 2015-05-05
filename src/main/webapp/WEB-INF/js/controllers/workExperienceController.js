@@ -86,9 +86,8 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
 
   $scope.workExperience = {};
   $scope.master = {};
-  $scope.allInstitutionTypes = [];
   $scope.selectedInstitution = [];
-  $scope.isExistingInstitution = false;
+  $scope.allInstitutionDataShown = false;
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -127,24 +126,12 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
             });
   };
 
-  $scope.loadAllInstitutionTypes = function() {
-    PctService.loadAllInstitutionTypes($routeParams, function(data) {
-      if (angular.isObject(data) && data.length > 0) {
-        $scope.allInstitutionTypes = data;
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
-  };
-
   $scope.loadSelectedWorkExperience = function(id) {
     PctService.loadSelectedWorkExperience(id, function(data) {
       if (angular.isObject(data)) {
         $scope.workExperience = data;
         $scope.workExperience.workStartDate = new Date(data.workStartDate);
         $scope.workExperience.workEndDate = new Date(data.workEndDate);
-        $scope.selectedInstitution = $scope.workExperience.institutionName;
         $scope.master = angular.copy($scope.workExperience);
         $scope.noResultsFound = false;
       } else {
@@ -160,49 +147,22 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
   $scope.setMaxDate();
 
   $scope.init = function() {
-    $scope.loadAllInstitutionTypes();
     $scope.loadSelectedWorkExperience(workExperienceId);
-    $scope.status = $routeParams.status;
     $scope.loadResources();
+    $scope.status = $routeParams.status;
   };
 
   $scope.init();
 
-  $scope.getInstitutions = function(val, type) {
-    return PctService.findInstutionsStartsWith(val, type).then(
-            function(response) {
-              var institutions = [];
-              for (var i = 0; i < response.length; i++) {
-                institutions.push(response[i]);
-              }
-              return institutions;
-            });
+  $scope.expandInstitutionData = function() {
+    $scope.allInstitutionDataShown = true;
   };
 
-  $scope.onSelectInstitution = function() {
-    $scope.isExistingInstitution = true;
-    $scope.workExperience.institutionType = $scope.selectedInstitution.institutionType;
-    $scope.workExperience.institutionName = $scope.selectedInstitution.name;
-    $scope.workExperience.universityName = $scope.selectedInstitution.university;
-    $scope.workExperience.institutionCity = $scope.selectedInstitution.city;
-    $scope.workExperience.institutionCountry = $scope.selectedInstitution.country;
-    $scope.workExperience.institutionId = $scope.selectedInstitution.id;
-  };
-
-  $scope.restartInsitutionData = function() {
-    $scope.selectedInstitution = null;
-    $scope.isExistingInstitution = false;
-    $scope.workExperience.institutionName = null;
-    $scope.workExperience.universityName = null;
-    $scope.workExperience.institutionCity = null;
-    $scope.workExperience.institutionCountry = null;
-    $scope.workExperience.institutionId = null;
+  $scope.collapseInstitutionData = function() {
+    $scope.allInstitutionDataShown = false;
   };
 
   $scope.saveWorkExperience = function() {
-    if (!$scope.isExistingInstitution) {
-      $scope.workExperience.institutionName = $scope.selectedInstitution;
-    }
     $http({
       method: 'PUT',
       url: "api/workExperiences",
@@ -228,11 +188,7 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
   };
 
   $scope.isUnchanged = function(workExperience) {
-    return ($scope.isExistingInstitution ? angular.equals(
-            $scope.selectedInstitution.name, $scope.master.institutionName)
-            : angular.equals($scope.selectedInstitution,
-                    $scope.master.institutionName))
-            && angular.equals(workExperience, $scope.master);
+    return angular.equals(workExperience, $scope.master);
   };
 
   $scope.cancel = function() {

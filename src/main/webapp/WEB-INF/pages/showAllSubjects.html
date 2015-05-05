@@ -334,27 +334,17 @@
 						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyName }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<div class="input-group">
-							<input
-								type="text"
-								class="ng-binding form-control"
-								id="inputFacultyName"
-								name="inputFacultyName"
-								ng-model="$parent.selectedFaculty"
-								typeahead="faculty as faculty.name for faculty in getFaculties($viewValue) | limitTo:8"
-								typeahead-on-select="onSelectFaculty()"
-								placeholder="{{ resources.subjectPopupLabels.facultyName }}"
-								autocomplete="off"
-								required /> 
-							<span class="input-group-addon"> <span
-								class="glyphicon glyphicon-expand"
-								ng-click="expandFacultyData()"
-								ng-show="!allFacultyDataShown"></span> <span
-								class="glyphicon glyphicon-collapse-down"
-								ng-click="collapseFacultyData()"
-								ng-show="allFacultyDataShown"></span>
-							</span>
-						</div>
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputFacultyName"
+							name="inputFacultyName"
+							ng-model="$parent.selectedFaculty"
+							typeahead="faculty as faculty.name for faculty in getFaculties($viewValue) | limitTo:8"
+							typeahead-on-select="onSelectFaculty()"
+							placeholder="{{ resources.subjectPopupLabels.facultyName }}"
+							autocomplete="off"
+							required /> 
 						<div
 							ng-show="form.inputFacultyName.$dirty && form.inputFacultyName.$invalid"
 							class="facultyNameFieldError">
@@ -364,10 +354,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group" ng-show="allFacultyDataShown">
+				<div class="form-group">
 					<label
 						for="inputUniversityName"
-						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.universityName }}
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.universityName }} <span class="required" ng-show="!isExistingFaculty">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -375,15 +365,26 @@
 							class="form-control"
 							id="inputUniversityName"
 							name="inputUniversityName"
-							ng-model="selectedFaculty.university"
+							ng-model="subject.universityName"
 							placeholder="{{ resources.subjectPopupLabels.universityName }}"
-							ng-disabled="true" />
+							ng-maxlength="50"
+							ng-disabled="isExistingFaculty"
+							ng-required="!isExistingFaculty" />
+						<div
+							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
+							class="universityNameFieldError">
+							<span
+								ng-show="form.inputUniversityName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputUniversityName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidUniversityNameMaxLength }}</span>
+						</div>
 					</div>
 				</div>
-				<div class="form-group" ng-show="allFacultyDataShown">
+				<div class="form-group">
 					<label
 						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyCity }}
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyCity }} <span class="required" ng-show="!isExistingFaculty">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -391,15 +392,26 @@
 							class="form-control"
 							id="inputInstitutionCity"
 							name="inputInstitutionCity"
-							ng-model="selectedFaculty.city"
+							ng-model="subject.institutionCity"
 							placeholder="{{ resources.subjectPopupLabels.facultyCity }}"
-							ng-disabled="true" />
+							ng-maxlength="50"
+							ng-disabled="isExistingFaculty"
+							ng-requiered="!isExistingFaculty" />
+						<div
+							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
+							class="institutionCityFieldError">
+							<span
+								ng-show="form.inputInstitutionCity.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputInstitutionCity.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span>
+						</div>
 					</div>
 				</div>
-				<div class="form-group" ng-show="allFacultyDataShown">
+				<div class="form-group">
 					<label
 						for="inputInstitutionCountry"
-						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyCountry }}
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.facultyCountry }} <span class="required" ng-show="!isExistingFaculty">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -407,9 +419,20 @@
 							class="form-control"
 							id="inputInstitutionCountry"
 							name="inputInstitutionCountry"
-							ng-model="selectedFaculty.country"
+							ng-model="subject.institutionCountry"
 							placeholder="{{ resources.subjectPopupLabels.facultyCountry }}"
-							ng-disabled="true" />
+							ng-maxlength="50"
+							ng-disabled="isExistingFaculty"
+							ng-requiered="!isExistingFaculty" />
+						<div
+							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
+							class="institutionCountryFieldError">
+							<span
+								ng-show="form.inputInstitutionCountry.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputInstitutionCountry.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">

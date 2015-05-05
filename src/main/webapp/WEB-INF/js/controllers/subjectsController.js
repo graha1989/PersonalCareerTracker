@@ -195,8 +195,9 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
   $scope.subject = {};
   $scope.faculty = {};
   $scope.selectedFaculty = [];
+  $scope.masterSelectedFaculty = [];
+  $scope.isExistingFaculty = false;
   $scope.allStudiesThesisTypes = [];
-  $scope.allFacultyDataShown = false;
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -240,20 +241,38 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
 
   $scope.init();
 
-  $scope.expandFacultyData = function() {
-    $scope.allFacultyDataShown = true;
-  };
-
-  $scope.collapseFacultyData = function() {
-    $scope.allFacultyDataShown = false;
-  };
-
   $scope.onSelectFaculty = function() {
-    $scope.allFacultyDataShown = true;
+    $scope.isExistingFaculty = true;
+    $scope.masterSelectedFaculty = angular.copy($scope.selectedFaculty);
+    $scope.subject.institutionName = $scope.selectedFaculty.name;
+    $scope.subject.universityName = $scope.selectedFaculty.university;
+    $scope.subject.institutionCity = $scope.selectedFaculty.city;
+    $scope.subject.institutionCountry = $scope.selectedFaculty.country;
     $scope.subject.institutionId = $scope.selectedFaculty.id;
   };
 
+  $scope.resetFacultyData = function() {
+    $scope.selectedFaculty = null;
+    $scope.isExistingFaculty = false;
+    $scope.subject.institutionName = null;
+    $scope.subject.universityName = null;
+    $scope.subject.institutionCity = null;
+    $scope.subject.institutionCountry = null;
+    $scope.subject.institutionId = null;
+  };
+
+  $scope.$watch('selectedFaculty', function() {
+    if ($scope.isExistingFaculty
+            && !angular.equals($scope.selectedFaculty,
+                    $scope.masterSelectedFaculty)) {
+      $scope.resetFacultyData();
+    }
+  });
+
   $scope.saveNewSubject = function() {
+    if (!$scope.isExistingFaculty) {
+      $scope.subject.institutionName = $scope.selectedFaculty;
+    }
     $http({
       method: 'POST',
       url: "api/subjects",
@@ -279,7 +298,13 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.validateForm = function() {
-    if ($scope.selectedFaculty != null && $scope.selectedFaculty != ''
+    if ((($scope.subject.institutionName != null && $scope.subject.institutionName != '') || ($scope.selectedFaculty != null && $scope.selectedFaculty != ''))
+            && $scope.subject.universityName != null
+            && $scope.subject.universityName != ''
+            && $scope.subject.institutionCity != null
+            && $scope.subject.institutionCity != ''
+            && $scope.subject.institutionCountry != null
+            && $scope.subject.institutionCountry != ''
             && $scope.subject.subjectName != null
             && $scope.subject.subjectName != ''
             && $scope.subject.studyProgram != null

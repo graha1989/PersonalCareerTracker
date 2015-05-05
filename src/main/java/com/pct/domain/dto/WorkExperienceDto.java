@@ -27,7 +27,7 @@ public class WorkExperienceDto implements Serializable {
 	@Length(max = 50)
 	@SafeHtml
 	private String institutionName;
-	
+
 	@Nullable
 	@Length(max = 50)
 	@SafeHtml
@@ -43,9 +43,12 @@ public class WorkExperienceDto implements Serializable {
 	@SafeHtml
 	private String institutionCountry;
 
+	@Nullable
+	protected Long institutionId;
+
 	@NotNull
 	private Date workStartDate;
-	
+
 	@Nullable
 	private Date workEndDate;
 
@@ -57,8 +60,7 @@ public class WorkExperienceDto implements Serializable {
 	@NotNull
 	protected Long professorId;
 
-	protected Long institutionId;
-
+	@Nullable
 	protected Long id;
 
 	public WorkExperienceDto() {
@@ -82,7 +84,6 @@ public class WorkExperienceDto implements Serializable {
 	}
 
 	public WorkExperienceDto(WorkExperience workExperience) {
-		super();
 		this.institutionType = workExperience.getInstitution().getInstitutionType();
 		this.institutionName = workExperience.getInstitution().getName();
 		this.universityName = workExperience.getInstitution().getUniversity();

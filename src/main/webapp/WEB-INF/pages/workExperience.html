@@ -84,30 +84,32 @@
 				<div class="form-group">
 					<label
 						for="inputInstitutionType"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionType }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionType }}
 					</label>
 					<div class="col-sm-6">
-						<select
-							class="ng-binding form-control"
-							id="inputInstitutionType"
-							name="inputInstitutionType"
-							ng-model="workExperience.institutionType"
-							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
-							ng-change="restartInsitutionData()"
-							required><option value="">{{ resources.workExperiencePopupLabels.institutionType }}</option></select>
-						<div
-							ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
-							class="institutionTypeFieldError">
-							<span
-								ng-show="form.inputInstitutionType.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
+						<div class="input-group">
+							<input
+								type="text"
+								class="ng-binding form-control"
+								id="inputInstitutionType"
+								name="inputInstitutionType"
+								ng-model="workExperience.institutionType.title"
+								ng-disabled="true" />
+							<span class="input-group-addon"> <span
+								class="glyphicon glyphicon-expand"
+								ng-click="expandInstitutionData()"
+								ng-show="!allInstitutionDataShown"></span> <span
+								class="glyphicon glyphicon-collapse-down"
+								ng-click="collapseInstitutionData()"
+								ng-show="allInstitutionDataShown"></span>
+							</span>
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group" ng-show="allInstitutionDataShown">
 					<label
 						for="inputInstitutionName"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionName }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionName }}
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -115,25 +117,14 @@
 							class="ng-binding form-control"
 							id="inputInstitutionName"
 							name="inputInstitutionName"
-							ng-model="$parent.selectedInstitution"
-							typeahead="institution as institution.name for institution in getInstitutions($viewValue) | limitTo:8"
-							typeahead-on-select="onSelectInstitution()"
-							placeholder="{{ resources.workExperiencePopupLabels.institutionName }}"
-							autocomplete="off"
-							required />
-						<div
-							ng-show="form.inputInstitutionName.$dirty && form.inputInstitutionName.$invalid"
-							class="institutionNameFieldError">
-							<span
-								ng-show="form.inputInstitutionName.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
-						</div>
+							ng-model="workExperience.institutionName"
+							ng-disabled="true" />
 					</div>
 				</div>
-				<div class="form-group" ng-show="workExperience.institutionType.name == 'FACULTY'">
+				<div class="form-group" ng-show="workExperience.institutionType.name == 'FACULTY' && allInstitutionDataShown">
 					<label
 						for="inputUniversityName"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.universityName }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.universityName }}
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -142,24 +133,13 @@
 							id="inputUniversityName"
 							name="inputUniversityName"
 							ng-model="workExperience.universityName"
-							placeholder="{{ resources.workExperiencePopupLabels.universityName }}"
-							ng-maxlength="50"
-							ng-required="workExperience.institutionType.name == 'FACULTY'" />
-						<div
-							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
-							class="universityNameFieldError">
-							<span
-								ng-show="form.inputUniversityName.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputUniversityName.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidUniversityNameMaxLength }}</span>
-						</div>
+							ng-disabled="true" />
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group" ng-show="allInstitutionDataShown">
 					<label
 						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCity }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCity }}
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -168,24 +148,13 @@
 							id="inputInstitutionCity"
 							name="inputInstitutionCity"
 							ng-model="workExperience.institutionCity"
-							placeholder="{{ resources.workExperiencePopupLabels.institutionCity }}"
-							ng-maxlength="50"
-							required />
-						<div
-							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
-							class="institutionCityFieldError">
-							<span
-								ng-show="form.inputInstitutionCity.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span>
-						</div>
+							ng-disabled="true" />
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group" ng-show="allInstitutionDataShown">
 					<label
 						for="inputInstitutionCountry"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }}
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -194,18 +163,7 @@
 							id="inputInstitutionCountry"
 							name="inputInstitutionCountry"
 							ng-model="workExperience.institutionCountry"
-							placeholder="{{ resources.workExperiencePopupLabels.institutionCountry }}"
-							ng-maxlength="50"
-							required />
-						<div
-							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
-							class="institutionCountryFieldError">
-							<span
-								ng-show="form.inputInstitutionCountry.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCountry.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span>
-						</div>
+							ng-disabled="true" />
 					</div>
 				</div>
 				<div class="form-group">

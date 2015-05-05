@@ -9,12 +9,39 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.StudiesThesisType;
 import com.pct.domain.Subject;
+import com.pct.domain.enums.InstitutionType;
+import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
 
 public class SubjectDto implements Serializable {
 
 	private static final long serialVersionUID = 1126081919536192074L;
+
+	@NotNull
+	@JsonDeserialize(using = InstitutionTypeEnumDeserializer.class)
+	private final InstitutionType institutionType = InstitutionType.FACULTY;
+
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private String institutionName;
+
+	@Nullable
+	@Length(max = 50)
+	@SafeHtml
+	private String universityName;
+
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private String institutionCity;
+
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private String institutionCountry;
 
 	@Nullable
 	protected Long id;
@@ -47,10 +74,15 @@ public class SubjectDto implements Serializable {
 	public SubjectDto() {
 	}
 
-	public SubjectDto(Long id, String subjectName, String studyProgram, StudiesThesisType studiesThesisType,
+	public SubjectDto(String institutionName, String universityName, String institutionCity, String institutionCountry,
+			Long id, String subjectName, String studyProgram, StudiesThesisType studiesThesisType,
 			Integer numberOfTheoreticalLessons, Integer numberOfPracticalLessons, Integer numberOfTeachingLessons,
 			Long institutionId) {
 		super();
+		this.institutionName = institutionName;
+		this.universityName = universityName;
+		this.institutionCity = institutionCity;
+		this.institutionCountry = institutionCountry;
 		this.id = id;
 		this.subjectName = subjectName;
 		this.studyProgram = studyProgram;
@@ -62,6 +94,10 @@ public class SubjectDto implements Serializable {
 	}
 
 	public SubjectDto(Subject subject) {
+		this.institutionName = subject.getInstitution().getName();
+		this.universityName = subject.getInstitution().getUniversity();
+		this.institutionCity = subject.getInstitution().getCity();
+		this.institutionCountry = subject.getInstitution().getCountry();
 		this.id = subject.getId();
 		this.subjectName = subject.getName();
 		this.studyProgram = subject.getProgram();
@@ -70,6 +106,42 @@ public class SubjectDto implements Serializable {
 		this.numberOfPracticalLessons = subject.getNumberOfPracticalLessons();
 		this.numberOfTeachingLessons = subject.getNumberOfTeachingLessons();
 		this.institutionId = subject.getInstitution().getId();
+	}
+
+	public String getInstitutionName() {
+		return institutionName;
+	}
+
+	public void setInstitutionName(String institutionName) {
+		this.institutionName = institutionName;
+	}
+
+	public String getUniversityName() {
+		return universityName;
+	}
+
+	public void setUniversityName(String universityName) {
+		this.universityName = universityName;
+	}
+
+	public String getInstitutionCity() {
+		return institutionCity;
+	}
+
+	public void setInstitutionCity(String institutionCity) {
+		this.institutionCity = institutionCity;
+	}
+
+	public String getInstitutionCountry() {
+		return institutionCountry;
+	}
+
+	public void setInstitutionCountry(String institutionCountry) {
+		this.institutionCountry = institutionCountry;
+	}
+
+	public InstitutionType getInstitutionType() {
+		return institutionType;
 	}
 
 	public Long getId() {
