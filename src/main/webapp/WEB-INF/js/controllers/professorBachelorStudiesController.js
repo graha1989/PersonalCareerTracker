@@ -11,7 +11,7 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
   $scope.editMode = [];
   $scope.inputStudyStartDateOpened = [];
   $scope.inputStudyEndDateOpened = [];
-  
+
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
@@ -48,37 +48,42 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
               $scope.errorMessages = angular.fromJson(response);
             });
   };
-  
+
   $scope.convertTimeToDate = function(time) {
     return new Date(time);
   };
 
   $scope.loadProfessorsBachelorStudies = function(professorId, thesisTypeId) {
-    return PctService.loadProfessorStudies(professorId, thesisTypeId)
-            .then(function(response) {
+    return PctService.loadProfessorStudies(professorId, thesisTypeId).then(
+            function(response) {
               if (angular.isObject(response) && response.length > 0) {
                 $scope.allBachelorStudies = response;
-                
+
                 for (var i = 0; i < $scope.allBachelorStudies.length; i++) {
-                  $scope.allBachelorStudies[i].studyStartDate = $scope.convertTimeToDate(response[i].studyStartDate);
-                  $scope.allBachelorStudies[i].studyEndDate = $scope.convertTimeToDate(response[i].studyEndDate);
+                  $scope.allBachelorStudies[i].studyStartDate = $scope
+                          .convertTimeToDate(response[i].studyStartDate);
+                  $scope.allBachelorStudies[i].studyEndDate = $scope
+                          .convertTimeToDate(response[i].studyEndDate);
                 }
-                
+
                 $scope.editMode = new Array($scope.allBachelorStudies.length);
                 for (var i = 0; i < $scope.allBachelorStudies.length; i++) {
                   $scope.editMode.splice(i, 1, false);
                 }
-                
-                $scope.inputStudyStartDateOpened = new Array($scope.allBachelorStudies.length);
+
+                $scope.inputStudyStartDateOpened = new Array(
+                        $scope.allBachelorStudies.length);
                 for (var i = 0; i < $scope.allBachelorStudies.length; i++) {
                   $scope.inputStudyStartDateOpened.splice(i, 1, false);
                 }
-                
-                $scope.inputStudyEndDateOpened = new Array($scope.allBachelorStudies.length);
+
+                $scope.inputStudyEndDateOpened = new Array(
+                        $scope.allBachelorStudies.length);
                 for (var i = 0; i < $scope.allBachelorStudies.length; i++) {
                   $scope.inputStudyEndDateOpened.splice(i, 1, false);
                 }
-                $scope.allBachelorStudiesMaster = angular.copy($scope.allBachelorStudies);
+                $scope.allBachelorStudiesMaster = angular
+                        .copy($scope.allBachelorStudies);
                 $scope.noResultsFound = false;
               } else {
                 $scope.noResultsFound = true;
@@ -116,26 +121,26 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
     $scope.editMode.splice(index, 1, true);
     for (var i = 0; i < $scope.editMode.length; i++) {
       if (i != index) {
-        $scope.allBachelorStudies[i] = angular.copy($scope.allBachelorStudiesMaster[i]);
+        $scope.allBachelorStudies[i] = angular
+                .copy($scope.allBachelorStudiesMaster[i]);
         $scope.editMode.splice(i, 1, false);
       }
     }
   };
-  
+
   $scope.close = function(index) {
-    $scope.allBachelorStudies[index] = angular.copy($scope.allBachelorStudiesMaster[index]);
+    $scope.allBachelorStudies[index] = angular
+            .copy($scope.allBachelorStudiesMaster[index]);
     $scope.editMode.splice(index, 1, false);
   };
-  
+
   $scope.isInEditMode = function() {
     for (var i = 0; i < $scope.editMode.length; i++) {
-      if ($scope.editMode[i] === true) {
-        return true;
-      }
+      if ($scope.editMode[i] === true) { return true; }
     }
     return false;
   };
-  
+
   $scope.updateProfessorBachelorStudies = function(studies, index) {
     $http({
       method: 'PUT',
@@ -160,15 +165,16 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
       }, "slow");
     });
   };
-  
+
   $scope.isUnchanged = function(index) {
-    return angular.equals($scope.allBachelorStudies[index], $scope.allBachelorStudiesMaster[index]);
+    return angular.equals($scope.allBachelorStudies[index],
+            $scope.allBachelorStudiesMaster[index]);
   };
 
   $scope.goBack = function() {
     window.history.back();
   };
-  
+
   $scope.deleteProfessorBachelorStudies = function(id, index) {
     PctService.deleteProfessorStudies(id, function(data) {
       if (angular.isObject(data)) {
@@ -176,18 +182,19 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
       } else {
         $scope.successStatus = "Successfully deleted bachelor studies.";
         $scope.allBachelorStudies.splice(index, 1);
-        $scope.loadProfessorsBachelorStudies($routeParams.professorId, $routeParams.thesisTypeId);
+        $scope.loadProfessorsBachelorStudies($routeParams.professorId,
+                $routeParams.thesisTypeId);
       }
     });
   };
-  
+
   $scope.createNewBachelorStudies = function() {
     $modal.open({
       templateUrl: 'createNewBachelorStudiesPopup.html',
       controller: createNewBachelorStudiesController,
     });
   };
-  
+
 });
 
 var createNewBachelorStudiesController = function($scope, $modalInstance,
@@ -200,7 +207,8 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
   $scope.allStudyPrograms = [];
   $scope.isExistingFaculty = false;
   $scope.selectedFaculty = [];
-  
+  $scope.masterSelectedFaculty = [];
+
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
@@ -237,7 +245,7 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
               $scope.errorMessages = angular.fromJson(response);
             });
   };
-  
+
   $scope.convertTimeToDate = function(time) {
     return new Date(time);
   };
@@ -277,20 +285,33 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
               return faculties;
             });
   };
-  
+
   $scope.$watch('selectedFaculty', function() {
-    if ($scope.selectedFaculty === null || $scope.selectedFaculty == '' || angular.isUndefined($scope.selectedFaculty)) {
-      $scope.isExistingFaculty = false;
+    if ($scope.isExistingFaculty
+            && !angular.equals($scope.selectedFaculty,
+                    $scope.masterSelectedFaculty)) {
+      $scope.resetFacultyData();
     }
   });
 
   $scope.onSelectFaculty = function() {
     $scope.isExistingFaculty = true;
+    $scope.masterSelectedFaculty = angular.copy($scope.selectedFaculty);
     $scope.bachelorStudies.facultyName = $scope.selectedFaculty.name;
     $scope.bachelorStudies.universityName = $scope.selectedFaculty.university;
     $scope.bachelorStudies.facultyCity = $scope.selectedFaculty.city;
     $scope.bachelorStudies.facultyCountry = $scope.selectedFaculty.country;
     $scope.bachelorStudies.institutionId = $scope.selectedFaculty.id;
+  };
+
+  $scope.resetFacultyData = function() {
+    $scope.selectedFaculty = null;
+    $scope.isExistingFaculty = false;
+    $scope.bachelorStudies.facultyName = null;
+    $scope.bachelorStudies.universityName = null;
+    $scope.bachelorStudies.facultyCity = null;
+    $scope.bachelorStudies.facultyCountry = null;
+    $scope.bachelorStudies.institutionId = null;
   };
 
   $scope.saveNewProfessorBachelorStudies = function() {
@@ -331,8 +352,12 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
     if ((($scope.bachelorStudies.facultyName != null && $scope.bachelorStudies.facultyName != '') || ($scope.selectedFaculty != null && $scope.selectedFaculty != ''))
             && $scope.bachelorStudies.universityName != null
             && $scope.bachelorStudies.universityName != ''
-            && (!$scope.isExistingFaculty ? ($scope.bachelorStudies.facultyCity != null && $scope.bachelorStudies.facultyCity != '') : true)
-            && (!$scope.isExistingFaculty ? ($scope.bachelorStudies.facultyCountry != null && $scope.bachelorStudies.facultyCountry != '') : true)   
+            && (!$scope.isExistingFaculty
+                    ? ($scope.bachelorStudies.facultyCity != null && $scope.bachelorStudies.facultyCity != '')
+                    : true)
+            && (!$scope.isExistingFaculty
+                    ? ($scope.bachelorStudies.facultyCountry != null && $scope.bachelorStudies.facultyCountry != '')
+                    : true)
             && $scope.bachelorStudies.studyProgram != null
             && $scope.bachelorStudies.studyProgram != ''
             && $scope.bachelorStudies.studyArea != null

@@ -10,7 +10,7 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
   $scope.editMode = [];
   $scope.inputStartDateOpened = [];
   $scope.inputEndDateOpened = [];
-  
+
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
@@ -47,37 +47,42 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
               $scope.errorMessages = angular.fromJson(response);
             });
   };
-  
+
   $scope.convertTimeToDate = function(time) {
     return new Date(time);
   };
 
   $scope.loadProfessorsSpecializationsAbroad = function(professorId) {
-    return PctService.loadProfessorsSpecializationsAbroad(professorId)
-            .then(function(response) {
+    return PctService.loadProfessorsSpecializationsAbroad(professorId).then(
+            function(response) {
               if (angular.isObject(response) && response.length > 0) {
                 $scope.allSpecializations = response;
-                
+
                 for (var i = 0; i < $scope.allSpecializations.length; i++) {
-                  $scope.allSpecializations[i].startDate = $scope.convertTimeToDate(response[i].startDate);
-                  $scope.allSpecializations[i].endDate = $scope.convertTimeToDate(response[i].endDate);
+                  $scope.allSpecializations[i].startDate = $scope
+                          .convertTimeToDate(response[i].startDate);
+                  $scope.allSpecializations[i].endDate = $scope
+                          .convertTimeToDate(response[i].endDate);
                 }
-                
+
                 $scope.editMode = new Array($scope.allSpecializations.length);
                 for (var i = 0; i < $scope.allSpecializations.length; i++) {
                   $scope.editMode.splice(i, 1, false);
                 }
-                
-                $scope.inputStartDateOpened = new Array($scope.allSpecializations.length);
+
+                $scope.inputStartDateOpened = new Array(
+                        $scope.allSpecializations.length);
                 for (var i = 0; i < $scope.allSpecializations.length; i++) {
                   $scope.inputStartDateOpened.splice(i, 1, false);
                 }
-                
-                $scope.inputEndDateOpened = new Array($scope.allSpecializations.length);
+
+                $scope.inputEndDateOpened = new Array(
+                        $scope.allSpecializations.length);
                 for (var i = 0; i < $scope.allSpecializations.length; i++) {
                   $scope.inputEndDateOpened.splice(i, 1, false);
                 }
-                $scope.allSpecializationsMaster = angular.copy($scope.allSpecializations);
+                $scope.allSpecializationsMaster = angular
+                        .copy($scope.allSpecializations);
                 $scope.noResultsFound = false;
               } else {
                 $scope.noResultsFound = true;
@@ -102,26 +107,26 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
     $scope.editMode.splice(index, 1, true);
     for (var i = 0; i < $scope.editMode.length; i++) {
       if (i != index) {
-        $scope.allSpecializations[i] = angular.copy($scope.allSpecializationsMaster[i]);
+        $scope.allSpecializations[i] = angular
+                .copy($scope.allSpecializationsMaster[i]);
         $scope.editMode.splice(i, 1, false);
       }
     }
   };
-  
+
   $scope.close = function(index) {
-    $scope.allSpecializations[index] = angular.copy($scope.allSpecializationsMaster[index]);
+    $scope.allSpecializations[index] = angular
+            .copy($scope.allSpecializationsMaster[index]);
     $scope.editMode.splice(index, 1, false);
   };
-  
+
   $scope.isInEditMode = function() {
     for (var i = 0; i < $scope.editMode.length; i++) {
-      if ($scope.editMode[i] === true) {
-        return true;
-      }
+      if ($scope.editMode[i] === true) { return true; }
     }
     return false;
   };
-  
+
   $scope.updateProfessorSpecialization = function(specialization, index) {
     $http({
       method: 'PUT',
@@ -146,15 +151,16 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
       }, "slow");
     });
   };
-  
+
   $scope.isUnchanged = function(index) {
-    return angular.equals($scope.allSpecializations[index], $scope.allSpecializationsMaster[index]);
+    return angular.equals($scope.allSpecializations[index],
+            $scope.allSpecializationsMaster[index]);
   };
 
   $scope.goBack = function() {
     window.history.back();
   };
-  
+
   $scope.deleteProfessorSpecializationAbroad = function(id, index) {
     PctService.deleteProfessorSpecializationAbroad(id, function(data) {
       if (angular.isObject(data)) {
@@ -166,14 +172,14 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
       }
     });
   };
-  
+
   $scope.createNewSpecialization = function() {
     $modal.open({
       templateUrl: 'createNewSpecializationPopup.html',
       controller: createNewSpecializationController,
     });
   };
-  
+
 });
 
 var createNewSpecializationController = function($scope, $modalInstance,
@@ -185,7 +191,8 @@ var createNewSpecializationController = function($scope, $modalInstance,
   $scope.errorMessages = {};
   $scope.isExistingInstitution = false;
   $scope.selectedInstitution = [];
-  
+  $scope.masterSelectedInstitution = [];
+
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
@@ -222,7 +229,7 @@ var createNewSpecializationController = function($scope, $modalInstance,
               $scope.errorMessages = angular.fromJson(response);
             });
   };
-  
+
   $scope.convertTimeToDate = function(time) {
     return new Date(time);
   };
@@ -250,19 +257,31 @@ var createNewSpecializationController = function($scope, $modalInstance,
               return institutions;
             });
   };
-  
-  $scope.$watch('selectedInstitution', function() {
-    if ($scope.selectedInstitution === null || $scope.selectedInstitution == '' || angular.isUndefined($scope.selectedInstitution)) {
-      $scope.isExistingInstitution = false;
+
+  $scope.$watch('selectedFaculty', function() {
+    if ($scope.isExistingInstitution
+            && !angular.equals($scope.selectedInstitution,
+                    $scope.masterSelectedInstitution)) {
+      $scope.resetInstitutionData();
     }
   });
 
   $scope.onSelectInstitution = function() {
     $scope.isExistingInstitution = true;
+    $scope.masterSelectedInstitution = angular.copy($scope.selectedInstitution);
     $scope.specialization.institutionName = $scope.selectedInstitution.name;
     $scope.specialization.city = $scope.selectedInstitution.city;
     $scope.specialization.country = $scope.selectedInstitution.country;
     $scope.specialization.institutionId = $scope.selectedInstitution.id;
+  };
+
+  $scope.resetInstitutionData = function() {
+    $scope.selectedInstitution = null;
+    $scope.isExistingInstitution = false;
+    $scope.specialization.institutionName = null;
+    $scope.specialization.city = null;
+    $scope.specialization.country = null;
+    $scope.specialization.institutionId = null;
   };
 
   $scope.saveNewProfessorSpecializationAbroad = function() {
@@ -300,8 +319,12 @@ var createNewSpecializationController = function($scope, $modalInstance,
 
   $scope.validateForm = function() {
     if ((($scope.specialization.institutionName != null && $scope.specialization.institutionName != '') || ($scope.selectedInstitution != null && $scope.selectedInstitution != ''))
-            && (!$scope.isExistingInstitution ? ($scope.specialization.city != null && $scope.specialization.city != '') : true)
-            && (!$scope.isExistingInstitution ? ($scope.specialization.country != null && $scope.specialization.country != '') : true)   
+            && (!$scope.isExistingInstitution
+                    ? ($scope.specialization.city != null && $scope.specialization.city != '')
+                    : true)
+            && (!$scope.isExistingInstitution
+                    ? ($scope.specialization.country != null && $scope.specialization.country != '')
+                    : true)
             && $scope.specialization.startDate != null
             && $scope.specialization.startDate != ''
             && $scope.specialization.endDate != null

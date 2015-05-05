@@ -12,16 +12,14 @@
 				<tr ng-repeat="specialization in allSpecializations">
 					<td>
 						<div class="modal-header">
-							<h3 class="modal-title">{{ resources.text.specializationTitle }} {{ $index + 1 }}</h3>
+							<h3 class="modal-title">{{ resources.text.specializationTitle }}: {{ specialization.institutionName }}, {{ specialization.city }}</h3>
 						</div>
 						<div class="modal-body">
 							<fieldset>
 								<div class="row form-group">
 									<label
 										for="inputSpecializationInstitution"
-										class="col-sm-2 control-label">{{ resources.professorSpecializationsAbroad.specializationInstitutionName }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+										class="col-sm-2 control-label">{{ resources.professorSpecializationsAbroad.specializationInstitutionName }}</label>
 									<div class="col-sm-4">
 										<input
 											type="text"
@@ -29,25 +27,11 @@
 											id="inputSpecializationInstitution"
 											name="inputSpecializationInstitution"
 											ng-model="specialization.institutionName"
-											placeholder="{{ resources.professorSpecializationsAbroad.specializationInstitutionName }}"
-											ng-disabled="!editMode[$index]"
-											ng-maxlength="50"
-											required />
-										<div
-											ng-show="form.inputSpecializationInstitution.$dirty && form.inputSpecializationInstitution.$invalid"
-											class="institutionNameFieldError">
-											<span
-												ng-show="form.inputSpecializationInstitution.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputSpecializationInstitution.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidInstitutionNameMaxLength }}</span>
-										</div>
+											ng-disabled="true" />
 									</div>
 									<label
 										for="inputCityName"
-										class="col-sm-1 control-label">{{ resources.professorSpecializationsAbroad.cityName }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+										class="col-sm-1 control-label">{{ resources.professorSpecializationsAbroad.cityName }}</label>
 									<div class="col-sm-2">
 										<input
 											type="text"
@@ -55,25 +39,11 @@
 											id="inputCityName"
 											name="inputCityName"
 											ng-model="specialization.city"
-											placeholder="{{ resources.professorSpecializationsAbroad.cityName }}"
-											ng-maxlength="50"
-											ng-disabled="!editMode[$index]"
-											required />
-										<div
-											ng-show="form.inputCityName.$dirty && form.inputCityName.$invalid"
-											class="cityNameFieldError">
-											<span
-												ng-show="form.inputCityName.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputCityName.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidCityNameMaxLength }}</span>
-										</div>
+											ng-disabled="true" />
 									</div>
 									<label
 										for="inputCountryName"
-										class="col-sm-1 control-label">{{ resources.professorSpecializationsAbroad.countryName }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+										class="col-sm-1 control-label">{{ resources.professorSpecializationsAbroad.countryName }}</label>
 									<div class="col-sm-2">
 										<input
 											type="text"
@@ -81,19 +51,7 @@
 											id="inputCountryName"
 											name="inputCountryName"
 											ng-model="specialization.country"
-											placeholder="{{ resources.professorSpecializationsAbroad.countryName }}"
-											ng-maxlength="50"
-											ng-disabled="!editMode[$index]"
-											required />
-										<div
-											ng-show="form.inputCountryName.$dirty && form.inputCountryName.$invalid"
-											class="countryNameFieldError">
-											<span
-												ng-show="form.inputCountryName.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputCountryName.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidCountryNameMaxLength }}</span>
-										</div>
+											ng-disabled="true" />
 									</div>
 								</div>
 								<div class="row form-group">
@@ -292,7 +250,7 @@
 				<div class="form-group">
 					<label
 						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.specializationPopupLabels.institutionCity }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.specializationPopupLabels.institutionCity }} <span class="required" ng-show="!isExistingInstitution">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -303,7 +261,8 @@
 							ng-model="specialization.city"
 							placeholder="{{ resources.specializationPopupLabels.institutionCity }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingInstitution"
+							ng-required="!isExistingInstitution" />
 						<div
 							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
 							class="institutionCityFieldError">
@@ -318,7 +277,7 @@
 				<div class="form-group">
 					<label
 						for="inputInstitutionCountry"
-						class="col-sm-4 control-label">{{ resources.specializationPopupLabels.institutionCountry }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.specializationPopupLabels.institutionCountry }} <span class="required" ng-show="!isExistingInstitution">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -329,7 +288,8 @@
 							ng-model="specialization.country"
 							placeholder="{{ resources.specializationPopupLabels.institutionCountry }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingInstitution"
+							ng-required="!isExistingInstitution" />
 						<div
 							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
 							class="institutionCountryFieldError">

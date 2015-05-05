@@ -11,7 +11,7 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
   $scope.editMode = [];
   $scope.inputStudyStartDateOpened = [];
   $scope.inputStudyEndDateOpened = [];
-  
+
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
@@ -48,37 +48,42 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
               $scope.errorMessages = angular.fromJson(response);
             });
   };
-  
+
   $scope.convertTimeToDate = function(time) {
     return new Date(time);
   };
 
   $scope.loadProfessorsDoctorStudies = function(professorId, thesisTypeId) {
-    return PctService.loadProfessorStudies(professorId, thesisTypeId)
-            .then(function(response) {
+    return PctService.loadProfessorStudies(professorId, thesisTypeId).then(
+            function(response) {
               if (angular.isObject(response) && response.length > 0) {
                 $scope.allDoctorStudies = response;
-                
+
                 for (var i = 0; i < $scope.allDoctorStudies.length; i++) {
-                  $scope.allDoctorStudies[i].studyStartDate = $scope.convertTimeToDate(response[i].studyStartDate);
-                  $scope.allDoctorStudies[i].studyEndDate = $scope.convertTimeToDate(response[i].studyEndDate);
+                  $scope.allDoctorStudies[i].studyStartDate = $scope
+                          .convertTimeToDate(response[i].studyStartDate);
+                  $scope.allDoctorStudies[i].studyEndDate = $scope
+                          .convertTimeToDate(response[i].studyEndDate);
                 }
-                
+
                 $scope.editMode = new Array($scope.allDoctorStudies.length);
                 for (var i = 0; i < $scope.allDoctorStudies.length; i++) {
                   $scope.editMode.splice(i, 1, false);
                 }
-                
-                $scope.inputStudyStartDateOpened = new Array($scope.allDoctorStudies.length);
+
+                $scope.inputStudyStartDateOpened = new Array(
+                        $scope.allDoctorStudies.length);
                 for (var i = 0; i < $scope.allDoctorStudies.length; i++) {
                   $scope.inputStudyStartDateOpened.splice(i, 1, false);
                 }
-                
-                $scope.inputStudyEndDateOpened = new Array($scope.allDoctorStudies.length);
+
+                $scope.inputStudyEndDateOpened = new Array(
+                        $scope.allDoctorStudies.length);
                 for (var i = 0; i < $scope.allDoctorStudies.length; i++) {
                   $scope.inputStudyEndDateOpened.splice(i, 1, false);
                 }
-                $scope.allDoctorStudiesMaster = angular.copy($scope.allDoctorStudies);
+                $scope.allDoctorStudiesMaster = angular
+                        .copy($scope.allDoctorStudies);
                 $scope.noResultsFound = false;
               } else {
                 $scope.noResultsFound = true;
@@ -116,26 +121,26 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
     $scope.editMode.splice(index, 1, true);
     for (var i = 0; i < $scope.editMode.length; i++) {
       if (i != index) {
-        $scope.allDoctorStudies[i] = angular.copy($scope.allDoctorStudiesMaster[i]);
+        $scope.allDoctorStudies[i] = angular
+                .copy($scope.allDoctorStudiesMaster[i]);
         $scope.editMode.splice(i, 1, false);
       }
     }
   };
-  
+
   $scope.close = function(index) {
-    $scope.allDoctorStudies[index] = angular.copy($scope.allDoctorStudiesMaster[index]);
+    $scope.allDoctorStudies[index] = angular
+            .copy($scope.allDoctorStudiesMaster[index]);
     $scope.editMode.splice(index, 1, false);
   };
-  
+
   $scope.isInEditMode = function() {
     for (var i = 0; i < $scope.editMode.length; i++) {
-      if ($scope.editMode[i] === true) {
-        return true;
-      }
+      if ($scope.editMode[i] === true) { return true; }
     }
     return false;
   };
-  
+
   $scope.updateProfessorDoctorStudies = function(studies, index) {
     $http({
       method: 'PUT',
@@ -160,15 +165,16 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
       }, "slow");
     });
   };
-  
+
   $scope.isUnchanged = function(index) {
-    return angular.equals($scope.allDoctorStudies[index], $scope.allDoctorStudiesMaster[index]);
+    return angular.equals($scope.allDoctorStudies[index],
+            $scope.allDoctorStudiesMaster[index]);
   };
 
   $scope.goBack = function() {
     window.history.back();
   };
-  
+
   $scope.deleteProfessorDoctorStudies = function(id, index) {
     PctService.deleteProfessorStudies(id, function(data) {
       if (angular.isObject(data)) {
@@ -176,18 +182,19 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
       } else {
         $scope.successStatus = "Successfully deleted doctor studies.";
         $scope.allDoctorStudies.splice(index, 1);
-        $scope.loadProfessorsDoctorStudies($routeParams.professorId, $routeParams.thesisTypeId);
+        $scope.loadProfessorsDoctorStudies($routeParams.professorId,
+                $routeParams.thesisTypeId);
       }
     });
   };
-  
+
   $scope.createNewDoctorStudies = function() {
     $modal.open({
       templateUrl: 'createNewDoctorStudiesPopup.html',
       controller: createNewDoctorStudiesController,
     });
   };
-  
+
 });
 
 var createNewDoctorStudiesController = function($scope, $modalInstance,
@@ -200,7 +207,8 @@ var createNewDoctorStudiesController = function($scope, $modalInstance,
   $scope.allStudyPrograms = [];
   $scope.isExistingFaculty = false;
   $scope.selectedFaculty = [];
-  
+  $scope.masterSelectedFaculty = [];
+
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
@@ -237,7 +245,7 @@ var createNewDoctorStudiesController = function($scope, $modalInstance,
               $scope.errorMessages = angular.fromJson(response);
             });
   };
-  
+
   $scope.convertTimeToDate = function(time) {
     return new Date(time);
   };
@@ -277,20 +285,33 @@ var createNewDoctorStudiesController = function($scope, $modalInstance,
               return faculties;
             });
   };
-  
+
   $scope.$watch('selectedFaculty', function() {
-    if ($scope.selectedFaculty === null || $scope.selectedFaculty == '' || angular.isUndefined($scope.selectedFaculty)) {
-      $scope.isExistingFaculty = false;
+    if ($scope.isExistingFaculty
+            && !angular.equals($scope.selectedFaculty,
+                    $scope.masterSelectedFaculty)) {
+      $scope.resetFacultyData();
     }
   });
 
   $scope.onSelectFaculty = function() {
     $scope.isExistingFaculty = true;
+    $scope.masterSelectedFaculty = angular.copy($scope.selectedFaculty);
     $scope.doctorStudies.facultyName = $scope.selectedFaculty.name;
     $scope.doctorStudies.universityName = $scope.selectedFaculty.university;
     $scope.doctorStudies.facultyCity = $scope.selectedFaculty.city;
     $scope.doctorStudies.facultyCountry = $scope.selectedFaculty.country;
     $scope.doctorStudies.institutionId = $scope.selectedFaculty.id;
+  };
+
+  $scope.resetFacultyData = function() {
+    $scope.selectedFaculty = null;
+    $scope.isExistingFaculty = false;
+    $scope.doctorStudies.facultyName = null;
+    $scope.doctorStudies.universityName = null;
+    $scope.doctorStudies.facultyCity = null;
+    $scope.doctorStudies.facultyCountry = null;
+    $scope.doctorStudies.institutionId = null;
   };
 
   $scope.saveNewProfessorDoctorStudies = function() {
@@ -331,8 +352,12 @@ var createNewDoctorStudiesController = function($scope, $modalInstance,
     if ((($scope.doctorStudies.facultyName != null && $scope.doctorStudies.facultyName != '') || ($scope.selectedFaculty != null && $scope.selectedFaculty != ''))
             && $scope.doctorStudies.universityName != null
             && $scope.doctorStudies.universityName != ''
-            && (!$scope.isExistingFaculty ? ($scope.doctorStudies.facultyCity != null && $scope.doctorStudies.facultyCity != '') : true)
-            && (!$scope.isExistingFaculty ? ($scope.doctorStudies.facultyCountry != null && $scope.doctorStudies.facultyCountry != '') : true)   
+            && (!$scope.isExistingFaculty
+                    ? ($scope.doctorStudies.facultyCity != null && $scope.doctorStudies.facultyCity != '')
+                    : true)
+            && (!$scope.isExistingFaculty
+                    ? ($scope.doctorStudies.facultyCountry != null && $scope.doctorStudies.facultyCountry != '')
+                    : true)
             && $scope.doctorStudies.studyProgram != null
             && $scope.doctorStudies.studyProgram != ''
             && $scope.doctorStudies.studyArea != null

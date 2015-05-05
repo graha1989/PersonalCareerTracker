@@ -6,13 +6,13 @@
 		role="form"
 		novalidate
 		ng-model="doctorStudies">
-	
+
 		<table>
 			<tbody>
 				<tr ng-repeat="doctorStudies in allDoctorStudies">
 					<td>
 						<div class="modal-header">
-							<h3 class="modal-title">{{ resources.text.professorDoctorStudiesTitle }} {{ $index + 1 }}</h3>
+							<h3 class="modal-title">{{ resources.text.professorDoctorStudiesTitle }}: {{ doctorStudies.facultyName }}, {{ doctorStudies.universityName }}</h3>
 						</div>
 						<div class="modal-body">
 							<fieldset>
@@ -126,9 +126,7 @@
 								<div class="row form-group">
 									<label
 										for="inputUniversityName"
-										class="col-sm-2 control-label">{{ resources.professorDoctorStudies.universityName }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+										class="col-sm-2 control-label">{{ resources.professorDoctorStudies.universityName }}</label>
 									<div class="col-sm-4">
 										<input
 											type="text"
@@ -136,25 +134,11 @@
 											id="inputUniversityName"
 											name="inputUniversityName"
 											ng-model="doctorStudies.universityName"
-											placeholder="{{ resources.professorDoctorStudies.universityName }}"
-											ng-maxlength="50"
-											ng-disabled="!editMode[$index]"
-											required />
-										<div
-											ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
-											class="universityNameFieldError">
-											<span
-												ng-show="form.inputUniversityName.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputUniversityName.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidUniversityNameMaxLength }}</span>
-										</div>
+											ng-disabled="true" />
 									</div>
 									<label
 										for="inputFacultyName"
-										class="col-sm-2 control-label">{{ resources.professorDoctorStudies.facultyName }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+										class="col-sm-2 control-label">{{ resources.professorDoctorStudies.facultyName }}</label>
 									<div class="col-sm-4">
 										<input
 											type="text"
@@ -162,19 +146,7 @@
 											id="inputFacultyName"
 											name="inputFacultyName"
 											ng-model="doctorStudies.facultyName"
-											placeholder="{{ resources.professorDoctorStudies.facultyName }}"
-											ng-maxlength="50"
-											ng-disabled="!editMode[$index]"
-											required />
-										<div
-											ng-show="form.inputFacultyName.$dirty && form.inputFacultyName.$invalid"
-											class="universityNameFieldError">
-											<span
-												ng-show="form.inputFacultyName.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputFacultyName.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidFacultyNameMaxLength }}</span>
-										</div>
+											ng-disabled="true" />
 									</div>
 								</div>
 								<div class="row form-group">
@@ -191,8 +163,7 @@
 											ng-model="doctorStudies.studyProgram"
 											ng-options="studyProgram.title for studyProgram in allStudyPrograms track by studyProgram.name"
 											ng-show="editMode[$index]"
-											required><option value="">{{ resources.professorDoctorStudies.studyProgram }}</option></select> 
-										<input
+											required><option value="">{{ resources.professorDoctorStudies.studyProgram }}</option></select> <input
 											type="text"
 											class="form-control"
 											id="inputStudyProgram"
@@ -316,9 +287,7 @@
 								id="cancel_button"
 								class="btn btn-link btn-sm"
 								ng-show="editMode[$index]"
-								ng-click="close($index)">
-								{{ resources.buttons.professorStudiesButtons.close }}
-							</button>
+								ng-click="close($index)">{{ resources.buttons.professorStudiesButtons.close }}</button>
 							<button
 								id="delete_button"
 								class="btn btn-link btn-sm"
@@ -331,7 +300,9 @@
 				</tr>
 				<tr>
 					<td>
-						<div class="text-center" ng-show="allDoctorStudies.length == 0">{{ errorMessages.error.emptyTable }}</div>	
+						<div
+							class="text-center"
+							ng-show="allDoctorStudies.length == 0">{{ errorMessages.error.emptyTable }}</div>
 					</td>
 				</tr>
 				<tr>
@@ -344,13 +315,13 @@
 								ng-click="createNewDoctorStudies()">
 								<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.professorStudiesButtons.add }}
 							</button>
-						</div>	
+						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</form>
-	
+
 	<script
 		type="text/ng-template"
 		id="createNewDoctorStudiesPopup.html">
@@ -388,7 +359,7 @@
 				<div class="form-group">
 					<label
 						for="inputUniversityName"
-						class="col-sm-4 control-label">{{ resources.doctorStudiesPopupLabels.universityName }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.doctorStudiesPopupLabels.universityName }} <span class="required" ng-show="!isExistingFaculty">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -399,7 +370,8 @@
 							ng-model="doctorStudies.universityName"
 							placeholder="{{ resources.doctorStudiesPopupLabels.universityName }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingFaculty"
+							ng-required="!isExistingFaculty" />
 						<div
 							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
 							class="universityNameFieldError">
@@ -414,7 +386,7 @@
 				<div class="form-group" ng-show="!isExistingFaculty">
 					<label
 						for="inputFacultyCity"
-						class="col-sm-4 control-label">{{ resources.doctorStudiesPopupLabels.facultyCity }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.doctorStudiesPopupLabels.facultyCity }} <span class="required" ng-show="!isExistingFaculty">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -425,7 +397,8 @@
 							ng-model="doctorStudies.facultyCity"
 							placeholder="{{ resources.doctorStudiesPopupLabels.facultyCity }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingFaculty"
+							ng-required="!isExistingFaculty" />
 						<div
 							ng-show="form.inputFacultyCity.$dirty && form.inputFacultyCity.$invalid"
 							class="facultyCityFieldError">
@@ -440,7 +413,7 @@
 				<div class="form-group" ng-show="!isExistingFaculty">
 					<label
 						for="inputFacultyCountry"
-						class="col-sm-4 control-label">{{ resources.doctorStudiesPopupLabels.facultyCountry }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.doctorStudiesPopupLabels.facultyCountry }} <span class="required" ng-show="!isExistingFaculty">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -451,7 +424,8 @@
 							ng-model="doctorStudies.facultyCountry"
 							placeholder="{{ resources.doctorStudiesPopupLabels.facultyCountry }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingFaculty"
+							ng-required="!isExistingFaculty" />
 						<div
 							ng-show="form.inputFacultyCountry.$dirty && form.inputFacultyCountry.$invalid"
 							class="facultyCountryFieldError">

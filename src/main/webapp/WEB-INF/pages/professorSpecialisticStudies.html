@@ -6,13 +6,13 @@
 		role="form"
 		novalidate
 		ng-model="specialisticStudies">
-	
+
 		<table>
 			<tbody>
 				<tr ng-repeat="specialisticStudies in allSpecialisticStudies">
 					<td>
 						<div class="modal-header">
-							<h3 class="modal-title">{{ resources.text.professorSpecialisticStudiesTitle }} {{ $index + 1 }}</h3>
+							<h3 class="modal-title">{{ resources.text.professorSpecialisticStudiesTitle }}: {{ specialisticStudies.facultyName }}, {{ specialisticStudies.universityName }}</h3>
 						</div>
 						<div class="modal-body">
 							<fieldset>
@@ -126,9 +126,7 @@
 								<div class="row form-group">
 									<label
 										for="inputUniversityName"
-										class="col-sm-2 control-label">{{ resources.professorSpecialisticStudies.universityName }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+										class="col-sm-2 control-label">{{ resources.professorSpecialisticStudies.universityName }}</label>
 									<div class="col-sm-4">
 										<input
 											type="text"
@@ -136,25 +134,11 @@
 											id="inputUniversityName"
 											name="inputUniversityName"
 											ng-model="specialisticStudies.universityName"
-											placeholder="{{ resources.professorSpecialisticStudies.universityName }}"
-											ng-maxlength="50"
-											ng-disabled="!editMode[$index]"
-											required />
-										<div
-											ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
-											class="universityNameFieldError">
-											<span
-												ng-show="form.inputUniversityName.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputUniversityName.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidUniversityNameMaxLength }}</span>
-										</div>
+											ng-disabled="true" />
 									</div>
 									<label
 										for="inputFacultyName"
-										class="col-sm-2 control-label">{{ resources.professorSpecialisticStudies.facultyName }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+										class="col-sm-2 control-label">{{ resources.professorSpecialisticStudies.facultyName }}</label>
 									<div class="col-sm-4">
 										<input
 											type="text"
@@ -162,19 +146,7 @@
 											id="inputFacultyName"
 											name="inputFacultyName"
 											ng-model="specialisticStudies.facultyName"
-											placeholder="{{ resources.professorSpecialisticStudies.facultyName }}"
-											ng-maxlength="50"
-											ng-disabled="!editMode[$index]"
-											required />
-										<div
-											ng-show="form.inputFacultyName.$dirty && form.inputFacultyName.$invalid"
-											class="universityNameFieldError">
-											<span
-												ng-show="form.inputFacultyName.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputFacultyName.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidFacultyNameMaxLength }}</span>
-										</div>
+											ng-disabled="true" />
 									</div>
 								</div>
 								<div class="row form-group">
@@ -191,8 +163,7 @@
 											ng-model="specialisticStudies.studyProgram"
 											ng-options="studyProgram.title for studyProgram in allStudyPrograms track by studyProgram.name"
 											ng-show="editMode[$index]"
-											required><option value="">{{ resources.professorSpecialisticStudies.studyProgram }}</option></select> 
-										<input
+											required><option value="">{{ resources.professorSpecialisticStudies.studyProgram }}</option></select> <input
 											type="text"
 											class="form-control"
 											id="inputStudyProgram"
@@ -316,9 +287,7 @@
 								id="cancel_button"
 								class="btn btn-link btn-sm"
 								ng-show="editMode[$index]"
-								ng-click="close($index)">
-								{{ resources.buttons.professorStudiesButtons.close }}
-							</button>
+								ng-click="close($index)">{{ resources.buttons.professorStudiesButtons.close }}</button>
 							<button
 								id="delete_button"
 								class="btn btn-link btn-sm"
@@ -331,7 +300,9 @@
 				</tr>
 				<tr>
 					<td>
-						<div class="text-center" ng-show="allSpecialisticStudies.length == 0">{{ errorMessages.error.emptyTable }}</div>	
+						<div
+							class="text-center"
+							ng-show="allSpecialisticStudies.length == 0">{{ errorMessages.error.emptyTable }}</div>
 					</td>
 				</tr>
 				<tr>
@@ -344,13 +315,13 @@
 								ng-click="createNewSpecialisticStudies()">
 								<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.professorStudiesButtons.add }}
 							</button>
-						</div>	
+						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</form>
-	
+
 	<script
 		type="text/ng-template"
 		id="createNewSpecialisticStudiesPopup.html">
