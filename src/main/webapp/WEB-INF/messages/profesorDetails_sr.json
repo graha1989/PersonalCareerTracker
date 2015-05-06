@@ -27,12 +27,12 @@
         "institutionsTitle": "Pregled svih institucija",
         "projectsTitle": "Pregled svih projekata",
         "subjectsTitle": "Pregled svih predmeta",
-        "teachingExperiencesTitle": "Izvođenje nastave",
+        "teachingExperiencesTitle": "Rad u nastavi",
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
         "editInstitutionPopupTitle": "Izmena institucije",
         "editProjectPopupTitle": "Izmena projekta",
         "editSubjectPopupTitle": "Izmena predmeta",
-        "editTeachingExperiencePopupTitle": "Izmena rada u nastavi",
+        "createNewTeachingExperiencePopupTitle": "Dodavanje novog radnog iskustva u nastavi",
         "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva",
         "addNewBachelorStudiesTitle": "Dodavanje novih osnovnih studija",
         "addNewMasterStudiesTitle": "Dodavanje novih master studija",
@@ -350,6 +350,12 @@
         "universityName": "Univerzitet",
         "institutionCity": "Grad",
         "institutionCountry": "Država"
+    },
+    "surveysTableLabels": {
+    	"subjectName": "Nastavni predmet",
+        "academicYear": "Školska godina",
+        "averageStudentGrade": "Ocena studenata",
+        "numberOfStudents": "Broj studenata"
     },
     "teachingExperienceTableLabels": {
     	"subjectName": "Naziv predmeta",

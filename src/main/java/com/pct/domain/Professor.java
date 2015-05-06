@@ -101,6 +101,12 @@ public class Professor extends AbstractEntity {
 	@JsonIgnore
 	private Set<TeachingExperience> teachingExperiences = new HashSet<TeachingExperience>();
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "professor")
+	@JsonIgnore
+	private Set<Survey> surveys = new HashSet<Survey>();
+
 	public Professor() {
 	}
 
@@ -109,7 +115,7 @@ public class Professor extends AbstractEntity {
 			String specialScientificArea, Set<LanguageExperience> languageExperiences, Set<Award> awards,
 			Set<ProjectExperience> projectExperiences, Set<ProfessorPublication> professorPublications,
 			Set<InternationalPublication> internationalPublications, Set<WorkExperience> workExperiences,
-			Set<Studies> studies, Set<TeachingExperience> teachingExperiences) {
+			Set<Studies> studies, Set<TeachingExperience> teachingExperiences, Set<Survey> surveys) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -130,6 +136,7 @@ public class Professor extends AbstractEntity {
 		this.workExperiences = workExperiences;
 		this.studies = studies;
 		this.teachingExperiences = teachingExperiences;
+		this.surveys = surveys;
 	}
 
 	public String getUserName() {
@@ -325,6 +332,18 @@ public class Professor extends AbstractEntity {
 
 		if (teachingExperiences != null) {
 			this.teachingExperiences.addAll(teachingExperiences);
+		}
+	}
+
+	public Set<Survey> getSurveys() {
+		return surveys;
+	}
+
+	public void setSurveys(Set<Survey> surveys) {
+		this.surveys.clear();
+
+		if (surveys != null) {
+			this.surveys.addAll(surveys);
 		}
 	}
 

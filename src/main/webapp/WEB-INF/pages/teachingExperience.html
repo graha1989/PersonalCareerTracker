@@ -25,20 +25,18 @@
 							<td>{{ resources.teachingExperienceTableLabels.facultyName }}</td>
 							<td>{{ resources.teachingExperienceTableLabels.universityName }}</td>
 							<td>{{ resources.teachingExperienceTableLabels.facultyCity }}</td>
-							<td>{{ resources.teachingExperienceTableLabels.facultyCountry }}</td>
 							<td>{{ resources.teachingExperienceTableLabels.studyType }}</td>
 							<td>{{ resources.teachingExperienceTableLabels.lessonsNumber }}</td>
-							<td colspan="2"></td>
+							<td colspan="3"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
 							ng-repeat="teachingExperience in teachingExperiences">
 							<td>{{ teachingExperience.subjectDto.subjectName }}</td>
 							<td>{{ teachingExperience.subjectDto.studyProgram }}</td>
-							<td>{{ teachingExperience.subjectDto.facultyName }}</td>
+							<td>{{ teachingExperience.subjectDto.institutionName }}</td>
 							<td>{{ teachingExperience.subjectDto.universityName }}</td>
-							<td>{{ teachingExperience.subjectDto.facultyCity }}</td>
-							<td>{{ teachingExperience.subjectDto.facultyCountry }}</td>
+							<td>{{ teachingExperience.subjectDto.institutionCity }}</td>
 							<td>{{ teachingExperience.subjectDto.studiesThesisType.type }}</td>
 							<td>{{ teachingExperience.subjectDto.numberOfTeachingLessons }} + {{ teachingExperience.subjectDto.numberOfTheoreticalLessons }} + {{ teachingExperience.subjectDto.numberOfPracticalLessons }}</td>
 							<td class="delete"><button
@@ -46,10 +44,17 @@
 									ng-click="deleteTeachingExperience(teachingExperience.id)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.teachingExperienceButtons.delete }}
 								</button></td>
+							<!-- 	
 							<td class="edit"><button
 									class="btn btn-link btn-xs"
 									ng-click="editTeachingExperience(teachingExperience.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.teachingExperienceButtons.edit }}
+								</button></td>
+							 -->
+							<td class="showSurveys"><button
+									class="btn btn-link btn-xs"
+									ng-click="showSurveysForSubject(teachingExperience.professorId, teachingExperience.subjectId)">
+									<span class="glyphicon glyphicon-list-alt"></span>
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
@@ -71,14 +76,15 @@
 
 	<script
 		type="text/ng-template"
-		id="editTeachingExperiencePopup.html">
+		id="createNewTeachingExperiencePopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
 			role="form"
+			novalidate
 			ng-model="teachingExperience">
 			<div class="modal-header">
-				<h3 class="modal-title">{{ resources.text.editTeachingExperiencePopupTitle }}</h3>
+				<h3 class="modal-title">{{ resources.text.createNewTeachingExperiencePopupTitle }}</h3>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
@@ -92,7 +98,7 @@
 							class="ng-binding form-control"
 							id="inputSubjectName"
 							name="inputSubjectName"
-							ng-model="teachingExperience.subjectDto.subjectName"
+							ng-model="$parent.selectedSubject"
 							typeahead="subject as subject.subjectName for subject in getSubjects($viewValue) | limitTo:8"
 							typeahead-on-select="onSelectSubject()"
 							placeholder="{{ resources.teachingExperiencePopupLabels.subjectName }}"
@@ -110,7 +116,7 @@
 				<div class="form-group">
 					<label
 						for="inputProgram"
-						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.studyProgram }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.studyProgram }} <span class="required" ng-show="!isExistingSubject">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -121,7 +127,8 @@
 							ng-model="teachingExperience.subjectDto.studyProgram"
 							placeholder="{{ resources.teachingExperiencePopupLabels.studyProgram }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingSubject"
+							ng-required="!isExistingSubject" />
 						<div
 							ng-show="form.inputProgram.$dirty && form.inputProgram.$invalid"
 							class="programFieldError">
@@ -133,8 +140,8 @@
 				</div>
 				<div class="form-group">
 					<label
-						for="inputProgram"
-						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyName }} <span class="required">*</span>
+						for="inputFacultyName"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyName }} <span class="required" ng-show="!isExistingSubject">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -143,11 +150,9 @@
 							id="inputFacultyName"
 							name="inputFacultyName"
 							ng-model="teachingExperience.subjectDto.facultyName"
-							typeahead="faculty.name for faculty in getFaculties($viewValue) | limitTo:8"
-							typeahead-on-select="onSelectFaculty()"
 							placeholder="{{ resources.teachingExperiencePopupLabels.facultyName }}"
-							autocomplete="off"
-							required />
+							ng-disabled="isExistingSubject"
+							ng-required="!isExistingSubject" />
 						<div
 							ng-show="form.inputFacultyName.$dirty && form.inputFacultyName.$invalid"
 							class="facultyNameFieldError">
@@ -160,7 +165,7 @@
 				<div class="form-group">
 					<label
 						for="inputUniversityName"
-						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.universityName }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.universityName }} <span class="required" ng-show="!isExistingSubject">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -171,7 +176,8 @@
 							ng-model="teachingExperience.subjectDto.universityName"
 							placeholder="{{ resources.teachingExperiencePopupLabels.universityName }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingSubject"
+							ng-required="!isExistingSubject" />
 						<div
 							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
 							class="universityNameFieldError">
@@ -186,7 +192,7 @@
 				<div class="form-group">
 					<label
 						for="inputFacultyCity"
-						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyCity }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyCity }} <span class="required" ng-show="!isExistingSubject">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -197,7 +203,8 @@
 							ng-model="teachingExperience.subjectDto.facultyCity"
 							placeholder="{{ resources.teachingExperiencePopupLabels.facultyCity }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingSubject"
+							ng-required="!isExistingSubject" />
 						<div
 							ng-show="form.inputFacultyCity.$dirty && form.inputFacultyCity.$invalid"
 							class="facultyCityFieldError">
@@ -212,7 +219,7 @@
 				<div class="form-group" ng-show="!isExistingFaculty">
 					<label
 						for="inputFacultyCountry"
-						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyCountry }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyCountry }} <span class="required" ng-show="!isExistingSubject">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -223,7 +230,8 @@
 							ng-model="teachingExperience.subjectDto.facultyCountry"
 							placeholder="{{ resources.teachingExperiencePopupLabels.facultyCountry }}"
 							ng-maxlength="50"
-							required />
+							ng-disabled="isExistingSubject"
+							ng-required="!isExistingSubject" />
 						<div
 							ng-show="form.inputFacultyCountry.$dirty && form.inputFacultyCountry.$invalid"
 							class="facultyCountryFieldError">
@@ -238,15 +246,28 @@
 				<div class="form-group">
 					<label
 						for="inputStudyType"
-						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.studyType }} <span class="required">*</span></label>
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.studyType }} <span class="required" ng-show="!isExistingSubject">*</span></label>
 					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputStudyType"
+							name="inputStudyType"
+							ng-model="teachingExperience.subjectDto.studiesThesisType.type"
+							placeholder="{{ resources.teachingExperiencePopupLabels.studyType }}"
+							ng-maxlength="50"
+							ng-disabled="isExistingSubject"
+							ng-required="!isExistingSubject" 
+							ng-show="isExistingSubject" />
 						<select
 							class="ng-binding form-control"
 							id="inputStudyType"
 							name="inputStudyType"
 							ng-model="teachingExperience.subjectDto.studiesThesisType"
 							ng-options="studiesThesisType.type for studiesThesisType in allStudiesThesisTypes track by studiesThesisType.id"
-							required><option value="">{{ resources.teachingExperiencePopupLabels.studyType }}</option></select> 
+							ng-disabled="isExistingSubject"
+							ng-required="!isExistingSubject"
+							ng-show="!isExistingSubject"><option value="">{{ resources.teachingExperiencePopupLabels.studyType }}</option></select> 
 						<div
 							ng-show="form.inputStudyType.$dirty && form.inputStudyType.$invalid"
 							class="studyTypeFieldError">
@@ -258,7 +279,7 @@
 				</div>
 				<div class="form-group">
 					<label
-						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.numberOfLessons }} <span class="required">*</span></label>
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.numberOfLessons }} <span class="required" ng-show="!isExistingSubject">*</span></label>
 					<div class="col-sm-6">
 						<input
 							type="number"
@@ -269,7 +290,8 @@
 							placeholder="{{ resources.teachingExperiencePopupLabels.teachingLessons }}"
 							min="0"
 							ng-maxlength="2"
-							required />
+							ng-disabled="isExistingSubject"
+							ng-required="!isExistingSubject" />
 						<div
 							ng-show="form.inputNumberOfTeachingLessons.$dirty && form.inputNumberOfTeachingLessons.$invalid"
 							class="numberOfTeachingLessonsFieldError">
@@ -296,7 +318,8 @@
 							placeholder="{{ resources.teachingExperiencePopupLabels.theoreticalLessons }}"
 							min="0"
 							ng-maxlength="2"
-							required />
+							ng-disabled="isExistingSubject"
+							ng-required="!isExistingSubject" />
 						<div
 							ng-show="form.inputNumberOfTheoreticalLessons.$dirty && form.inputNumberOfTheoreticalLessons.$invalid"
 							class="numberOfTheoreticalLessonsFieldError">
@@ -323,7 +346,8 @@
 							placeholder="{{ resources.teachingExperiencePopupLabels.practicalLessons }}"
 							min="0"
 							ng-maxlength="2"
-							required />
+							ng-disabled="isExistingSubject"
+							ng-required="!isExistingSubject" />
 						<div
 							ng-show="form.inputNumberOfPracticalLessons.$dirty && form.inputNumberOfPracticalLessons.$invalid"
 							class="numberOfPracticalLessonsFieldError">
@@ -339,19 +363,9 @@
 				</div>
 			</div>
 			<div class="modal-footer action">
-				<button
-					id="submit_button"
-					type="submit"
-					class="btn btn-success btn-sm"
-					ng-disabled="form.$invalid || isUnchanged(teachingExperience)"
-					ng-click="saveTeachingExperience()">
-					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.teachingExperienceButtons.edit }}
-				</button>
-				<button
-					id="cancel_button"
-					class="btn btn-sm"
-					ng-click="cancel()">{{ resources.buttons.teachingExperienceButtons.close }}</button>
-			</div>
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="!validateForm()" ng-click="saveNewTeachingExperience()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.teachingExperienceButtons.save }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.teachingExperienceButtons.close }}</button>
+  			</div>
 		</form>
 	</script>
 

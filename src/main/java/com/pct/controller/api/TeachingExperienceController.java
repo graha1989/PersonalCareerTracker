@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,7 @@ import com.pct.domain.dto.SubjectDto;
 import com.pct.domain.dto.TeachingExperienceDto;
 import com.pct.service.SubjectService;
 import com.pct.service.TeachingExperienceService;
+import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.SubjectNotFoundException;
 import com.pct.validation.TeachingExperienceNotFoundException;
 
@@ -68,10 +71,30 @@ public class TeachingExperienceController {
 
 		List<SubjectDto> subjects = new ArrayList<SubjectDto>();
 		if (value.length() >= 3) {
-			subjects = subjectService.findSubjectsStartsWith(value, subjectIds);
+			subjects = subjectService.findAvailableSubjectsStartsWith(value, subjectIds);
 		}
 
 		return new ResponseEntity<List<SubjectDto>>(subjects, HttpStatus.OK);
+	}
+
+	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<String> persistTeachingExperience(
+			@Valid @RequestBody TeachingExperienceDto teachingExperienceDto) {
+
+		try {
+			teachingExperienceService.saveTeachingExperience(teachingExperienceDto);
+		} catch (TeachingExperienceNotFoundException e) {
+			e.printStackTrace();
+		} catch (ProfessorNotFoundException e) {
+			e.printStackTrace();
+		} catch (SubjectNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		logger.debug("Teaching experience for: " + teachingExperienceDto.getSubjectDto().getSubjectName()
+				+ " successfully saved.");
+
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 }

@@ -10,10 +10,10 @@ import com.pct.domain.Subject;
 
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
 	
-	@Query("SELECT s FROM Subject s WHERE s.id NOT IN :subjectIds AND s.name LIKE %:value%")
+	@Query("SELECT s FROM Subject s WHERE s.id NOT IN :subjectIds AND (s.active = true OR s.active IS NULL) AND s.name LIKE %:value%")
 	List<Subject> findByNameLikeAndNotInIds(@Param("value") String value, @Param("subjectIds") List<Long> subjectIds);
 	
-	@Query("SELECT s FROM Subject s WHERE s.name LIKE %:value%")
+	@Query("SELECT s FROM Subject s WHERE s.active = true OR s.active IS NULL AND s.name LIKE %:value%")
 	List<Subject> findByNameLike(@Param("value") String value);
 	
 }

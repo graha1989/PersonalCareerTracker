@@ -8,7 +8,7 @@ import com.pct.validation.SubjectNotFoundException;
 
 public interface SubjectService {
 	
-	List<SubjectDto> findSubjectsStartsWith(String value, List<Long> subjectIds);
+	List<SubjectDto> findAvailableSubjectsStartsWith(String value, List<Long> subjectIds);
 
 	List<SubjectDto> findAllSubjects();
 

@@ -23,19 +23,20 @@ public class TeachingExperienceDto implements Serializable {
 	public TeachingExperienceDto() {
 	}
 
-	public TeachingExperienceDto(SubjectDto subjectDto, Long professorId, Long subjectId, Long id) {
+	public TeachingExperienceDto(SubjectDto subjectDto, Long professorId, Long id) {
 		super();
 		this.subjectDto = subjectDto;
+		this.professorId = professorId;
 		this.id = id;
 	}
 
 	public TeachingExperienceDto(TeachingExperience teachingExperience) {
 		this.subjectDto.setSubjectName(teachingExperience.getSubject().getName());
 		this.subjectDto.setStudyProgram(teachingExperience.getSubject().getProgram());
-		/*this.subjectDto.setFacultyName(teachingExperience.getSubject().getInstitution().getName());
+		this.subjectDto.setInstitutionName(teachingExperience.getSubject().getInstitution().getName());
 		this.subjectDto.setUniversityName(teachingExperience.getSubject().getInstitution().getUniversity());
-		this.subjectDto.setFacultyCity(teachingExperience.getSubject().getInstitution().getCity());
-		this.subjectDto.setFacultyCountry(teachingExperience.getSubject().getInstitution().getCountry());*/
+		this.subjectDto.setInstitutionCity(teachingExperience.getSubject().getInstitution().getCity());
+		this.subjectDto.setInstitutionCountry(teachingExperience.getSubject().getInstitution().getCountry());
 		this.subjectDto.setStudiesThesisType(teachingExperience.getSubject().getStudiesThesisType());
 		this.subjectDto.setNumberOfTheoreticalLessons(teachingExperience.getSubject().getNumberOfTheoreticalLessons());
 		this.subjectDto.setNumberOfPracticalLessons(teachingExperience.getSubject().getNumberOfPracticalLessons());

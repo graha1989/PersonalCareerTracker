@@ -12,5 +12,5 @@ public interface TeachingExperienceRepository extends JpaRepository<TeachingExpe
 	
 	@Query("SELECT e FROM TeachingExperience e JOIN e.professor p WHERE p.id=:professorId")
 	List<TeachingExperience> findAllTeachingExperiences(@Param("professorId") Long professorId);
-
+	
 }

@@ -3,6 +3,7 @@ package com.pct.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -55,12 +56,23 @@ public class Subject extends AbstractEntity {
 	@JsonIgnore
 	private Set<TeachingExperience> teachingExperiences = new HashSet<TeachingExperience>();
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "subject")
+	@JsonIgnore
+	private Set<Survey> surveys = new HashSet<Survey>();
+	
+	@Nullable
+	@Column(name = "active")
+	private Boolean active;
+
 	public Subject() {
 	}
 
 	public Subject(String name, String program, Integer numberOfTheoreticalLessons, Integer numberOfPracticalLessons,
 			Integer numberOfTeachingLessons, Institution institution, Professor professor,
-			StudiesThesisType studiesThesisType, Set<TeachingExperience> teachingExperiences) {
+			StudiesThesisType studiesThesisType, Set<TeachingExperience> teachingExperiences, Set<Survey> surveys,
+			Boolean active) {
 		super();
 		this.name = name;
 		this.program = program;
@@ -71,6 +83,8 @@ public class Subject extends AbstractEntity {
 		this.professor = professor;
 		this.studiesThesisType = studiesThesisType;
 		this.teachingExperiences = teachingExperiences;
+		this.surveys = surveys;
+		this.active = active;
 	}
 
 	public String getName() {
@@ -147,6 +161,26 @@ public class Subject extends AbstractEntity {
 		if (teachingExperiences != null) {
 			this.teachingExperiences.addAll(teachingExperiences);
 		}
+	}
+
+	public Set<Survey> getSurveys() {
+		return surveys;
+	}
+
+	public void setSurveys(Set<Survey> surveys) {
+		this.surveys.clear();
+
+		if (surveys != null) {
+			this.surveys.addAll(surveys);
+		}
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 }

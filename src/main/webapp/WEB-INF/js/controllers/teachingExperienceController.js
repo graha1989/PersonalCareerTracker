@@ -42,45 +42,28 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
   $scope.goBack = function() {
     window.history.back();
   };
-  /*
-   * $scope.deleteWorkExperience = function(id, index) {
-   * PctService.deleteWorkExperience(id, function(data) { if
-   * (angular.isObject(data)) { $scope.errorStatus = data.status; } else {
-   * $scope.successStatus = "Successfully deleted work experience.";
-   * $scope.workExperiences.splice(index, 1);
-   * $scope.loadWorkExperiences($routeParams.professorId); } }); };
-   */
-  $scope.editTeachingExperience = function(id) {
+
+  $scope.createNewTeachingExperience = function() {
     $modal.open({
-      templateUrl: 'editTeachingExperiencePopup.html',
-      controller: editTeachingExperiencePopupController,
+      templateUrl: 'createNewTeachingExperiencePopup.html',
+      controller: createTeachingExperiencePopupController,
       resolve: {
-        teachingExperienceId: function() {
-          return id;
-        },
         teachingExperiences: function() {
           return $scope.teachingExperiences;
         }
       }
     });
   };
-  /*
-   * $scope.createNewWorkExperience = function() { $modal.open({ templateUrl:
-   * 'createNewWorkExperiencePopup.html', controller:
-   * createNewWorkExperienceController, resolve: { workExperiences: function() {
-   * return $scope.workExperiences; } } }); };
-   */
+
 });
 
-var editTeachingExperiencePopupController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, teachingExperienceId,
-        teachingExperiences, PctService) {
+var createTeachingExperiencePopupController = function($scope, $modalInstance,
+        $routeParams, $http, $route, $templateCache, PctService,
+        teachingExperiences) {
 
   $scope.teachingExperience = {};
-  $scope.master = {};
-  $scope.allStudiesThesisTypes = [];
-  $scope.selectedFaculty = [];
-  $scope.isExistingFaculty = false;
+  $scope.selectedSubject = [];
+  $scope.masterSelectedSubject = [];
   $scope.isExistingSubject = false;
 
   $scope.patterns = {
@@ -100,41 +83,15 @@ var editTeachingExperiencePopupController = function($scope, $modalInstance,
             });
   };
 
-  $scope.loadAllStudyTypes = function() {
-    PctService.loadThesisTypes($routeParams, function(data) {
-      if (angular.isObject(data) && data.length > 0) {
-        $scope.allStudiesThesisTypes = data;
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
-  };
-
-  $scope.loadSelectedTeachingExperience = function(id) {
-    PctService.loadSelectedTeachingExperience(id, function(data) {
-      if (angular.isObject(data)) {
-        $scope.teachingExperience = data;
-        $scope.selectedFaculty = $scope.teachingExperience.facultyName;
-        $scope.master = angular.copy($scope.workExperience);
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
-  };
-
   $scope.getSubjectIds = function(selectedTeachingExperiences) {
     var subjectsIdsArray = [];
     for (var i = 0; i < selectedTeachingExperiences.length; i++) {
-      subjectsIdsArray.push(selectedTeachingExperiences[i].subjectId);
+      subjectsIdsArray.push(selectedTeachingExperiences[i].subjectDto.id);
     }
     return subjectsIdsArray;
   };
 
   $scope.init = function() {
-    $scope.loadAllStudyTypes();
-    $scope.loadSelectedTeachingExperience(teachingExperienceId);
     $scope.status = $routeParams.status;
     $scope.loadResources();
   };
@@ -159,28 +116,89 @@ var editTeachingExperiencePopupController = function($scope, $modalInstance,
             });
   };
 
-  $scope.getFaculties = function(val) {
-    return PctService.findInstutionsStartsWith(val, 'FACULTY').then(
-            function(response) {
-              var faculties = [];
-              for (var i = 0; i < response.length; i++) {
-                faculties.push(response[i]);
-              }
-              return faculties;
-            });
-  };
-/*
   $scope.onSelectSubject = function() {
     $scope.isExistingSubject = true;
-    $scope.teachingExperience.subjectName = $scope.selectedSubject.subjectName;
-    $scope.teachingExperience.studyProgram = $scope.selectedSubject.studyProgram;
-    
-    
-    $scope.workExperience.institutionName = $scope.selectedInstitution.name;
-    $scope.workExperience.universityName = $scope.selectedInstitution.university;
-    $scope.workExperience.institutionCity = $scope.selectedInstitution.city;
-    $scope.workExperience.institutionCountry = $scope.selectedInstitution.country;
-    $scope.workExperience.institutionId = $scope.selectedInstitution.id;
+    $scope.masterSelectedSubject = angular.copy($scope.selectedSubject);
+    $scope.teachingExperience.subjectDto = {};
+    $scope.teachingExperience.subjectDto.subjectName = $scope.selectedSubject.subjectName;
+    $scope.teachingExperience.subjectDto.studyProgram = $scope.selectedSubject.studyProgram;
+    $scope.teachingExperience.subjectDto.institutionName = $scope.selectedSubject.institutionName;
+    $scope.teachingExperience.subjectDto.universityName = $scope.selectedSubject.universityName;
+    $scope.teachingExperience.subjectDto.institutionName = $scope.selectedSubject.institutionName;
+    $scope.teachingExperience.subjectDto.institutionCountry = $scope.selectedSubject.institutionCountry;
+    $scope.teachingExperience.subjectDto.studiesThesisType = $scope.selectedSubject.studiesThesisType;
+    $scope.teachingExperience.subjectDto.numberOfTeachingLessons = $scope.selectedSubject.numberOfTeachingLessons;
+    $scope.teachingExperience.subjectDto.numberOfTheoreticalLessons = $scope.selectedSubject.numberOfTheoreticalLessons;
+    $scope.teachingExperience.subjectDto.numberOfPracticalLessons = $scope.selectedSubject.numberOfPracticalLessons;
+    $scope.teachingExperience.subjectDto.institutionId = $scope.selectedSubject.institutionId;
+    $scope.teachingExperience.subjectDto.id = $scope.selectedSubject.id;
   };
-*/
+
+  $scope.restartSubjectData = function() {
+    $scope.selectedSubject = null;
+    $scope.isExistingSubject = false;
+    $scope.teachingExperience.subjectDto.subjectName = null;
+    $scope.teachingExperience.subjectDto.studyProgram = null;
+    $scope.teachingExperience.subjectDto.facultyName = null;
+    $scope.teachingExperience.subjectDto.universityName = null;
+    $scope.teachingExperience.subjectDto.facultyCity = null;
+    $scope.teachingExperience.subjectDto.facultyCountry = null;
+    $scope.teachingExperience.subjectDto.studiesThesisType = null;
+    $scope.teachingExperience.subjectDto.numberOfTeachingLessons = null;
+    $scope.teachingExperience.subjectDto.numberOfTheoreticalLessons = null;
+    $scope.teachingExperience.subjectDto.numberOfPracticalLessons = null;
+    $scope.teachingExperience.subjectDto.institutionId = null;
+    $scope.teachingExperience.subjectDto.id = null;
+    $scope.teachingExperience.subjectDto = null;
+  };
+
+  $scope.$watch('selectedSubject', function() {
+    if ($scope.isExistingSubject
+            && !angular.equals($scope.selectedSubject,
+                    $scope.masterSelectedSubject)) {
+      $scope.restartSubjectData();
+    }
+  });
+
+  $scope.saveNewTeachingExperience = function() {
+    if (!$scope.isExistingSubject) {
+      $scope.teachingExperience.subjectDto.subjectName = $scope.selectedSubject;
+    }
+    $scope.teachingExperience.professorId = $routeParams.professorId;
+    $http({
+      method: 'POST',
+      url: "api/teachingExperiences",
+      data: $scope.teachingExperience,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).success(function(data, status) {
+      $("html, body").animate({
+        scrollTop: 0
+      }, "slow");
+      $modalInstance.close();
+      $route.reload();
+    }).error(function(data, status) {
+      if (angular.isObject(data.fieldErrors)) {
+        $scope.fieldErrors = angular.fromJson(data.fieldErrors);
+      }
+      $scope.status = status;
+      $("html, body").animate({
+        scrollTop: 0
+      }, "slow");
+    });
+  };
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
+
+  $scope.validateForm = function() {
+    if ($scope.isExistingSubject) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
 };

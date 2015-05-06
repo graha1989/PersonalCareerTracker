@@ -377,5 +377,18 @@ app.factory("PctService", [
           $http.get('api/subjects/selectedSubject?id=' + id)
                   .success(callback).error(callback);
         },
+        loadAllSurveys: function(subjectId) {
+          var deferred = $q.defer();
+          $http.get("api/surveys/allSurveys", {
+            params: {
+              subjectId: subjectId
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
       };
     }]);

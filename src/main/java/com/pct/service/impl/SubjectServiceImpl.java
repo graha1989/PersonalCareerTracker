@@ -29,7 +29,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	@Transactional
-	public List<SubjectDto> findSubjectsStartsWith(String value, List<Long> subjectIds) {
+	public List<SubjectDto> findAvailableSubjectsStartsWith(String value, List<Long> subjectIds) {
 
 		List<SubjectDto> subjectDtos = new ArrayList<SubjectDto>();
 		List<Subject> subjects = new ArrayList<Subject>();
