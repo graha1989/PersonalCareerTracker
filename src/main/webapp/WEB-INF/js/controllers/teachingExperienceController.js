@@ -66,6 +66,10 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
       }
     });
   };
+  
+  $scope.showSurveysForSubject = function(professorId, subjectId) {
+    $location.path('/surveys/professorId/' + professorId + '/subjectId/' + subjectId);
+  };
 
 });
 

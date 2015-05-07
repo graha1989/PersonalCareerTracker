@@ -14,5 +14,7 @@ public interface ProfessorService {
 	void saveProfesor(ProfessorDto ProfessorDto);
 
 	List<ProfessorDto> findProfessorsStartsWith(String value, Long idProf, Long idMentor) throws ProfessorNotFoundException;
+
+	List<ProfessorDto> findAllProfessors();
 	
 }

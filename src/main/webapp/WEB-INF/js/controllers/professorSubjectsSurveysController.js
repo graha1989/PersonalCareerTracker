@@ -37,8 +37,8 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
     });
   };
 
-  $scope.loadAllSurveys = function(subjectId) {
-    PctService.loadAllSurveys(subjectId, function(data) {
+  $scope.loadAllSurveys = function(professorId, subjectId) {
+    PctService.loadAllSurveys(professorId, subjectId, function(data) {
       if (angular.isObject(data) && data.length > 0) {
         $scope.allSurveys = data;
         for (var i = 0; i < $scope.allSurveys.length; i++) {
@@ -52,47 +52,10 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
   };
 
   $scope.init = function() {
-    $scope.loadAllSurveys($routeParams.prosubjectId);
+    $scope.loadAllSurveys($routeParams.professorId, $routeParams.subjectId);
     $scope.loadResources();
   };
 
   $scope.init();
-/*
-  $scope.editSubject = function(id) {
-    $modal.open({
-      templateUrl: 'editSubjectPopup.html',
-      controller: editSubjectPopupController,
-      resolve: {
-        subjectId: function() {
-          return id;
-        }
-      }
-    });
-  };
 
-  $scope.createNewSubject = function() {
-    $modal.open({
-      templateUrl: 'createNewSubjectPopup.html',
-      controller: createNewSubjectController,
-    });
-  };
-*/
 });
-
-var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
-        $http, $route, $templateCache, subjectId, PctService) {
-
-  $scope.cancel = function() {
-    $modalInstance.dismiss('cancel');
-  };
-
-};
-
-var createNewSubjectController = function($scope, $modalInstance, $routeParams,
-        $http, $route, $templateCache, PctService) {
-
-  $scope.cancel = function() {
-    $modalInstance.dismiss('cancel');
-  };
-
-};

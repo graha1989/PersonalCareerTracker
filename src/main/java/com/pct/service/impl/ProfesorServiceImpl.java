@@ -96,4 +96,22 @@ public class ProfesorServiceImpl implements ProfessorService {
 		return professorsDtoList;
 	}
 
+	@Override
+	@Transactional
+	public List<ProfessorDto> findAllProfessors() {
+
+		List<ProfessorDto> professorDtos = new ArrayList<ProfessorDto>();
+		try {
+			List<Professor> professors = profesorRepository.findAll();
+			for (Professor p : professors) {
+				ProfessorDto professorDto = new ProfessorDto(p);
+				professorDtos.add(professorDto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return professorDtos;
+	}
+
 }

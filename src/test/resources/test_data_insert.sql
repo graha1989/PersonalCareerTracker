@@ -152,3 +152,7 @@ INSERT INTO subject (name, program, numberOfTheoreticalLessons, numberOfPractica
 INSERT INTO teaching_experience (subjectId, professorId) VALUES
 	('1', '3')
 	ON DUPLICATE KEY UPDATE subjectId=VALUES(subjectId), professorId=VALUES(professorId);
+	
+INSERT INTO survey (professorId, subjectId, academicYear, averageGrade, numberOfStudents) VALUES
+	('3', '1', '2011/2012', '8.89', '151')
+	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), subjectId=VALUES(subjectId), academicYear=VALUES(academicYear), averageGrade=VALUES(averageGrade), numberOfStudents=VALUES(numberOfStudents);

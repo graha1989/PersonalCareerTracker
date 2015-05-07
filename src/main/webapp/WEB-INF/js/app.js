@@ -93,6 +93,14 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         templateUrl: 'pages/showAllSubjects.html',
         controller: 'SubjectsController'
       })
+      .when('/surveys/professorId/:professorId/subjectId/:subjectId', {
+        templateUrl: 'pages/professorSubjectsSurveys.html?professorId=:professorId&subjectId=:subjectId',
+        controller: 'ProfessorSubjectsSurveysController'
+      })
+      .when('/showAllProfessors', {
+        templateUrl: 'pages/showAllProfessors.html',
+        controller: 'AllProfessorsController'
+      })
 			.otherwise({
 				redirectTo: '/showAllStudents'
 			});

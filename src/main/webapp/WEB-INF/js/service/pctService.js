@@ -18,7 +18,7 @@ app.factory("PctService", [
           }).success(callback).error(callback);
         },
         loadProfesor: function(id, callback) {
-          $http.get('api/professor/loadProfesorDetails?id=' + id).success(
+          $http.get('api/professors/loadProfesorDetails?id=' + id).success(
                   callback).error(callback);
         },
         loadThesis: function(mentorId, thesisTypeId, callback) {
@@ -58,7 +58,7 @@ app.factory("PctService", [
         },
         findProfessorsStartsWith: function(value, id1, id2) {
           var deferred = $q.defer();
-          $http.get("api/professor/findProfessorStartsWith", {
+          $http.get("api/professors/findProfessorStartsWith", {
             params: {
               value: value,
               idProf: id1,
@@ -383,10 +383,11 @@ app.factory("PctService", [
           $http.get('api/subjects/selectedSubject?id=' + id)
                   .success(callback).error(callback);
         },
-        loadAllSurveys: function(subjectId) {
+        loadAllSurveys: function(professorId, subjectId) {
           var deferred = $q.defer();
           $http.get("api/surveys/allSurveys", {
             params: {
+              professorId: professorId,
               subjectId: subjectId
             }
           }).success(function(response) {
@@ -395,6 +396,9 @@ app.factory("PctService", [
             deferred.reject(response);
           });
           return deferred.promise;
+        },
+        loadAllProfessors: function(params, callback) {
+          $http.get('api/professors/allProfessors').success(callback);
         },
       };
     }]);

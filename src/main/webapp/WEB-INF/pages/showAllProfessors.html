@@ -2,50 +2,44 @@
 
 	<form
 		name="form"
-		id="showAllProfessorSubjectsSurveysForm"
+		id="showAllProfessorsForm"
 		novalidate
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
-		ng-model="survey">
+		ng-model="professor">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ resources.text.institutionsTitle }}</h3>
+			<h3 class="modal-title">{{ resources.text.allProfessorsTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
 
 				<table
-					ng-show="allSurveys != []"
+					ng-show="allProfessors != []"
 					class="table table-condensed table-striped table-hover"
 					cellspacing="0"
 					cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
-							<td>{{ resources.surveysTableLabels.subjectName }}</td>
-							<td>{{ resources.surveysTableLabels.academicYear }}</td>
-							<td>{{ resources.surveysTableLabels.averageStudentGrade }}</td>
-							<td>{{ resources.surveysTableLabels.numberOfStudents }}</td>
+							<td>{{ resources.professorsTableLabels.firstNameAndLastName }}</td>
 							<td colspan="2"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
-							ng-repeat="surveyData in completeSurveyDataArray">
-							<td>{{ surveyData.subject.institutionType.title }}</td>
-							<td>{{ surveyData.survey.academicYear }}</td>
-							<td>{{ surveyData.survey.averageGrade }}</td>
-							<td>{{ surveyData.survey.numberOfStudents }}</td>
-							<td class="delete"><button
+							ng-repeat="professor in allProfessors">
+							<td>{{ professor.name }} {{ professor.surname }}</td>
+							<td class="details"><button
 									class="btn btn-link btn-xs"
-									ng-click="deleteInstitution(institution.id, $index)">
-									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.institutionButtons.delete }}
+									ng-click="showProfessorDetails(professor.id)">
+									<span class="glyphicon glyphicon-user"></span> {{ resources.buttons.allProfessorsButtons.details }}
 								</button></td>
-							<td class="edit"><button
+							<td class="teachingExperiences"><button
 									class="btn btn-link btn-xs"
-									ng-click="editInstitution(institution.id)">
-									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.institutionButtons.edit }}
+									ng-click="showProfessorTeahingExperience(professor.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.allProfessorsButtons.teachingExperiences }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="7">{{ errorMessages.error.emptyTable }}</td>
+							<td colspan="3">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -63,168 +57,63 @@
 
 	<script
 		type="text/ng-template"
-		id="editInstitutionPopup.html">
+		id="professorDetailsPopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
 			novalidate
 			role="form"
-			ng-model="institution">
+			ng-model="professor">
 			<div class="modal-header">
-				<h3 class="modal-title">{{ resources.text.editInstitutionPopupTitle }}</h3>
+				<h3 class="modal-title">{{ resources.text.professorDetailsPopupTitle }}</h3>
 			</div>
 			<div class="modal-body">
-				<div class="form-group">
-					<label
-						for="inputInstitutionType"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionType }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<select
-							class="ng-binding form-control"
-							id="inputInstitutionType"
-							name="inputInstitutionType"
-							ng-model="institution.institutionType"
-							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
-							ng-change="resetInsitutionData()"
-							required><option value="">{{ resources.institutionPopupLabels.institutionType }}</option></select>
-						<div
-							ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
-							class="institutionTypeFieldError">
-							<span
-								ng-show="form.inputInstitutionType.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
-						</div>
-					</div>
+				<div class="row" ng-show="professor.name">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.name }}:</label>
+					<div class="col-sm-4">{{ professor.name }}</div>
 				</div>
-				<div class="form-group">
-					<label
-						for="inputInstitutionName"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionName }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="ng-binding form-control"
-							id="inputInstitutionName"
-							name="inputInstitutionName"
-							ng-model="institution.name"
-							placeholder="{{ resources.institutionPopupLabels.institutionName }}"
-							ng-maxlength="50"
-							required />
-						<div
-							ng-show="form.inputInstitutionName.$dirty && form.inputInstitutionName.$invalid"
-							class="institutionNameFieldError">
-							<span
-								ng-show="form.inputInstitutionName.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionName.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionNameMaxLength }}</span>
-						</div>
-					</div>
+				<div class="row" ng-show="professor.fathersName">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.fathersName }}:</label>
+					<div class="col-sm-4">{{ professor.fathersName }}</div>
 				</div>
-				<div class="form-group" ng-show="institution.institutionType.name == 'FACULTY'">
-					<label
-						for="inputUniversityName"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.universityName }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputUniversityName"
-							name="inputUniversityName"
-							ng-model="institution.university"
-							placeholder="{{ resources.institutionPopupLabels.universityName }}"
-							ng-maxlength="50"
-							ng-required="institution.institutionType.name == 'FACULTY'" />
-						<div
-							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
-							class="universityNameFieldError">
-							<span
-								ng-show="form.inputUniversityName.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputUniversityName.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidUniversityNameMaxLength }}</span>
-						</div>
-					</div>
+				<div class="row" ng-show="professor.surname">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.surname }}:</label>
+					<div class="col-sm-4">{{ professor.surname }}</div>
 				</div>
-				<div class="form-group">
-					<label
-						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionCity }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputInstitutionCity"
-							name="inputInstitutionCity"
-							ng-model="institution.city"
-							placeholder="{{ resources.institutionPopupLabels.institutionCity }}"
-							ng-maxlength="50"
-							ng-pattern="patterns.onlyLetters"
-							required />
-						<div
-							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
-							class="institutionCityFieldError">
-							<span
-								ng-show="form.inputInstitutionCity.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
-						</div>
-					</div>
+				<div class="row" ng-show="professor.email">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.email }}:</label>
+					<div class="col-sm-4">{{ professor.email }}</div>
 				</div>
-				<div class="form-group">
-					<label
-						for="inputInstitutionCountry"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputInstitutionCountry"
-							name="inputInstitutionCountry"
-							ng-model="institution.country"
-							placeholder="{{ resources.institutionPopupLabels.institutionCountry }}"
-							ng-maxlength="50"
-							ng-pattern="patterns.onlyLetters"
-							required />
-						<div
-							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
-							class="institutionCountryFieldError">
-							<span
-								ng-show="form.inputInstitutionCountry.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCountry.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span> <span
-								ng-show="form.inputInstitutionCountry.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
-						</div>
-					</div>
+				<div class="row" ng-show="professor.dateOfBirth">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.dateOfBirth }}:</label>
+					<div class="col-sm-4">{{ professor.dateOfBirth | date:'dd-MM-yyyy' }}</div>
+				</div>
+				<div class="row" ng-show="professor.placeOfBirth">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.placeOfBirth }}:</label>
+					<div class="col-sm-4">{{ professor.placeOfBirth }}</div>
+				</div>
+				<div class="row" ng-show="professor.countryOfBirth">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.countryOfBirth }}:</label>
+					<div class="col-sm-4">{{ professor.countryOfBirth }}</div>
+				</div>
+				<div class="row" ng-show="professor.scientificArea">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.scientificArea }}:</label>
+					<div class="col-sm-4">{{ professor.scientificArea }}</div>
+				</div>
+				<div class="row" ng-show="professor.specialScientificArea">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.specialScientificArea }}:</label>
+					<div class="col-sm-4">{{ professor.specialScientificArea }}</div>
 				</div>
 			</div>
 			<div class="modal-footer action">
 				<button
-					id="submit_button"
-					type="submit"
-					class="btn btn-success btn-sm"
-					ng-disabled="form.$invalid || isUnchanged(institution)"
-					ng-click="saveInstitution()">
-					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.institutionButtons.edit }}
-				</button>
-				<button
 					id="cancel_button"
-					class="btn btn-sm"
-					ng-click="cancel()">{{ resources.buttons.institutionButtons.close }}</button>
+					class="btn btn-success btn-sm"
+					ng-click="cancel()">{{ resources.buttons.allProfessorsButtons.close }}</button>
 			</div>
 		</form>
 	</script>
-
+	<!-- 
 	<script
 		type="text/ng-template"
 		id="createNewInstitutionPopup.html">
@@ -377,5 +266,5 @@
   			</div>
 		</form>
 	</script>
-
+ -->
 </div>

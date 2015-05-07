@@ -22,7 +22,7 @@ import com.pct.service.ProfessorService;
 import com.pct.validation.ProfessorNotFoundException;
 
 @RestController
-@RequestMapping("/api/professor")
+@RequestMapping("/api/professors")
 public class ProfessorController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProfessorController.class);
@@ -74,6 +74,15 @@ public class ProfessorController {
 		}
 
 		return new ResponseEntity<List<ProfessorDto>>(professors, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "allProfessors", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<List<ProfessorDto>> showAllProfessors() {
+
+		List<ProfessorDto> professorDtos = professorService.findAllProfessors();
+		logger.debug("Current number of professors in database is " + professorDtos.size() + ".");
+
+		return new ResponseEntity<List<ProfessorDto>>(professorDtos, HttpStatus.OK);
 	}
 
 }

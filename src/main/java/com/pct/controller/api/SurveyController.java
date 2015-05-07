@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
-import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.SurveyDto;
 import com.pct.service.SurveyService;
 
@@ -28,8 +27,8 @@ public class SurveyController {
 
 	@RequestMapping(value = "allSurveys", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<SurveyDto>> showAllSurveys(
-			@RequestParam(value = RequestMappings.ID, required = true) Long professorId,
-			@RequestParam(value = RequestMappings.ID, required = true) Long subjectId) {
+			@RequestParam(value = "professorId", required = true) Long professorId,
+			@RequestParam(value = "subjectId", required = true) Long subjectId) {
 
 		List<SurveyDto> surveyDtos = surveyService.findAllSurveysForSubject(professorId, subjectId);
 		logger.debug("Current number of surveys for subject with ID " + subjectId + " in database is "

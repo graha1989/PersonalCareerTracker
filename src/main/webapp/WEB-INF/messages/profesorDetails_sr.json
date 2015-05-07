@@ -26,10 +26,12 @@
         "workExperiencesTitle": "Kretanje u profesionalnom radu",
         "institutionsTitle": "Pregled svih institucija",
         "projectsTitle": "Pregled svih projekata",
+        "allProfessorsTitle": "Pregled svih profesora",
         "subjectsTitle": "Pregled svih predmeta",
         "teachingExperiencesTitle": "Rad u nastavi",
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
         "editInstitutionPopupTitle": "Izmena institucije",
+        "professorDetailsPopupTitle": "Podaci o profesoru",
         "editProjectPopupTitle": "Izmena projekta",
         "editSubjectPopupTitle": "Izmena predmeta",
         "createNewTeachingExperiencePopupTitle": "Dodavanje novog radnog iskustva u nastavi",
@@ -209,6 +211,11 @@
             "save": "Sačuvaj",
             "cancel": "Odustani"
         },
+        "allProfessorsButtons": {
+            "details": "Detaljnije",
+            "teachingExperiences": "Rad u nastavi",
+            "close": "Zatvori"
+        },
         "teachingExperienceButtons": {
             "delete": "Izbriši",
             "edit": "Izmeni",
@@ -352,6 +359,9 @@
         "institutionCity": "Grad",
         "institutionCountry": "Država"
     },
+    "professorsTableLabels": {
+    	"firstNameAndLastName": "Ime i prezime"
+    },
     "surveysTableLabels": {
     	"subjectName": "Nastavni predmet",
         "academicYear": "Školska godina",
@@ -384,6 +394,17 @@
         "universityName": "Naziv univerziteta",
         "institutionCity": "Grad",
         "institutionCountry": "Država"
+    },
+    "professorDetailsPopupLabels": {
+    	"name": "Ime",
+        "surname": "Prezime",
+        "fathersName": "Očevo ime",
+        "email": "E-mail",
+        "dateOfBirth": "Datum rođenja",
+        "placeOfBirth": "Mesto rođenja",
+        "countryOfBirth": "Država",
+        "scientificArea": "Naučna oblast",
+        "specialScientificArea": "Uža naučna oblast"
     },
     "teachingExperiencePopupLabels": {
     	"subjectName": "Naziv predmeta",
