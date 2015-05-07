@@ -41,20 +41,13 @@
 							<td>{{ teachingExperience.subjectDto.numberOfTeachingLessons }} + {{ teachingExperience.subjectDto.numberOfTheoreticalLessons }} + {{ teachingExperience.subjectDto.numberOfPracticalLessons }}</td>
 							<td class="delete"><button
 									class="btn btn-link btn-xs"
-									ng-click="deleteTeachingExperience(teachingExperience.id)">
+									ng-click="deleteTeachingExperience(teachingExperience.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.teachingExperienceButtons.delete }}
 								</button></td>
-							<!-- 	
-							<td class="edit"><button
-									class="btn btn-link btn-xs"
-									ng-click="editTeachingExperience(teachingExperience.id)">
-									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.teachingExperienceButtons.edit }}
-								</button></td>
-							 -->
 							<td class="showSurveys"><button
 									class="btn btn-link btn-xs"
 									ng-click="showSurveysForSubject(teachingExperience.professorId, teachingExperience.subjectId)">
-									<span class="glyphicon glyphicon-list-alt"></span>
+									<span class="glyphicon glyphicon-list-alt"></span> {{ resources.buttons.teachingExperienceButtons.survey }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">

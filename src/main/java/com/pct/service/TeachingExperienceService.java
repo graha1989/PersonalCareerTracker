@@ -14,5 +14,7 @@ public interface TeachingExperienceService {
 	TeachingExperienceDto findTeachingExperienceById(Long id) throws TeachingExperienceNotFoundException;
 
 	void saveTeachingExperience(TeachingExperienceDto teachingExperienceDto) throws TeachingExperienceNotFoundException, ProfessorNotFoundException, SubjectNotFoundException;
+
+	void deleteTeachingExperience(Long id) throws TeachingExperienceNotFoundException;
 	
 }

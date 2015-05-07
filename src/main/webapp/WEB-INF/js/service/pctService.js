@@ -330,6 +330,12 @@ app.factory("PctService", [
           $http.get('api/teachingExperiences/selectedTeachingExperience?id=' + id)
                   .success(callback).error(callback);
         },
+        deleteTeachingExperience: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/teachingExperiences?id=' + id
+          }).success(callback).error(callback);
+        },
         findSubjectsStartsWith: function(value, subjectIds) {
           var deferred = $q.defer();
           $http.get("api/teachingExperiences/findSubjectsStartsWith", {

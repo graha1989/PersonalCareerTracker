@@ -96,5 +96,13 @@ public class TeachingExperienceController {
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(method = RequestMethod.DELETE)
+	public ResponseEntity<TeachingExperienceDto> deleteTeachingExperience(
+			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws TeachingExperienceNotFoundException {
+		teachingExperienceService.deleteTeachingExperience(id);
+
+		return new ResponseEntity<TeachingExperienceDto>(HttpStatus.OK);
+	}
 
 }

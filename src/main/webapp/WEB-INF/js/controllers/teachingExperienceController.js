@@ -54,6 +54,18 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
       }
     });
   };
+  
+  $scope.deleteTeachingExperience = function(id, index) {
+    PctService.deleteTeachingExperience(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.errorStatus = data.status;
+      } else {
+        $scope.successStatus = "Successfully deleted teaching experience.";
+        $scope.teachingExperiences.splice(index, 1);
+        $scope.loadTeachingExperiences($routeParams.professorId);
+      }
+    });
+  };
 
 });
 

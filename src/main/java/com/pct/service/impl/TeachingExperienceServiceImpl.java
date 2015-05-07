@@ -108,4 +108,16 @@ public class TeachingExperienceServiceImpl implements TeachingExperienceService 
 		return teachingExperience;
 	}
 
+	@Override
+	@Transactional
+	public void deleteTeachingExperience(Long id) throws TeachingExperienceNotFoundException {
+
+		TeachingExperience teachingExperience = teachingExperienceRepository.findOne(id);
+		if (teachingExperience == null) {
+			throw new TeachingExperienceNotFoundException();
+		}
+
+		teachingExperienceRepository.delete(teachingExperience);
+	}
+
 }

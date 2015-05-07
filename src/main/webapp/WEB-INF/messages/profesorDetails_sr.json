@@ -215,7 +215,8 @@
             "add": "Dodaj novi predmet",
             "close": "Zatvori",
             "save": "Sačuvaj",
-            "cancel": "Odustani"
+            "cancel": "Odustani",
+            "survey": "Ankete"
         },
         "professorStudiesButtons": {
             "delete": "Izbriši",
