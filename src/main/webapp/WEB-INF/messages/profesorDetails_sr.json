@@ -373,6 +373,10 @@
     "professorsTableLabels": {
     	"firstNameAndLastName": "Ime i prezime"
     },
+    "surveysResultsTableLabels": {
+    	"averageGrade": "Ukupna prosečna ocena",
+    	"averageSudentsNumber": "Prosečan broj studenata"
+    },
     "surveysTableLabels": {
     	"subjectName": "Nastavni predmet",
         "academicYear": "Školska godina",

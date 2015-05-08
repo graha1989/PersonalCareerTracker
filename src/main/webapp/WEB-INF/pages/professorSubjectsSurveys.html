@@ -47,6 +47,16 @@
 						</tr>
 					</tbody>
 				</table>
+				<div ng-show="allSurveys != []" ng-model="result">
+					<div class="row">
+						<label class="col-sm-3">{{ resources.surveysResultsTableLabels.averageGrade }}:</label>
+						<div class="col-sm-2">{{ result.averageGrade | number : 2 }}</div>
+					</div>
+					<div class="row">
+						<label class="col-sm-3">{{ resources.surveysResultsTableLabels.averageSudentsNumber }}:</label>
+						<div class="col-sm-2">{{ result.averageSudentsNumber | number : 2 }}</div>
+					</div>
+				</div>
 			</fieldset>
 		</div>
 		<div class="modal-footer action">

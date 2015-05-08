@@ -3,7 +3,7 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
 
   $scope.survey = {};
   $scope.allSurveys = [];
-
+  $scope.result = {};
   $scope.completeSurveyDataArray = [];
 
   $scope.noResultsFound = true;
@@ -44,11 +44,25 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
         for (var i = 0; i < $scope.allSurveys.length; i++) {
           $scope.loadSelectedSubject($scope.allSurveys[i].subjectId, i);
         }
+        $scope.calculateResult();
         $scope.noResultsFound = false;
       } else {
         $scope.noResultsFound = true;
       }
     });
+  };
+
+  $scope.calculateResult = function() {
+    var gradeSum = 0;
+    var studentsSum = 0;
+    for (var i = 0; i < $scope.allSurveys.length; i++) {
+      gradeSum = gradeSum + $scope.allSurveys[i].averageGrade;
+      studentsSum = studentsSum + $scope.allSurveys[i].numberOfStudents;
+    }
+    $scope.result = {
+      averageGrade: gradeSum / $scope.allSurveys.length,
+      averageSudentsNumber: studentsSum / $scope.allSurveys.length
+    }
   };
 
   $scope.init = function() {
@@ -76,17 +90,19 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
       controller: createNewSurveyController,
     });
   };
-  
+
   $scope.deleteSurvey = function(id, index) {
-    PctService.deleteSurvey(id, function(data) {
-      if (angular.isObject(data)) {
-        $scope.errorStatus = data.status;
-      } else {
-        $scope.successStatus = "Successfully deleted survey.";
-        $scope.allSurveys.splice(index, 1);
-        $scope.loadAllSurveys($routeParams.professorId, $routeParams.subjectId);
-      }
-    });
+    PctService.deleteSurvey(id,
+            function(data) {
+              if (angular.isObject(data)) {
+                $scope.errorStatus = data.status;
+              } else {
+                $scope.successStatus = "Successfully deleted survey.";
+                $scope.allSurveys.splice(index, 1);
+                $scope.loadAllSurveys($routeParams.professorId,
+                        $routeParams.subjectId);
+              }
+            });
   };
 
 });
