@@ -15,4 +15,6 @@ public interface SurveyService {
 
 	void saveSurvey(SurveyDto surveyDto) throws ProfessorNotFoundException, SubjectNotFoundException;
 
+	void deleteSurvey(Long id) throws SurveyNotFoundException;
+
 }

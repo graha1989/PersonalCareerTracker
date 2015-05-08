@@ -76,6 +76,18 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
       controller: createNewSurveyController,
     });
   };
+  
+  $scope.deleteSurvey = function(id, index) {
+    PctService.deleteSurvey(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.errorStatus = data.status;
+      } else {
+        $scope.successStatus = "Successfully deleted survey.";
+        $scope.allSurveys.splice(index, 1);
+        $scope.loadAllSurveys($routeParams.professorId, $routeParams.subjectId);
+      }
+    });
+  };
 
 });
 

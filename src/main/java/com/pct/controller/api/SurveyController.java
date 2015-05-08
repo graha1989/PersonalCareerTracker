@@ -43,7 +43,7 @@ public class SurveyController {
 
 		return new ResponseEntity<List<SurveyDto>>(surveyDtos, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "selectedSurvey", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<SurveyDto> showSurvey(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws SurveyNotFoundException {
@@ -51,7 +51,7 @@ public class SurveyController {
 
 		return new ResponseEntity<SurveyDto>(surveyDto, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<String> persistSurvey(@Valid @RequestBody SurveyDto surveyDto) {
 
@@ -66,6 +66,14 @@ public class SurveyController {
 		logger.debug("Survey for subject with ID: " + surveyDto.getSubjectId() + " successfully saved.");
 
 		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public ResponseEntity<SurveyDto> deleteSurvey(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws SurveyNotFoundException {
+		surveyService.deleteSurvey(id);
+
+		return new ResponseEntity<SurveyDto>(HttpStatus.OK);
 	}
 
 }

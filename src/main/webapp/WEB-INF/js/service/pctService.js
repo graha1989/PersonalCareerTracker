@@ -395,5 +395,11 @@ app.factory("PctService", [
           $http.get('api/surveys/selectedSurvey?id=' + id)
                   .success(callback).error(callback);
         },
+        deleteSurvey: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/surveys?id=' + id
+          }).success(callback).error(callback);
+        },
       };
     }]);

@@ -113,4 +113,16 @@ public class SurveyServiceImpl implements SurveyService {
 		return survey;
 	}
 
+	@Override
+	@Transactional
+	public void deleteSurvey(Long id) throws SurveyNotFoundException {
+
+		Survey survey = surveyRepository.findOne(id);
+		if (survey == null) {
+			throw new SurveyNotFoundException();
+		}
+
+		surveyRepository.delete(survey);
+	}
+
 }
