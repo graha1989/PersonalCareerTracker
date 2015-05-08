@@ -383,22 +383,17 @@ app.factory("PctService", [
           $http.get('api/subjects/selectedSubject?id=' + id)
                   .success(callback).error(callback);
         },
-        loadAllSurveys: function(professorId, subjectId) {
-          var deferred = $q.defer();
-          $http.get("api/surveys/allSurveys", {
-            params: {
-              professorId: professorId,
-              subjectId: subjectId
-            }
-          }).success(function(response) {
-            deferred.resolve(response);
-          }).error(function(response) {
-            deferred.reject(response);
-          });
-          return deferred.promise;
-        },
         loadAllProfessors: function(params, callback) {
           $http.get('api/professors/allProfessors').success(callback);
+        },
+        loadAllSurveys: function(professorId, subjectId, callback) {
+          $http.get(
+                  'api/surveys/allSurveys?professorId=' + professorId
+                          + '&subjectId=' + subjectId).success(callback);
+        },
+        loadSelectedSurvey: function(id, callback) {
+          $http.get('api/surveys/selectedSurvey?id=' + id)
+                  .success(callback).error(callback);
         },
       };
     }]);

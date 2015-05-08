@@ -154,5 +154,7 @@ INSERT INTO teaching_experience (subjectId, professorId) VALUES
 	ON DUPLICATE KEY UPDATE subjectId=VALUES(subjectId), professorId=VALUES(professorId);
 	
 INSERT INTO survey (professorId, subjectId, academicYear, averageGrade, numberOfStudents) VALUES
-	('3', '1', '2011/2012', '8.89', '151')
+	('3', '1', '2011/2012', '8.89', '151'),
+	('3', '1', '2012/2013', '8.80', '110'),
+	('3', '1', '2013/2014', '8.50', '103')
 	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), subjectId=VALUES(subjectId), academicYear=VALUES(academicYear), averageGrade=VALUES(averageGrade), numberOfStudents=VALUES(numberOfStudents);

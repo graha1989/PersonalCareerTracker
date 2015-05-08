@@ -8,7 +8,7 @@
 		ng-model="survey">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ resources.text.institutionsTitle }}</h3>
+			<h3 class="modal-title">{{ resources.text.surveysTitle }}: {{ completeSurveyDataArray[1].subject.subjectName }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
@@ -20,7 +20,6 @@
 					cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
-							<td>{{ resources.surveysTableLabels.subjectName }}</td>
 							<td>{{ resources.surveysTableLabels.academicYear }}</td>
 							<td>{{ resources.surveysTableLabels.averageStudentGrade }}</td>
 							<td>{{ resources.surveysTableLabels.numberOfStudents }}</td>
@@ -29,23 +28,22 @@
 						<tr
 							class="active ng-scope"
 							ng-repeat="surveyData in completeSurveyDataArray">
-							<td>{{ surveyData.subject.institutionType.title }}</td>
 							<td>{{ surveyData.survey.academicYear }}</td>
 							<td>{{ surveyData.survey.averageGrade }}</td>
 							<td>{{ surveyData.survey.numberOfStudents }}</td>
 							<td class="delete"><button
 									class="btn btn-link btn-xs"
-									ng-click="deleteInstitution(institution.id, $index)">
-									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.institutionButtons.delete }}
+									ng-click="deleteSurvey(surveyData.survey.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.surveysButtons.delete }}
 								</button></td>
 							<td class="edit"><button
 									class="btn btn-link btn-xs"
-									ng-click="editInstitution(institution.id)">
-									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.institutionButtons.edit }}
+									ng-click="editSurvey(surveyData.survey.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.surveysButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="7">{{ errorMessages.error.emptyTable }}</td>
+							<td colspan="5">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -55,155 +53,112 @@
 			<button
 				id="addNewButton"
 				class="btn btn-success btn-sm"
-				ng-click="createNewInstitution()">
-				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.institutionButtons.add }}
+				ng-click="createNewSurvey()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.surveysButtons.add }}
 			</button>
 		</div>
 	</form>
 
 	<script
 		type="text/ng-template"
-		id="editInstitutionPopup.html">
+		id="editSurveyPopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
 			novalidate
 			role="form"
-			ng-model="institution">
+			ng-model="survey">
 			<div class="modal-header">
-				<h3 class="modal-title">{{ resources.text.editInstitutionPopupTitle }}</h3>
+				<h3 class="modal-title">{{ resources.text.editSurveyPopupTitle }}</h3>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
 					<label
-						for="inputInstitutionType"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionType }} <span class="required">*</span>
+						for="inputAcademicYear"
+						class="col-sm-3 control-label">{{ resources.surveyPopupLabels.academicYear }} <span class="required">*</span>
 					</label>
-					<div class="col-sm-6">
-						<select
-							class="ng-binding form-control"
-							id="inputInstitutionType"
-							name="inputInstitutionType"
-							ng-model="institution.institutionType"
-							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
-							ng-change="resetInsitutionData()"
-							required><option value="">{{ resources.institutionPopupLabels.institutionType }}</option></select>
-						<div
-							ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
-							class="institutionTypeFieldError">
-							<span
-								ng-show="form.inputInstitutionType.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
-						for="inputInstitutionName"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionName }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
+					<div class="col-sm-4">
 						<input
 							type="text"
 							class="ng-binding form-control"
-							id="inputInstitutionName"
-							name="inputInstitutionName"
-							ng-model="institution.name"
-							placeholder="{{ resources.institutionPopupLabels.institutionName }}"
-							ng-maxlength="50"
+							id="inputAcademicYear"
+							name="inputAcademicYear"
+							ng-model="survey.academicYear"
+							placeholder="{{ resources.surveyPopupLabels.academicYear }}"
+							ng-minlength="9"
+							ng-maxlength="9"
 							required />
 						<div
-							ng-show="form.inputInstitutionName.$dirty && form.inputInstitutionName.$invalid"
-							class="institutionNameFieldError">
+							ng-show="form.inputAcademicYear.$dirty && form.inputAcademicYear.$invalid"
+							class="academicYearFieldError">
 							<span
-								ng-show="form.inputInstitutionName.$error.required"
+								ng-show="form.inputAcademicYear.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionName.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionNameMaxLength }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group" ng-show="institution.institutionType.name == 'FACULTY'">
-					<label
-						for="inputUniversityName"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.universityName }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputUniversityName"
-							name="inputUniversityName"
-							ng-model="institution.university"
-							placeholder="{{ resources.institutionPopupLabels.universityName }}"
-							ng-maxlength="50"
-							ng-required="institution.institutionType.name == 'FACULTY'" />
-						<div
-							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
-							class="universityNameFieldError">
-							<span
-								ng-show="form.inputUniversityName.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputUniversityName.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidUniversityNameMaxLength }}</span>
+								ng-show="form.inputAcademicYear.$error.minlength"
+								class="ng-binding">{{ errorMessages.error.invalidSurveyAcademicYearMinLength }}</span> <span
+								ng-show="form.inputAcademicYear.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidSurveyAcademicYearMaxLength }}</span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label
-						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionCity }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
+						for="inputAverageGrade"
+						class="col-sm-3 control-label">{{ resources.surveyPopupLabels.averageGrade }} <span class="required">*</span></label>
+					<div class="col-sm-4">
 						<input
-							type="text"
+							type="number"
 							class="form-control"
-							id="inputInstitutionCity"
-							name="inputInstitutionCity"
-							ng-model="institution.city"
-							placeholder="{{ resources.institutionPopupLabels.institutionCity }}"
-							ng-maxlength="50"
-							ng-pattern="patterns.onlyLetters"
+							id="inputAverageGrade"
+							name="inputAverageGrade"
+							ng-model="survey.averageGrade"
+							placeholder="{{ resources.surveyPopupLabels.averageGrade }}"
+							step="0.01"
+							min="5"
+							max="10"
+							ng-maxlength="5"
 							required />
 						<div
-							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
-							class="institutionCityFieldError">
+							ng-show="form.inputAverageGrade.$dirty && form.inputAverageGrade.$invalid"
+							class="averageGradeFieldError">
 							<span
-								ng-show="form.inputInstitutionCity.$error.required"
+								ng-show="form.inputAverageGrade.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+								ng-show="form.inputAverageGrade.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxGradeLength }}</span> <span
+								ng-show="form.inputAverageGrade.$error.min"
+								class="ng-binding">{{ errorMessages.error.minAverageNumber }}</span> <span
+								ng-show="form.inputAverageGrade.$error.max"
+								class="ng-binding">{{ errorMessages.error.maxAverageNumber }}</span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label
-						for="inputInstitutionCountry"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }} <span class="required">*</span>
+						for="inputNumberOfStudents"
+						class="col-sm-3 control-label">{{ resources.surveyPopupLabels.numberOfStudents }} <span class="required">*</span>
 					</label>
-					<div class="col-sm-6">
+					<div class="col-sm-4">
 						<input
-							type="text"
-							class="form-control"
-							id="inputInstitutionCountry"
-							name="inputInstitutionCountry"
-							ng-model="institution.country"
-							placeholder="{{ resources.institutionPopupLabels.institutionCountry }}"
-							ng-maxlength="50"
-							ng-pattern="patterns.onlyLetters"
+							type="number"
+							class="form-control ng-valid ng-valid-number ng-valid-min ng-valid-maxlength ng-dirty"
+							id="inputNumberOfStudents"
+							name="inputNumberOfStudents"
+							ng-model="survey.numberOfStudents"
+							placeholder="{{ resources.surveyPopupLabels.numberOfStudents }}"
+							min="1"
+							ng-maxlength="5"
 							required />
 						<div
-							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
-							class="institutionCountryFieldError">
+							ng-show="form.inputNumberOfStudents.$dirty && form.inputNumberOfStudents.$invalid"
+							class="numberOfStudentsFieldError">
 							<span
-								ng-show="form.inputInstitutionCountry.$error.required"
+								ng-show="form.inputNumberOfStudents.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCountry.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span> <span
-								ng-show="form.inputInstitutionCountry.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+								ng-show="form.inputNumberOfStudents.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+								ng-show="form.inputNumberOfStudents.$error.min"
+								class="ng-binding">{{ errorMessages.error.minNumberOfStudents }}</span>
 						</div>
 					</div>
 				</div>
@@ -213,167 +168,125 @@
 					id="submit_button"
 					type="submit"
 					class="btn btn-success btn-sm"
-					ng-disabled="form.$invalid || isUnchanged(institution)"
-					ng-click="saveInstitution()">
-					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.institutionButtons.edit }}
+					ng-disabled="form.$invalid || isUnchanged(survey)"
+					ng-click="saveSurvey()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.surveysButtons.edit }}
 				</button>
 				<button
 					id="cancel_button"
 					class="btn btn-sm"
-					ng-click="cancel()">{{ resources.buttons.institutionButtons.close }}</button>
+					ng-click="cancel()">{{ resources.buttons.surveysButtons.close }}</button>
 			</div>
 		</form>
 	</script>
 
 	<script
 		type="text/ng-template"
-		id="createNewInstitutionPopup.html">
+		id="createNewSurveyPopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
 			novalidate
 			role="form"
-			ng-model="institution">
+			ng-model="survey">
 			<div class="modal-header">
-				<h3 class="modal-title">{{ resources.text.addNewInstitutionPopupTitle }}</h3>
+				<h3 class="modal-title">{{ resources.text.addNewSurveyPopupTitle }}</h3>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
 					<label
-						for="inputInstitutionType"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionType }} <span class="required">*</span>
+						for="inputAcademicYear"
+						class="col-sm-3 control-label">{{ resources.surveyPopupLabels.academicYear }} <span class="required">*</span>
 					</label>
-					<div class="col-sm-6">
-						<select
-							class="ng-binding form-control"
-							id="inputInstitutionType"
-							name="inputInstitutionType"
-							ng-model="institution.institutionType"
-							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
-							required><option value="">{{ resources.institutionPopupLabels.institutionType }}</option></select>
-						<div
-							ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
-							class="institutionTypeFieldError">
-							<span
-								ng-show="form.inputInstitutionType.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
-						for="inputInstitutionName"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionName }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
+					<div class="col-sm-4">
 						<input
 							type="text"
 							class="ng-binding form-control"
-							id="inputInstitutionName"
-							name="inputInstitutionName"
-							ng-model="institution.name"
-							placeholder="{{ resources.institutionPopupLabels.institutionName }}"
-							ng-maxlength="50"
+							id="inputAcademicYear"
+							name="inputAcademicYear"
+							ng-model="survey.academicYear"
+							placeholder="{{ resources.surveyPopupLabels.academicYear }}"
+							ng-minlength="9"
+							ng-maxlength="9"
 							required />
 						<div
-							ng-show="form.inputInstitutionName.$dirty && form.inputInstitutionName.$invalid"
-							class="institutionNameFieldError">
+							ng-show="form.inputAcademicYear.$dirty && form.inputAcademicYear.$invalid"
+							class="academicYearFieldError">
 							<span
-								ng-show="form.inputInstitutionName.$error.required"
+								ng-show="form.inputAcademicYear.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionName.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionNameMaxLength }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group" ng-show="institution.institutionType.name == 'FACULTY'">
-					<label
-						for="inputUniversityName"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.universityName }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputUniversityName"
-							name="inputUniversityName"
-							ng-model="institution.university"
-							placeholder="{{ resources.institutionPopupLabels.universityName }}"
-							ng-maxlength="50"
-							ng-required="institution.institutionType.name == 'FACULTY'" />
-						<div
-							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
-							class="universityNameFieldError">
-							<span
-								ng-show="form.inputUniversityName.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputUniversityName.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidUniversityNameMaxLength }}</span>
+								ng-show="form.inputAcademicYear.$error.minlength"
+								class="ng-binding">{{ errorMessages.error.invalidSurveyAcademicYearMinLength }}</span> <span
+								ng-show="form.inputAcademicYear.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidSurveyAcademicYearMaxLength }}</span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label
-						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionCity }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
+						for="inputAverageGrade"
+						class="col-sm-3 control-label">{{ resources.surveyPopupLabels.averageGrade }} <span class="required">*</span></label>
+					<div class="col-sm-4">
 						<input
-							type="text"
+							type="number"
 							class="form-control"
-							id="inputInstitutionCity"
-							name="inputInstitutionCity"
-							ng-model="institution.city"
-							placeholder="{{ resources.institutionPopupLabels.institutionCity }}"
-							ng-maxlength="50"
-							ng-pattern="patterns.onlyLetters"
+							id="inputAverageGrade"
+							name="inputAverageGrade"
+							ng-model="survey.averageGrade"
+							placeholder="{{ resources.surveyPopupLabels.averageGrade }}"
+							step="0.01"
+							min="5"
+							max="10"
+							ng-maxlength="5"
 							required />
 						<div
-							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
-							class="institutionCityFieldError">
+							ng-show="form.inputAverageGrade.$dirty && form.inputAverageGrade.$invalid"
+							class="averageGradeFieldError">
 							<span
-								ng-show="form.inputInstitutionCity.$error.required"
+								ng-show="form.inputAverageGrade.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+								ng-show="form.inputAverageGrade.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxGradeLength }}</span> <span
+								ng-show="form.inputAverageGrade.$error.min"
+								class="ng-binding">{{ errorMessages.error.minAverageNumber }}</span> <span
+								ng-show="form.inputAverageGrade.$error.max"
+								class="ng-binding">{{ errorMessages.error.maxAverageNumber }}</span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label
-						for="inputInstitutionCountry"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }} <span class="required">*</span>
+						for="inputNumberOfStudents"
+						class="col-sm-3 control-label">{{ resources.surveyPopupLabels.numberOfStudents }} <span class="required">*</span>
 					</label>
-					<div class="col-sm-6">
+					<div class="col-sm-4">
 						<input
-							type="text"
-							class="form-control"
-							id="inputInstitutionCountry"
-							name="inputInstitutionCountry"
-							ng-model="institution.country"
-							placeholder="{{ resources.institutionPopupLabels.institutionCountry }}"
-							ng-maxlength="50"
-							ng-pattern="patterns.onlyLetters"
+							type="number"
+							class="form-control ng-valid ng-valid-number ng-valid-min ng-valid-maxlength ng-dirty"
+							id="inputNumberOfStudents"
+							name="inputNumberOfStudents"
+							ng-model="survey.numberOfStudents"
+							placeholder="{{ resources.surveyPopupLabels.numberOfStudents }}"
+							min="1"
+							ng-maxlength="5"
 							required />
 						<div
-							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
-							class="institutionCountryFieldError">
+							ng-show="form.inputNumberOfStudents.$dirty && form.inputNumberOfStudents.$invalid"
+							class="numberOfStudentsFieldError">
 							<span
-								ng-show="form.inputInstitutionCountry.$error.required"
+								ng-show="form.inputNumberOfStudents.$error.required"
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCountry.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span> <span
-								ng-show="form.inputInstitutionCountry.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+								ng-show="form.inputNumberOfStudents.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+								ng-show="form.inputNumberOfStudents.$error.min"
+								class="ng-binding">{{ errorMessages.error.minNumberOfStudents }}</span>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer action">
-		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="!validateForm()" ng-click="saveNewInstitution()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.institutionButtons.save }}</button>
-		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.institutionButtons.close }}</button>
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="!validateForm()" ng-click="saveNewSurvey()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.surveysButtons.save }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.surveysButtons.close }}</button>
   			</div>
 		</form>
 	</script>

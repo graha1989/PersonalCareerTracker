@@ -49,7 +49,7 @@ public class SubjectController {
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<String> persistProject(@Valid @RequestBody SubjectDto subjectDto) {
+	public ResponseEntity<String> persistSubject(@Valid @RequestBody SubjectDto subjectDto) {
 
 		try {
 			subjectService.saveSubject(subjectDto);

@@ -12,6 +12,8 @@
 		"invalidThesisTitleMaxLength" : "Max. 200 characters.",
 		"invalidSpecializationPurposeMaxLength" : "Max. 200 characters.",
 		"invalidInstitutionNameMaxLength" : "Max. 50 characters.",
+		"invalidSurveyAcademicYearMinLength" : "Min. 9 characters.",
+		"invalidSurveyAcademicYearMaxLength" : "Max. 9 characters.",
 		"invalidAwardNameAndAwardedByMaxLength" : "Max. 200 characters.",
 		"invalidProjectNameFinancedByMaxLength" : "Max. 200 characters.",
 		"invalidProjectNameMaxLength" : "Max. 200 characters.",
@@ -41,6 +43,7 @@
 		"minAverageNumber" : "Min. number is 5",
 		"maxAverageNumber" : "Max. number is 10",
 		"minQuotedNumber" : "Min. number is 0",
+		"minNumberOfStudents" : "Min. number is 1",
 		"invalidMaxGradeLength" : "Max. 5 characters.",
 		"invalidLessonsNumberLength" : "Max. 2 characters.",
 		"minLessonsNumber" : "Min. number is 0."

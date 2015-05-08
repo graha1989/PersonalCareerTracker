@@ -19,18 +19,21 @@
         "IamProjectLeaderTooltip": "Trenutni korisnik je rukovodilac",
         "addNewProjectPopupTitle": "Dodavanje novog projekta",
         "addNewInstitutionPopupTitle": "Dodavanje nove institucije",
+        "addNewSurveyPopupTitle": "Dodavanje nove ankete",
         "professorPublicationsTitle": "Sve lične publikacije",
         "internationalPublicationsTitle": "Sve međunarodne publikacije",
         "editPublicationPopupTitle": "Izmena publikacije",
         "newPublicationPopupTitle": "Unos nove publikacije",
         "workExperiencesTitle": "Kretanje u profesionalnom radu",
         "institutionsTitle": "Pregled svih institucija",
+        "surveysTitle": "Pregled svih anketa za predmet",
         "projectsTitle": "Pregled svih projekata",
         "allProfessorsTitle": "Pregled svih profesora",
         "subjectsTitle": "Pregled svih predmeta",
         "teachingExperiencesTitle": "Rad u nastavi",
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
         "editInstitutionPopupTitle": "Izmena institucije",
+        "editSurveyPopupTitle": "Izmena ankete",
         "professorDetailsPopupTitle": "Podaci o profesoru",
         "editProjectPopupTitle": "Izmena projekta",
         "editSubjectPopupTitle": "Izmena predmeta",
@@ -207,6 +210,14 @@
             "delete": "Izbriši",
             "edit": "Izmeni",
             "add": "Dodaj novu instituciju",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
+        "surveysButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novu anketu",
             "close": "Zatvori",
             "save": "Sačuvaj",
             "cancel": "Odustani"
@@ -394,6 +405,11 @@
         "universityName": "Naziv univerziteta",
         "institutionCity": "Grad",
         "institutionCountry": "Država"
+    },
+    "surveyPopupLabels": {
+    	"academicYear": "Školska godina",
+        "averageGrade": "Prosečna ocena",
+        "numberOfStudents": "Broj studenata"
     },
     "professorDetailsPopupLabels": {
     	"name": "Ime",
