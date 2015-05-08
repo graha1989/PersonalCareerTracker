@@ -8,6 +8,28 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
   $scope.resources = {};
   $scope.errorMessages = {};
 
+  $scope.sortType = '';
+
+  $scope.allSortTypes = [{
+    description: "broju indeksa-rastuće",
+    sortBy: "+transcriptNumber"
+  }, {
+    description: "broju indeksa-opadajuće",
+    sortBy: "-transcriptNumber"
+  }, {
+    description: "imenu-rastuće",
+    sortBy: "+name"
+  }, {
+    description: "imenu-opadajuće",
+    sortBy: "-name"
+  }, {
+    description: "prezimenu-rastuće",
+    sortBy: "+surname"
+  }, {
+    description: "prezimenu-opadajuće",
+    sortBy: "-surname"
+  }];
+
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/

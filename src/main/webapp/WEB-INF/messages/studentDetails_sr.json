@@ -3,7 +3,8 @@
         "title":"Prikaz studenata",
         "introText":"Spisak studenata registrovanih u sistemu za praćenje lične karijere",
         "editPopupTitle":"Izmena podataka o studentu",
-        "newPopupTitle":"Unos novog studenta"
+        "newPopupTitle":"Unos novog studenta",
+        "sortBy": "Sortiraj po..."
        },
 	"studentsTableLabels" : {
 		"firstNameLabel":"Ime",

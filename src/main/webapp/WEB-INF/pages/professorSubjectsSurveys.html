@@ -27,7 +27,7 @@
 						</tr>
 						<tr
 							class="active ng-scope"
-							ng-repeat="survey in allSurveys">
+							ng-repeat="survey in allSurveys | orderBy:'academicYear'">
 							<td>{{ survey.academicYear }}</td>
 							<td>{{ survey.averageGrade }}</td>
 							<td>{{ survey.numberOfStudents }}</td>
