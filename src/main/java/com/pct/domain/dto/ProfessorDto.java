@@ -61,7 +61,6 @@ public class ProfessorDto implements Serializable {
 	protected Long id;
 
 	public ProfessorDto() {
-		super();
 	}
 
 	public ProfessorDto(String userName, String password, String email, String name, String surname,
@@ -83,7 +82,6 @@ public class ProfessorDto implements Serializable {
 	}
 
 	public ProfessorDto(Professor p) {
-		super();
 		this.userName = p.getUserName();
 		this.password = p.getPassword();
 		this.email = p.getEmail();

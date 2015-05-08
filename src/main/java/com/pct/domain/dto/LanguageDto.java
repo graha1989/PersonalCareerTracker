@@ -20,7 +20,6 @@ public class LanguageDto implements Serializable {
 	protected Long id;
 
 	public LanguageDto() {
-		super();
 	}
 
 	public LanguageDto(String languageName, Long id) {

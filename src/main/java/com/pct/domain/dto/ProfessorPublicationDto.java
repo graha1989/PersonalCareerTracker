@@ -69,7 +69,6 @@ public class ProfessorPublicationDto implements Serializable {
 	protected Long id;
 
 	public ProfessorPublicationDto() {
-		super();
 	}
 
 	public ProfessorPublicationDto(PublicationType publicationType, String isbn, String title, String journalTitle,

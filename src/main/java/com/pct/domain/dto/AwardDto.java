@@ -40,7 +40,6 @@ public class AwardDto implements Serializable {
 	protected Long id;
 	
 	public AwardDto() {
-		super();
 	}
 
 	public AwardDto(String awardName, String awardedBy, Date dateOfAward, AwardType awardType, AwardField awardField, Long id, Long mentorId) {

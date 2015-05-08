@@ -22,67 +22,66 @@ public class ThesisDto implements Serializable {
 	private String title;
 
 	protected Long studentId;
-	
+
 	@Length(max = 10)
 	@SafeHtml
 	private String studentTranscriptNumber;
-	
+
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
 	private String studentName;
-	
+
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
 	private String studentSurname;
-	
+
 	protected Long commissionPresidentId;
-	
+
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
 	private String commissionPresidentName;
-	
+
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
 	private String commissionPresidentSurname;
-	
+
 	protected Long commissionMemberId;
-	
+
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
 	private String commissionMemberName;
-	
+
 	@Length(max = 50)
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
 	private String commissionMemberSurname;
-	
+
 	@NotEmpty
 	@Length(max = 50)
 	@SafeHtml
 	private String paperScientificArea;
-	
+
 	protected Long mentorId;
-	
+
 	private Date dateOfGraduation;
 
 	@NotEmpty
 	@Length(max = 100)
 	@SafeHtml
 	private String universityName;
-	
+
 	protected Long thesisTypeId;
-	
+
 	protected Long id;
 
 	public ThesisDto() {
-		super();
 	}
-	
+
 	public ThesisDto(String title, Long studentId, String studentTranscriptNumber, String studentName,
 			String studentSurname, Long commissionPresidentId, String commissionPresidentName,
 			String commissionPresidentSurname, Long commissionMemberId, String commissionMemberName,
@@ -107,8 +106,6 @@ public class ThesisDto implements Serializable {
 		this.thesisTypeId = thesisTypeId;
 		this.id = id;
 	}
-
-
 
 	public ThesisDto(Thesis thesis) {
 		this.title = thesis.getTitle();
@@ -265,5 +262,5 @@ public class ThesisDto implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 }

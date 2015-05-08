@@ -111,7 +111,6 @@ public class StudiesDto implements Serializable {
 	}
 
 	public StudiesDto(Studies studies) {
-		super();
 		this.studyProgram = studies.getStudyProgram();
 		this.studyArea = studies.getStudyArea();
 		this.studyStartDate = studies.getStudyStartDate();

@@ -12,7 +12,7 @@ import com.pct.constants.RegexPatterns;
 import com.pct.domain.Student;
 
 public class StudentDto implements Serializable {
-	
+
 	private static final long serialVersionUID = 7330507151842329181L;
 
 	@NotEmpty
@@ -31,10 +31,18 @@ public class StudentDto implements Serializable {
 	@SafeHtml
 	@Pattern(regexp = RegexPatterns.LETTERS_ONLY)
 	private String surname;
-	
+
 	protected Long id;
-	
+
 	public StudentDto() {
+	}
+
+	public StudentDto(String transcriptNumber, String name, String surname, Long id) {
+		super();
+		this.transcriptNumber = transcriptNumber;
+		this.name = name;
+		this.surname = surname;
+		this.id = id;
 	}
 
 	public StudentDto(Student student) {
@@ -75,5 +83,5 @@ public class StudentDto implements Serializable {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
+
 }

@@ -62,7 +62,6 @@ public class InternationalPublicationDto implements Serializable {
 	protected Long id;
 
 	public InternationalPublicationDto() {
-		super();
 	}
 
 	public InternationalPublicationDto(PublicationType publicationType, String isbn, String title, String journalTitle,
@@ -83,7 +82,6 @@ public class InternationalPublicationDto implements Serializable {
 	}
 
 	public InternationalPublicationDto(InternationalPublication p) {
-		super();
 		this.publicationType = p.getPublicationType();
 		this.isbn = p.getIsbn();
 		this.title = p.getTitle();
