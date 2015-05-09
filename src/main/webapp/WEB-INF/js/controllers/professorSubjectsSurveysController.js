@@ -10,6 +10,28 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
   $scope.resources = {};
   $scope.errorMessages = {};
 
+  $scope.sortType = '';
+
+  $scope.allSortTypes = [{
+    description: "godini-rastuće",
+    sortBy: "+academicYear"
+  }, {
+    description: "godini-opadajuće",
+    sortBy: "-academicYear"
+  }, {
+    description: "prosečnoj oceni-rastuće",
+    sortBy: "+averageGrade"
+  }, {
+    description: "prosečnoj oceni-opadajuće",
+    sortBy: "-averageGrade"
+  }, {
+    description: "broju studenata-rastuće",
+    sortBy: "+numberOfStudents"
+  }, {
+    description: "broju studenata-opadajuće",
+    sortBy: "-numberOfStudents"
+  }];
+
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
     $http.get('messages/profesorDetails_' + locale.value + '.json').success(
