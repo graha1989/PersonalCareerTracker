@@ -264,5 +264,9 @@ var createNewSurveyController = function($scope, $modalInstance, $routeParams,
       return false;
     }
   };
+  
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
 
 };

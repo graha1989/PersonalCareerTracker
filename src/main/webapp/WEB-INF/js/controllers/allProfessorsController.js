@@ -7,7 +7,23 @@ app.controller("AllProfessorsController", function($scope, $routeParams, $http,
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
+  
+  $scope.sortType = '';
 
+  $scope.allSortTypes = [{
+    description: "imenu-rastuće",
+    sortBy: "+name"
+  }, {
+    description: "imenu-opadajuće",
+    sortBy: "-name"
+  }, {
+    description: "prezimenu-rastuće",
+    sortBy: "+surname"
+  }, {
+    description: "prezimenu-opadajuće",
+    sortBy: "-surname"
+  }];
+  
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
     $http.get('messages/profesorDetails_' + locale.value + '.json').success(

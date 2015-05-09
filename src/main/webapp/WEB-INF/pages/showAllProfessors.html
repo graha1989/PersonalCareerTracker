@@ -12,7 +12,22 @@
 		</div>
 		<div class="modal-body">
 			<fieldset>
-
+				
+				<div
+					class="row form-group"
+					ng-show="allProfessors != []">
+					<label
+						for="inputSortCriteria"
+						class="col-sm-9 control-label"></label>
+					<div class="col-sm-3">
+						<select
+							class="ng-binding form-control"
+							id="inputSortCriteria"
+							name="inputSortCriteria"
+							ng-model="sortType"
+							ng-options="sortType.description for sortType in allSortTypes"><option value="">{{ resources.text.sortBy }}</option></select>
+					</div>
+				</div>
 				<table
 					ng-show="allProfessors != []"
 					class="table table-condensed table-striped table-hover"
@@ -25,7 +40,7 @@
 						</tr>
 						<tr
 							class="active ng-scope"
-							ng-repeat="professor in allProfessors">
+							ng-repeat="professor in allProfessors | orderBy:sortType.sortBy">
 							<td>{{ professor.name }} {{ professor.surname }}</td>
 							<td class="details"><button
 									class="btn btn-link btn-xs"
