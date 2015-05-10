@@ -11,12 +11,6 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
   $scope.sortType = '';
 
   $scope.allSortTypes = [{
-    description: "broju indeksa-rastuće",
-    sortBy: "+transcriptNumber"
-  }, {
-    description: "broju indeksa-opadajuće",
-    sortBy: "-transcriptNumber"
-  }, {
     description: "imenu-rastuće",
     sortBy: "+name"
   }, {
