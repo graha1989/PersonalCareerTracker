@@ -52,7 +52,7 @@ app.controller("RegisterProfesorController", function($scope, $routeParams,
   $scope.saveNewProfesor = function() {
     $http({
       method: 'POST',
-      url: "api/professor/persistProfessor",
+      url: "api/professors/persistProfessor",
       data: $scope.profesor,
       headers: {
         'Content-Type': 'application/json'

@@ -41,13 +41,14 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
   $scope.loadProfesorDetails = function(id) {
     $http({
       method: 'GET',
-      url: "api/professor/loadProfesorDetails?id=" + id,
+      url: "api/professors/loadProfesorDetails?id=" + id,
       headers: {
         'Content-Type': 'application/json'
       }
     }).success(function(data, status) {
       if (angular.isObject(data)) {
         $scope.profesor = data;
+        $scope.profesor.dateOfBirth = new Date(data.dateOfBirth);
       }
     }).error(function(data, status) {
     });
@@ -90,7 +91,7 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
   $scope.updateProfesor = function() {
     $http({
       method: 'PUT',
-      url: "api/professor/persistProfessor",
+      url: "api/professors/persistProfessor",
       data: $scope.profesor,
       headers: {
         'Content-Type': 'application/json'
@@ -113,28 +114,7 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
   };
 
   $scope.isUnchanged = function(profesor) {
-    profesor.dateOfBirth = new Date(profesor.dateOfBirth).getTime();
     return angular.equals(profesor, $scope.master);
-  };
-
-  $scope.openMentoring = function(mentorId, type) {
-    if (type.type == 'Bachelor') {
-      $location.path('/bachelorMentoring/mentorId/' + mentorId
-              + '/thesisTypeId/' + type.id);
-    } else if (type.type == 'Master') {
-      $location.path('/masterMentoring/mentorId/' + mentorId + '/thesisTypeId/'
-              + type.id);
-    } else if (type.type == 'Specijalističke') {
-      $location.path('/specialisticMentoring/mentorId/' + mentorId
-              + '/thesisTypeId/' + type.id);
-    } else {
-      $location.path('/doctorMentoring/mentorId/' + mentorId + '/thesisTypeId/'
-              + type.id);
-    }
-  };
-
-  $scope.openLanguageExperience = function(mentorId) {
-    $location.path('/languageExperience/mentorId/' + mentorId);
   };
 
 });

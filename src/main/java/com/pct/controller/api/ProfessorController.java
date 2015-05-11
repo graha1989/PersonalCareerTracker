@@ -45,7 +45,7 @@ public class ProfessorController {
 		return new ResponseEntity<ProfessorDto>(profesor, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/selectedProfesor", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = "selectedProfesor", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProfessorDto> showProfesor(String userName) throws ProfessorNotFoundException {
 		ProfessorDto profesor = professorService.findProfesorByUserName(userName);
 		return new ResponseEntity<ProfessorDto>(profesor, HttpStatus.OK);
@@ -75,7 +75,7 @@ public class ProfessorController {
 
 		return new ResponseEntity<List<ProfessorDto>>(professors, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "allProfessors", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProfessorDto>> showAllProfessors() {
 
