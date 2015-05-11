@@ -86,7 +86,7 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setName(projectDto.getName());
 		project.setProjectType(projectDto.getProjectType());
 		project.setFinancedBy(projectDto.getFinancedBy());
-		project.setProjectLeader(projectDto.getProjectLeader());
+		project.setProjectLeaders(projectDto.getProjectLeaders());
 
 		return project;
 	}

@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,27 +36,29 @@ public class Project extends AbstractEntity {
 	@JsonDeserialize(using = ProjectTypeEnumDeserializer.class)
 	private ProjectType projectType;
 
-	@Column(name = "projectLeader")
-	@Lob
-	private String projectLeader;
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "project")
 	@JsonIgnore
 	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "project")
+	@JsonIgnore
+	private Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
+
 	public Project() {
 	}
 
-	public Project(String name, String financedBy, ProjectType projectType, String projectLeader,
-			Set<ProjectExperience> projectExperiences) {
+	public Project(String name, String financedBy, ProjectType projectType, Set<ProjectExperience> projectExperiences,
+			Set<ProjectLeader> projectLeaders) {
 		super();
 		this.name = name;
 		this.financedBy = financedBy;
 		this.projectType = projectType;
-		this.projectLeader = projectLeader;
 		this.projectExperiences = projectExperiences;
+		this.projectLeaders = projectLeaders;
 	}
 
 	public String getName() {
@@ -84,14 +85,6 @@ public class Project extends AbstractEntity {
 		this.projectType = projectType;
 	}
 
-	public String getProjectLeader() {
-		return projectLeader;
-	}
-
-	public void setProjectLeader(String projectLeader) {
-		this.projectLeader = projectLeader;
-	}
-
 	public Set<ProjectExperience> getProjectExperiences() {
 		return projectExperiences;
 	}
@@ -101,6 +94,18 @@ public class Project extends AbstractEntity {
 
 		if (projectExperiences != null) {
 			this.projectExperiences.addAll(projectExperiences);
+		}
+	}
+
+	public Set<ProjectLeader> getProjectLeaders() {
+		return projectLeaders;
+	}
+
+	public void setProjectLeaders(Set<ProjectLeader> projectLeaders) {
+		this.projectLeaders.clear();
+
+		if (projectLeaders != null) {
+			this.projectLeaders.addAll(projectLeaders);
 		}
 	}
 
