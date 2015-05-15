@@ -1,11 +1,10 @@
 app.controller("ProfesorDetailsController", function($scope, $routeParams,
         $http, $location, $modal, PctService) {
 
-  $scope.profesor = {};
+  $scope.professor = {};
   $scope.id;
   $scope.resources = {};
   $scope.errorMessages = {};
-  $scope.thesisTypes = [];
   $scope.master = {};
   $scope.editMode = false;
 
@@ -38,32 +37,17 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
     $scope.opened = $scope.editMode;
   };
 
-  $scope.loadProfesorDetails = function(id) {
+  $scope.loadProfessorDetails = function(id) {
     $http({
       method: 'GET',
-      url: "api/professors/loadProfesorDetails?id=" + id,
+      url: "api/professors/loadProfessorDetails?id=" + id,
       headers: {
         'Content-Type': 'application/json'
       }
     }).success(function(data, status) {
       if (angular.isObject(data)) {
-        $scope.profesor = data;
-        $scope.profesor.dateOfBirth = new Date(data.dateOfBirth);
-      }
-    }).error(function(data, status) {
-    });
-  };
-
-  $scope.loadThesisTypes = function() {
-    $http({
-      method: 'GET',
-      url: "api/thesis/allThesisTypes",
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).success(function(data, status) {
-      if (angular.isObject(data)) {
-        $scope.thesisTypes = data;
+        $scope.professor = data;
+        $scope.professor.dateOfBirth = new Date(data.dateOfBirth);
       }
     }).error(function(data, status) {
     });
@@ -77,22 +61,22 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
 
   $scope.init = function() {
     $scope.id = $routeParams.id;
-    $scope.loadProfesorDetails($scope.id);
-    $scope.loadThesisTypes();
+    $scope.loadProfessorDetails($scope.id);
     $scope.loadResources();
   };
 
   $scope.init();
 
-  $scope.editProfesor = function(id) {
+  $scope.editProfessor = function(id) {
     $scope.editMode = true;
   };
 
-  $scope.updateProfesor = function() {
+  $scope.updateProfessor = function() {
+    $scope.professor.id = $routeParams.id;
     $http({
       method: 'PUT',
       url: "api/professors/persistProfessor",
-      data: $scope.profesor,
+      data: $scope.professor,
       headers: {
         'Content-Type': 'application/json'
       }

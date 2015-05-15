@@ -16,17 +16,25 @@
 <link href="<spring:url value='resources/css/bootstrap-theme.min.css' />" rel="stylesheet">
 <link href="<spring:url value='resources/css/datepicker.css' />" rel="stylesheet">
 <link href="<spring:url value='resources/css/ngDialog.css' />" rel="stylesheet">
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-	         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-	         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-	<![endif]-->
+
 </head>
 <body>
 
 	<div class="container" id="appContainer">
-
+		<div class="col-sm-12 pull-right">
+			<c:choose>
+				<c:when test="${loggedIn}">
+					<a class="btn btn-link pull-right btn-xs" id="logout" href="j_spring_security_logout"><spring:message code='logout' /></a>
+				</c:when>
+				<c:otherwise>
+					<a id="login" class="btn btn-link pull-right btn-xs" href="login"><spring:message code='login.login' /></a>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<hr/>
+		<div>
+			<jsp:include page="menu.jsp" />
+		</div>
 		<div ng-view>
 			<!-- Pages will be inserted here -->
 		</div>
@@ -41,11 +49,12 @@
 	<script type="text/javascript" src="<spring:url value='js/lib/bootstrap.min.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/lib/bootstrap-datepicker.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/lib/ngDialog.min.js' />"></script>
-	
+
 	<script type="text/javascript" src="<spring:url value='js/app.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/homeController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/studentsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/registerProfesorController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/registerUserController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/profesorDetailsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/bachelorMentoringController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/masterMentoringController.js' />"></script>
@@ -68,6 +77,7 @@
 	<script type="text/javascript" src="<spring:url value='js/controllers/subjectsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorSubjectsSurveysController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/allProfessorsController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/menuController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/service/pctService.js' />"></script>
 </body>
 </html>

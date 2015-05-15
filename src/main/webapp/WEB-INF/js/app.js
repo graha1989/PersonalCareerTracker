@@ -13,8 +13,12 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
 				templateUrl: 'pages/registerProfesor.html',
 				controller: 'RegisterProfesorController'
 			})
-			.when('/profesorDetails/id/:id', {
-				templateUrl: 'pages/profesorDetails.html?id=:id',
+			.when('/registerUser', {
+        templateUrl: 'pages/registerUser.html',
+        controller: 'RegisterUserController'
+      })
+			.when('/professorDetails/id/:id', {
+				templateUrl: 'pages/professorDetails.html?id=:id',
 				controller: 'ProfesorDetailsController'
 			})
 			.when('/bachelorMentoring/mentorId/:mentorId/thesisTypeId/:thesisTypeId', {

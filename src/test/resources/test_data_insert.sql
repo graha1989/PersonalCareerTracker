@@ -1,3 +1,4 @@
+
 INSERT INTO student (name, surname, transcriptNumber) VALUES
 	('Jovan', 'Jovanović', '151/08'),
 	('Petar', 'Petrović', '214m/11'),
@@ -42,15 +43,24 @@ INSERT INTO language (name) VALUES
 	('Italijanski jezik')
 	ON DUPLICATE KEY UPDATE name=VALUES(name);
 	
-INSERT INTO professor (userName, password, email, name, surname, fathersName, dateOfBirth, placeOfBirth, countryOfBirth, scientificArea, specialScientificArea) VALUES
-	('admin', 'admin123', 'admin@email.com', 'Pera', 'Perić', 'Petar', '1988-04-04 00:00:00', 'Novi Sad', 'Srbija', 'Informatika', 'Informacioni sistemi'),
-	('admin1', 'admin321', 'admin1@email.com', 'Mika', 'Mikić', 'Mirko', '1986-04-28 00:00:00', 'Vršac', 'Srbija', 'Hemija', 'Fizička hemija'),
-	('user123', 'user1234', 'user123@email.com', 'Srđan', 'Bojić', 'Goran', '1985-04-30 00:00:00', 'Subotica', 'Srbija', 'Informatika', 'Informacioni sistemi'),
-	('user9', 'user99999', 'user9@email.com', 'Bojana', 'Bratić', 'Ivan', '1980-04-30 00:00:00', 'Kikinda', 'Srbija', 'Hemija', 'Organska hemija'),
-	('user1357', 'UserUser', 'user1357@email.com', 'Gordana', 'Grčić', 'Milan', '1982-11-30 00:00:00', 'Mostar', 'Bosna i Hercegovina', 'Geografija', 'Ruralni razvoj'),
-	('admin2', 'admin456', 'admin2@email.com', 'Jova', 'Jović', 'Jovan', '1987-08-18 00:00:00', 'Beograd', 'Srbija', 'Fizika', 'Atomska fizika')
-	ON DUPLICATE KEY UPDATE userName=VALUES(userName), password=VALUES(password), email=VALUES(email), name=VALUES(name), surname=VALUES(surname), fathersName=VALUES(fathersName), dateOfBirth=VALUES(dateOfBirth), placeOfBirth=VALUES(placeOfBirth), countryOfBirth=VALUES(countryOfBirth), scientificArea=VALUES(scientificArea), specialScientificArea=VALUES(specialScientificArea);
-	
+INSERT INTO user (id, userName, password, email, name, surname) VALUES
+	('1', 'admin', 'admin123', 'admin@email.com', 'Pera', 'Perić'),
+	('2', 'admin1', 'admin321', 'admin1@email.com', 'Mika', 'Mikić'),
+	('3', 'user123', 'user1234', 'user123@email.com', 'Srđan', 'Bojić'),
+	('4', 'user9', 'user99999', 'user9@email.com', 'Bojana', 'Bratić'),
+	('5', 'user1357', 'UserUser', 'user1357@email.com', 'Gordana', 'Grčić'),
+	('6', 'admin2', 'admin456', 'admin2@email.com', 'Jova', 'Jović')
+	ON DUPLICATE KEY UPDATE id=VALUES(id), userName=VALUES(userName), password=VALUES(password), email=VALUES(email), name=VALUES(name), surname=VALUES(surname);
+
+INSERT INTO professor (id, fathersName, dateOfBirth, placeOfBirth, countryOfBirth, scientificArea, specialScientificArea) VALUES
+	('1', 'Petar', '1988-04-04 00:00:00', 'Novi Sad', 'Srbija', 'Informatika', 'Informacioni sistemi'),
+	('2', 'Mirko', '1986-04-28 00:00:00', 'Vršac', 'Srbija', 'Hemija', 'Fizička hemija'),
+	('3', 'Goran', '1985-04-30 00:00:00', 'Subotica', 'Srbija', 'Informatika', 'Informacioni sistemi'),
+	('4', 'Ivan', '1980-04-30 00:00:00', 'Kikinda', 'Srbija', 'Hemija', 'Organska hemija'),
+	('5', 'Milan', '1982-11-30 00:00:00', 'Mostar', 'Bosna i Hercegovina', 'Geografija', 'Ruralni razvoj'),
+	('6', 'Jovan', '1987-08-18 00:00:00', 'Beograd', 'Srbija', 'Fizika', 'Atomska fizika')
+	ON DUPLICATE KEY UPDATE fathersName=VALUES(fathersName), dateOfBirth=VALUES(dateOfBirth), placeOfBirth=VALUES(placeOfBirth), countryOfBirth=VALUES(countryOfBirth), scientificArea=VALUES(scientificArea), specialScientificArea=VALUES(specialScientificArea);
+
 INSERT INTO thesis (title, paperScientificArea, dateOfGraduation, universityName, studiesThesisTypeId, studentId, mentorId, commissionMemberId, commissionPresidentId) VALUES
 	('Bachelor teza 1', 'Informatika', '2014-04-04 00:00:00', 'Univerzitet Novi Sad', '1', '1', '3', '2', '1'),
 	('Master teza 1', 'Informatika', '2012-04-14 00:00:00', 'Univerzitet Niš', '2', '2', '3', '3', '2'),
@@ -158,3 +168,8 @@ INSERT INTO survey (professorId, subjectId, academicYear, averageGrade, numberOf
 	('3', '1', '2012/2013', '8.80', '110'),
 	('3', '1', '2013/2014', '8.50', '103')
 	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), subjectId=VALUES(subjectId), academicYear=VALUES(academicYear), averageGrade=VALUES(averageGrade), numberOfStudents=VALUES(numberOfStudents);
+	
+INSERT INTO role (name) VALUES
+	('ROLE_ADMIN'),
+	('ROLE_USER')
+	ON DUPLICATE KEY UPDATE name=VALUES(name);

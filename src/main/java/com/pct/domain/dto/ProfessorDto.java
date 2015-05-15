@@ -4,42 +4,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import com.pct.domain.Professor;
 
-public class ProfessorDto implements Serializable {
+public class ProfessorDto extends UserDto implements Serializable {
 
 	private static final long serialVersionUID = -1976948443456869445L;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String userName;
-
-	@NotEmpty
-	@Length(min = 8, max = 50)
-	@SafeHtml
-	private String password;
-
-	@NotEmpty
-	@Length(max = 50)
-	@SafeHtml
-	private String email;
-
-	@Length(max = 50)
-	@SafeHtml
-	private String name;
-
-	@Length(max = 50)
-	@SafeHtml
-	private String surname;
 
 	@Length(max = 50)
 	@SafeHtml
 	private String fathersName;
-
+	
 	private Date dateOfBirth;
 
 	@Length(max = 50)
@@ -66,74 +42,23 @@ public class ProfessorDto implements Serializable {
 	public ProfessorDto(String userName, String password, String email, String name, String surname,
 			String fathersName, Date dateOfBirth, String placeOfBirth, String countryOfBirth, String scientificArea,
 			String specialScientificArea, Long id) {
-		super();
-		this.userName = userName;
-		this.password = password;
-		this.email = email;
-		this.name = name;
-		this.surname = surname;
+		super(userName, password, email, name, surname, id);
 		this.fathersName = fathersName;
 		this.dateOfBirth = dateOfBirth;
 		this.placeOfBirth = placeOfBirth;
 		this.countryOfBirth = countryOfBirth;
 		this.scientificArea = scientificArea;
 		this.specialScientificArea = specialScientificArea;
-		this.id = id;
 	}
 
 	public ProfessorDto(Professor p) {
-		this.userName = p.getUserName();
-		this.password = p.getPassword();
-		this.email = p.getEmail();
-		this.name = p.getName();
-		this.surname = p.getSurname();
+		super(p.getUserName(), p.getPassword(), p.getEmail(), p.getName(), p.getSurname(), p.getId());
 		this.fathersName = p.getFathersName();
 		this.dateOfBirth = p.getDateOfBirth();
 		this.placeOfBirth = p.getPlaceOfBirth();
 		this.countryOfBirth = p.getCountryOfBirth();
 		this.scientificArea = p.getScientificArea();
 		this.specialScientificArea = p.getSpecialScientificArea();
-		this.id = p.getId();
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSurname() {
-		return surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
 	}
 
 	public String getFathersName() {

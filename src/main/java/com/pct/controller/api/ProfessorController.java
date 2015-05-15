@@ -5,11 +5,13 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pct.constants.MimeTypes;
 import com.pct.domain.dto.ProfessorDto;
 import com.pct.service.ProfessorService;
+import com.pct.service.UserService;
 import com.pct.validation.ProfessorNotFoundException;
 
 @RestController
@@ -30,19 +33,25 @@ public class ProfessorController {
 	@Autowired
 	ProfessorService professorService;
 
-	@RequestMapping(value = "persistProfessor", method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<ProfessorDto> persistProfessor(@Valid @RequestBody ProfessorDto professorDto) {
-		professorService.saveProfesor(professorDto);
-		ProfessorDto profesor = new ProfessorDto();
-		try {
-			profesor = professorService.findProfesorByUserName(professorDto.getUserName());
-		} catch (ProfessorNotFoundException e) {
-			e.printStackTrace();
-		}
-		logger.debug("Professor: " + profesor.getUserName() + " (ID " + profesor.getId()
-				+ ") successfully registrated in database.");
+	@Autowired
+	UserService userService;
 
-		return new ResponseEntity<ProfessorDto>(profesor, HttpStatus.OK);
+	@RequestMapping(value = "persistProfessor", method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<String> persistProfessor(@Valid @RequestBody ProfessorDto professorDto) {
+
+		if (StringUtils.isBlank(professorDto.getFathersName()) && professorDto.getDateOfBirth() == null
+				&& StringUtils.isBlank(professorDto.getPlaceOfBirth())
+				&& StringUtils.isBlank(professorDto.getCountryOfBirth())
+				&& StringUtils.isBlank(professorDto.getScientificArea())
+				&& StringUtils.isBlank(professorDto.getSpecialScientificArea())) {
+			userService.saveUser(professorDto);
+		} else {
+			professorService.saveProfesor(professorDto);
+		}
+
+		logger.debug("Professor: " + professorDto.getUserName() + " (ID " + professorDto.getId()
+				+ ") successfully registrated in database.");
+		return new ResponseEntity<String>("Successfully persisted user", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "selectedProfesor", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
@@ -51,15 +60,15 @@ public class ProfessorController {
 		return new ResponseEntity<ProfessorDto>(profesor, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "loadProfesorDetails", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = "loadProfessorDetails", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProfessorDto> getProfessorById(@RequestParam(value = "id", required = true) Long id) {
-		ProfessorDto profesor = new ProfessorDto();
+		ProfessorDto professorDto = new ProfessorDto();
 		try {
-			profesor = professorService.findProfesorById(id);
+			professorDto = professorService.findProfesorById(id);
 		} catch (ProfessorNotFoundException e) {
 			e.printStackTrace();
 		}
-		return new ResponseEntity<ProfessorDto>(profesor, HttpStatus.OK);
+		return new ResponseEntity<ProfessorDto>(professorDto, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "findProfessorStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
@@ -76,6 +85,7 @@ public class ProfessorController {
 		return new ResponseEntity<List<ProfessorDto>>(professors, HttpStatus.OK);
 	}
 
+	@Secured(value = "ROLE_ADMIN")
 	@RequestMapping(value = "allProfessors", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProfessorDto>> showAllProfessors() {
 

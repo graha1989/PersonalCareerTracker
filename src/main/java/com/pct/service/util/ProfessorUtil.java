@@ -40,5 +40,21 @@ public class ProfessorUtil {
 
 		return professor;
 	}
+	
+	public static void copyProfessorPropertiesFromDto(Professor professor, ProfessorDto professorDto) {
+		if(professorDto.getId() == null){
+			professor.setPassword(professorDto.getPassword());
+		}
+		professor.setUserName(professorDto.getUserName());
+		professor.setEmail(professorDto.getEmail());
+		professor.setName(professorDto.getName());
+		professor.setSurname(professorDto.getSurname());
+		professor.setFathersName(professorDto.getFathersName());
+		professor.setDateOfBirth(professorDto.getDateOfBirth());
+		professor.setPlaceOfBirth(professorDto.getPlaceOfBirth());
+		professor.setCountryOfBirth(professorDto.getCountryOfBirth());
+		professor.setScientificArea(professorDto.getScientificArea());
+		professor.setSpecialScientificArea(professorDto.getSpecialScientificArea());
+	}
 
 }

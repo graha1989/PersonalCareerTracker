@@ -1,6 +1,10 @@
 {
     "text": {
-        "title": "Podaci o profesoru",
+        "professorTitle": "Podaci o profesoru",
+        "professorAccountTitle": "Podaci o nalogu",
+        "professorBiographicDataTitle": "Biografski podaci",
+        "professorProfessionalDataTitle": "Profesionalna orijentacija",
+        "userTitle": "Podaci o korisniku",
         "profesorDetailsText": "Lični podaci o profesoru",
         "editProfesorText": "Izmena podataka o profesoru",
         "bachelorMentoringTitle": "Mentorstva na bachelor tezama",
@@ -63,7 +67,22 @@
         "placeOfBirthLabel": "Mesto rođenja",
         "countryOfBirthLabel": "Zemlja rođenja",
         "scientificAreaLabel": "Naučna oblast",
-        "specialScientificAreaLabel": "Uža naučna oblast"
+        "specialScientificAreaLabel": "Uža naučna oblast",
+        "professorCheckboxLabel": "Profesor"
+    },
+    "userLabels": {
+        "userNameLabel": "Korisničko ime",
+        "passwordLabel": "Lozinka",
+        "emailLabel": "E-mail adresa",
+        "nameLabel": "Ime",
+        "surnameLabel": "Prezime"
+    },
+    "professorMenuLabels": {
+        "mentoring": "Mentorstva",
+        "bachelorMentoring": "Bachelor teza",
+        "masterMentoring": "Master teza",
+        "specialisticMentoring": "Specijalistička teza",
+        "doctorMentoring": "Doktorska teza"
     },
     "professorBachelorStudies": {
         "studyProgram": "Studijski program",
@@ -140,6 +159,7 @@
         "register": "Registruj se",
         "save": "Sačuvaj",
         "close": "Zatvori",
+        "back": "Nazad",
         "edit": "Izmeni",
         "delete": "Izbriši",
         "add": "Dodaj"
