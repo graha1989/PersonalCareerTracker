@@ -201,7 +201,8 @@
             "add": "Dodaj novi projekat",
             "close": "Zatvori",
             "save": "Sačuvaj",
-            "cancel": "Odustani"
+            "cancel": "Odustani",
+            "addNewLeader": "Dodaj rukovodioca"
         },
         "subjectButtons": {
             "delete": "Izbriši",
@@ -291,11 +292,11 @@
     },
     "projectsTableLabels": {
         "projectName": "Naziv projekta",
-        "financedBy": "Finansiran (od koga)",
+        "projectFinancedBy": "Finansiran (od koga)",
         "projectType": "Vrsta projekta",
         "startDate": "Projekat počeo",
         "endDate": "Završio se",
-        "leader": "Rukovodioci"
+        "projectLeaders": "Rukovodioci"
     },
     "subjectsTableLabels": {
         "subjectName": "Naziv predmeta",
@@ -322,7 +323,8 @@
         "projectEndDate": "Završio",
         "projectLeader": "Rukovodilac",
         "newProjectLeader": "Novi rukovodilac",
-        "IamLeaderAlso": "Rukovodilac"
+        "IamLeaderAlso": "Rukovodilac",
+        "newProjectLeaderNameAndSurname": "Ime i prezime"
     },
     "subjectPopupLabels": {
         "subjectName": "Naziv predmeta",

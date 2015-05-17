@@ -1,6 +1,7 @@
 package com.pct.domain.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -34,7 +35,7 @@ public class ProjectDto implements Serializable {
 	@SafeHtml
 	private String financedBy;
 
-	Set<ProjectLeader> projectLeaders;
+	Set<ProjectLeaderDto> projectLeaderDtos;
 
 	@Nullable
 	protected Long id;
@@ -43,13 +44,13 @@ public class ProjectDto implements Serializable {
 	}
 
 	public ProjectDto(ProjectType projectType, String name, String financedBy, Long id,
-			Set<ProjectLeader> projectLeaders) {
+			Set<ProjectLeaderDto> projectLeaderDtos) {
 		super();
 		this.projectType = projectType;
 		this.name = name;
 		this.financedBy = financedBy;
 		this.id = id;
-		this.projectLeaders = projectLeaders;
+		this.projectLeaderDtos = projectLeaderDtos;
 	}
 
 	public ProjectDto(Project project) {
@@ -57,7 +58,15 @@ public class ProjectDto implements Serializable {
 		this.name = project.getName();
 		this.financedBy = project.getFinancedBy();
 		this.id = project.getId();
-		this.projectLeaders = project.getProjectLeaders();
+		this.projectLeaderDtos = createProjectLeadersDtoSet(project.getProjectLeaders());
+	}
+
+	private Set<ProjectLeaderDto> createProjectLeadersDtoSet(Set<ProjectLeader> projectLeaders) {
+		Set<ProjectLeaderDto> projectLeaderDtos = new HashSet<ProjectLeaderDto>();
+		for (ProjectLeader projectLeader : projectLeaders) {
+			projectLeaderDtos.add(new ProjectLeaderDto(projectLeader));
+		}
+		return projectLeaderDtos;
 	}
 
 	public ProjectType getProjectType() {
@@ -92,12 +101,12 @@ public class ProjectDto implements Serializable {
 		this.id = id;
 	}
 
-	public Set<ProjectLeader> getProjectLeaders() {
-		return projectLeaders;
+	public Set<ProjectLeaderDto> getProjectLeaderDtos() {
+		return projectLeaderDtos;
 	}
 
-	public void setProjectLeaders(Set<ProjectLeader> projectLeaders) {
-		this.projectLeaders = projectLeaders;
+	public void setProjectLeaderDtos(Set<ProjectLeaderDto> projectLeaderDtos) {
+		this.projectLeaderDtos = projectLeaderDtos;
 	}
 
 }

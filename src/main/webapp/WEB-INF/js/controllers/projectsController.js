@@ -2,7 +2,9 @@ app.controller("ProjectsController", function($scope, $routeParams, $http,
         $location, $modal, PctService) {
 
   $scope.project = {};
+  $scope.project.projectLeaderDtos = [];
   $scope.allProjects = [];
+  $scope.completeProjectData = [];
 
   $scope.noResultsFound = true;
   $scope.resources = {};
@@ -20,10 +22,33 @@ app.controller("ProjectsController", function($scope, $routeParams, $http,
             });
   };
 
+  $scope.constructLeadersString = function(array) {
+    var leadersString = "";
+    for (var i = 0; i < array.length; i++) {
+      leadersString = leadersString + ((i > 0 && i < array.length) ? "; " : "")
+              + array[i].name + " " + array[i].surname;
+    }
+    return leadersString;
+  };
+
+  $scope.makeCompleteProjectData = function(element) {
+    var projectLeaders = $scope.constructLeadersString(element.projectLeaderDtos);
+    $scope.completeProjectData.push({
+      "projectType": element.projectType,
+      "name": element.name,
+      "financedBy": element.financedBy,
+      "id": element.id,
+      "projectLeaders": projectLeaders
+    });
+  };
+
   $scope.loadAllProjects = function() {
     PctService.loadAllProjects($routeParams, function(data) {
       if (angular.isObject(data) && data.length > 0) {
         $scope.allProjects = data;
+        for (var i = 0; i < $scope.allProjects.length; i++) {
+          $scope.makeCompleteProjectData($scope.allProjects[i]);
+        }
         $scope.noResultsFound = false;
       } else {
         $scope.noResultsFound = true;
@@ -78,7 +103,8 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
   $scope.master = {};
   $scope.allProjectTypes = [];
   $scope.projectLeadersArray = [];
-  $scope.newProjectLeader = "";
+  $scope.newProjectLeader = [];
+  $scope.isExistingPerson = false;
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -110,30 +136,12 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
 
   $scope.createLeadersArray = function() {
     var array = [];
-    for (var i = 0; i < $scope.project.projectLeader.split(";").length; i++) {
-      array.push($scope.project.projectLeader.split(";")[i].trim());
+    for (var i = 0; i < $scope.project.projectLeaderDtos.length; i++) {
+      array.push($scope.project.projectLeaderDtos[i].name + " "
+              + $scope.project.projectLeaderDtos[i].surname);
     }
     return array;
   }
-
-  $scope.constructLeadersString = function(array) {
-    $scope.project.projectLeader = "";
-    for (var i = 0; i < array.length; i++) {
-      $scope.project.projectLeader = $scope.project.projectLeader
-              + ((i > 0 && i < array.length) ? "; " : "") + array[i];
-    }
-  };
-
-  $scope.arrayContainsElement = function(array, element) {
-    var index = -1;
-    for (var i = 0; i < array.length; i++) {
-      if (array[i] === element) {
-        index = i;
-        break;
-      }
-    }
-    return index;
-  };
 
   $scope.loadSelectedProject = function(id) {
     PctService.loadSelectedProject(id, function(data) {
@@ -141,7 +149,6 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
         $scope.project = data;
         $scope.master = angular.copy($scope.project);
         $scope.projectLeadersArray = $scope.createLeadersArray();
-        $scope.constructLeadersString($scope.projectLeadersArray);
         $scope.noResultsFound = false;
       } else {
         $scope.noResultsFound = true;
@@ -152,16 +159,39 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
   $scope.init = function() {
     $scope.loadAllProjectTypes();
     $scope.loadSelectedProject(projectId);
-    $scope.status = $routeParams.status;
     $scope.loadResources();
+    $scope.status = $routeParams.status;
   };
 
   $scope.init();
 
+  $scope.onSelectPerson = function() {
+    $scope.isExistingPerson = true;
+  };
+
+  $scope.getAllPotentalLeaders = function(val) {
+    return PctService.findProfessorsOrLeadersStartsWith(val).then(
+            function(response) {
+              var persons = [];
+              for (var i = 0; i < response.length; i++) {
+                persons.push(response[i]);
+              }
+              return persons;
+            });
+  };
+
   $scope.addProjectLeader = function() {
-    $scope.projectLeadersArray.push($scope.newProjectLeader);
-    $scope.constructLeadersString($scope.projectLeadersArray);
-    $scope.newProjectLeader = "";
+    if ($scope.isExistingPerson) {
+      $scope.project.projectLeaderDtos.push({
+        "professorId": $scope.newProjectLeader.professorId,
+        "name": $scope.newProjectLeader.name,
+        "surname": $scope.newProjectLeader.surname,
+        "projectId": $scope.project.id
+      });
+    };
+    $scope.projectLeadersArray = [];
+    $scope.projectLeadersArray = $scope.createLeadersArray();
+    $scope.newProjectLeader = [];
   };
 
   $scope.removeProjectLeader = function(index) {

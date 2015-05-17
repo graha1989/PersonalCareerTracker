@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.Professor;
 import com.pct.domain.Role;
+import com.pct.domain.dto.PersonDto;
 import com.pct.domain.dto.ProfessorDto;
 import com.pct.domain.enums.RoleNames;
 import com.pct.repository.ProfesorRepository;
@@ -144,6 +145,23 @@ public class ProfesorServiceImpl implements ProfessorService {
 		ProfessorUtil.copyProfessorPropertiesFromDto(professor, dto);
 
 		return professor;
+	}
+
+	@Override
+	@Transactional
+	public List<PersonDto> findProfessorsStartsWith(String value) {
+		
+		List<PersonDto> personDtos = new ArrayList<PersonDto>();
+		List<Professor> professorsList = profesorRepository.findByNameLikeOrSurnameLike(value);
+		for (Professor p : professorsList) {
+			PersonDto personDto = new PersonDto();
+			personDto.setProfessorId(p.getId());
+			personDto.setName(p.getName());
+			personDto.setSurname(p.getSurname());
+			personDtos.add(personDto);
+		}
+		
+		return personDtos;
 	}
 
 }

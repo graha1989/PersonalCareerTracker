@@ -401,5 +401,18 @@ app.factory("PctService", [
             url: 'api/surveys?id=' + id
           }).success(callback).error(callback);
         },
+        findProfessorsOrLeadersStartsWith: function(value) {
+          var deferred = $q.defer();
+          $http.get("api/projects/findProfessorsOrLeadersStartsWith", {
+            params: {
+              value: value
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
       };
     }]);

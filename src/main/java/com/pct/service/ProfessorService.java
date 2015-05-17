@@ -2,6 +2,7 @@ package com.pct.service;
 
 import java.util.List;
 
+import com.pct.domain.dto.PersonDto;
 import com.pct.domain.dto.ProfessorDto;
 import com.pct.validation.ProfessorNotFoundException;
 
@@ -16,5 +17,7 @@ public interface ProfessorService {
 	List<ProfessorDto> findProfessorsStartsWith(String value, Long idProf, Long idMentor) throws ProfessorNotFoundException;
 
 	List<ProfessorDto> findAllProfessors();
+
+	List<PersonDto> findProfessorsStartsWith(String value);
 	
 }

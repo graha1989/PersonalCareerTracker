@@ -21,6 +21,7 @@
 		"invalidPublicationAuthorMaxLength" : "Max. 200 characters.",
 		"invalidPublicationPageNumberMaxLength" : "Max. 10 characters.",
 		"invalidProjectLeaderFinancedByMaxLength" : "Max. 400 characters.",
+		"invalidProjectLeaderNameAndSurnameMaxLength" : "Max. 100 characters.",
 		"invalidPublicationIsbnMaxLength" : "Max. 20 characters.",
 		"invalidPublicationYearMinLength" : "Min. 4 characters.",
 		"invalidPublicationYearMaxLength" : "Max. 4 characters.",

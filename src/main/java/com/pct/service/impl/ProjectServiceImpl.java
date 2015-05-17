@@ -2,7 +2,9 @@ package com.pct.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -10,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pct.domain.Professor;
 import com.pct.domain.Project;
+import com.pct.domain.ProjectLeader;
 import com.pct.domain.dto.ProjectDto;
+import com.pct.domain.dto.ProjectLeaderDto;
 import com.pct.domain.enums.ProjectType;
+import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProjectRepository;
 import com.pct.service.ProjectService;
 import com.pct.validation.ProjectNotFoundException;
@@ -23,6 +29,9 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	ProjectRepository projectRepository;
 
+	@Autowired
+	ProfesorRepository professorRepository;
+
 	@Override
 	@Transactional
 	public List<ProjectDto> findAllProjects() {
@@ -31,6 +40,13 @@ public class ProjectServiceImpl implements ProjectService {
 		try {
 			List<Project> projects = projectRepository.findAll();
 			for (Project p : projects) {
+				for (ProjectLeader projectLeader : p.getProjectLeaders()) {
+					if (projectLeader.getProfessor() != null && projectLeader.getProfessor().getId() != null) {
+						Professor professor = professorRepository.findOne(projectLeader.getProfessor().getId());
+						projectLeader.setName(professor.getName());
+						projectLeader.setSurname(professor.getSurname());
+					}
+				}
 				ProjectDto projectDto = new ProjectDto(p);
 				projectDtos.add(projectDto);
 			}
@@ -55,6 +71,13 @@ public class ProjectServiceImpl implements ProjectService {
 		if (id != null) {
 			Project project = projectRepository.findOne(id);
 			if (project != null) {
+				for (ProjectLeader projectLeader : project.getProjectLeaders()) {
+					if (projectLeader.getProfessor() != null && projectLeader.getProfessor().getId() != null) {
+						Professor professor = professorRepository.findOne(projectLeader.getProfessor().getId());
+						projectLeader.setName(professor.getName());
+						projectLeader.setSurname(professor.getSurname());
+					}
+				}
 				projectDto = new ProjectDto(project);
 				return projectDto;
 			}
@@ -76,7 +99,7 @@ public class ProjectServiceImpl implements ProjectService {
 	 * @param projectDto
 	 * @return
 	 */
-	public Project initializeProject(@Nonnull ProjectDto projectDto) {
+	private Project initializeProject(@Nonnull ProjectDto projectDto) {
 		Project project = null;
 		if (projectDto.getId() != null) {
 			project = projectRepository.findOne(projectDto.getId());
@@ -86,7 +109,15 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setName(projectDto.getName());
 		project.setProjectType(projectDto.getProjectType());
 		project.setFinancedBy(projectDto.getFinancedBy());
-		project.setProjectLeaders(projectDto.getProjectLeaders());
+
+		Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
+
+		for (ProjectLeaderDto projectLeaderDto : projectDto.getProjectLeaderDtos()) {
+			projectLeaders.add(new ProjectLeader(professorRepository.findOne(projectLeaderDto.getProfessorId()),
+					projectRepository.findOne(projectLeaderDto.getProjectId()), projectLeaderDto.getName(),
+					projectLeaderDto.getSurname()));
+		}
+		project.setProjectLeaders(projectLeaders);
 
 		return project;
 	}

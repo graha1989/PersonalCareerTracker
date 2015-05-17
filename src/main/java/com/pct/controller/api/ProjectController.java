@@ -1,5 +1,6 @@
 package com.pct.controller.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
+import com.pct.domain.dto.PersonDto;
 import com.pct.domain.dto.ProjectDto;
 import com.pct.domain.enums.ProjectType;
+import com.pct.service.ProfessorService;
+import com.pct.service.ProjectLeaderService;
 import com.pct.service.ProjectService;
 import com.pct.validation.ProjectNotFoundException;
 
@@ -30,6 +34,12 @@ public class ProjectController {
 
 	@Autowired
 	ProjectService projectService;
+	
+	@Autowired
+	ProfessorService professorService;
+	
+	@Autowired
+	ProjectLeaderService projectLeaderService;
 
 	@RequestMapping(value = "allProjects", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProjectDto>> showAllProjects() {
@@ -75,5 +85,20 @@ public class ProjectController {
 		projectService.deleteProject(id);
 
 		return new ResponseEntity<ProjectDto>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "findProfessorsOrLeadersStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<List<PersonDto>> findProfessorsOrLeadersStartsWith(
+			@RequestParam(value = "value", required = true) String value) {
+
+		List<PersonDto> personDtos = new ArrayList<PersonDto>();
+		if (value.length() >= 3) {
+			List<PersonDto> professorDtos = professorService.findProfessorsStartsWith(value);
+			List<PersonDto> leaderDtos = projectLeaderService.findProjectLeaderStartsWith(value);
+			personDtos.addAll(professorDtos);
+			personDtos.addAll(leaderDtos);
+		}
+
+		return new ResponseEntity<List<PersonDto>>(personDtos, HttpStatus.OK);
 	}
 }

@@ -42,7 +42,7 @@ public class Project extends AbstractEntity {
 	@JsonIgnore
 	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "project")
 	@JsonIgnore

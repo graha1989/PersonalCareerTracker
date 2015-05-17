@@ -93,13 +93,13 @@ public class Professor extends User {
 	@JsonManagedReference(value = "professor")
 	@JsonIgnore
 	private Set<Survey> surveys = new HashSet<Survey>();
-
+/*
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
 	@JsonIgnore
 	private Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
-
+*/
 	public Professor() {
 	}
 
@@ -125,7 +125,6 @@ public class Professor extends User {
 		this.studies = studies;
 		this.teachingExperiences = teachingExperiences;
 		this.surveys = surveys;
-		this.projectLeaders = projectLeaders;
 	}
 
 	public String getFathersName() {
@@ -295,7 +294,7 @@ public class Professor extends User {
 			this.surveys.addAll(surveys);
 		}
 	}
-
+/*
 	public Set<ProjectLeader> getProjectLeaders() {
 		return projectLeaders;
 	}
@@ -307,5 +306,5 @@ public class Professor extends User {
 			this.projectLeaders.addAll(projectLeaders);
 		}
 	}
-
+*/
 }

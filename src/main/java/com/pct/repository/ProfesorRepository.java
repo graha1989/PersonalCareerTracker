@@ -23,7 +23,7 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	 * @return Professor
 	 */
 	Professor findByUserName(String userName);
-	
+
 	/**
 	 * Retrieves Professor by e-mail.
 	 * 
@@ -31,7 +31,7 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	 * @return Professor
 	 */
 	Professor findByEmail(String email);
-	
+
 	/**
 	 * Retrieves list of professors with partially matching name or surname.
 	 * 
@@ -41,7 +41,7 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	 */
 	@Query("SELECT p FROM Professor p WHERE concat(p.name, ' ', p.surname) LIKE %:value% AND p.id <> :idMentor")
 	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value, @Param("idMentor") Long idMentor);
-	
+
 	/**
 	 * Retrieves list of professors with partially matching name or surname.
 	 * 
@@ -50,6 +50,10 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	 * @return list of Profesors
 	 */
 	@Query("SELECT p FROM Professor p WHERE concat(p.name, ' ', p.surname) LIKE %:value% AND p.id <> :idProf AND p.id <> :idMentor")
-	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value, @Param("idProf") Long idProf, @Param("idMentor") Long idMentor);
+	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value, @Param("idProf") Long idProf,
+			@Param("idMentor") Long idMentor);
+
+	@Query("SELECT p FROM Professor p WHERE concat(p.name, ' ', p.surname) LIKE %:value%")
+	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value);
 
 }

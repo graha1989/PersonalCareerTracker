@@ -1,9 +1,6 @@
 <div>
 
-	<form
-		name="form"
-		id="showAllProjectsForm"
-		novalidate
+	<form name="form" id="showAllProjectsForm" novalidate
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
 		ng-model="project">
 
@@ -13,11 +10,9 @@
 		<div class="modal-body">
 			<fieldset>
 
-				<table
-					ng-show="allProjects != []"
+				<table ng-show="allProjects != []"
 					class="table table-condensed table-striped table-hover"
-					cellspacing="0"
-					cellpadding="0">
+					cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
 							<td>{{ resources.projectsTableLabels.projectType }}</td>
@@ -26,22 +21,21 @@
 							<td>{{ resources.projectsTableLabels.projectLeaders }}</td>
 							<td colspan="2"></td>
 						</tr>
-						<tr
-							class="active ng-scope"
-							ng-repeat="project in allProjects">
+						<tr class="active ng-scope"
+							ng-repeat="project in completeProjectData">
 							<td>{{ project.projectType.title }}</td>
 							<td>{{ project.name }}</td>
 							<td>{{ project.financedBy }}</td>
-							<td>{{ project.projectLeader }}</td>
-							<td class="delete"><button
-									class="btn btn-link btn-xs"
+							<td>{{ project.projectLeaders }}</td>
+							<td class="delete"><button class="btn btn-link btn-xs"
 									ng-click="deleteProject(project.id, $index)">
-									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.projectButtons.delete }}
+									<span class="glyphicon glyphicon-trash"></span> {{
+									resources.buttons.projectButtons.delete }}
 								</button></td>
-							<td class="edit"><button
-									class="btn btn-link btn-xs"
+							<td class="edit"><button class="btn btn-link btn-xs"
 									ng-click="editProject(project.id)">
-									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.projectButtons.edit }}
+									<span class="glyphicon glyphicon-pencil"></span> {{
+									resources.buttons.projectButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
@@ -52,18 +46,15 @@
 			</fieldset>
 		</div>
 		<div class="modal-footer action">
-			<button
-				id="addNewButton"
-				class="btn btn-success btn-sm"
+			<button id="addNewButton" class="btn btn-success btn-sm"
 				ng-click="createNewProject()">
-				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.projectButtons.add }}
+				<span class="glyphicon glyphicon-plus"></span> {{
+				resources.buttons.projectButtons.add }}
 			</button>
 		</div>
 	</form>
 
-	<script
-		type="text/ng-template"
-		id="editProjectPopup.html">
+	<script type="text/ng-template" id="editProjectPopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
@@ -182,10 +173,12 @@
 						</div>
 					</div>
 				</div>
+
+
 				<div class="form-group">
 					<label
 						for="inputNewProjectLeader"
-							class="col-sm-4 control-label">{{ resources.projectPopupLabels.newProjectLeader }} <span class="required">*</span>
+							class="col-sm-4 control-label">{{ resources.projectPopupLabels.newProjectLeader }} <span ng-show="projectLeadersArray.length == 0" class="required">*</span>
 					</label>
 					<div class="col-sm-6">
 						<div class="input-group">
@@ -195,8 +188,10 @@
 								id="inputNewProjectLeader"
 								name="inputNewProjectLeader"
 								ng-model="$parent.newProjectLeader"
-								ng-pattern="patterns.onlyLetters"
-								ng-maxlength="100"
+								typeahead="person as person.name + ' ' + person.surname for person in getAllPotentalLeaders($viewValue) | limitTo:8"
+								typeahead-on-select="onSelectPerson()"
+								placeholder="{{ resources.projectPopupLabels.newProjectLeaderNameAndSurname }}"
+								autocomplete="off"
 								ng-required="projectLeadersArray.length == 0" /> 
 							<span
 								id="add_button"
@@ -212,14 +207,13 @@
 							class="projectLeaderFieldError">
 							<span
 								ng-show="form.inputNewProjectLeader.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputNewProjectLeader.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span> <span
-								ng-show="form.inputNewProjectLeader.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+								class="ng-binding">{{ errorMessages.error.required }}</span>
 						</div>
 					</div>
 				</div>
+
+
+
 			</div>
 			<div class="modal-footer action">
 				<button
@@ -238,9 +232,7 @@
 		</form>
 	</script>
 
-	<script
-		type="text/ng-template"
-		id="createNewProjectPopup.html">
+	<script type="text/ng-template" id="createNewProjectPopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"

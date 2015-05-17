@@ -88,6 +88,14 @@ INSERT INTO project (name, financedBy, projectType) VALUES
 	('SQL projekat', 'Grad Beograd', 'SCIENTIFIC')
 	ON DUPLICATE KEY UPDATE name=VALUES(name), financedBy=VALUES(financedBy), projectType=VALUES(projectType);
 	
+INSERT INTO project_leader (professorId, projectId, name, surname) VALUES
+	('3', '1', null, null),
+	(null, '1', 'Saša', 'Mrkić'),
+	(null, '1', 'Goran', 'Nović'),
+	(null, '2', 'Milan', 'Dvornik'),
+	(null, '3', 'Dragoslav', 'Berić')
+	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), projectId=VALUES(projectId), name=VALUES(name), surname=VALUES(surname);
+	
 INSERT INTO project_experience (projectId, professorId, startDate, endDate) VALUES
 	('1', '3', '2006-09-15', '2008-09-15'),
 	('2', '3', '2009-09-15', '2011-09-15')
