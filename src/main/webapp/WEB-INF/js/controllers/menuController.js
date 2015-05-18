@@ -3,7 +3,7 @@ app.controller("MenuController", function($scope, $http, $location,
 
   $scope.thesisTypes = [];
   $scope.resources = {};
-  $scope.professorId = $routeParams.id;
+  $scope.professorId = '';
 
   $scope.isActive = function(menu) {
     return (menu === $location.path());
@@ -35,17 +35,24 @@ app.controller("MenuController", function($scope, $http, $location,
     }).error(function(data, status) {
     });
   };
+  
+  $scope.initUserId = function() {
+    console.log('Setting professor id: ');
+    $scope.professorId = document.getElementById('currentUserId').value;
+    console.log($scope.professorId);
+  };
 
   $scope.init = function() {
     $scope.loadThesisTypes();
     $scope.loadResources();
+    $scope.initUserId();
   };
 
   $scope.init();
 
   $scope.openBachelorMentoring = function() {
-    $location.path("/bachelorMentoring/mentorId/" + $scope.professorId
-            + "/thesisTypeId/" + $scope.thesisTypes[0].id);
+    $location.path('/bachelorMentoring/mentorId/' + $scope.professorId
+            + '/thesisTypeId/' + $scope.thesisTypes[0].id);
   };
 
 });

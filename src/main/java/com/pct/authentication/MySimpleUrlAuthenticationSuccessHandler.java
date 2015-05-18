@@ -40,7 +40,12 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
 	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException {
-		String targetUrl = determineTargetUrl(authentication);
+
+		String username = (String) authentication.getPrincipal();
+		User user = userRepository.findByUserName(username);
+		request.getSession().setAttribute("currentUserId", user.getId().toString());
+
+		String targetUrl = determineTargetUrl(authentication, user);
 
 		if (response.isCommitted()) {
 			LOGGER.debug("Response has already been committed. Unable to redirect to " + targetUrl);
@@ -51,7 +56,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 	}
 
 	/** Builds the target URL according to the logic defined in the main class Javadoc. */
-	protected String determineTargetUrl(Authentication authentication) {
+	protected String determineTargetUrl(Authentication authentication, User user) {
 		boolean isUser = false;
 		boolean isAdmin = false;
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -64,9 +69,6 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 				break;
 			}
 		}
-
-		String username = (String) authentication.getPrincipal();
-		User user = userRepository.findByUserName(username);
 
 		if (isUser) {
 			return "/#/professorDetails/id/" + user.getId();

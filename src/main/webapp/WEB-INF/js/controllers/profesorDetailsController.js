@@ -100,5 +100,5 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
   $scope.isUnchanged = function(profesor) {
     return angular.equals(profesor, $scope.master);
   };
-
+  
 });

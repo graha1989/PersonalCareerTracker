@@ -31,15 +31,17 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
-		<hr/>
-		<div>
-			<jsp:include page="menu.jsp" />
-		</div>
+		<c:if test="${loggedIn}">
+			<hr/>
+			<div>
+				<jsp:include page="menu.jsp" />
+			</div>
+		</c:if>
 		<div ng-view>
 			<!-- Pages will be inserted here -->
 		</div>
-
 		<input type="hidden" value='<c:out value="${pageContext.response.locale}"></c:out>' id="localeCode">
+		<input type="hidden" value='<%= session.getAttribute("currentUserId") %>' id="currentUserId">
 	</div>
 
 	<script type="text/javascript" src="<spring:url value='js/lib/angular.min.js' />"></script>
