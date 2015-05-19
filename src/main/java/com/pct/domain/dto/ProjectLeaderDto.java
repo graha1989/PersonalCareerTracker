@@ -43,7 +43,6 @@ public class ProjectLeaderDto implements Serializable {
 	}
 
 	public ProjectLeaderDto(ProjectLeader projectLeader) {
-		super();
 		this.name = projectLeader.getName();
 		this.surname = projectLeader.getSurname();
 		this.professorId = (projectLeader.getProfessor() != null ? projectLeader.getProfessor().getId() : null);

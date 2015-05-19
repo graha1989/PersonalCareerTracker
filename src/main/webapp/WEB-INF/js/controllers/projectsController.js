@@ -32,7 +32,8 @@ app.controller("ProjectsController", function($scope, $routeParams, $http,
   };
 
   $scope.makeCompleteProjectData = function(element) {
-    var projectLeaders = $scope.constructLeadersString(element.projectLeaderDtos);
+    var projectLeaders = $scope
+            .constructLeadersString(element.projectLeaderDtos);
     $scope.completeProjectData.push({
       "projectType": element.projectType,
       "name": element.name,
@@ -186,17 +187,32 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
         "professorId": $scope.newProjectLeader.professorId,
         "name": $scope.newProjectLeader.name,
         "surname": $scope.newProjectLeader.surname,
-        "projectId": $scope.project.id
+        "projectId": $scope.project.id,
+        "id": $scope.newProjectLeader.id
       });
-    };
+    } else {
+      $scope.project.projectLeaderDtos.push({
+        "professorId": null,
+        "name": $scope.newProjectLeader.substring(0, $scope.newProjectLeader
+                .indexOf(' ')),
+        "surname": $scope.newProjectLeader.substring($scope.newProjectLeader
+                .indexOf(' ') + 1, $scope.newProjectLeader.length),
+        "projectId": $scope.project.id,
+        "id": null
+      });
+    }
+    ;
     $scope.projectLeadersArray = [];
     $scope.projectLeadersArray = $scope.createLeadersArray();
     $scope.newProjectLeader = [];
+    $scope.isExistingPerson = false;
   };
 
   $scope.removeProjectLeader = function(index) {
     $scope.projectLeadersArray.splice(index, 1);
-    $scope.constructLeadersString($scope.projectLeadersArray);
+    $scope.project.projectLeaderDtos.splice(index, 1);
+    $scope.projectLeadersArray = [];
+    $scope.projectLeadersArray = $scope.createLeadersArray();
   };
 
   $scope.saveProject = function() {

@@ -19,6 +19,7 @@ import com.pct.domain.dto.ProjectDto;
 import com.pct.domain.dto.ProjectLeaderDto;
 import com.pct.domain.enums.ProjectType;
 import com.pct.repository.ProfesorRepository;
+import com.pct.repository.ProjectLeaderRepository;
 import com.pct.repository.ProjectRepository;
 import com.pct.service.ProjectService;
 import com.pct.validation.ProjectNotFoundException;
@@ -31,6 +32,9 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
 	ProfesorRepository professorRepository;
+
+	@Autowired
+	ProjectLeaderRepository projectLeaderRepository;
 
 	@Override
 	@Transactional
@@ -90,7 +94,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Transactional
 	public void saveProject(ProjectDto projectDto) throws ProjectNotFoundException {
 		Project project = initializeProject(projectDto);
-		projectRepository.saveAndFlush(project);
+		projectRepository.save(project);
 	}
 
 	/**
@@ -113,12 +117,22 @@ public class ProjectServiceImpl implements ProjectService {
 		Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
 
 		for (ProjectLeaderDto projectLeaderDto : projectDto.getProjectLeaderDtos()) {
-			projectLeaders.add(new ProjectLeader(professorRepository.findOne(projectLeaderDto.getProfessorId()),
-					projectRepository.findOne(projectLeaderDto.getProjectId()), projectLeaderDto.getName(),
-					projectLeaderDto.getSurname()));
+			ProjectLeader projectLeader = new ProjectLeader();
+			Professor professor = null;
+			if (projectLeaderDto.getId() != null) {
+				projectLeader = projectLeaderRepository.findOne(projectLeaderDto.getId());
+			} else if (projectLeaderDto.getProfessorId() != null) {
+				professor = professorRepository.findOne(projectLeaderDto.getProfessorId());
+			}
+			projectLeader.setName(projectLeaderDto.getName());
+			projectLeader.setSurname(projectLeaderDto.getSurname());
+			projectLeader.setProject(project);
+			projectLeader.setProfessor(professor);
+
+			projectLeaders.add(projectLeader);
 		}
 		project.setProjectLeaders(projectLeaders);
-
+		 
 		return project;
 	}
 

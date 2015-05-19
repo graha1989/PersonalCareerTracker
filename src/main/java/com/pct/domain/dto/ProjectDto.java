@@ -1,7 +1,8 @@
 package com.pct.domain.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -35,7 +36,7 @@ public class ProjectDto implements Serializable {
 	@SafeHtml
 	private String financedBy;
 
-	Set<ProjectLeaderDto> projectLeaderDtos;
+	List<ProjectLeaderDto> projectLeaderDtos;
 
 	@Nullable
 	protected Long id;
@@ -44,7 +45,7 @@ public class ProjectDto implements Serializable {
 	}
 
 	public ProjectDto(ProjectType projectType, String name, String financedBy, Long id,
-			Set<ProjectLeaderDto> projectLeaderDtos) {
+			List<ProjectLeaderDto> projectLeaderDtos) {
 		super();
 		this.projectType = projectType;
 		this.name = name;
@@ -58,11 +59,11 @@ public class ProjectDto implements Serializable {
 		this.name = project.getName();
 		this.financedBy = project.getFinancedBy();
 		this.id = project.getId();
-		this.projectLeaderDtos = createProjectLeadersDtoSet(project.getProjectLeaders());
+		this.projectLeaderDtos = createProjectLeadersDtoList(project.getProjectLeaders());
 	}
 
-	private Set<ProjectLeaderDto> createProjectLeadersDtoSet(Set<ProjectLeader> projectLeaders) {
-		Set<ProjectLeaderDto> projectLeaderDtos = new HashSet<ProjectLeaderDto>();
+	private List<ProjectLeaderDto> createProjectLeadersDtoList(Set<ProjectLeader> projectLeaders) {
+		List<ProjectLeaderDto> projectLeaderDtos = new ArrayList<ProjectLeaderDto>();
 		for (ProjectLeader projectLeader : projectLeaders) {
 			projectLeaderDtos.add(new ProjectLeaderDto(projectLeader));
 		}
@@ -101,11 +102,11 @@ public class ProjectDto implements Serializable {
 		this.id = id;
 	}
 
-	public Set<ProjectLeaderDto> getProjectLeaderDtos() {
+	public List<ProjectLeaderDto> getProjectLeaderDtos() {
 		return projectLeaderDtos;
 	}
 
-	public void setProjectLeaderDtos(Set<ProjectLeaderDto> projectLeaderDtos) {
+	public void setProjectLeaderDtos(List<ProjectLeaderDto> projectLeaderDtos) {
 		this.projectLeaderDtos = projectLeaderDtos;
 	}
 
