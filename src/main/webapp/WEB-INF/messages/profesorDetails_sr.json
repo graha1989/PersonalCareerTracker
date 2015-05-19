@@ -86,6 +86,13 @@
         "specialisticMentoring": "Specijalistička teza",
         "doctorMentoring": "Doktorska teza"
     },
+    "adminMenuLabels": {
+    	"home": "Početak",
+        "allProfessors": "Svi profesori",
+        "allStudents": "Svi studenti",
+        "allSubjects": "Svi predmeti",
+        "allInstitutions": "Sve institucije"
+    },
     "professorBachelorStudies": {
         "studyProgram": "Studijski program",
         "studyArea": "Naučna oblast",

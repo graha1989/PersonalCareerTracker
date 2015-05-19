@@ -6,7 +6,7 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
 				controller: 'AdminDetailsController'
 			})
 			.when('/showAllStudents', {
-				templateUrl: 'pages/showAllStudents.html',
+				templateUrl: 'admin/pages/showAllStudents.html',
 				controller: 'StudentsController'
 			})
 			.when('/registerProfesor', {
@@ -86,7 +86,7 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         controller: 'TeachingExperienceController'
       })
       .when('/showAllInstitutions', {
-        templateUrl: 'pages/showAllInstitutions.html',
+        templateUrl: 'admin/pages/showAllInstitutions.html',
         controller: 'InstitutionsController'
       })
       .when('/showAllProjects', {
@@ -94,7 +94,7 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         controller: 'ProjectsController'
       })
       .when('/showAllSubjects', {
-        templateUrl: 'pages/showAllSubjects.html',
+        templateUrl: 'admin/pages/showAllSubjects.html',
         controller: 'SubjectsController'
       })
       .when('/surveys/professorId/:professorId/subjectId/:subjectId', {
@@ -102,7 +102,7 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         controller: 'ProfessorSubjectsSurveysController'
       })
       .when('/showAllProfessors', {
-        templateUrl: 'pages/showAllProfessors.html',
+        templateUrl: 'admin/pages/showAllProfessors.html',
         controller: 'AllProfessorsController'
       })
 			.otherwise({

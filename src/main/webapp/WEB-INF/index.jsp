@@ -19,7 +19,7 @@
 
 </head>
 <body>
-
+<c:set var="role" value='<%= session.getAttribute("currentUserRole") %>' />
 	<div class="container" id="appContainer">
 		<div class="col-sm-12 pull-right">
 			<c:choose>
@@ -32,10 +32,20 @@
 			</c:choose>
 		</div>
 		<c:if test="${loggedIn}">
-			<hr/>
-			<div>
-				<jsp:include page="menu.jsp" />
-			</div>
+			<c:choose>
+				<c:when test="${role == 'ROLE_USER'}">
+					<hr/>
+					<div>
+						<jsp:include page="professorMenu.jsp" />
+					</div>
+				</c:when>
+				<c:when test="${role == 'ROLE_ADMIN'}">
+					<hr/>
+					<div>
+						<jsp:include page="admin/adminMenu.jsp" />
+					</div>
+				</c:when>
+			</c:choose>
 		</c:if>
 		<div ng-view>
 			<!-- Pages will be inserted here -->
@@ -53,8 +63,6 @@
 	<script type="text/javascript" src="<spring:url value='js/lib/ngDialog.min.js' />"></script>
 
 	<script type="text/javascript" src="<spring:url value='js/app.js' />"></script>
-	<script type="text/javascript" src="<spring:url value='admin/controllers/adminDetailsController.js' />"></script>
-	<script type="text/javascript" src="<spring:url value='js/controllers/studentsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/registerProfesorController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/registerUserController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/profesorDetailsController.js' />"></script>
@@ -74,12 +82,18 @@
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorDoctorStudiesController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorSpecializationAbroadController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/teachingExperienceController.js' />"></script>
-	<script type="text/javascript" src="<spring:url value='js/controllers/institutionsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/projectsController.js' />"></script>
-	<script type="text/javascript" src="<spring:url value='js/controllers/subjectsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorSubjectsSurveysController.js' />"></script>
-	<script type="text/javascript" src="<spring:url value='js/controllers/allProfessorsController.js' />"></script>
-	<script type="text/javascript" src="<spring:url value='js/controllers/menuController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/professorMenuController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/service/pctService.js' />"></script>
+	<c:if test="${role == 'ROLE_ADMIN'}">
+		<script type="text/javascript" src="<spring:url value='admin/controllers/studentsController.js' />"></script>
+		<script type="text/javascript" src="<spring:url value='admin/controllers/allProfessorsController.js' />"></script>
+		<script type="text/javascript" src="<spring:url value='admin/controllers/institutionsController.js' />"></script>
+		<script type="text/javascript" src="<spring:url value='admin/controllers/subjectsController.js' />"></script>
+		<script type="text/javascript" src="<spring:url value='admin/controllers/adminMenuController.js' />"></script>
+		<script type="text/javascript" src="<spring:url value='admin/controllers/adminDetailsController.js' />"></script>
+	</c:if>
+	
 </body>
 </html>

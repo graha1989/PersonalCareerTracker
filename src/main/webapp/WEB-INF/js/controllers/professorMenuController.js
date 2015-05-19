@@ -1,4 +1,4 @@
-app.controller("MenuController", function($scope, $http, $location,
+app.controller("ProfessorMenuController", function($scope, $http, $location,
         $routeParams) {
 
   $scope.thesisTypes = [];

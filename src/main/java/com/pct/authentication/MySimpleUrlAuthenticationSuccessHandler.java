@@ -43,9 +43,8 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
 		String username = (String) authentication.getPrincipal();
 		User user = userRepository.findByUserName(username);
-		request.getSession().setAttribute("currentUserId", user.getId().toString());
 
-		String targetUrl = determineTargetUrl(authentication, user);
+		String targetUrl = determineTargetUrl(authentication, user, request);
 
 		if (response.isCommitted()) {
 			LOGGER.debug("Response has already been committed. Unable to redirect to " + targetUrl);
@@ -56,20 +55,23 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 	}
 
 	/** Builds the target URL according to the logic defined in the main class Javadoc. */
-	protected String determineTargetUrl(Authentication authentication, User user) {
+	protected String determineTargetUrl(Authentication authentication, User user, HttpServletRequest request) {
 		boolean isUser = false;
 		boolean isAdmin = false;
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		for (GrantedAuthority grantedAuthority : authorities) {
 			if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
 				isUser = true;
+				request.getSession().setAttribute("currentUserRole", "ROLE_USER");
 				break;
 			} else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
 				isAdmin = true;
+				request.getSession().setAttribute("currentUserRole", "ROLE_ADMIN");
 				break;
 			}
 		}
-
+		request.getSession().setAttribute("currentUserId", user.getId().toString());
+		
 		if (isUser) {
 			return "/#/professorDetails/id/" + user.getId();
 		} else if (isAdmin) {

@@ -11,13 +11,13 @@
 
 <div
 	class="menu"
-	ng-controller="MenuController">
+	ng-controller="ProfessorMenuController">
 	<div class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li class="dropdown"><a
-						href="#"
+						href=""
 						class="dropdown-toggle"
 						data-toggle="dropdown"
 						role="button"
@@ -25,10 +25,10 @@
 						<ul
 							class="dropdown-menu"
 							role="menu">
-							<li><a ng-click="openBachelorMentoring()">{{resources.professorMenuLabels.bachelorMentoring}}</a></li>
-							<li><a ng-click="openMasterMentoring()">{{resources.professorMenuLabels.masterMentoring}}</a></li>
-							<li><a ng-click="openSpecialisticMentoring()">{{resources.professorMenuLabels.specialisticMentoring}}</a></li>
-							<li><a ng-click="openDoctorMentoring()">{{resources.professorMenuLabels.doctorMentoring}}</a></li>
+							<li><a href="" ng-click="openBachelorMentoring()">{{resources.professorMenuLabels.bachelorMentoring}}</a></li>
+							<li><a href="" ng-click="openMasterMentoring()">{{resources.professorMenuLabels.masterMentoring}}</a></li>
+							<li><a href="" ng-click="openSpecialisticMentoring()">{{resources.professorMenuLabels.specialisticMentoring}}</a></li>
+							<li><a href="" ng-click="openDoctorMentoring()">{{resources.professorMenuLabels.doctorMentoring}}</a></li>
 						</ul></li>
 
 				</ul>
