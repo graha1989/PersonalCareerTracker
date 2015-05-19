@@ -335,7 +335,7 @@
 			<button
 				id="edit_button"
 				type="edit"
-				class="btn btn-success btn-sm"
+				class="btn btn-success btn-xs"
 				ng-show="!editMode"
 				ng-click="editProfessor(professor.id)">
 				<span class="glyphicon glyphicon-pencil"></span> {{ resources.form.edit }}
@@ -343,15 +343,11 @@
 			<button
 				id="submit_button"
 				type="submit"
-				class="btn btn-success btn-sm"
+				class="btn btn-success btn-xs"
 				ng-show="editMode"
 				ng-click="updateProfessor()">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.form.save }}
 			</button>
-			<button
-				id="cancel_button"
-				class="btn btn-sm"
-				ng-click="cancel()">{{ resources.form.close }}</button>
 		</div>
 	</form>
 

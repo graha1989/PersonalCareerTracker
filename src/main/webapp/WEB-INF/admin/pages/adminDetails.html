@@ -1,0 +1,160 @@
+<div>
+
+	<form
+		name="form"
+		class="form-horizontal css-form"
+		role="form"
+		ng-model="admin">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.userTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<div
+				ng-show="error"
+				class="glyphicon glyphicon-exclamation-sign">{{ error }}</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ resources.text.userAccountTitle }}</div>
+				<div class="panel-body">
+					<div class="row form-group">
+						<label
+							for="inputUserName"
+							class="col-sm-2 control-label">{{ resources.profesorLabels.userNameLabel }} <span
+							ng-show="editMode"
+							class="required">*</span></label>
+						<div class="col-sm-4">
+							<input
+								type="text"
+								class="form-control"
+								id="inputUserName"
+								name="inputUserName"
+								ng-model="admin.userName"
+								ng-maxlength="50"
+								ng-disabled="!editMode"
+								required />
+							<div
+								ng-show="form.inputUserName.$dirty && form.inputUserName.$invalid"
+								class="userNameFieldError">
+								<span
+									ng-show="form.inputUserName.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputUserName.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span>
+							</div>
+						</div>
+						<label
+							for="inputEmail"
+							class="col-sm-2 control-label">{{ resources.profesorLabels.emailLabel }} <span
+							ng-show="editMode"
+							class="required">*</span></label>
+						<div class="col-sm-4">
+							<input
+								type="email"
+								class="form-control"
+								id="inputEmail"
+								name="inputEmail"
+								ng-model="admin.email"
+								ng-maxlength="50"
+								ng-disabled="!editMode"
+								required />
+							<div
+								ng-show="form.inputEmail.$dirty && form.inputEmail.$invalid"
+								class="emailFieldError">
+								<span
+									ng-show="form.inputEmail.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputEmail.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+									ng-show="form.inputEmail.$error.email"
+									class="ng-binding">{{ errorMessages.error.invalidInput }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ resources.text.userPersonalDataTitle }}</div>
+				<div class="panel-body">
+					<div class="row form-group">
+						<label
+							for="inputFirstName"
+							class="col-sm-2 control-label">{{ resources.profesorLabels.nameLabel }} <span
+							ng-show="editMode"
+							class="required">*</span></label>
+						<div class="col-sm-4">
+							<input
+								type="text"
+								class="form-control"
+								id="inputFirstName"
+								name="inputFirstName"
+								ng-model="admin.name"
+								ng-pattern="patterns.onlyLetters"
+								ng-maxlength="50"
+								ng-disabled="!editMode"
+								required />
+							<div
+								ng-show="form.inputFirstName.$dirty && form.inputFirstName.$invalid"
+								class="firsNameFieldError">
+								<span
+									ng-show="form.inputFirstName.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputFirstName.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+									ng-show="form.inputFirstName.$error.pattern"
+									class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+							</div>
+						</div>
+						<label
+							for="inputLastName"
+							class="col-sm-2 control-label">{{ resources.profesorLabels.surnameLabel }} <span
+							ng-show="editMode"
+							class="required">*</span></label>
+						<div class="col-sm-4">
+							<input
+								type="text"
+								class="form-control"
+								id="inputLastName"
+								name="inputLastName"
+								ng-model="admin.surname"
+								ng-pattern="patterns.onlyLetters"
+								ng-maxlength="50"
+								ng-disabled="!editMode"
+								required />
+							<div
+								ng-show="form.inputLastName.$dirty && form.inputLastName.$invalid"
+								class="lastNameFieldError">
+								<span
+									ng-show="form.inputLastName.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputLastName.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+									ng-show="form.inputLastName.$error.pattern"
+									class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="edit_button"
+				type="edit"
+				class="btn btn-success btn-xs"
+				ng-show="!editMode"
+				ng-click="editAdmin(admin.id)">
+				<span class="glyphicon glyphicon-pencil"></span> {{ resources.form.edit }}
+			</button>
+			<button
+				id="submit_button"
+				type="submit"
+				class="btn btn-success btn-xs"
+				ng-show="editMode"
+				ng-click="updateAdmin()">
+				<span class="glyphicon glyphicon-save"></span> {{ resources.form.save }}
+			</button>
+		</div>
+	</form>
+
+</div>

@@ -53,7 +53,7 @@
 	<script type="text/javascript" src="<spring:url value='js/lib/ngDialog.min.js' />"></script>
 
 	<script type="text/javascript" src="<spring:url value='js/app.js' />"></script>
-	<script type="text/javascript" src="<spring:url value='js/controllers/homeController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='admin/controllers/adminDetailsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/studentsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/registerProfesorController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/registerUserController.js' />"></script>

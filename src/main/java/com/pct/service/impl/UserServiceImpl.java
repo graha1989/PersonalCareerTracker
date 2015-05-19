@@ -16,6 +16,7 @@ import com.pct.repository.RoleRepository;
 import com.pct.repository.UserRepository;
 import com.pct.service.UserService;
 import com.pct.service.util.UserUtil;
+import com.pct.validation.UserNotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -61,6 +62,23 @@ public class UserServiceImpl implements UserService {
 		UserUtil.copyUserPropertiesFromDto(user, dto);
 
 		return user;
+	}
+
+	@Override
+	@Transactional
+	public UserDto findAdminById(Long id) throws UserNotFoundException {
+
+		UserDto userDto;
+		if (id != null) {
+			User user = userRepository.findOne(id);
+			if (user != null) {
+				userDto = new UserDto(user.getUserName(), user.getPassword(), user.getEmail(), user.getName(),
+						user.getSurname(), user.getId());
+
+				return userDto;
+			}
+		}
+		throw new UserNotFoundException();
 	}
 
 }

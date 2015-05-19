@@ -35,7 +35,7 @@ app.controller("MenuController", function($scope, $http, $location,
     }).error(function(data, status) {
     });
   };
-  
+
   $scope.initUserId = function() {
     console.log('Setting professor id: ');
     $scope.professorId = document.getElementById('currentUserId').value;
@@ -53,6 +53,21 @@ app.controller("MenuController", function($scope, $http, $location,
   $scope.openBachelorMentoring = function() {
     $location.path('/bachelorMentoring/mentorId/' + $scope.professorId
             + '/thesisTypeId/' + $scope.thesisTypes[0].id);
+  };
+
+  $scope.openMasterMentoring = function() {
+    $location.path('/masterMentoring/mentorId/' + $scope.professorId
+            + '/thesisTypeId/' + $scope.thesisTypes[1].id);
+  };
+
+  $scope.openSpecialisticMentoring = function() {
+    $location.path('/specialisticMentoring/mentorId/' + $scope.professorId
+            + '/thesisTypeId/' + $scope.thesisTypes[2].id);
+  };
+
+  $scope.openDoctorMentoring = function() {
+    $location.path('/doctorMentoring/mentorId/' + $scope.professorId
+            + '/thesisTypeId/' + $scope.thesisTypes[3].id);
   };
 
 });

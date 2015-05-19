@@ -7,7 +7,7 @@
 	<security:http auto-config="true" use-expressions="true">
 
 		<security:form-login login-page="/login" authentication-failure-url="/login?error=1" default-target-url="/" authentication-failure-handler-ref="authenticationFailureHandler" authentication-success-handler-ref="myAuthenticationSuccessHandler" />
-		<security:intercept-url pattern="/admin/**" access="isInRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/css/**" access="permitAll" />
 		<security:intercept-url pattern="/error/**" access="permitAll" />
 		<security:intercept-url pattern="/images/**" access="permitAll" />
