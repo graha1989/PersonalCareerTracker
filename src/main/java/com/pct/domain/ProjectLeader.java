@@ -32,7 +32,7 @@ public class ProjectLeader extends AbstractEntity {
 	/* For project leaders outside faculty (database) */
 	@Column(name = "name", length = 50)
 	private String name;
-	
+
 	/* For project leaders outside faculty (database) */
 	@Column(name = "surname", length = 50)
 	private String surname;

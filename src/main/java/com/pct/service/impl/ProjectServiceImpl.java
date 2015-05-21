@@ -3,6 +3,7 @@ package com.pct.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -27,14 +28,20 @@ import com.pct.validation.ProjectNotFoundException;
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
-	@Autowired
 	ProjectRepository projectRepository;
 
-	@Autowired
 	ProfesorRepository professorRepository;
 
-	@Autowired
 	ProjectLeaderRepository projectLeaderRepository;
+
+	@Autowired
+	public ProjectServiceImpl(ProjectRepository projectRepository, ProfesorRepository professorRepository,
+			ProjectLeaderRepository projectLeaderRepository) {
+		super();
+		this.projectRepository = projectRepository;
+		this.professorRepository = professorRepository;
+		this.projectLeaderRepository = projectLeaderRepository;
+	}
 
 	@Override
 	@Transactional
@@ -94,7 +101,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Transactional
 	public void saveProject(ProjectDto projectDto) throws ProjectNotFoundException {
 		Project project = initializeProject(projectDto);
-		projectRepository.save(project);
+		projectRepository.saveAndFlush(project);
 	}
 
 	/**
@@ -131,8 +138,25 @@ public class ProjectServiceImpl implements ProjectService {
 
 			projectLeaders.add(projectLeader);
 		}
-		project.setProjectLeaders(projectLeaders);
-		 
+		// If collection from Dto miss some element from original collection, we remove it from original
+		Iterator<ProjectLeader> currentLeadersIterator = project.getProjectLeaders().iterator();
+		while (currentLeadersIterator.hasNext()) {
+			ProjectLeader projectLeader = currentLeadersIterator.next();
+			if (!projectLeaders.contains(projectLeader)) {
+				currentLeadersIterator.remove();
+				projectLeader.setProject(null);
+			}
+		}
+		// If original collection miss some element from Dto collection, we add it to original
+		Iterator<ProjectLeader> newLeadersIterator = projectLeaders.iterator();
+		while (newLeadersIterator.hasNext()) {
+			ProjectLeader projectLeader = newLeadersIterator.next();
+			if (!project.getProjectLeaders().contains(projectLeader)) {
+				project.getProjectLeaders().add(projectLeader);
+				projectLeader.setProject(project);
+			}
+		}
+
 		return project;
 	}
 

@@ -34,10 +34,10 @@ public class ProjectController {
 
 	@Autowired
 	ProjectService projectService;
-	
+
 	@Autowired
 	ProfessorService professorService;
-	
+
 	@Autowired
 	ProjectLeaderService projectLeaderService;
 

@@ -95,12 +95,12 @@ INSERT INTO project_leader (professorId, projectId, name, surname) VALUES
 	(null, '2', 'Milan', 'Dvornik'),
 	(null, '3', 'Dragoslav', 'Berić')
 	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), projectId=VALUES(projectId), name=VALUES(name), surname=VALUES(surname);
-	
+/*	
 INSERT INTO project_experience (projectId, professorId, startDate, endDate) VALUES
 	('1', '3', '2006-09-15', '2008-09-15'),
 	('2', '3', '2009-09-15', '2011-09-15')
 	ON DUPLICATE KEY UPDATE projectId=VALUES(projectId), professorId=VALUES(professorId), startDate=VALUES(startDate), endDate=VALUES(endDate);
-	
+*/	
 INSERT INTO publication_category (code, description, nsmPoints, ttbtPoints, shPoints) VALUES
 	('M11', 'Istaknuta monografija međunarodnog značaja', '15', '15', '15'),
 	('M12', 'Monografija međunarodnog značaja', '10', '10', '10'),

@@ -108,7 +108,7 @@ public class Professor extends User {
 			Set<Award> awards, Set<ProjectExperience> projectExperiences,
 			Set<ProfessorPublication> professorPublications, Set<InternationalPublication> internationalPublications,
 			Set<WorkExperience> workExperiences, Set<Studies> studies, Set<TeachingExperience> teachingExperiences,
-			Set<Survey> surveys, Set<ProjectLeader> projectLeaders) {
+			Set<Survey> surveys) {
 		super();
 		this.fathersName = fathersName;
 		this.dateOfBirth = dateOfBirth;

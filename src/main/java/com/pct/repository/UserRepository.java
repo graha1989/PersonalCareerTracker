@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @param email
 	 * @return user
 	 */
-	//User findByEmail(String email);
+	User findByEmail(String email);
 
 	/**
 	 * Retrieves Users by email.
@@ -24,11 +24,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @param email
 	 * @return user
 	 */
-	
-	/*
+
 	@Query("SELECT u FROM User u WHERE u.email LIKE %:email%")
 	List<User> findByEmailLike(@Param("email") String email);
-*/
+
 	/**
 	 * Retrieves user by username.
 	 * 
@@ -43,11 +42,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @param username
 	 * @return user
 	 */
-	
-	/*
-	@Query("SELECT u FROM User u WHERE u.username LIKE %:username%")
+
+	@Query("SELECT u FROM User u WHERE u.userName LIKE %:username%")
 	List<User> findByUsernameLike(@Param("username") String username);
-*/
+
 	/**
 	 * Retrieves list of users with partially matching username or email.
 	 * 
@@ -55,9 +53,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @param email
 	 * @return list of users
 	 */
-	
-	/*
-	@Query("SELECT u FROM User u WHERE u.username LIKE %:username% AND u.email LIKE %:email%")
+
+	@Query("SELECT u FROM User u WHERE u.userName LIKE %:username% AND u.email LIKE %:email%")
 	List<User> findByUsernameLikeAndEmailLike(@Param("username") String username, @Param("email") String email);
-*/
+
 }

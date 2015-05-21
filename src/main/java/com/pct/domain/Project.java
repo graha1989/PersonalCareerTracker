@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -37,15 +38,14 @@ public class Project extends AbstractEntity {
 	private ProjectType projectType;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "project")
 	@JsonIgnore
 	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
-	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project", orphanRemoval = true)
+	@Cascade(CascadeType.ALL)
 	@JsonManagedReference(value = "project")
-	@JsonIgnore
 	private Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
 
 	public Project() {
