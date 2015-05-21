@@ -53,6 +53,14 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value, @Param("idProf") Long idProf,
 			@Param("idMentor") Long idMentor);
 
+	/**
+	 * Retrieves list of professors with partially matching name or surname, and id not in List of professors who are
+	 * leaders on project with projectId.
+	 * 
+	 * @param value
+	 * @param professorIds
+	 * @return list of Profesors
+	 */
 	@Query("SELECT p FROM Professor p WHERE p.id NOT IN :professorIds AND concat(p.name, ' ', p.surname) LIKE %:value%")
 	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value,
 			@Param("professorIds") List<Long> professorIds);

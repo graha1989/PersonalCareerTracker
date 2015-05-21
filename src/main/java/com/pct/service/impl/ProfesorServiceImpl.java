@@ -26,14 +26,20 @@ import com.pct.validation.ProfessorNotFoundException;
 @Service
 public class ProfesorServiceImpl implements ProfessorService {
 
-	@Autowired
 	private ProfesorRepository profesorRepository;
 
-	@Autowired
 	private RoleRepository roleRepository;
-	
-	@Autowired
+
 	private ProjectLeaderRepository projectLeaderRepository;
+
+	@Autowired
+	public ProfesorServiceImpl(ProfesorRepository profesorRepository, RoleRepository roleRepository,
+			ProjectLeaderRepository projectLeaderRepository) {
+		super();
+		this.profesorRepository = profesorRepository;
+		this.roleRepository = roleRepository;
+		this.projectLeaderRepository = projectLeaderRepository;
+	}
 
 	@Override
 	@Transactional
@@ -154,10 +160,12 @@ public class ProfesorServiceImpl implements ProfessorService {
 	@Override
 	@Transactional
 	public List<PersonDto> findProfessorsStartsWith(String value, Long projectId) {
-		
-		List<Long> professorWhoAreLeadersOnProjectIds = projectLeaderRepository.findProfessorIdsWhoAreLeadersOnProject(projectId);
+
+		List<Long> professorWhoAreLeadersOnProjectIds = projectLeaderRepository
+				.findProfessorIdsWhoAreLeadersOnProject(projectId);
 		List<PersonDto> personDtos = new ArrayList<PersonDto>();
-		List<Professor> professorsList = profesorRepository.findByNameLikeOrSurnameLike(value, professorWhoAreLeadersOnProjectIds);
+		List<Professor> professorsList = profesorRepository.findByNameLikeOrSurnameLike(value,
+				professorWhoAreLeadersOnProjectIds);
 		for (Professor p : professorsList) {
 			PersonDto personDto = new PersonDto();
 			personDto.setProfessorId(p.getId());
@@ -165,7 +173,7 @@ public class ProfesorServiceImpl implements ProfessorService {
 			personDto.setSurname(p.getSurname());
 			personDtos.add(personDto);
 		}
-		
+
 		return personDtos;
 	}
 
