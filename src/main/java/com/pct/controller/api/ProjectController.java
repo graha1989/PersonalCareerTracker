@@ -89,12 +89,13 @@ public class ProjectController {
 
 	@RequestMapping(value = "findProfessorsOrLeadersStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<PersonDto>> findProfessorsOrLeadersStartsWith(
-			@RequestParam(value = "value", required = true) String value) {
+			@RequestParam(value = "value", required = true) String value,
+			@RequestParam(value = "projectId", required = true) Long projectId) {
 
 		List<PersonDto> personDtos = new ArrayList<PersonDto>();
 		if (value.length() >= 3) {
 			List<PersonDto> professorDtos = professorService.findProfessorsStartsWith(value);
-			List<PersonDto> leaderDtos = projectLeaderService.findProjectLeaderStartsWith(value);
+			List<PersonDto> leaderDtos = projectLeaderService.findProjectLeaderStartsWith(value, projectId);
 			personDtos.addAll(professorDtos);
 			personDtos.addAll(leaderDtos);
 		}

@@ -6,6 +6,6 @@ import com.pct.domain.dto.PersonDto;
 
 public interface ProjectLeaderService {
 
-	List<PersonDto> findProjectLeaderStartsWith(String value);
+	List<PersonDto> findProjectLeaderStartsWith(String value, Long projectId);
 	
 }

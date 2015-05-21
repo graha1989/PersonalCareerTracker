@@ -171,7 +171,7 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.getAllPotentalLeaders = function(val) {
-    return PctService.findProfessorsOrLeadersStartsWith(val).then(
+    return PctService.findProfessorsOrLeadersStartsWith(val, $scope.project.id).then(
             function(response) {
               var persons = [];
               for (var i = 0; i < response.length; i++) {

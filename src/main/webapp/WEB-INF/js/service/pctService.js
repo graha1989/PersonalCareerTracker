@@ -401,11 +401,12 @@ app.factory("PctService", [
             url: 'api/surveys?id=' + id
           }).success(callback).error(callback);
         },
-        findProfessorsOrLeadersStartsWith: function(value) {
+        findProfessorsOrLeadersStartsWith: function(value, projectId) {
           var deferred = $q.defer();
           $http.get("api/projects/findProfessorsOrLeadersStartsWith", {
             params: {
-              value: value
+              value: value,
+              projectId: projectId
             }
           }).success(function(response) {
             deferred.resolve(response);

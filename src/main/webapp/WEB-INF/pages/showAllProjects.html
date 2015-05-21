@@ -173,8 +173,6 @@
 						</div>
 					</div>
 				</div>
-
-
 				<div class="form-group">
 					<label
 						for="inputNewProjectLeader"
@@ -197,7 +195,7 @@
 								id="add_button"
 								type="button"
 								class="btn btn-sm input-group-addon"
-								ng-disabled="!newProjectLeader"
+								ng-disabled="newProjectLeader.length == 0"
 								ng-click="addProjectLeader()">
 								<span class="glyphicon glyphicon-plus" />
 							</span>
@@ -211,9 +209,6 @@
 						</div>
 					</div>
 				</div>
-
-
-
 			</div>
 			<div class="modal-footer action">
 				<button

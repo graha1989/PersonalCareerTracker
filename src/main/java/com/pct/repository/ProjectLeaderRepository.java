@@ -10,7 +10,7 @@ import com.pct.domain.ProjectLeader;
 
 public interface ProjectLeaderRepository extends JpaRepository<ProjectLeader, Long> {
 
-	@Query("SELECT p FROM ProjectLeader p WHERE concat(p.name, ' ', p.surname) LIKE %:value% AND p.professor IS NULL")
-	List<ProjectLeader> findByNameLikeOrSurnameLike(@Param("value") String value);
+	@Query("SELECT p FROM ProjectLeader p JOIN p.project project WHERE concat(p.name, ' ', p.surname) LIKE %:value% AND p.professor IS NULL AND project.id != :projectId")
+	List<ProjectLeader> findByNameLikeOrSurnameLike(@Param("value") String value, @Param("projectId") Long projectId);
 
 }

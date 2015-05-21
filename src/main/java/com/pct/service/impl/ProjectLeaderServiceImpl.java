@@ -14,16 +14,16 @@ import com.pct.service.ProjectLeaderService;
 
 @Service
 public class ProjectLeaderServiceImpl implements ProjectLeaderService {
-	
+
 	@Autowired
 	private ProjectLeaderRepository projectLeaderRepository;
-	
+
 	@Override
 	@Transactional
-	public List<PersonDto> findProjectLeaderStartsWith(String value) {
-		
+	public List<PersonDto> findProjectLeaderStartsWith(String value, Long projectId) {
+
 		List<PersonDto> personDtos = new ArrayList<PersonDto>();
-		List<ProjectLeader> projectLeaders = projectLeaderRepository.findByNameLikeOrSurnameLike(value);
+		List<ProjectLeader> projectLeaders = projectLeaderRepository.findByNameLikeOrSurnameLike(value, projectId);
 		for (ProjectLeader p : projectLeaders) {
 			PersonDto personDto = new PersonDto();
 			personDto.setName(p.getName());
@@ -31,7 +31,7 @@ public class ProjectLeaderServiceImpl implements ProjectLeaderService {
 			personDtos.add(personDto);
 			personDto.setLeaderId(p.getId());
 		}
-		
+
 		return personDtos;
 	}
 
