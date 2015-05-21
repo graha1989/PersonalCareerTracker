@@ -18,6 +18,6 @@ public interface ProfessorService {
 
 	List<ProfessorDto> findAllProfessors();
 
-	List<PersonDto> findProfessorsStartsWith(String value);
+	List<PersonDto> findProfessorsStartsWith(String value, Long projectId);
 	
 }

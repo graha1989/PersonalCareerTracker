@@ -12,7 +12,7 @@ import com.pct.domain.Professor;
  * Spring Data repository for Professor entity
  * 
  * @author a.grahovac
- *
+ * 
  */
 public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 
@@ -53,7 +53,8 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value, @Param("idProf") Long idProf,
 			@Param("idMentor") Long idMentor);
 
-	@Query("SELECT p FROM Professor p WHERE concat(p.name, ' ', p.surname) LIKE %:value%")
-	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value);
+	@Query("SELECT p FROM Professor p WHERE p.id NOT IN :professorIds AND concat(p.name, ' ', p.surname) LIKE %:value%")
+	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value,
+			@Param("professorIds") List<Long> professorIds);
 
 }

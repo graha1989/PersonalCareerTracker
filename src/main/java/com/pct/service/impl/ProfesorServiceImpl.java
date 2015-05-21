@@ -16,6 +16,7 @@ import com.pct.domain.dto.PersonDto;
 import com.pct.domain.dto.ProfessorDto;
 import com.pct.domain.enums.RoleNames;
 import com.pct.repository.ProfesorRepository;
+import com.pct.repository.ProjectLeaderRepository;
 import com.pct.repository.RoleRepository;
 import com.pct.service.ProfessorService;
 import com.pct.service.util.ProfessorUtil;
@@ -30,6 +31,9 @@ public class ProfesorServiceImpl implements ProfessorService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private ProjectLeaderRepository projectLeaderRepository;
 
 	@Override
 	@Transactional
@@ -149,10 +153,11 @@ public class ProfesorServiceImpl implements ProfessorService {
 
 	@Override
 	@Transactional
-	public List<PersonDto> findProfessorsStartsWith(String value) {
+	public List<PersonDto> findProfessorsStartsWith(String value, Long projectId) {
 		
+		List<Long> professorWhoAreLeadersOnProjectIds = projectLeaderRepository.findProfessorIdsWhoAreLeadersOnProject(projectId);
 		List<PersonDto> personDtos = new ArrayList<PersonDto>();
-		List<Professor> professorsList = profesorRepository.findByNameLikeOrSurnameLike(value);
+		List<Professor> professorsList = profesorRepository.findByNameLikeOrSurnameLike(value, professorWhoAreLeadersOnProjectIds);
 		for (Professor p : professorsList) {
 			PersonDto personDto = new PersonDto();
 			personDto.setProfessorId(p.getId());
