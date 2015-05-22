@@ -163,9 +163,14 @@ public class ProfesorServiceImpl implements ProfessorService {
 
 		List<Long> professorWhoAreLeadersOnProjectIds = projectLeaderRepository
 				.findProfessorIdsWhoAreLeadersOnProject(projectId);
+		List<Professor> professorsList = new ArrayList<Professor>();
+		if (professorWhoAreLeadersOnProjectIds != null && professorWhoAreLeadersOnProjectIds.size() != 0) {
+			professorsList = profesorRepository.findByNameLikeOrSurnameLike(value, professorWhoAreLeadersOnProjectIds);
+		} else {
+			professorsList = profesorRepository.findByNameLikeOrSurnameLike(value);
+		}
 		List<PersonDto> personDtos = new ArrayList<PersonDto>();
-		List<Professor> professorsList = profesorRepository.findByNameLikeOrSurnameLike(value,
-				professorWhoAreLeadersOnProjectIds);
+
 		for (Professor p : professorsList) {
 			PersonDto personDto = new PersonDto();
 			personDto.setProfessorId(p.getId());
@@ -176,5 +181,4 @@ public class ProfesorServiceImpl implements ProfessorService {
 
 		return personDtos;
 	}
-
 }

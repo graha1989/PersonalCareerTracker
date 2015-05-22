@@ -6,6 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -78,6 +79,18 @@ public class ProjectLeader extends AbstractEntity {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object instanceof ProjectLeader) {
+			ProjectLeader projectLeader = (ProjectLeader) object;
+			return new EqualsBuilder().append(professor, projectLeader.getProfessor())
+					.append(project, projectLeader.getProject()).append(name, projectLeader.getName())
+					.append(surname, projectLeader.getSurname()).isEquals()
+					&& super.equals(object);
+		}
+		return false;
 	}
 
 }

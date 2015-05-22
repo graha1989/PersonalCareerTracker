@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
  * Abstract superclass for entity classes.
  * 
  * @author a.grahovac
- *
+ * 
  */
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
@@ -25,7 +25,7 @@ public abstract class AbstractEntity implements Serializable {
 	@GeneratedValue
 	@Column(name = "id")
 	private Long id;
-	
+
 	/**
 	 * Constructor.
 	 */
@@ -71,7 +71,7 @@ public abstract class AbstractEntity implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -92,5 +92,5 @@ public abstract class AbstractEntity implements Serializable {
 
 		return returnValue;
 	}
-	
+
 }

@@ -65,4 +65,7 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value,
 			@Param("professorIds") List<Long> professorIds);
 
+	@Query("SELECT p FROM Professor p WHERE concat(p.name, ' ', p.surname) LIKE %:value%")
+	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value);
+
 }
