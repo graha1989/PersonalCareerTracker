@@ -171,8 +171,8 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.getAllPotentalLeaders = function(val) {
-    return PctService.findProfessorsOrLeadersStartsWith(val, $scope.project.id).then(
-            function(response) {
+    return PctService.findProfessorsOrLeadersStartsWith(val, $scope.project.id)
+            .then(function(response) {
               var persons = [];
               for (var i = 0; i < response.length; i++) {
                 persons.push(response[i]);
@@ -254,40 +254,16 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
         $http, $route, $templateCache, PctService) {
 
   $scope.project = {};
+  $scope.project.projectLeaderDtos = [];
+  $scope.master = {};
   $scope.allProjectTypes = [];
   $scope.projectLeadersArray = [];
-  $scope.newProjectLeader = "";
+  $scope.newProjectLeader = [];
+  $scope.isExistingPerson = false;
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
-  };
-
-  $scope.createLeadersArray = function() {
-    var array = [];
-    for (var i = 0; i < $scope.project.projectLeader.split(";").length; i++) {
-      array.push($scope.project.projectLeader.split(";")[i].trim());
-    }
-    return array;
-  }
-
-  $scope.constructLeadersString = function(array) {
-    $scope.project.projectLeader = "";
-    for (var i = 0; i < array.length; i++) {
-      $scope.project.projectLeader = $scope.project.projectLeader
-              + ((i > 0 && i < array.length) ? "; " : "") + array[i];
-    }
-  };
-
-  $scope.arrayContainsElement = function(array, element) {
-    var index = -1;
-    for (var i = 0; i < array.length; i++) {
-      if (array[i] === element) {
-        index = i;
-        break;
-      }
-    }
-    return index;
   };
 
   $scope.loadResources = function() {
@@ -313,23 +289,70 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
     });
   };
 
+  $scope.createLeadersArray = function() {
+    var array = [];
+    for (var i = 0; i < $scope.project.projectLeaderDtos.length; i++) {
+      array.push($scope.project.projectLeaderDtos[i].name + " "
+              + $scope.project.projectLeaderDtos[i].surname);
+    }
+    return array;
+  }
+
   $scope.init = function() {
     $scope.loadAllProjectTypes();
-    $scope.status = $routeParams.status;
     $scope.loadResources();
+    $scope.status = $routeParams.status;
   };
 
   $scope.init();
 
+  $scope.onSelectPerson = function() {
+    $scope.isExistingPerson = true;
+  };
+
+  $scope.getAllPotentalLeaders = function(val) {
+    return PctService.findProfessorsOrLeadersStartsWith(val, $scope.project.id)
+            .then(function(response) {
+              var persons = [];
+              for (var i = 0; i < response.length; i++) {
+                persons.push(response[i]);
+              }
+              return persons;
+            });
+  };
+
   $scope.addProjectLeader = function() {
-    $scope.projectLeadersArray.push($scope.newProjectLeader);
-    $scope.constructLeadersString($scope.projectLeadersArray);
-    $scope.newProjectLeader = "";
+    if ($scope.isExistingPerson) {
+      $scope.project.projectLeaderDtos.push({
+        "professorId": $scope.newProjectLeader.professorId,
+        "name": $scope.newProjectLeader.name,
+        "surname": $scope.newProjectLeader.surname,
+        "projectId": $scope.project.id,
+        "id": $scope.newProjectLeader.id
+      });
+    } else {
+      $scope.project.projectLeaderDtos.push({
+        "professorId": null,
+        "name": $scope.newProjectLeader.substring(0, $scope.newProjectLeader
+                .indexOf(' ')),
+        "surname": $scope.newProjectLeader.substring($scope.newProjectLeader
+                .indexOf(' ') + 1, $scope.newProjectLeader.length),
+        "projectId": $scope.project.id,
+        "id": null
+      });
+    }
+    ;
+    $scope.projectLeadersArray = [];
+    $scope.projectLeadersArray = $scope.createLeadersArray();
+    $scope.newProjectLeader = [];
+    $scope.isExistingPerson = false;
   };
 
   $scope.removeProjectLeader = function(index) {
     $scope.projectLeadersArray.splice(index, 1);
-    $scope.constructLeadersString($scope.projectLeadersArray);
+    $scope.project.projectLeaderDtos.splice(index, 1);
+    $scope.projectLeadersArray = [];
+    $scope.projectLeadersArray = $scope.createLeadersArray();
   };
 
   $scope.saveNewProject = function() {
@@ -361,8 +384,8 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
     if ($scope.project.name != null && $scope.project.name != ''
             && $scope.project.financedBy != null
             && $scope.project.financedBy != ''
-            && $scope.project.projectLeader != null
-            && $scope.project.projectLeader != ''
+            && $scope.project.projectLeaderDtos != null
+            && $scope.project.projectLeaderDtos.length > 0
             && $scope.project.projectType != null
             && $scope.project.projectType != '') {
       return true;
