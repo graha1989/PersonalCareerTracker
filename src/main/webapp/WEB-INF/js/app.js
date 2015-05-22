@@ -90,7 +90,7 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         controller: 'InstitutionsController'
       })
       .when('/showAllProjects', {
-        templateUrl: 'pages/showAllProjects.html',
+        templateUrl: 'admin/pages/showAllProjects.html',
         controller: 'ProjectsController'
       })
       .when('/showAllSubjects', {

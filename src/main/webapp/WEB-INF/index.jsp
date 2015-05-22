@@ -82,7 +82,6 @@
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorDoctorStudiesController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorSpecializationAbroadController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/teachingExperienceController.js' />"></script>
-	<script type="text/javascript" src="<spring:url value='js/controllers/projectsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorSubjectsSurveysController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorMenuController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/service/pctService.js' />"></script>
@@ -92,6 +91,7 @@
 		<script type="text/javascript" src="<spring:url value='admin/controllers/institutionsController.js' />"></script>
 		<script type="text/javascript" src="<spring:url value='admin/controllers/subjectsController.js' />"></script>
 		<script type="text/javascript" src="<spring:url value='admin/controllers/adminMenuController.js' />"></script>
+		<script type="text/javascript" src="<spring:url value='admin/controllers/projectsController.js' />"></script>
 		<script type="text/javascript" src="<spring:url value='admin/controllers/adminDetailsController.js' />"></script>
 	</c:if>
 	
