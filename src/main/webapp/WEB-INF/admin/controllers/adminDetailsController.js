@@ -68,7 +68,7 @@ app.controller("AdminDetailsController", function($scope, $routeParams, $http,
     $scope.admin.id = $routeParams.id;
     $http({
       method: 'PUT',
-      url: "api/admins/persistAdmin",
+      url: "api/professors/persistProfessor",
       data: $scope.admin,
       headers: {
         'Content-Type': 'application/json'
