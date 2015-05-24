@@ -140,7 +140,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 			projectLeaders.add(projectLeader);
 		}
-		// If collection from Dto miss some element from original collection, we remove it from original
+		// If collection from Dto miss some element from original collection, we
+		// remove it from original
 		Iterator<ProjectLeader> currentLeadersIterator = project.getProjectLeaders().iterator();
 		while (currentLeadersIterator.hasNext()) {
 			ProjectLeader projectLeader = currentLeadersIterator.next();
@@ -149,7 +150,8 @@ public class ProjectServiceImpl implements ProjectService {
 				projectLeader.setProject(null);
 			}
 		}
-		// If original collection miss some element from Dto collection, we add it to original
+		// If original collection miss some element from Dto collection, we add
+		// it to original
 		Iterator<ProjectLeader> newLeadersIterator = projectLeaders.iterator();
 		while (newLeadersIterator.hasNext()) {
 			ProjectLeader projectLeader = newLeadersIterator.next();

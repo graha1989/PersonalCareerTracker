@@ -97,14 +97,8 @@ public class ProjectController {
 
 		List<PersonDto> personDtos = new ArrayList<PersonDto>();
 		if (value.length() >= 3) {
-			/*
-			 * List<PersonDto> professorDtos = professorService.findProfessorsStartsWith(value, projectId);
-			 */
 			List<PersonDto> leaderDtos = projectLeaderService.findProjectLeaderStartsWith(value, projectId,
 					professorsWhoAreLeadersOnThisProject, leadersOnThisProjectWhoAreNotProfessors);
-			/*
-			 * personDtos.addAll(professorDtos);
-			 */
 			personDtos.addAll(leaderDtos);
 		}
 
