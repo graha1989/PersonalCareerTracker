@@ -12,11 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.Professor;
 import com.pct.domain.Role;
-import com.pct.domain.dto.PersonDto;
 import com.pct.domain.dto.ProfessorDto;
 import com.pct.domain.enums.RoleNames;
 import com.pct.repository.ProfesorRepository;
-import com.pct.repository.ProjectLeaderRepository;
 import com.pct.repository.RoleRepository;
 import com.pct.service.ProfessorService;
 import com.pct.service.util.ProfessorUtil;
@@ -30,15 +28,11 @@ public class ProfesorServiceImpl implements ProfessorService {
 
 	private RoleRepository roleRepository;
 
-	private ProjectLeaderRepository projectLeaderRepository;
-
 	@Autowired
-	public ProfesorServiceImpl(ProfesorRepository profesorRepository, RoleRepository roleRepository,
-			ProjectLeaderRepository projectLeaderRepository) {
+	public ProfesorServiceImpl(ProfesorRepository profesorRepository, RoleRepository roleRepository) {
 		super();
 		this.profesorRepository = profesorRepository;
 		this.roleRepository = roleRepository;
-		this.projectLeaderRepository = projectLeaderRepository;
 	}
 
 	@Override
@@ -157,28 +151,4 @@ public class ProfesorServiceImpl implements ProfessorService {
 		return professor;
 	}
 
-	@Override
-	@Transactional
-	public List<PersonDto> findProfessorsStartsWith(String value, Long projectId) {
-
-		List<Long> professorWhoAreLeadersOnProjectIds = projectLeaderRepository
-				.findProfessorIdsWhoAreLeadersOnProject(projectId);
-		List<Professor> professorsList = new ArrayList<Professor>();
-		if (professorWhoAreLeadersOnProjectIds != null && professorWhoAreLeadersOnProjectIds.size() != 0) {
-			professorsList = profesorRepository.findByNameLikeOrSurnameLike(value, professorWhoAreLeadersOnProjectIds);
-		} else {
-			professorsList = profesorRepository.findByNameLikeOrSurnameLike(value);
-		}
-		List<PersonDto> personDtos = new ArrayList<PersonDto>();
-
-		for (Professor p : professorsList) {
-			PersonDto personDto = new PersonDto();
-			personDto.setProfessorId(p.getId());
-			personDto.setName(p.getName());
-			personDto.setSurname(p.getSurname());
-			personDtos.add(personDto);
-		}
-
-		return personDtos;
-	}
 }

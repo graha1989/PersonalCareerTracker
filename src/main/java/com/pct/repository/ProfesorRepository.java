@@ -61,11 +61,11 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	 * @param professorIds
 	 * @return list of Profesors
 	 */
-	@Query("SELECT p FROM Professor p WHERE p.id NOT IN :professorIds AND concat(p.name, ' ', p.surname) LIKE %:value%")
-	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value,
-			@Param("professorIds") List<Long> professorIds);
+	@Query("SELECT p FROM Professor p WHERE p.id NOT IN :professorsWhoAreLeadersOnThisProject AND concat(p.name, ' ', p.surname) LIKE %:value%")
+	List<Professor> findProfessorsWhoAreNotLeadersOnSelectedProject(@Param("value") String value,
+			@Param("professorsWhoAreLeadersOnThisProject") List<Long> professorsWhoAreLeadersOnThisProject);
 
 	@Query("SELECT p FROM Professor p WHERE concat(p.name, ' ', p.surname) LIKE %:value%")
-	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value);
+	List<Professor> findProfessorsWhoAreNotLeadersOnSelectedProject(@Param("value") String value);
 
 }

@@ -401,12 +401,14 @@ app.factory("PctService", [
             url: 'api/surveys?id=' + id
           }).success(callback).error(callback);
         },
-        findProfessorsOrLeadersStartsWith: function(value, projectId) {
+        findProfessorsOrLeadersStartsWith: function(value, projectId, professorsWhoAreLeadersOnThisProject, leadersOnThisProjectWhoAreNotProfessors) {
           var deferred = $q.defer();
           $http.get("api/projects/findProfessorsOrLeadersStartsWith", {
             params: {
               value: value,
-              projectId: projectId
+              projectId: projectId,
+              professorsWhoAreLeadersOnThisProject: professorsWhoAreLeadersOnThisProject,
+              leadersOnThisProjectWhoAreNotProfessors: leadersOnThisProjectWhoAreNotProfessors
             }
           }).success(function(response) {
             deferred.resolve(response);

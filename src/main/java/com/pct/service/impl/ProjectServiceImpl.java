@@ -87,6 +87,7 @@ public class ProjectServiceImpl implements ProjectService {
 						Professor professor = professorRepository.findOne(projectLeader.getProfessor().getId());
 						projectLeader.setName(professor.getName());
 						projectLeader.setSurname(professor.getSurname());
+						projectLeader.setProfessor(professor);
 					}
 				}
 				projectDto = new ProjectDto(project);
@@ -126,9 +127,10 @@ public class ProjectServiceImpl implements ProjectService {
 		for (ProjectLeaderDto projectLeaderDto : projectDto.getProjectLeaderDtos()) {
 			ProjectLeader projectLeader = new ProjectLeader();
 			Professor professor = null;
-			if (projectLeaderDto.getId() != null) {
+			if (projectLeaderDto.getId() != null && projectLeaderDto.getId() > 0L) {
 				projectLeader = projectLeaderRepository.findOne(projectLeaderDto.getId());
-			} else if (projectLeaderDto.getProfessorId() != null) {
+			}
+			if (projectLeaderDto.getProfessorId() != null && projectLeaderDto.getProfessorId() > 0L) {
 				professor = professorRepository.findOne(projectLeaderDto.getProfessorId());
 			}
 			projectLeader.setName(projectLeaderDto.getName());

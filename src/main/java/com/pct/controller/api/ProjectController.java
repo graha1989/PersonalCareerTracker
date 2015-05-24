@@ -3,6 +3,7 @@ package com.pct.controller.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -90,13 +91,20 @@ public class ProjectController {
 	@RequestMapping(value = "findProfessorsOrLeadersStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<PersonDto>> findProfessorsOrLeadersStartsWith(
 			@RequestParam(value = "value", required = true) String value,
-			@RequestParam(value = "projectId", required = true) Long projectId) {
+			@RequestParam(value = "projectId", required = true) Long projectId,
+			@RequestParam(value = "professorsWhoAreLeadersOnThisProject", required = false) @Nullable List<Long> professorsWhoAreLeadersOnThisProject,
+			@RequestParam(value = "leadersOnThisProjectWhoAreNotProfessors", required = false) @Nullable List<Long> leadersOnThisProjectWhoAreNotProfessors) {
 
 		List<PersonDto> personDtos = new ArrayList<PersonDto>();
 		if (value.length() >= 3) {
-			List<PersonDto> professorDtos = professorService.findProfessorsStartsWith(value, projectId);
-			List<PersonDto> leaderDtos = projectLeaderService.findProjectLeaderStartsWith(value, projectId);
-			personDtos.addAll(professorDtos);
+			/*
+			 * List<PersonDto> professorDtos = professorService.findProfessorsStartsWith(value, projectId);
+			 */
+			List<PersonDto> leaderDtos = projectLeaderService.findProjectLeaderStartsWith(value, projectId,
+					professorsWhoAreLeadersOnThisProject, leadersOnThisProjectWhoAreNotProfessors);
+			/*
+			 * personDtos.addAll(professorDtos);
+			 */
 			personDtos.addAll(leaderDtos);
 		}
 

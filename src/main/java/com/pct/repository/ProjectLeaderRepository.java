@@ -21,8 +21,13 @@ public interface ProjectLeaderRepository extends JpaRepository<ProjectLeader, Lo
 	 * @param projectId
 	 * @return List<ProjectLeader>
 	 */
-	@Query("SELECT p FROM ProjectLeader p JOIN p.project project WHERE concat(p.name, ' ', p.surname) LIKE %:value% AND p.professor IS NULL AND project.id != :projectId")
-	List<ProjectLeader> findByNameLikeOrSurnameLike(@Param("value") String value, @Param("projectId") Long projectId);
+	@Query("SELECT p FROM ProjectLeader p WHERE p.professor IS NULL AND p.project.id != :projectId AND p.id NOT IN :leadersOnThisProjectWhoAreNotProfessors AND concat(p.name, ' ', p.surname) LIKE %:value%")
+	List<ProjectLeader> findLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject(@Param("value") String value,
+			@Param("projectId") Long projectId,
+			@Param("leadersOnThisProjectWhoAreNotProfessors") List<Long> leadersOnThisProjectWhoAreNotProfessors);
+
+	@Query("SELECT p FROM ProjectLeader p WHERE p.professor IS NULL AND concat(p.name, ' ', p.surname) LIKE %:value%")
+	List<ProjectLeader> findLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject(@Param("value") String value);
 
 	/**
 	 * Finding all professors who are leaders on project with projectId and returns List of their Ids
