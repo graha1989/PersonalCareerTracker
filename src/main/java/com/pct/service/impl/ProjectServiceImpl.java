@@ -75,7 +75,8 @@ public class ProjectServiceImpl implements ProjectService {
 	@Transactional
 	public ProjectDto findProjectById(Long id) throws ProjectNotFoundException {
 
-		ProjectDto projectDto;
+		ProjectDto projectDto = null;
+
 		if (id != null) {
 			Project project = projectRepository.findOne(id);
 			if (project != null) {
@@ -122,18 +123,24 @@ public class ProjectServiceImpl implements ProjectService {
 		Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
 
 		for (ProjectLeaderDto projectLeaderDto : projectDto.getProjectLeaderDtos()) {
-			ProjectLeader projectLeader = new ProjectLeader();
+			ProjectLeader projectLeader = null;
 			Professor professor = null;
 			if (projectLeaderDto.getId() != null && projectLeaderDto.getId() > 0L) {
 				projectLeader = projectLeaderRepository.findOne(projectLeaderDto.getId());
+			} else if (projectLeaderDto.getProfessorId() != null && projectLeaderDto.getProfessorId() > 0L) {
+				projectLeader = projectLeaderRepository.findLeadersByProfessorId(projectLeaderDto.getProfessorId());
+				if (projectLeader == null) {
+					projectLeader = new ProjectLeader();
+					projectLeader.setName(projectLeaderDto.getName());
+					projectLeader.setSurname(projectLeaderDto.getSurname());
+					professor = professorRepository.findOne(projectLeaderDto.getProfessorId());
+					projectLeader.setProfessor(professor);
+				}
+			} else {
+				projectLeader = new ProjectLeader();
+				projectLeader.setName(projectLeaderDto.getName());
+				projectLeader.setSurname(projectLeaderDto.getSurname());
 			}
-			if (projectLeaderDto.getProfessorId() != null && projectLeaderDto.getProfessorId() > 0L) {
-				professor = professorRepository.findOne(projectLeaderDto.getProfessorId());
-			}
-			projectLeader.setName(projectLeaderDto.getName());
-			projectLeader.setSurname(projectLeaderDto.getSurname());
-			projectLeader.setProject(project);
-			projectLeader.setProfessor(professor);
 
 			projectLeaders.add(projectLeader);
 		}
@@ -144,7 +151,7 @@ public class ProjectServiceImpl implements ProjectService {
 			ProjectLeader projectLeader = currentLeadersIterator.next();
 			if (!projectLeaders.contains(projectLeader)) {
 				currentLeadersIterator.remove();
-				projectLeader.setProject(null);
+				projectLeader.setProjects(null);
 			}
 		}
 		// If original collection miss some element from Dto collection, we add
@@ -154,7 +161,6 @@ public class ProjectServiceImpl implements ProjectService {
 			ProjectLeader projectLeader = newLeadersIterator.next();
 			if (!project.getProjectLeaders().contains(projectLeader)) {
 				project.getProjectLeaders().add(projectLeader);
-				projectLeader.setProject(project);
 			}
 		}
 

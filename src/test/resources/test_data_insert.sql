@@ -81,20 +81,29 @@ INSERT INTO award (awardName, awardedBy, dateOfAward, professorId, awardType, aw
 	('Mihajlo Pupin', 'Univerzitet Novi Sad', '2008-09-15', '3', 'PRIZE', 'SCIENTIFIC_FIELD'),
 	('Dositej Obradović', 'Univerzitet Novi Sad', '2013-09-15', '3', 'PRIZE', 'PEDAGOGICAL_FIELD')
 	ON DUPLICATE KEY UPDATE awardName=VALUES(awardName), awardedBy=VALUES(awardedBy), dateOfAward=VALUES(dateOfAward), professorId=VALUES(professorId), awardType=VALUES(awardType), awardField=VALUES(awardField);
-	
+
 INSERT INTO project (name, financedBy, projectType) VALUES
 	('XML Projekat', 'Vlada Republike Srbije', 'SCIENTIFIC'),
 	('Etika u informatici', 'Grad Novi Sad', 'OTHER'),
 	('SQL projekat', 'Grad Beograd', 'SCIENTIFIC')
 	ON DUPLICATE KEY UPDATE name=VALUES(name), financedBy=VALUES(financedBy), projectType=VALUES(projectType);
 	
-INSERT INTO project_leader (professorId, projectId, name, surname) VALUES
-	('3', '1', null, null),
-	(null, '1', 'Saša', 'Mrkić'),
-	(null, '1', 'Goran', 'Nović'),
-	(null, '2', 'Milan', 'Dvornik'),
-	(null, '3', 'Dragoslav', 'Berić')
-	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), projectId=VALUES(projectId), name=VALUES(name), surname=VALUES(surname);
+INSERT INTO project_leader (professorId, name, surname) VALUES
+	('3', 'Srđan', 'Bojić'),
+	(null, 'Saša', 'Mrkić'),
+	(null, 'Goran', 'Nović'),
+	(null, 'Milan', 'Dvornik'),
+	(null, 'Dragoslav', 'Berić')
+	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), name=VALUES(name), surname=VALUES(surname);
+	
+INSERT INTO project_leader_intersecting_table (projectId, leaderId) VALUES
+	('1', '1'),
+	('1', '2'),
+	('1', '3'),
+	('2', '4'),
+	('3', '5')
+	ON DUPLICATE KEY UPDATE projectId=VALUES(projectId), leaderId=VALUES(leaderId);
+
 /*	
 INSERT INTO project_experience (projectId, professorId, startDate, endDate) VALUES
 	('1', '3', '2006-09-15', '2008-09-15'),

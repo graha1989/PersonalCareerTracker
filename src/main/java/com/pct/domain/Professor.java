@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @PrimaryKeyJoinColumn(name = "id")
 public class Professor extends User {
 
-	private static final long serialVersionUID = 6438166967413025243L;
+	private static final long serialVersionUID = -9169321822436114344L;
 
 	@Column(name = "fathersName", length = 50)
 	private String fathersName;
@@ -94,10 +95,14 @@ public class Professor extends User {
 	@JsonIgnore
 	private Set<Survey> surveys = new HashSet<Survey>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
-	@JsonIgnore
-	private Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
+	@OneToOne(mappedBy = "professor")
+	private ProjectLeader projectLeader;
 
+	/*
+	 * @OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	 * 
+	 * @JsonIgnore private Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
+	 */
 	public Professor() {
 	}
 
@@ -106,7 +111,7 @@ public class Professor extends User {
 			Set<Award> awards, Set<ProjectExperience> projectExperiences,
 			Set<ProfessorPublication> professorPublications, Set<InternationalPublication> internationalPublications,
 			Set<WorkExperience> workExperiences, Set<Studies> studies, Set<TeachingExperience> teachingExperiences,
-			Set<Survey> surveys, Set<ProjectLeader> projectLeaders) {
+			Set<Survey> surveys, ProjectLeader projectLeader) {
 		super();
 		this.fathersName = fathersName;
 		this.dateOfBirth = dateOfBirth;
@@ -123,7 +128,7 @@ public class Professor extends User {
 		this.studies = studies;
 		this.teachingExperiences = teachingExperiences;
 		this.surveys = surveys;
-		this.projectLeaders = projectLeaders;
+		this.projectLeader = projectLeader;
 	}
 
 	public String getFathersName() {
@@ -294,16 +299,20 @@ public class Professor extends User {
 		}
 	}
 
-	public Set<ProjectLeader> getProjectLeaders() {
-		return projectLeaders;
+	/*
+	 * public Set<ProjectLeader> getProjectLeaders() { return projectLeaders; }
+	 * 
+	 * public void setProjectLeaders(Set<ProjectLeader> projectLeaders) { this.projectLeaders.clear();
+	 * 
+	 * if (projectLeaders != null) { this.projectLeaders.addAll(projectLeaders); } }
+	 */
+
+	public ProjectLeader getProjectLeader() {
+		return projectLeader;
 	}
 
-	public void setProjectLeaders(Set<ProjectLeader> projectLeaders) {
-		this.projectLeaders.clear();
-
-		if (projectLeaders != null) {
-			this.projectLeaders.addAll(projectLeaders);
-		}
+	public void setProjectLeader(ProjectLeader projectLeader) {
+		this.projectLeader = projectLeader;
 	}
 
 }

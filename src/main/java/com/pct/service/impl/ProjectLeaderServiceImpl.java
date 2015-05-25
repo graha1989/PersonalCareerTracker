@@ -38,7 +38,7 @@ public class ProjectLeaderServiceImpl implements ProjectLeaderService {
 		if (projectId != null && projectId > 0L) {
 			if (leadersOnThisProjectWhoAreNotProfessors != null && leadersOnThisProjectWhoAreNotProfessors.size() > 0) {
 				projectLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject = projectLeaderRepository
-						.findLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject(value, projectId,
+						.findLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject(value,
 								leadersOnThisProjectWhoAreNotProfessors);
 			} else {
 				projectLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject = projectLeaderRepository

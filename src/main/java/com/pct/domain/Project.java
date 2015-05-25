@@ -8,8 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -24,7 +27,7 @@ import com.pct.domain.enums.deserializers.ProjectTypeEnumDeserializer;
 @Table(name = "project")
 public class Project extends AbstractEntity {
 
-	private static final long serialVersionUID = -8558884874336561177L;
+	private static final long serialVersionUID = 6035835341873602474L;
 
 	@Column(name = "name", length = 200)
 	private String name;
@@ -43,9 +46,9 @@ public class Project extends AbstractEntity {
 	@JsonIgnore
 	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project", orphanRemoval = true)
-	@Cascade(CascadeType.ALL)
-	@JsonManagedReference(value = "project")
+	@ManyToMany(fetch = FetchType.EAGER)
+	@Cascade({ CascadeType.ALL })
+	@JoinTable(name = "project_leader_intersecting_table", joinColumns = @JoinColumn(name = "projectId"), inverseJoinColumns = @JoinColumn(name = "leaderId"))
 	private Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
 
 	public Project() {

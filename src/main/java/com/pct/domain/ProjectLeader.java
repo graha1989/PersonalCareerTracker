@@ -1,14 +1,17 @@
 package com.pct.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -16,18 +19,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "project_leader")
 public class ProjectLeader extends AbstractEntity {
 
-	private static final long serialVersionUID = -8149758813572407334L;
+	private static final long serialVersionUID = -4242038483732113166L;
 
-	@ManyToOne
-	@Cascade(CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "professorId")
+	@OneToOne(optional = true)
+	@JoinColumn(name = "professorId", nullable = true)
 	@JsonBackReference(value = "professor")
 	private Professor professor;
 
-	@ManyToOne
-	@JoinColumn(name = "projectId")
+	@ManyToMany(mappedBy = "projectLeaders", fetch = FetchType.EAGER)
 	@JsonBackReference(value = "project")
-	private Project project;
+	private Set<Project> projects = new HashSet<Project>();
 
 	/* For project leaders outside faculty (database) */
 	@Column(name = "name", length = 50)
@@ -40,12 +41,12 @@ public class ProjectLeader extends AbstractEntity {
 	public ProjectLeader() {
 	}
 
-	public ProjectLeader(Professor professor, Project project, String name, String surname) {
+	public ProjectLeader(Professor professor, String name, String surname, Set<Project> projects) {
 		super();
 		this.professor = professor;
-		this.project = project;
 		this.name = name;
 		this.surname = surname;
+		this.projects = projects;
 	}
 
 	public Professor getProfessor() {
@@ -54,14 +55,6 @@ public class ProjectLeader extends AbstractEntity {
 
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
-	}
-
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
 	}
 
 	public String getName() {
@@ -80,12 +73,24 @@ public class ProjectLeader extends AbstractEntity {
 		this.surname = surname;
 	}
 
+	public Set<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(Set<Project> projects) {
+		this.projects.clear();
+
+		if (projects != null) {
+			this.projects.addAll(projects);
+		}
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (object instanceof ProjectLeader) {
 			ProjectLeader projectLeader = (ProjectLeader) object;
 			return new EqualsBuilder().append(professor, projectLeader.getProfessor())
-					.append(project, projectLeader.getProject()).append(name, projectLeader.getName())
+					.append(projects, projectLeader.getProjects()).append(name, projectLeader.getName())
 					.append(surname, projectLeader.getSurname()).isEquals()
 					&& super.equals(object);
 		}

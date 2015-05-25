@@ -12,5 +12,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
 	@Query("SELECT p FROM Project p WHERE p.id NOT IN :projectIds AND p.name LIKE %:value%")
 	List<Project> findByNameLike(@Param("value") String value, @Param("projectIds") List<Long> projectIds);
-
+	
 }

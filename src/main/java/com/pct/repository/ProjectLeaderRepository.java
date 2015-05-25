@@ -21,9 +21,8 @@ public interface ProjectLeaderRepository extends JpaRepository<ProjectLeader, Lo
 	 * @param leadersOnThisProjectWhoAreNotProfessors
 	 * @return List<ProjectLeader>
 	 */
-	@Query("SELECT p FROM ProjectLeader p WHERE p.professor IS NULL AND p.project.id != :projectId AND p.id NOT IN :leadersOnThisProjectWhoAreNotProfessors AND concat(p.name, ' ', p.surname) LIKE %:value%")
+	@Query("SELECT l FROM ProjectLeader l WHERE l.professor IS NULL AND l.id NOT IN :leadersOnThisProjectWhoAreNotProfessors AND concat(l.name, ' ', l.surname) LIKE %:value%")
 	List<ProjectLeader> findLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject(@Param("value") String value,
-			@Param("projectId") Long projectId,
 			@Param("leadersOnThisProjectWhoAreNotProfessors") List<Long> leadersOnThisProjectWhoAreNotProfessors);
 
 	/**
@@ -32,7 +31,7 @@ public interface ProjectLeaderRepository extends JpaRepository<ProjectLeader, Lo
 	 * @param value
 	 * @return List<ProjectLeader>
 	 */
-	@Query("SELECT p FROM ProjectLeader p WHERE p.professor IS NULL AND concat(p.name, ' ', p.surname) LIKE %:value%")
+	@Query("SELECT l FROM ProjectLeader l WHERE l.professor IS NULL AND concat(l.name, ' ', l.surname) LIKE %:value%")
 	List<ProjectLeader> findLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject(@Param("value") String value);
 
 	/**
@@ -42,17 +41,17 @@ public interface ProjectLeaderRepository extends JpaRepository<ProjectLeader, Lo
 	 * @param leadersOnThisProjectWhoAreNotProfessors
 	 * @return List<ProjectLeader>
 	 */
-	@Query("SELECT p FROM ProjectLeader p WHERE p.professor IS NULL AND p.id NOT IN :leadersOnThisProjectWhoAreNotProfessors AND concat(p.name, ' ', p.surname) LIKE %:value%")
+	@Query("SELECT l FROM ProjectLeader l WHERE l.professor IS NULL AND l.id NOT IN :leadersOnThisProjectWhoAreNotProfessors AND concat(l.name, ' ', l.surname) LIKE %:value%")
 	List<ProjectLeader> findLeadersWhoAreNotProfessorsAndNotAlreadyUsed(@Param("value") String value,
 			@Param("leadersOnThisProjectWhoAreNotProfessors") List<Long> leadersOnThisProjectWhoAreNotProfessors);
 
 	/**
-	 * Finding all professors who are leaders on project with projectId and returns List of their Ids
+	 * Finding project leader who is professor by professorId.
 	 * 
-	 * @param projectId
-	 * @return List<Long>
+	 * @param professorId
+	 * @return ProjectLeader
 	 */
-	@Query("SELECT p.id FROM ProjectLeader l JOIN l.professor p WHERE l.project.id = :projectId")
-	List<Long> findProfessorIdsWhoAreLeadersOnProject(@Param("projectId") Long projectId);
+	@Query("SELECT l FROM ProjectLeader l WHERE l.professor.id = :professorId")
+	ProjectLeader findLeadersByProfessorId(@Param("professorId") Long professorId);
 
 }
