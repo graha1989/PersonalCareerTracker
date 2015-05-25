@@ -417,5 +417,20 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        findAllProfessorsOrLeadersStartsWith: function(value, professorsWhoAreLeadersOnThisProject, leadersOnThisProjectWhoAreNotProfessors) {
+          var deferred = $q.defer();
+          $http.get("api/projects/findProfessorsOrLeadersStartsWith", {
+            params: {
+              value: value,
+              professorsWhoAreLeadersOnThisProject: professorsWhoAreLeadersOnThisProject,
+              leadersOnThisProjectWhoAreNotProfessors: leadersOnThisProjectWhoAreNotProfessors
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
       };
     }]);

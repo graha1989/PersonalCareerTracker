@@ -277,6 +277,7 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
         $http, $route, $templateCache, PctService) {
 
   $scope.project = {};
+  $scope.project.projectLeaderDtos = [];
   $scope.allProjectTypes = [];
   $scope.projectLeadersArray = [];
   $scope.professorsWhoAreLeadersOnThisProject = [];
@@ -321,19 +322,6 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
     return array;
   }
 
-  $scope.loadSelectedProject = function(id) {
-    PctService.loadSelectedProject(id, function(data) {
-      if (angular.isObject(data)) {
-        $scope.project = data;
-        $scope.projectLeadersArray = $scope.createLeadersArray();
-        $scope.getLeaderIds();
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
-  };
-
   $scope.getLeaderIds = function() {
     $scope.professorsWhoAreLeadersOnThisProject = [];
     $scope.leadersOnThisProjectWhoAreNotProfessors = [];
@@ -352,7 +340,6 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
 
   $scope.init = function() {
     $scope.loadAllProjectTypes();
-    $scope.loadSelectedProject(projectId);
     $scope.loadResources();
     $scope.status = $routeParams.status;
   };
@@ -364,7 +351,7 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.getAllPotentalLeaders = function(val) {
-    return PctService.findProfessorsOrLeadersStartsWith(val, $scope.project.id,
+    return PctService.findAllProfessorsOrLeadersStartsWith(val,
             $scope.professorsWhoAreLeadersOnThisProject,
             $scope.leadersOnThisProjectWhoAreNotProfessors).then(
             function(response) {
@@ -412,7 +399,7 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
     $scope.projectLeadersArray = $scope.createLeadersArray();
   };
 
-  $scope.saveProject = function() {
+  $scope.saveNewProject = function() {
     $http({
       method: 'POST',
       url: "api/projects",
@@ -435,6 +422,20 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
         scrollTop: 0
       }, "slow");
     });
+  };
+
+  $scope.validateForm = function() {
+    if ($scope.project.name != null && $scope.project.name != ''
+            && $scope.project.financedBy != null
+            && $scope.project.financedBy != ''
+            && $scope.project.projectLeaderDtos != null
+            && $scope.project.projectLeaderDtos.length > 0
+            && $scope.project.projectType != null
+            && $scope.project.projectType != '') {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   $scope.cancel = function() {

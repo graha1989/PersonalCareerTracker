@@ -51,22 +51,35 @@ public class ProjectLeaderServiceImpl implements ProjectLeaderService {
 				professorsWhoAreNotLeadersOnSelectedProject = professorRepository
 						.findProfessorsWhoAreNotLeadersOnSelectedProject(value);
 			}
-			for (ProjectLeader p : projectLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject) {
-				PersonDto personDto = new PersonDto();
-				personDto.setName(p.getName());
-				personDto.setSurname(p.getSurname());
-				personDto.setLeaderId(p.getId());
-				personDtos.add(personDto);
-			}
-			for (Professor p : professorsWhoAreNotLeadersOnSelectedProject) {
-				PersonDto personDto = new PersonDto();
-				personDto.setName(p.getName());
-				personDto.setSurname(p.getSurname());
-				personDto.setProfessorId(p.getId());
-				personDtos.add(personDto);
-			}
 		} else {
-			System.out.println("Waiting for inserting new Project...");
+			if (leadersOnThisProjectWhoAreNotProfessors != null && leadersOnThisProjectWhoAreNotProfessors.size() > 0) {
+				projectLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject = projectLeaderRepository
+						.findLeadersWhoAreNotProfessorsAndNotAlreadyUsed(value, leadersOnThisProjectWhoAreNotProfessors);
+			} else {
+				projectLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject = projectLeaderRepository
+						.findLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject(value);
+			}
+			if (professorsWhoAreLeadersOnThisProject != null && professorsWhoAreLeadersOnThisProject.size() > 0) {
+				professorsWhoAreNotLeadersOnSelectedProject = professorRepository
+						.findProfessorsWhoAreNotLeadersOnSelectedProject(value, professorsWhoAreLeadersOnThisProject);
+			} else {
+				professorsWhoAreNotLeadersOnSelectedProject = professorRepository
+						.findProfessorsWhoAreNotLeadersOnSelectedProject(value);
+			}
+		}
+		for (ProjectLeader p : projectLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject) {
+			PersonDto personDto = new PersonDto();
+			personDto.setName(p.getName());
+			personDto.setSurname(p.getSurname());
+			personDto.setLeaderId(p.getId());
+			personDtos.add(personDto);
+		}
+		for (Professor p : professorsWhoAreNotLeadersOnSelectedProject) {
+			PersonDto personDto = new PersonDto();
+			personDto.setName(p.getName());
+			personDto.setSurname(p.getSurname());
+			personDto.setProfessorId(p.getId());
+			personDtos.add(personDto);
 		}
 
 		return personDtos;

@@ -262,7 +262,6 @@
 							name="inputProjectType"
 							ng-model="project.projectType"
 							ng-options="projectType.title for projectType in allProjectTypes track by projectType.name"
-							ng-change="resetProjectData()"
 							required><option value="">{{ resources.projectPopupLabels.projectType }}</option></select>
 						<div
 							ng-show="form.inputProjectType.$dirty && form.inputProjectType.$invalid"
@@ -362,7 +361,7 @@
 				<div class="form-group">
 					<label
 						for="inputNewProjectLeader"
-							class="col-sm-4 control-label">{{ resources.projectPopupLabels.newProjectLeader }} <span class="required">*</span>
+							class="col-sm-4 control-label">{{ resources.projectPopupLabels.newProjectLeader }} <span ng-show="projectLeadersArray.length == 0" class="required">*</span>
 					</label>
 					<div class="col-sm-6">
 						<div class="input-group">
@@ -372,14 +371,17 @@
 								id="inputNewProjectLeader"
 								name="inputNewProjectLeader"
 								ng-model="$parent.newProjectLeader"
-								ng-pattern="patterns.onlyLetters"
-								ng-maxlength="100"
+								typeahead="person as person.name + ' ' + person.surname for person in getAllPotentalLeaders($viewValue) | limitTo:8"
+								typeahead-on-select="onSelectPerson()"
+								placeholder="{{ resources.projectPopupLabels.newProjectLeaderNameAndSurname }}"
+								autocomplete="off"
+								ng-disabled="isExistingPerson"
 								ng-required="projectLeadersArray.length == 0" /> 
 							<span
 								id="add_button"
 								type="button"
 								class="btn btn-sm input-group-addon"
-								ng-disabled="!newProjectLeader"
+								ng-disabled="newProjectLeader.length == 0"
 								ng-click="addProjectLeader()">
 								<span class="glyphicon glyphicon-plus" />
 							</span>
@@ -389,11 +391,7 @@
 							class="projectLeaderFieldError">
 							<span
 								ng-show="form.inputNewProjectLeader.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputNewProjectLeader.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidProjectNameFinancedByMaxLength }}</span> <span
-								ng-show="form.inputNewProjectLeader.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+								class="ng-binding">{{ errorMessages.error.required }}</span>
 						</div>
 					</div>
 				</div>

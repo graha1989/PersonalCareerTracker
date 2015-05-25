@@ -25,7 +25,6 @@ public class ProjectLeader extends AbstractEntity {
 	private Professor professor;
 
 	@ManyToOne
-	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "projectId")
 	@JsonBackReference(value = "project")
 	private Project project;

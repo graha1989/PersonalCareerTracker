@@ -29,15 +29,12 @@ import com.pct.validation.ProjectNotFoundException;
 public class ProjectServiceImpl implements ProjectService {
 
 	ProjectRepository projectRepository;
-
 	ProfesorRepository professorRepository;
-
 	ProjectLeaderRepository projectLeaderRepository;
 
 	@Autowired
 	public ProjectServiceImpl(ProjectRepository projectRepository, ProfesorRepository professorRepository,
 			ProjectLeaderRepository projectLeaderRepository) {
-		super();
 		this.projectRepository = projectRepository;
 		this.professorRepository = professorRepository;
 		this.projectLeaderRepository = projectLeaderRepository;

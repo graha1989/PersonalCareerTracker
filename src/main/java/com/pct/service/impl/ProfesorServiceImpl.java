@@ -25,12 +25,10 @@ import com.pct.validation.ProfessorNotFoundException;
 public class ProfesorServiceImpl implements ProfessorService {
 
 	private ProfesorRepository profesorRepository;
-
 	private RoleRepository roleRepository;
 
 	@Autowired
 	public ProfesorServiceImpl(ProfesorRepository profesorRepository, RoleRepository roleRepository) {
-		super();
 		this.profesorRepository = profesorRepository;
 		this.roleRepository = roleRepository;
 	}

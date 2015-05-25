@@ -91,7 +91,7 @@ public class ProjectController {
 	@RequestMapping(value = "findProfessorsOrLeadersStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<PersonDto>> findProfessorsOrLeadersStartsWith(
 			@RequestParam(value = "value", required = true) String value,
-			@RequestParam(value = "projectId", required = true) Long projectId,
+			@RequestParam(value = "projectId", required = false) @Nullable Long projectId,
 			@RequestParam(value = "professorsWhoAreLeadersOnThisProject", required = false) @Nullable List<Long> professorsWhoAreLeadersOnThisProject,
 			@RequestParam(value = "leadersOnThisProjectWhoAreNotProfessors", required = false) @Nullable List<Long> leadersOnThisProjectWhoAreNotProfessors) {
 

@@ -15,10 +15,10 @@ import com.pct.domain.ProjectLeader;
 public interface ProjectLeaderRepository extends JpaRepository<ProjectLeader, Long> {
 
 	/**
-	 * Finding all project leaders who are not professors and not leaders on project with projectId
+	 * Finding all project leaders who are not professors and not leaders on the project with the projectId.
 	 * 
 	 * @param value
-	 * @param projectId
+	 * @param leadersOnThisProjectWhoAreNotProfessors
 	 * @return List<ProjectLeader>
 	 */
 	@Query("SELECT p FROM ProjectLeader p WHERE p.professor IS NULL AND p.project.id != :projectId AND p.id NOT IN :leadersOnThisProjectWhoAreNotProfessors AND concat(p.name, ' ', p.surname) LIKE %:value%")
@@ -26,8 +26,25 @@ public interface ProjectLeaderRepository extends JpaRepository<ProjectLeader, Lo
 			@Param("projectId") Long projectId,
 			@Param("leadersOnThisProjectWhoAreNotProfessors") List<Long> leadersOnThisProjectWhoAreNotProfessors);
 
+	/**
+	 * Finding all project leaders who are not professors.
+	 * 
+	 * @param value
+	 * @return List<ProjectLeader>
+	 */
 	@Query("SELECT p FROM ProjectLeader p WHERE p.professor IS NULL AND concat(p.name, ' ', p.surname) LIKE %:value%")
 	List<ProjectLeader> findLeadersWhoAreNotProfessorsAndNotLeadersOnSelectedProject(@Param("value") String value);
+
+	/**
+	 * Finding all project leaders who are not in the list of id-s of already entered leaders.
+	 * 
+	 * @param value
+	 * @param leadersOnThisProjectWhoAreNotProfessors
+	 * @return List<ProjectLeader>
+	 */
+	@Query("SELECT p FROM ProjectLeader p WHERE p.professor IS NULL AND p.id NOT IN :leadersOnThisProjectWhoAreNotProfessors AND concat(p.name, ' ', p.surname) LIKE %:value%")
+	List<ProjectLeader> findLeadersWhoAreNotProfessorsAndNotAlreadyUsed(@Param("value") String value,
+			@Param("leadersOnThisProjectWhoAreNotProfessors") List<Long> leadersOnThisProjectWhoAreNotProfessors);
 
 	/**
 	 * Finding all professors who are leaders on project with projectId and returns List of their Ids
