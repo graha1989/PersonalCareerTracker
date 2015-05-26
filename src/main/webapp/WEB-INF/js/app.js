@@ -37,12 +37,12 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
 				templateUrl: 'pages/doctorMentoring.html?mentorId=:mentorId&thesisTypeId=:thesisTypeId',
 				controller: 'DoctorMentoringController'
 			})
-			.when('/languageExperience/mentorId/:mentorId', {
-				templateUrl: 'pages/languageExperience.html?mentorId=:mentorId',
+			.when('/languageExperience/professorId/:professorId', {
+				templateUrl: 'pages/languageExperience.html?professorId=:professorId',
 				controller: 'LanguageController'
 			})
-			.when('/awards/mentorId/:mentorId', {
-				templateUrl: 'pages/awards.html?mentorId=:mentorId',
+			.when('/awards/professorId/:professorId', {
+				templateUrl: 'pages/awards.html?professorId=:professorId',
 				controller: 'AwardController'
 			})
 			.when('/projectExperiences/professorId/:professorId', {

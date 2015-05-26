@@ -120,8 +120,12 @@ public class ProjectExperienceServiceImpl implements ProjectExperienceService {
 	public List<ProjectDto> findProjectsStartsWith(String value, List<Long> projectIds) {
 
 		List<ProjectDto> projectsDtoList = new ArrayList<ProjectDto>();
-
-		List<Project> projectsList = projectRepository.findByNameLike(value, projectIds);
+		List<Project> projectsList = new ArrayList<Project>();
+		if (projectIds != null && projectIds.size() > 0) {
+			projectsList = projectRepository.findByNameLike(value, projectIds);
+		} else {
+			projectsList = projectRepository.findByNameLike(value);
+		}
 		for (Project p : projectsList) {
 			ProjectDto projectDto = new ProjectDto(p);
 			projectsDtoList.add(projectDto);

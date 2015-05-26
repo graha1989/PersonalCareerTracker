@@ -50,6 +50,10 @@ app.controller("ProfessorMenuController", function($scope, $http, $location,
 
   $scope.init();
 
+  $scope.home = function() {
+    $location.path('/professorDetails/id/' + $scope.professorId);
+  };
+
   $scope.openBachelorMentoring = function() {
     $location.path('/bachelorMentoring/mentorId/' + $scope.professorId
             + '/thesisTypeId/' + $scope.thesisTypes[0].id);
@@ -68,6 +72,58 @@ app.controller("ProfessorMenuController", function($scope, $http, $location,
   $scope.openDoctorMentoring = function() {
     $location.path('/doctorMentoring/mentorId/' + $scope.professorId
             + '/thesisTypeId/' + $scope.thesisTypes[3].id);
+  };
+  
+  $scope.openProfessorBachelorStudies = function() {
+    $location.path('/studies/professorBachelorStudies/professorId/' + $scope.professorId
+            + '/thesisTypeId/' + $scope.thesisTypes[0].id);
+  };
+  
+  $scope.openProfessorMasterStudies = function() {
+    $location.path('/studies/professorMasterStudies/professorId/' + $scope.professorId
+            + '/thesisTypeId/' + $scope.thesisTypes[1].id);
+  };
+  
+  $scope.openProfessorSpecialisticStudies = function() {
+    $location.path('/studies/professorSpecialisticStudies/professorId/' + $scope.professorId
+            + '/thesisTypeId/' + $scope.thesisTypes[2].id);
+  };
+  
+  $scope.openProfessorDoctorStudies = function() {
+    $location.path('/studies/professorDoctorStudies/professorId/' + $scope.professorId
+            + '/thesisTypeId/' + $scope.thesisTypes[3].id);
+  };
+  
+  $scope.openProfessorSpecializationAbroad = function() {
+    $location.path('/specializations/professorSpecializationsAbroad/professorId/' + $scope.professorId);
+  };
+  
+  $scope.openProfessorAwards = function() {
+    $location.path('/awards/professorId/' + $scope.professorId);
+  };
+  
+  $scope.openProfessorLanguageExperiences = function() {
+    $location.path('/languageExperience/professorId/' + $scope.professorId);
+  };
+  
+  $scope.openProfessorWorkExperiences = function() {
+    $location.path('/workExperiences/professorId/' + $scope.professorId);
+  };
+  
+  $scope.openProfessorTeachingExperiences = function() {
+    $location.path('/teachingExperience/professorId/' + $scope.professorId);
+  };
+  
+  $scope.openProfessorProjectExperiences = function() {
+    $location.path('/projectExperiences/professorId/' + $scope.professorId);
+  };
+  
+  $scope.openProfessorPublications = function() {
+    $location.path('/publications/professorPublications/professorId/' + $scope.professorId);
+  };
+  
+  $scope.openInternationalPublications = function() {
+    $location.path('/publications/internationalPublications/professorId/' + $scope.professorId);
   };
 
 });

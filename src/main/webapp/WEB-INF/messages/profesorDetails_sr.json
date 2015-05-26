@@ -81,11 +81,32 @@
         "surnameLabel": "Prezime"
     },
     "professorMenuLabels": {
+    	"home": "Početak",
         "mentoring": "Mentorstva",
-        "bachelorMentoring": "Bachelor teza",
-        "masterMentoring": "Master teza",
-        "specialisticMentoring": "Specijalistička teza",
-        "doctorMentoring": "Doktorska teza"
+        "mentoringTypes": {
+        	"bachelorMentoring": "Bachelor teza",
+	        "masterMentoring": "Master teza",
+	        "specialisticMentoring": "Specijalistička teza",
+	        "doctorMentoring": "Doktorska teza"
+        },
+        "studies": "Studije",
+        "studyTypes": {
+        	"bachelorStudies": "Bachelor studije",
+	        "masterStudies": "Master studije",
+	        "specialisticStudies": "Specijalističke studije",
+	        "doctorStudies": "Doktorske studije",
+	        "specializationAbroad": "Inostrane specijalizacije"
+	 	},
+	 	"awards": "Nagrade i priznanja",
+	 	"languageExperiences": "Poznavanje jezika",
+	 	"workExperiences": "Radno iskustvo",
+	 	"teachingExperiences": "Rad u nastavi",
+	 	"projectExperiences": "Rad na projektima",
+	 	"publications": "Publikacije",
+	 	"publicationTypes": {
+        	"personalPublications": "Lične publikacije",
+	        "internationalPublications": "Međunarodne publikacije"
+	    }
     },
     "adminMenuLabels": {
     	"home": "Početak",
