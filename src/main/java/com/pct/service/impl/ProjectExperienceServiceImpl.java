@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pct.domain.Professor;
 import com.pct.domain.Project;
 import com.pct.domain.ProjectExperience;
+import com.pct.domain.dto.ProjectDto;
 import com.pct.domain.dto.ProjectExperienceDto;
 import com.pct.domain.enums.ProjectType;
 import com.pct.repository.ProfesorRepository;
@@ -27,15 +28,12 @@ import com.pct.validation.ProjectNotFoundException;
 public class ProjectExperienceServiceImpl implements ProjectExperienceService {
 
 	private ProjectExperienceRepository projectExperienceRepository;
-
 	private ProfesorRepository professorRepository;
-
 	private ProjectRepository projectRepository;
 
 	@Autowired
 	public ProjectExperienceServiceImpl(ProjectExperienceRepository projectExperienceRepository,
 			ProfesorRepository professorRepository, ProjectRepository projectRepository) {
-		super();
 		this.projectExperienceRepository = projectExperienceRepository;
 		this.professorRepository = professorRepository;
 		this.projectRepository = projectRepository;
@@ -119,16 +117,16 @@ public class ProjectExperienceServiceImpl implements ProjectExperienceService {
 
 	@Override
 	@Transactional
-	public List<ProjectExperienceDto> findProjectsStartsWith(String value, List<Long> projectIds) {
+	public List<ProjectDto> findProjectsStartsWith(String value, List<Long> projectIds) {
 
-		List<ProjectExperienceDto> projectsDtoList = new ArrayList<ProjectExperienceDto>();
+		List<ProjectDto> projectsDtoList = new ArrayList<ProjectDto>();
 
 		List<Project> projectsList = projectRepository.findByNameLike(value, projectIds);
 		for (Project p : projectsList) {
-			/*
-			 * ProjectExperienceDto projectDto = new ProjectExperienceDto(p); projectsDtoList.add(projectDto);
-			 */
+			ProjectDto projectDto = new ProjectDto(p);
+			projectsDtoList.add(projectDto);
 		}
+
 		return projectsDtoList;
 	}
 

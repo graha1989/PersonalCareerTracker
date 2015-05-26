@@ -42,7 +42,7 @@
         "editSurveyPopupTitle": "Izmena ankete",
         "professorDetailsPopupTitle": "Podaci o profesoru",
         "editProjectPopupTitle": "Izmena projekta",
-        "addNewProjectPopupTitle": "Dodavanje novog projekta",
+        "addNewProjectExperiencePopupTitle": "Dodavanje novog rada na projekta",
         "editSubjectPopupTitle": "Izmena predmeta",
         "createNewTeachingExperiencePopupTitle": "Dodavanje novog radnog iskustva u nastavi",
         "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva",
@@ -332,7 +332,7 @@
         "projectFinancedBy": "Finansiran (od koga)",
         "projectStartDate": "Počeo sa radom",
         "projectEndDate": "Završio",
-        "projectLeader": "Rukovodilac",
+        "projectLeaders": "Rukovodioci",
         "newProjectLeader": "Novi rukovodilac",
         "IamLeaderAlso": "Rukovodilac",
         "newProjectLeaderNameAndSurname": "Ime i prezime"

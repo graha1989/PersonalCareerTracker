@@ -31,6 +31,7 @@
 </head>
 <body>
 	<div
+		class="bg-success"
 		ng-controller="LoginController"
 		style="width: 600px; margin: 0 auto;">
 		<form

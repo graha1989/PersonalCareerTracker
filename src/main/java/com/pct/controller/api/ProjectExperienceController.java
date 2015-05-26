@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
+import com.pct.domain.dto.ProjectDto;
 import com.pct.domain.dto.ProjectExperienceDto;
 import com.pct.domain.enums.ProjectType;
 import com.pct.service.ProjectExperienceService;
@@ -37,7 +38,8 @@ public class ProjectExperienceController {
 	@RequestMapping(value = "allProfessorProjecExperiences", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProjectExperienceDto>> showAllProfessorProjectExperiencess(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
-		List<ProjectExperienceDto> projectExperienceDtos = projectExperienceService.findAllProjectExperiences(professorId);
+		List<ProjectExperienceDto> projectExperienceDtos = projectExperienceService
+				.findAllProjectExperiences(professorId);
 
 		logger.debug("Successfully loaded:" + projectExperienceDtos.size() + " project experiences.");
 
@@ -79,21 +81,22 @@ public class ProjectExperienceController {
 	}
 
 	@RequestMapping(value = "findProjectStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<List<ProjectExperienceDto>> findProjectStartsWith(
+	public ResponseEntity<List<ProjectDto>> findProjectStartsWith(
 			@RequestParam(value = "value", required = true) String value,
 			@RequestParam(value = "projectIds", required = false) List<Long> projectIds)
 			throws ProjectExperienceNotFoundException {
 
-		List<ProjectExperienceDto> projects = new ArrayList<ProjectExperienceDto>();
+		List<ProjectDto> projects = new ArrayList<ProjectDto>();
 		if (value.length() >= 3) {
 			projects = projectExperienceService.findProjectsStartsWith(value, projectIds);
 		}
 
-		return new ResponseEntity<List<ProjectExperienceDto>>(projects, HttpStatus.OK);
+		return new ResponseEntity<List<ProjectDto>>(projects, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ResponseEntity<ProjectExperienceDto> deleteProjectExperience(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+	public ResponseEntity<ProjectExperienceDto> deleteProjectExperience(
+			@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws ProjectExperienceNotFoundException {
 		projectExperienceService.deleteProjectExperience(id);
 

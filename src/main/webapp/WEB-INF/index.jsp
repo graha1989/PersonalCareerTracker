@@ -20,7 +20,7 @@
 </head>
 <body>
 <c:set var="role" value='<%= session.getAttribute("currentUserRole") %>' />
-	<div class="container" id="appContainer">
+	<div class="container bg-success" id="appContainer">
 		<div class="col-sm-12 pull-right">
 			<c:choose>
 				<c:when test="${loggedIn}">
