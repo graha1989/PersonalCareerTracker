@@ -139,7 +139,7 @@ public class ProjectExperienceServiceImpl implements ProjectExperienceService {
 			throw new ProjectExperienceNotFoundException();
 		}
 
-		projectExperienceRepository.delete(projectExperience);
+		projectExperienceRepository.delete(id);
 	}
 
 }

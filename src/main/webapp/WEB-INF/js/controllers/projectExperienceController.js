@@ -54,6 +54,7 @@ app.controller("ProjectExperienceController", function($scope, $routeParams,
             function(response) {
               if (angular.isObject(response) && response.length > 0) {
                 $scope.allProjectExperiences = response;
+                $scope.completeProjecExperienceDataArray = [];
                 for (var i = 0; i < $scope.allProjectExperiences.length; i++) {
                   $scope.loadSelectedProject(
                           $scope.allProjectExperiences[i].projectId, i);
@@ -96,6 +97,19 @@ app.controller("ProjectExperienceController", function($scope, $routeParams,
         projectExperiences: function() {
           return $scope.allProjectExperiences;
         }
+      }
+    });
+  };
+
+  $scope.deleteProjectExperience = function(id, index) {
+    PctService.deleteProjectExperience(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.errorStatus = data.status;
+      } else {
+        $scope.successStatus = "Successfully deleted teaching experience.";
+        $scope.completeProjecExperienceDataArray.splice(index, 1);
+        $scope.allProjectExperiences.splice(index, 1);
+        $scope.loadProjectExperiences($routeParams.professorId);
       }
     });
   };
@@ -427,8 +441,8 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
   };
 
   $scope.isProfessorLeader = function() {
-    var index = $scope.arrayContainsElement($scope.selectedProject.projectLeaderDtos,
-            $routeParams.professorId);
+    var index = $scope.arrayContainsElement(
+            $scope.selectedProject.projectLeaderDtos, $routeParams.professorId);
     if (index == -1) { return false; }
     return true;
   };
