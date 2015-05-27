@@ -56,14 +56,14 @@
 							<td class="delete"><div class="col-sm-1"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteLanguageExperience(language.id, $index)"
-									ng-disabled="addNewRow">
+									ng-disabled="addNewRow || !noEditMode">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.languageExperienceButtons.delete }}
 								</button></div></td>
 							<td class="edit"><div class="col-sm-1"><button
 									class="btn btn-link btn-xs"
 									ng-show="!editMode[$index]"
 									ng-click="makeEditable($index)"
-									ng-disabled="addNewRow">
+									ng-disabled="addNewRow || !noEditMode">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.languageExperienceButtons.edit }}
 								</button>
 								<button
@@ -105,7 +105,7 @@
 							<td colspan="2"><div class="col-sm-2" /></td>
 						</tr>
 						<tr ng-show="noResultsFound && !addNewRow">
-							<td colspan="6"><div class="col-sm-12">{{ errorMessages.error.emptyTable }}</div></td>
+							<td colspan="6" class="col-sm-12">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -116,7 +116,8 @@
 				id="addNewButton"
 				class="btn btn-success btn-sm"
 				ng-show="!addNewRow"
-				ng-click="addNewLanguage()">
+				ng-click="addNewLanguage()"
+				ng-disabled="!noEditMode">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.languageExperienceButtons.add }}
 			</button>
 			<button

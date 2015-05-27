@@ -115,8 +115,12 @@ public class LanguageServiceImpl implements LanguageService {
 			throws LanguageNotFoundException {
 
 		List<LanguageDto> languageDtoList = new ArrayList<LanguageDto>();
-
-		List<Language> languageList = languageRepo.findAllNotListedLanguages(languageExperienceIdsList);
+		List<Language> languageList = new ArrayList<Language>();
+		if (languageExperienceIdsList != null && languageExperienceIdsList.size() > 0) {
+			languageList = languageRepo.findAllNotListedLanguages(languageExperienceIdsList);
+		} else {
+			languageList = languageRepo.findAll();
+		}
 		for (Language l : languageList) {
 			LanguageDto languageDto = new LanguageDto(l);
 			languageDto.setId(l.getId());

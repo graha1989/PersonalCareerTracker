@@ -6,7 +6,7 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
   $scope.languageExperienceIdsList = [];
   $scope.language = {};
   $scope.language.languageId;
-  $scope.language.professorId = $routeParams.mentorId;
+  $scope.language.professorId = $routeParams.professorId;
   $scope.language.languageName;
   $scope.language.reading = false;
   $scope.language.writing = false;
@@ -17,6 +17,7 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
   $scope.errorMessages = {};
   $scope.editMode = [];
   $scope.addNewRow = false;
+  $scope.noEditMode = true;
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -30,14 +31,15 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
             });
   };
 
-  $scope.loadLanguages = function(mentorId) {
-    return PctService.loadLanguages(mentorId).then(function(response) {
+  $scope.loadLanguages = function(professorId) {
+    return PctService.loadLanguages(professorId).then(function(response) {
       if (angular.isObject(response) && response.length > 0) {
         $scope.professorLanguages = response;
         $scope.editMode = new Array($scope.professorLanguages.length);
         for (var i = 0; i < $scope.professorLanguages.length; i++) {
           $scope.editMode.splice(i, 1, false);
-        };
+        }
+        ;
         $scope.noResultsFound = false;
       } else {
         $scope.editMode = [0];
@@ -47,11 +49,19 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
   };
 
   $scope.init = function() {
-    $scope.loadLanguages($routeParams.mentorId);
+    $scope.loadLanguages($routeParams.professorId);
     $scope.loadResources();
   };
 
   $scope.init();
+
+  $scope.$watchCollection('editMode', function() {
+    if ($scope.editMode.indexOf(true) == -1) {
+      $scope.noEditMode = true;
+    } else {
+      $scope.noEditMode = false;
+    }
+  });
 
   $scope.goBack = function() {
     window.history.back();
@@ -120,7 +130,7 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
       } else {
         $scope.successStatus = "Successfully deleted language experience.";
         $scope.allLanguages.splice(index, 1);
-        $scope.loadLanguages($routeParams.mentorId);
+        $scope.loadLanguages($routeParams.professorId);
       }
     });
   };

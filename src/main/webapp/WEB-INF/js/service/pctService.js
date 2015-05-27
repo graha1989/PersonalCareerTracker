@@ -71,11 +71,11 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
-        loadLanguages: function(mentorId) {
+        loadLanguages: function(professorId) {
           var deferred = $q.defer();
           $http.get("api/languages/allProfessorLanguages", {
             params: {
-              mentorId: mentorId
+              professorId: professorId
             }
           }).success(function(response) {
             deferred.resolve(response);
