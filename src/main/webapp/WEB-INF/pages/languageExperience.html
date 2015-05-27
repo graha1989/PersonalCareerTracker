@@ -23,7 +23,7 @@
 							<td><div class="col-sm-1">{{ resources.languageExperienceTableLabels.writing }}</div></td>
 							<td><div class="col-sm-1">{{ resources.languageExperienceTableLabels.reading }}</div></td>
 							<td><div class="col-sm-1">{{ resources.languageExperienceTableLabels.pronouncing }}</div></td>
-							<td colspan="2"><div class="col-sm-2" /></td>
+							<td ng-show="isUser" colspan="2"><div class="col-sm-2" /></td>
 						</tr>
 						<tr
 							class="active ng-scope"
@@ -53,13 +53,13 @@
 								type="checkbox"
 								ng-model="language.pronouncing"
 								ng-show="editMode[$index]"></input></div></td>
-							<td class="delete"><div class="col-sm-1"><button
+							<td class="delete" ng-show="isUser"><div class="col-sm-1"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteLanguageExperience(language.id, $index)"
 									ng-disabled="addNewRow || !noEditMode">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.languageExperienceButtons.delete }}
 								</button></div></td>
-							<td class="edit"><div class="col-sm-1"><button
+							<td class="edit" ng-show="isUser"><div class="col-sm-1"><button
 									class="btn btn-link btn-xs"
 									ng-show="!editMode[$index]"
 									ng-click="makeEditable($index)"
@@ -68,7 +68,7 @@
 								</button>
 								<button
 									class="btn btn-link btn-xs"
-									ng-show="editMode[$index]"
+									ng-show="editMode[$index] && isUser"
 									ng-click="editLanguageExperience(language, $index)">
 									<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.languageExperienceButtons.save }}
 								</button></div></td>
@@ -105,7 +105,8 @@
 							<td colspan="2"><div class="col-sm-2" /></td>
 						</tr>
 						<tr ng-show="noResultsFound && !addNewRow">
-							<td colspan="6" class="col-sm-12">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isUser" colspan="6" class="col-sm-12">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isAdmin" colspan="4" class="col-sm-12">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -115,7 +116,7 @@
 			<button
 				id="addNewButton"
 				class="btn btn-success btn-sm"
-				ng-show="!addNewRow"
+				ng-show="!addNewRow && isUser"
 				ng-click="addNewLanguage()"
 				ng-disabled="!noEditMode">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.languageExperienceButtons.add }}
@@ -123,14 +124,14 @@
 			<button
 				id="cancelAddingNew"
 				class="btn btn-sm"
-				ng-show="addNewRow"
+				ng-show="addNewRow && isUser"
 				ng-click="cancelAddingNew()">
 				<span class="glyphicon glyphicon-remove"></span> {{ resources.buttons.languageExperienceButtons.cancel }}
 			</button>
 			<button
 				id="saveNewButton"
 				class="btn btn-success btn-sm"
-				ng-show="addNewRow"
+				ng-show="addNewRow && isUser"
 				ng-disabled="isNewLanguageSelected() || !(language.writing || language.reading || language.pronouncing)"
 				ng-click="saveNewLanguageExperience()">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.languageExperienceButtons.save }}

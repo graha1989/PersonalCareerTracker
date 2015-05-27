@@ -270,7 +270,7 @@
 								id="edit_button"
 								type="edit"
 								class="btn btn-link btn-sm"
-								ng-show="!editMode[$index]"
+								ng-show="!editMode[$index] && isUser"
 								ng-click="editProfesorBachelorStudies($index)">
 								<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.professorStudiesButtons.edit }}
 							</button>
@@ -278,7 +278,7 @@
 								id="submit_button"
 								type="submit"
 								class="btn btn-link btn-sm"
-								ng-show="editMode[$index]"
+								ng-show="editMode[$index] && isUser"
 								ng-disabled="form.$invalid || isUnchanged($index)"
 								ng-click="updateProfessorBachelorStudies(bachelorStudies, $index)">
 								<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.professorStudiesButtons.save }}
@@ -286,12 +286,12 @@
 							<button
 								id="cancel_button"
 								class="btn btn-link btn-sm"
-								ng-show="editMode[$index]"
+								ng-show="editMode[$index] && isUser"
 								ng-click="close($index)">{{ resources.buttons.professorStudiesButtons.close }}</button>
 							<button
 								id="delete_button"
 								class="btn btn-link btn-sm"
-								ng-show="!editMode[$index]"
+								ng-show="!editMode[$index] && isUser"
 								ng-click="deleteProfessorBachelorStudies(bachelorStudies.id, $index)">
 								<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.professorStudiesButtons.delete }}
 							</button>
@@ -312,6 +312,7 @@
 								id="addNewButton"
 								class="btn btn-success btn-large"
 								ng-disabled="isInEditMode()"
+								ng-show="isUser"
 								ng-click="createNewBachelorStudies()">
 								<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.professorStudiesButtons.add }}
 							</button>

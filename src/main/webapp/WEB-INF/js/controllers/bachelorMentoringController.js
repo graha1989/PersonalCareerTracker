@@ -6,6 +6,9 @@ app.controller("BachelorMentoringController", function($scope, $routeParams,
   $scope.resources = {};
   $scope.errorMessages = {};
   $scope.noResultsFound = true;
+  
+  $scope.isUser = false;
+  $scope.isAdmin = false;
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -35,11 +38,20 @@ app.controller("BachelorMentoringController", function($scope, $routeParams,
       }
     });
   };
+  
+  $scope.getCurrentUserRole = function() {
+    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+      $scope.isUser = true;
+    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+      $scope.isAdmin = true;
+    }
+  };
 
   $scope.init = function() {
     $scope.thesis = {};
     $scope.loadThesis($routeParams.mentorId, $routeParams.thesisTypeId);
     $scope.loadResources();
+    $scope.getCurrentUserRole();
   };
 
   $scope.init();

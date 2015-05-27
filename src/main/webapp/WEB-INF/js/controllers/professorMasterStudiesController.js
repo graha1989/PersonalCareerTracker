@@ -11,6 +11,9 @@ app.controller("ProfessorMasterStudiesController", function($scope,
   $scope.editMode = [];
   $scope.inputStudyStartDateOpened = [];
   $scope.inputStudyEndDateOpened = [];
+  
+  $scope.isUser = false;
+  $scope.isAdmin = false;
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -107,6 +110,14 @@ app.controller("ProfessorMasterStudiesController", function($scope,
   };
 
   $scope.setMaxDate();
+  
+  $scope.getCurrentUserRole = function() {
+    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+      $scope.isUser = true;
+    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+      $scope.isAdmin = true;
+    }
+  };
 
   $scope.init = function() {
     $scope.loadProfessorsMasterStudies($routeParams.professorId,

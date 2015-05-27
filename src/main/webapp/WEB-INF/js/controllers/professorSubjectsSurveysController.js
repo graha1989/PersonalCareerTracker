@@ -9,6 +9,9 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
+  
+  $scope.isUser = false;
+  $scope.isAdmin = false;
 
   $scope.sortType = '';
 
@@ -31,6 +34,10 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
     description: "broju studenata-opadajuće",
     sortBy: "-numberOfStudents"
   }];
+  
+  $scope.noSurveys = function() {
+    return $scope.allSurveys.length === 0;
+  };
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -86,14 +93,23 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
       averageSudentsNumber: studentsSum / $scope.allSurveys.length
     }
   };
+  
+  $scope.getCurrentUserRole = function() {
+    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+      $scope.isUser = true;
+    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+      $scope.isAdmin = true;
+    }
+  };
 
   $scope.init = function() {
     $scope.loadAllSurveys($routeParams.professorId, $routeParams.subjectId);
     $scope.loadResources();
+    $scope.getCurrentUserRole();
   };
 
   $scope.init();
-
+  
   $scope.editSurvey = function(id) {
     $modal.open({
       templateUrl: 'editSurveyPopup.html',

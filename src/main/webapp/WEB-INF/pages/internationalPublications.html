@@ -29,7 +29,7 @@
 							<td>{{ resources.internationalPublicationsTableLabels.pagesWithQuotes }}</td>
 							<td>{{ resources.internationalPublicationsTableLabels.year }}</td>
 							<td>{{ resources.internationalPublicationsTableLabels.category }}</td>
-							<td colspan="2"></td>
+							<td ng-show="isUser" colspan="2"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
@@ -43,19 +43,22 @@
 							<td>{{ internationalPublication.pagesWithQuotes }}</td>
 							<td>{{ internationalPublication.year }}</td>
 							<td>{{ internationalPublication.publicationCategoryDto.code }}</td>
-							<td class="delete"><button
+							<td class="delete"
+								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteInternationalPublication(internationalPublication.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.publicationsButtons.delete }}
 								</button></td>
-							<td class="edit"><button
+							<td class="edit"
+								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="editInternationalPublication(internationalPublication.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.publicationsButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="11">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isUser" colspan="11">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isAdmin" colspan="9">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -65,6 +68,7 @@
 			<button
 				id="addNewButton"
 				class="btn btn-success btn-sm"
+				ng-show="isUser"
 				ng-click="createNewInternationalPublication()">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.publicationsButtons.add }}
 			</button>

@@ -66,7 +66,7 @@ public class AwardServiceImpl implements AwardService {
 	@Transactional
 	public void saveAward(AwardDto awardDto) throws ProfessorNotFoundException {
 
-		Professor professor = professorRepository.findOne(awardDto.getMentorId());
+		Professor professor = professorRepository.findOne(awardDto.getProfessorId());
 		if (professor == null) {
 			throw new ProfessorNotFoundException();
 		}

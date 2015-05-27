@@ -278,7 +278,31 @@
         },
         "allProfessorsButtons": {
             "details": "Detaljnije",
+            "studies": "Studije",
+            "studyTypes": {
+	        	"bachelorStudies": "Bachelor studije",
+		        "masterStudies": "Master studije",
+		        "specialisticStudies": "Specijalističke studije",
+		        "doctorStudies": "Doktorske studije",
+		        "specializationAbroad": "Inostrane specijalizacije"
+		 	},
+		 	"mentoring": "Mentorstva",
+            "mentoringTypes": {
+	        	"bachelorMentoring": "Bachelor teza",
+		        "masterMentoring": "Master teza",
+		        "specialisticMentoring": "Specijalistička teza",
+		        "doctorMentoring": "Doktorska teza"
+		 	},
+		 	"publications": "Publikacije",
+            "publicationTypes": {
+	        	"professorPublications": "Lične publikacije",
+		        "internationalPublications": "Internacionalne publikacije"
+		 	},
             "teachingExperiences": "Rad u nastavi",
+            "projectExperiences": "Rad na projektima",
+            "awards": "Priznanja",
+            "languages": "Jezici",
+            "workExperiences": "Radna iskustva",
             "close": "Zatvori"
         },
         "teachingExperienceButtons": {

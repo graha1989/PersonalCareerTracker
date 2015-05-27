@@ -20,7 +20,7 @@
 							<td>{{ resources.awardsTableLabels.dateOfAward }}</td>
 							<td>{{ resources.awardsTableLabels.awardedBy }}</td>
 							<td>{{ resources.awardsTableLabels.field }}</td>
-							<td colspan="2"></td>
+							<td ng-show="isUser" colspan="2"></td>
 						</tr>
 						<tr class="active ng-scope" ng-repeat="award in awards">
 							<td>{{ award.awardType.title}}</td>
@@ -28,19 +28,23 @@
 							<td>{{ award.dateOfAward | date:'dd-MM-yyyy' }}</td>
 							<td>{{ award.awardedBy }}</td>
 							<td>{{ award.awardField.title }}</td>
-							<td class="delete"><button class="btn btn-link btn-xs"
+							<td class="delete" ng-show="isUser"><button
+									class="btn btn-link btn-xs"
 									ng-click="deleteAward(award.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{
 									resources.buttons.awardButtons.delete }}
 								</button></td>
-							<td class="edit"><button class="btn btn-link btn-xs"
-									ng-click="editAward(award.id)">
+							<td class="edit" ng-show="isUser"><button
+									class="btn btn-link btn-xs" ng-click="editAward(award.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{
 									resources.buttons.awardButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="7">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isUser" colspan="7">{{
+								errorMessages.error.emptyTable }}</td>
+							<td ng-show="isAdmin" colspan="5">{{
+								errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -48,7 +52,7 @@
 		</div>
 		<div class="modal-footer action">
 			<button id="addNewButton" class="btn btn-success btn-sm"
-				ng-click="createNewAward()">
+				ng-show="isUser" ng-click="createNewAward()">
 				<span class="glyphicon glyphicon-plus"></span> {{
 				resources.buttons.awardButtons.add }}
 			</button>

@@ -8,14 +8,13 @@
 		ng-model="survey">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ resources.text.surveysTitle }}: {{ completeSurveyDataArray[1].subject.subjectName }}</h3>
+			<h3 class="modal-title">{{ resources.text.surveysTitle }}: {{ completeSurveyDataArray[0].subject.subjectName }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
-				
 				<div
 					class="row form-group"
-					ng-show="allSurveys != []">
+					ng-show="!noSurveys()">
 					<label
 						for="inputSortCriteria"
 						class="col-sm-9 control-label"></label>
@@ -38,7 +37,7 @@
 							<td>{{ resources.surveysTableLabels.academicYear }}</td>
 							<td>{{ resources.surveysTableLabels.averageStudentGrade }}</td>
 							<td>{{ resources.surveysTableLabels.numberOfStudents }}</td>
-							<td colspan="2"></td>
+							<td ng-show="isAdmin" colspan="2"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
@@ -46,19 +45,20 @@
 							<td>{{ survey.academicYear }}</td>
 							<td>{{ survey.averageGrade }}</td>
 							<td>{{ survey.numberOfStudents }}</td>
-							<td class="delete"><button
+							<td class="delete" ng-show="isAdmin"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteSurvey(survey.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.surveysButtons.delete }}
 								</button></td>
-							<td class="edit"><button
+							<td class="edit" ng-show="isAdmin"><button
 									class="btn btn-link btn-xs"
 									ng-click="editSurvey(survey.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.surveysButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="5">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isAdmin" colspan="5">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isUser" colspan="3">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -78,7 +78,8 @@
 			<button
 				id="addNewButton"
 				class="btn btn-success btn-sm"
-				ng-click="createNewSurvey()">
+				ng-click="createNewSurvey()"
+				ng-show="isAdmin">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.surveysButtons.add }}
 			</button>
 		</div>

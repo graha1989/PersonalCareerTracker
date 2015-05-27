@@ -18,7 +18,7 @@ app.factory("PctService", [
           }).success(callback).error(callback);
         },
         loadProfesor: function(id, callback) {
-          $http.get('api/professors/loadProfesorDetails?id=' + id).success(
+          $http.get('api/professors/loadProfessorDetails?id=' + id).success(
                   callback).error(callback);
         },
         loadThesis: function(mentorId, thesisTypeId, callback) {

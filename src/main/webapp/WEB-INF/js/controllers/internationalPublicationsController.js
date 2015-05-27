@@ -10,6 +10,9 @@ app
                   $scope.noResultsFound = true;
                   $scope.resources = {};
                   $scope.errorMessages = {};
+                  
+                  $scope.isUser = false;
+                  $scope.isAdmin = false;
 
                   $scope.loadResources = function() {
                     var locale = document.getElementById('localeCode');
@@ -40,11 +43,20 @@ app
                                       }
                                     });
                   };
+                  
+                  $scope.getCurrentUserRole = function() {
+                    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+                      $scope.isUser = true;
+                    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+                      $scope.isAdmin = true;
+                    }
+                  };
 
                   $scope.init = function() {
                     $scope
                             .loadInternationalPublications($routeParams.professorId);
                     $scope.loadResources();
+                    $scope.getCurrentUserRole();
                   };
 
                   $scope.init();

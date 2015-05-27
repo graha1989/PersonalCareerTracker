@@ -18,6 +18,9 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
   $scope.editMode = [];
   $scope.addNewRow = false;
   $scope.noEditMode = true;
+  
+  $scope.isUser = false;
+  $scope.isAdmin = false;
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -47,10 +50,19 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
       }
     });
   };
-
+  
+  $scope.getCurrentUserRole = function() {
+    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+      $scope.isUser = true;
+    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+      $scope.isAdmin = true;
+    }
+  };
+  
   $scope.init = function() {
     $scope.loadLanguages($routeParams.professorId);
     $scope.loadResources();
+    $scope.getCurrentUserRole();
   };
 
   $scope.init();

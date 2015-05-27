@@ -15,7 +15,7 @@ public class ProfessorDto extends UserDto implements Serializable {
 	@Length(max = 50)
 	@SafeHtml
 	private String fathersName;
-	
+
 	private Date dateOfBirth;
 
 	@Length(max = 50)
@@ -110,6 +110,9 @@ public class ProfessorDto extends UserDto implements Serializable {
 	}
 
 	public Long getId() {
+		if (super.id != null && super.id > 0L) {
+			this.id = super.id;
+		}
 		return id;
 	}
 

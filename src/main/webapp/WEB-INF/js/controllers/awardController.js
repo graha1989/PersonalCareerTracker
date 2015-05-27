@@ -6,6 +6,9 @@ app.controller("AwardController", function($scope, $routeParams, $http, $route,
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
+  
+  $scope.isUser = false;
+  $scope.isAdmin = false;
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -29,10 +32,19 @@ app.controller("AwardController", function($scope, $routeParams, $http, $route,
       }
     });
   };
+  
+  $scope.getCurrentUserRole = function() {
+    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+      $scope.isUser = true;
+    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+      $scope.isAdmin = true;
+    }
+  };
 
   $scope.init = function() {
-    $scope.loadAwards($routeParams.mentorId);
+    $scope.loadAwards($routeParams.professorId);
     $scope.loadResources();
+    $scope.getCurrentUserRole();
   };
 
   $scope.init();
@@ -243,7 +255,7 @@ var createNewAwardController = function($scope, $modalInstance, $routeParams,
   $scope.init = function() {
     $scope.loadAllAwardTypes();
     $scope.loadAllAwardFields();
-    $scope.award.mentorId = $routeParams.mentorId;
+    $scope.award.professorId = $routeParams.professorId;
     $scope.status = $routeParams.status;
     $scope.loadResources();
   };

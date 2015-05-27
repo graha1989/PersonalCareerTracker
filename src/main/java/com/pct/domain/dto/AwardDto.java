@@ -35,14 +35,14 @@ public class AwardDto implements Serializable {
 	@NotNull
 	private AwardField awardField;
 	
-	protected Long mentorId;
+	protected Long professorId;
 	
 	protected Long id;
 	
 	public AwardDto() {
 	}
 
-	public AwardDto(String awardName, String awardedBy, Date dateOfAward, AwardType awardType, AwardField awardField, Long id, Long mentorId) {
+	public AwardDto(String awardName, String awardedBy, Date dateOfAward, AwardType awardType, AwardField awardField, Long id, Long professorId) {
 		super();
 		this.awardName = awardName;
 		this.awardedBy = awardedBy;
@@ -50,7 +50,7 @@ public class AwardDto implements Serializable {
 		this.awardType = awardType;
 		this.awardField = awardField;
 		this.id = id;
-		this.mentorId = mentorId;
+		this.professorId = professorId;
 	}
 
 	public AwardDto(Award award) {
@@ -60,7 +60,7 @@ public class AwardDto implements Serializable {
 		this.awardType = award.getAwardType();
 		this.awardField = award.getAwardField();
 		this.id = award.getId();
-		this.mentorId = award.getProfessor().getId();
+		this.professorId = award.getProfessor().getId();
 	}
 
 	public String getAwardName() {
@@ -111,12 +111,12 @@ public class AwardDto implements Serializable {
 		this.id = id;
 	}
 
-	public Long getMentorId() {
-		return mentorId;
+	public Long getProfessorId() {
+		return professorId;
 	}
 
-	public void setMentorId(Long mentorId) {
-		this.mentorId = mentorId;
+	public void setProfessorId(Long professorId) {
+		this.professorId = professorId;
 	}
 	
 }

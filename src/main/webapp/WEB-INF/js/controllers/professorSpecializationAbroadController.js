@@ -10,7 +10,10 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
   $scope.editMode = [];
   $scope.inputStartDateOpened = [];
   $scope.inputEndDateOpened = [];
-
+  
+  $scope.isUser = false;
+  $scope.isAdmin = false;
+  
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
@@ -95,10 +98,19 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
   };
 
   $scope.setMaxDate();
+  
+  $scope.getCurrentUserRole = function() {
+    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+      $scope.isUser = true;
+    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+      $scope.isAdmin = true;
+    }
+  };
 
   $scope.init = function() {
     $scope.loadProfessorsSpecializationsAbroad($routeParams.professorId);
     $scope.loadResources();
+    $scope.getCurrentUserRole();
   };
 
   $scope.init();

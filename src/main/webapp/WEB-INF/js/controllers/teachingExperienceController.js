@@ -7,6 +7,9 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
+  
+  $scope.isUser = false;
+  $scope.isAdmin = false;
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -31,14 +34,23 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
               }
             });
   };
+  
+  $scope.getCurrentUserRole = function() {
+    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+      $scope.isUser = true;
+    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+      $scope.isAdmin = true;
+    }
+  };
 
   $scope.init = function() {
     $scope.loadTeachingExperiences($routeParams.professorId);
     $scope.loadResources();
+    $scope.getCurrentUserRole();
   };
 
   $scope.init();
-
+  
   $scope.goBack = function() {
     window.history.back();
   };
@@ -54,7 +66,7 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
       }
     });
   };
-  
+
   $scope.deleteTeachingExperience = function(id, index) {
     PctService.deleteTeachingExperience(id, function(data) {
       if (angular.isObject(data)) {
@@ -66,9 +78,10 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
       }
     });
   };
-  
+
   $scope.showSurveysForSubject = function(professorId, subjectId) {
-    $location.path('/surveys/professorId/' + professorId + '/subjectId/' + subjectId);
+    $location.path('/surveys/professorId/' + professorId + '/subjectId/'
+            + subjectId);
   };
 
 });

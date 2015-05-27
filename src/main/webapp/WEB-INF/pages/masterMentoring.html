@@ -26,7 +26,7 @@
 							<td>{{ resources.mentoringTableLabels.thesisPaperScientificArea }}</td>
 							<td>{{ resources.mentoringTableLabels.thesisDateOfGraduation }}</td>
 							<td>{{ resources.mentoringTableLabels.thesisUniversityName }}</td>
-							<td colspan="2"></td>
+							<td ng-show="isUser" colspan="2"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
@@ -38,19 +38,22 @@
 							<td>{{ thesis.paperScientificArea }}</td>
 							<td>{{ thesis.dateOfGraduation | date:'dd-MM-yyyy' }}</td>
 							<td>{{ thesis.universityName }}</td>
-							<td class="delete"><button
+							<td class="delete"
+								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteThesis(thesis.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.mentorThesisButtons.delete }}
 								</button></td>
-							<td class="edit"><button
+							<td class="edit"
+								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="editThesis(thesis.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.mentorThesisButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="9">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isUser" colspan="9">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isAdmin" colspan="7">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -60,6 +63,7 @@
 			<button
 				id="addNewButton"
 				class="btn btn-success btn-sm"
+				ng-show="isUser"
 				ng-click="createNewMasterThesis()">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.mentorThesisButtons.add }}
 			</button>

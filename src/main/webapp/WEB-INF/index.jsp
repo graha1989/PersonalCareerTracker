@@ -52,6 +52,7 @@
 		</div>
 		<input type="hidden" value='<c:out value="${pageContext.response.locale}"></c:out>' id="localeCode">
 		<input type="hidden" value='<%= session.getAttribute("currentUserId") %>' id="currentUserId">
+		<input type="hidden" value='<c:out value="${role}"></c:out>' id="currentUserRole">
 	</div>
 
 	<script type="text/javascript" src="<spring:url value='js/lib/angular.min.js' />"></script>
