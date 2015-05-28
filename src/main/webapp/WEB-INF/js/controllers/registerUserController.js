@@ -4,6 +4,7 @@ app.controller("RegisterUserController", function($scope, $routeParams, $http,
   $scope.professor;
   $scope.resources = {};
   $scope.errorMessages = {};
+  $scope.fieldErrors = [];
   $scope.opened = false;
   $scope.isProfessor = false;
 
@@ -15,6 +16,12 @@ app.controller("RegisterUserController", function($scope, $routeParams, $http,
   $scope.dateOptions = {
     "starting-day": "1"
   };
+
+  $(function() {
+    $("[data-hide]").on("click", function() {
+      $("." + $(this).attr("data-hide")).hide();
+    });
+  });
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -68,7 +75,6 @@ app.controller("RegisterUserController", function($scope, $routeParams, $http,
       }, "slow");
       window.location.href = "login";
     }).error(function(data, status) {
-      $scope.error = "Greška!";
       if (angular.isObject(data.fieldErrors)) {
         $scope.fieldErrors = angular.fromJson(data.fieldErrors);
       }

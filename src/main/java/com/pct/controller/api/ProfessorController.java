@@ -22,7 +22,9 @@ import com.pct.constants.MimeTypes;
 import com.pct.domain.dto.ProfessorDto;
 import com.pct.service.ProfessorService;
 import com.pct.service.UserService;
+import com.pct.validation.EmailExistException;
 import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.UserNameExistException;
 
 @RestController
 @RequestMapping("/api/professors")
@@ -37,7 +39,8 @@ public class ProfessorController {
 	UserService userService;
 
 	@RequestMapping(value = "persistProfessor", method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<String> persistProfessor(@Valid @RequestBody ProfessorDto professorDto) {
+	public ResponseEntity<String> persistProfessor(@Valid @RequestBody ProfessorDto professorDto)
+			throws UserNameExistException, EmailExistException {
 
 		if (StringUtils.isBlank(professorDto.getFathersName()) && professorDto.getDateOfBirth() == null
 				&& StringUtils.isBlank(professorDto.getPlaceOfBirth())

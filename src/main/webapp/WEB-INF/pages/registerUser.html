@@ -6,7 +6,7 @@
 		role="form"
 		novalidate
 		ng-model="professor">
-
+		
 		<div class="modal-header">
 			<div class="row form-controll">
 				<h3 class="modal-title col-sm-4">{{ resources.text.userTitle }}</h3>
@@ -18,6 +18,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="alert-warning" ng-show="fieldErrors.length">
+	        <div ng-repeat="error in fieldErrors"> <span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{error.message}}</strong></div>
+	    </div>
 		<div class="modal-body">
 			<div
 				ng-show="error"
