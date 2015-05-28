@@ -124,6 +124,7 @@ app.controller("ProfessorMasterStudiesController", function($scope,
             $routeParams.thesisTypeId);
     $scope.loadAllStudyPrograms();
     $scope.loadResources();
+    $scope.getCurrentUserRole();
   };
 
   $scope.init();
