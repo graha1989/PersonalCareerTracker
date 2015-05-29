@@ -142,6 +142,10 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
               }
             });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

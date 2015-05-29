@@ -206,6 +206,10 @@ app.controller("ProfessorMasterStudiesController", function($scope,
       controller: createNewMasterStudiesController,
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

@@ -89,6 +89,10 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
       }
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

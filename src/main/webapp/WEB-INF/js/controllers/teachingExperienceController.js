@@ -83,6 +83,10 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
     $location.path('/surveys/professorId/' + professorId + '/subjectId/'
             + subjectId);
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

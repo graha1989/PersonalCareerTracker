@@ -191,6 +191,10 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
       controller: createNewSpecializationController,
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

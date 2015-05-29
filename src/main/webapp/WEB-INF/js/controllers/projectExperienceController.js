@@ -125,6 +125,10 @@ app.controller("ProjectExperienceController", function($scope, $routeParams,
       }
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

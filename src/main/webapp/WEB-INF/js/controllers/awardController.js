@@ -83,6 +83,10 @@ app.controller("AwardController", function($scope, $routeParams, $http, $route,
       controller: createNewAwardController,
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

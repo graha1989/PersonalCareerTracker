@@ -206,6 +206,10 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
       controller: createNewDoctorStudiesController,
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

@@ -136,6 +136,13 @@
 				ng-click="saveNewLanguageExperience()">
 				<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.languageExperienceButtons.save }}
 			</button>
+			<button
+				id="cancel_button"
+				class="btn btn-sm"
+				ng-click="goBack()"
+				ng-disabled="!noEditMode || addNewRow">
+				<span class="glyphicon glyphicon-arrow-left"></span> {{ resources.form.back }}
+			</button>
 		</div>
 	</form>
 

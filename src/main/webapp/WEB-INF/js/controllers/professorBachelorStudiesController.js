@@ -206,6 +206,10 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
       controller: createNewBachelorStudiesController,
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 
@@ -389,5 +393,5 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
       return false;
     }
   };
-
+  
 };

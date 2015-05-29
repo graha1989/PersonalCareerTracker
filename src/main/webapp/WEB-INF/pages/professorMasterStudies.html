@@ -1,46 +1,36 @@
 <div>
 
-	<form
-		name="form"
+	<form name="form"
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
-		role="form"
-		novalidate
-		ng-model="masterStudies">
+		role="form" novalidate ng-model="masterStudies">
 
 		<table>
 			<tbody>
 				<tr ng-repeat="masterStudies in allMasterStudies">
 					<td>
 						<div class="modal-header">
-							<h3 class="modal-title">{{ resources.text.professorMasterStudiesTitle }}: {{ masterStudies.facultyName }}, {{ masterStudies.universityName }}</h3>
+							<h3 class="modal-title">{{
+								resources.text.professorMasterStudiesTitle }}: {{
+								masterStudies.facultyName }}, {{ masterStudies.universityName }}</h3>
 						</div>
 						<div class="modal-body">
 							<fieldset>
 								<div class="row form-group">
-									<label
-										for="inputStudyStartDate"
-										class="col-sm-2 control-label">{{ resources.professorMasterStudies.studyStartDate }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+									<label for="inputStudyStartDate" class="col-sm-2 control-label">{{
+										resources.professorMasterStudies.studyStartDate }} <span
+										class="required" ng-show="editMode[$index]">*</span>
+									</label>
 									<div class="col-sm-2">
-										<div
-											class="input-group date"
-											id="datepicker">
-											<input
-												type="text"
-												class="form-control"
-												id="inputStudyStartDate"
-												name="inputStudyStartDate"
-												placeholder="DD-MM-GGGG"
-												datepicker-popup="dd-MM-yyyy"
+										<div class="input-group date" id="datepicker">
+											<input type="text" class="form-control"
+												id="inputStudyStartDate" name="inputStudyStartDate"
+												placeholder="DD-MM-GGGG" datepicker-popup="dd-MM-yyyy"
 												is-open="inputStudyStartDateOpened[$index]"
-												min-date="minDate"
-												max-date="maxDate"
-												datepicker-options="dateOptions"
-												show-button-bar="false"
+												min-date="minDate" max-date="maxDate"
+												datepicker-options="dateOptions" show-button-bar="false"
 												ng-model="masterStudies.studyStartDate"
-												ng-disabled="!editMode[$index]"
-												required /> <span class="input-group-addon"> <span
+												ng-disabled="!editMode[$index]" required /> <span
+												class="input-group-addon"> <span
 												class="glyphicon glyphicon-calendar"
 												ng-click="openStudyStartDate($event, $index)"></span>
 											</span>
@@ -48,35 +38,25 @@
 										<div
 											ng-show="form.inputStudyStartDate.$dirty && form.inputStudyStartDate.$invalid"
 											class="studyStartDateFieldError">
-											<span
-												ng-show="form.inputStudyStartDate.$error.required"
+											<span ng-show="form.inputStudyStartDate.$error.required"
 												class="ng-binding">{{ errorMessages.error.required }}</span>
 										</div>
 									</div>
-									<label
-										for="inputStudyEndDate"
-										class="col-sm-2 control-label">{{ resources.professorMasterStudies.studyEndDate }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+									<label for="inputStudyEndDate" class="col-sm-2 control-label">{{
+										resources.professorMasterStudies.studyEndDate }} <span
+										class="required" ng-show="editMode[$index]">*</span>
+									</label>
 									<div class="col-sm-2">
-										<div
-											class="input-group date"
-											id="datepicker">
-											<input
-												type="text"
-												class="form-control"
-												id="inputStudyEndDate"
-												name="inputStudyEndDate"
-												placeholder="DD-MM-GGGG"
-												datepicker-popup="dd-MM-yyyy"
-												is-open="inputStudyEndDateOpened[$index]"
-												min-date="minDate"
-												max-date="maxDate"
-												datepicker-options="dateOptions"
+										<div class="input-group date" id="datepicker">
+											<input type="text" class="form-control"
+												id="inputStudyEndDate" name="inputStudyEndDate"
+												placeholder="DD-MM-GGGG" datepicker-popup="dd-MM-yyyy"
+												is-open="inputStudyEndDateOpened[$index]" min-date="minDate"
+												max-date="maxDate" datepicker-options="dateOptions"
 												show-button-bar="false"
 												ng-model="masterStudies.studyEndDate"
-												ng-disabled="!editMode[$index]"
-												required /> <span class="input-group-addon"> <span
+												ng-disabled="!editMode[$index]" required /> <span
+												class="input-group-addon"> <span
 												class="glyphicon glyphicon-calendar"
 												ng-click="openStudyEndDate($event, $index)"></span>
 											</span>
@@ -84,237 +64,189 @@
 										<div
 											ng-show="form.inputStudyEndDate.$dirty && form.inputStudyEndDate.$invalid"
 											class="studyEndDateFieldError">
-											<span
-												ng-show="form.inputStudyEndDate.$error.required"
+											<span ng-show="form.inputStudyEndDate.$error.required"
 												class="ng-binding">{{ errorMessages.error.required }}</span>
 										</div>
 									</div>
-									<label
-										for="inputAverageGrade"
-										class="col-sm-2 control-label">{{ resources.professorMasterStudies.averageGrade }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+									<label for="inputAverageGrade" class="col-sm-2 control-label">{{
+										resources.professorMasterStudies.averageGrade }} <span
+										class="required" ng-show="editMode[$index]">*</span>
+									</label>
 									<div class="col-sm-2">
-										<input
-											type="number"
-											class="form-control"
-											id="inputAverageGrade"
-											name="inputAverageGrade"
+										<input type="number" class="form-control"
+											id="inputAverageGrade" name="inputAverageGrade"
 											ng-model="masterStudies.averageGrade"
 											placeholder="{{ resources.professorMasterStudies.averageGrade }}"
-											step="0.01"
-											ng-disabled="!editMode[$index]"
-											min="5"
-											max="10"
-											ng-maxlength="5"
-											required />
+											step="0.01" ng-disabled="!editMode[$index]" min="5" max="10"
+											ng-maxlength="5" required />
 										<div
 											ng-show="form.inputAverageGrade.$dirty && form.inputAverageGrade.$invalid"
 											class="averageGradeFieldError">
-											<span
-												ng-show="form.inputAverageGrade.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputAverageGrade.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidMaxGradeLength }}</span> <span
+											<span ng-show="form.inputAverageGrade.$error.required"
+												class="ng-binding">{{ errorMessages.error.required }}</span>
+											<span ng-show="form.inputAverageGrade.$error.maxlength"
+												class="ng-binding">{{
+												errorMessages.error.invalidMaxGradeLength }}</span> <span
 												ng-show="form.inputAverageGrade.$error.min"
-												class="ng-binding">{{ errorMessages.error.minAverageNumber }}</span> <span
+												class="ng-binding">{{
+												errorMessages.error.minAverageNumber }}</span> <span
 												ng-show="form.inputAverageGrade.$error.max"
-												class="ng-binding">{{ errorMessages.error.maxAverageNumber }}</span>
+												class="ng-binding">{{
+												errorMessages.error.maxAverageNumber }}</span>
 										</div>
 									</div>
 								</div>
 								<div class="row form-group">
-									<label
-										for="inputUniversityName"
-										class="col-sm-2 control-label">{{ resources.professorMasterStudies.universityName }}</label>
+									<label for="inputUniversityName" class="col-sm-2 control-label">{{
+										resources.professorMasterStudies.universityName }}</label>
 									<div class="col-sm-4">
-										<input
-											type="text"
-											class="form-control"
-											id="inputUniversityName"
-											name="inputUniversityName"
-											ng-model="masterStudies.universityName"
-											ng-disabled="true" />
+										<input type="text" class="form-control"
+											id="inputUniversityName" name="inputUniversityName"
+											ng-model="masterStudies.universityName" ng-disabled="true" />
 									</div>
-									<label
-										for="inputFacultyName"
-										class="col-sm-2 control-label">{{ resources.professorMasterStudies.facultyName }}</label>
+									<label for="inputFacultyName" class="col-sm-2 control-label">{{
+										resources.professorMasterStudies.facultyName }}</label>
 									<div class="col-sm-4">
-										<input
-											type="text"
-											class="form-control"
-											id="inputFacultyName"
-											name="inputFacultyName"
-											ng-model="masterStudies.facultyName"
+										<input type="text" class="form-control" id="inputFacultyName"
+											name="inputFacultyName" ng-model="masterStudies.facultyName"
 											ng-disabled="true" />
 									</div>
 								</div>
 								<div class="row form-group">
-									<label
-										for="inputStudyProgram"
-										class="col-sm-2 control-label">{{ resources.professorMasterStudies.studyProgram }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+									<label for="inputStudyProgram" class="col-sm-2 control-label">{{
+										resources.professorMasterStudies.studyProgram }} <span
+										class="required" ng-show="editMode[$index]">*</span>
+									</label>
 									<div class="col-sm-4">
-										<select
-											class="ng-binding form-control"
-											id="inputStudyProgram"
+										<select class="ng-binding form-control" id="inputStudyProgram"
 											name="inputStudyProgram"
 											ng-model="masterStudies.studyProgram"
 											ng-options="studyProgram.title for studyProgram in allStudyPrograms track by studyProgram.name"
-											ng-show="editMode[$index]"
-											required><option value="">{{ resources.professorMasterStudies.studyProgram }}</option></select> <input
-											type="text"
-											class="form-control"
-											id="inputStudyProgram"
+											ng-show="editMode[$index]" required><option value="">{{
+												resources.professorMasterStudies.studyProgram }}</option></select> <input
+											type="text" class="form-control" id="inputStudyProgram"
 											name="inputStudyProgram"
 											ng-model="masterStudies.studyProgram.title"
-											ng-show="!editMode[$index]"
-											ng-disabled="true" />
+											ng-show="!editMode[$index]" ng-disabled="true" />
 										<div
 											ng-show="form.inputStudyProgram.$dirty && form.inputStudyProgram.$invalid"
 											class="studyProgramFieldError">
-											<span
-												ng-show="form.inputStudyProgram.$error.required"
+											<span ng-show="form.inputStudyProgram.$error.required"
 												class="ng-binding">{{ errorMessages.error.required }}</span>
 										</div>
 									</div>
-									<label
-										for="inputStudyArea"
-										class="col-sm-2 control-label">{{ resources.professorMasterStudies.studyArea }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+									<label for="inputStudyArea" class="col-sm-2 control-label">{{
+										resources.professorMasterStudies.studyArea }} <span
+										class="required" ng-show="editMode[$index]">*</span>
+									</label>
 									<div class="col-sm-4">
-										<input
-											type="text"
-											class="form-control"
-											id="inputStudyArea"
-											name="inputStudyArea"
-											ng-model="masterStudies.studyArea"
+										<input type="text" class="form-control" id="inputStudyArea"
+											name="inputStudyArea" ng-model="masterStudies.studyArea"
 											placeholder="{{ resources.professorMasterStudies.studyArea }}"
-											ng-maxlength="100"
-											ng-disabled="!editMode[$index]"
-											required />
+											ng-maxlength="100" ng-disabled="!editMode[$index]" required />
 										<div
 											ng-show="form.inputStudyArea.$dirty && form.inputStudyArea.$invalid"
 											class="inputStudyAreaError">
-											<span
-												ng-show="form.inputStudyArea.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputStudyArea.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidStudyAreaMaxLength }}</span>
+											<span ng-show="form.inputStudyArea.$error.required"
+												class="ng-binding">{{ errorMessages.error.required }}</span>
+											<span ng-show="form.inputStudyArea.$error.maxlength"
+												class="ng-binding">{{
+												errorMessages.error.invalidStudyAreaMaxLength }}</span>
 										</div>
 									</div>
 								</div>
 								<div class="row form-group">
-									<label
-										for="inputThesisTitle"
-										class="col-sm-2 control-label">{{ resources.professorMasterStudies.thesisTitle }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+									<label for="inputThesisTitle" class="col-sm-2 control-label">{{
+										resources.professorMasterStudies.thesisTitle }} <span
+										class="required" ng-show="editMode[$index]">*</span>
+									</label>
 									<div class="col-sm-4">
-										<input
-											type="text"
-											class="form-control"
-											id="inputThesisTitle"
-											name="inputThesisTitle"
-											ng-model="masterStudies.thesisTitle"
+										<input type="text" class="form-control" id="inputThesisTitle"
+											name="inputThesisTitle" ng-model="masterStudies.thesisTitle"
 											placeholder="{{ resources.professorMasterStudies.thesisTitle }}"
-											ng-disabled="!editMode[$index]"
-											ng-maxlength="200"
-											required />
+											ng-disabled="!editMode[$index]" ng-maxlength="200" required />
 										<div
 											ng-show="form.inputThesisTitle.$dirty && form.inputThesisTitle.$invalid"
 											class="thesisTitleFieldError">
-											<span
-												ng-show="form.inputThesisTitle.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputThesisTitle.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidThesisTitleMaxLength }}</span>
+											<span ng-show="form.inputThesisTitle.$error.required"
+												class="ng-binding">{{ errorMessages.error.required }}</span>
+											<span ng-show="form.inputThesisTitle.$error.maxlength"
+												class="ng-binding">{{
+												errorMessages.error.invalidThesisTitleMaxLength }}</span>
 										</div>
 									</div>
-									<label
-										for="inputAcquiredTitle"
-										class="col-sm-2 control-label">{{ resources.professorMasterStudies.acquiredTitle }} <span
-										class="required"
-										ng-show="editMode[$index]">*</span></label>
+									<label for="inputAcquiredTitle" class="col-sm-2 control-label">{{
+										resources.professorMasterStudies.acquiredTitle }} <span
+										class="required" ng-show="editMode[$index]">*</span>
+									</label>
 									<div class="col-sm-4">
-										<input
-											type="text"
-											class="form-control"
-											id="inputAcquiredTitle"
-											name="inputAcquiredTitle"
+										<input type="text" class="form-control"
+											id="inputAcquiredTitle" name="inputAcquiredTitle"
 											ng-model="masterStudies.acquiredTitle"
 											placeholder="{{ resources.professorMasterStudies.acquiredTitle }}"
 											ng-disabled="!editMode[$index]"
-											ng-pattern="patterns.onlyLetters"
-											ng-maxlength="30"
-											required />
+											ng-pattern="patterns.onlyLetters" ng-maxlength="30" required />
 										<div
 											ng-show="form.inputAcquiredTitle.$dirty && form.inputAcquiredTitle.$invalid"
 											class="acquiredTitleFieldError">
-											<span
-												ng-show="form.inputAcquiredTitle.$error.required"
-												class="ng-binding">{{ errorMessages.error.required }}</span> <span
-												ng-show="form.inputAcquiredTitle.$error.maxlength"
-												class="ng-binding">{{ errorMessages.error.invalidAcquiredTitleMaxLength }}</span> <span
+											<span ng-show="form.inputAcquiredTitle.$error.required"
+												class="ng-binding">{{ errorMessages.error.required }}</span>
+											<span ng-show="form.inputAcquiredTitle.$error.maxlength"
+												class="ng-binding">{{
+												errorMessages.error.invalidAcquiredTitleMaxLength }}</span> <span
 												ng-show="form.inputAcquiredTitle.$error.pattern"
-												class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+												class="ng-binding">{{ errorMessages.error.onlyLetters
+												}}</span>
 										</div>
 									</div>
 								</div>
 							</fieldset>
 						</div>
 						<div class="modal-footer action">
-							<button
-								id="edit_button"
-								type="edit"
-								class="btn btn-link btn-sm"
+							<button id="edit_button" type="edit" class="btn btn-link btn-sm"
 								ng-show="!editMode[$index] && isUser"
 								ng-click="editProfesorMasterStudies($index)">
-								<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.professorStudiesButtons.edit }}
+								<span class="glyphicon glyphicon-pencil"></span> {{
+								resources.buttons.professorStudiesButtons.edit }}
 							</button>
-							<button
-								id="submit_button"
-								type="submit"
-								class="btn btn-link btn-sm"
-								ng-show="editMode[$index] && isUser"
+							<button id="submit_button" type="submit"
+								class="btn btn-link btn-sm" ng-show="editMode[$index] && isUser"
 								ng-disabled="form.$invalid || isUnchanged($index)"
 								ng-click="updateProfessorMasterStudies(masterStudies, $index)">
-								<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.professorStudiesButtons.save }}
+								<span class="glyphicon glyphicon-save"></span> {{
+								resources.buttons.professorStudiesButtons.save }}
 							</button>
-							<button
-								id="cancel_button"
-								class="btn btn-link btn-sm"
-								ng-show="editMode[$index] && isUser"
-								ng-click="close($index)">{{ resources.buttons.professorStudiesButtons.close }}</button>
-							<button
-								id="delete_button"
-								class="btn btn-link btn-sm"
+							<button id="cancel_button" class="btn btn-link btn-sm"
+								ng-show="editMode[$index] && isUser" ng-click="close($index)">{{
+								resources.buttons.professorStudiesButtons.close }}</button>
+							<button id="delete_button" class="btn btn-link btn-sm"
 								ng-show="!editMode[$index] && isUser"
 								ng-click="deleteProfessorMasterStudies(masterStudies.id, $index)">
-								<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.professorStudiesButtons.delete }}
+								<span class="glyphicon glyphicon-trash"></span> {{
+								resources.buttons.professorStudiesButtons.delete }}
 							</button>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<div
-							class="text-center"
-							ng-show="allMasterStudies.length == 0">{{ errorMessages.error.emptyTable }}</div>
+						<div class="text-center" ng-show="allMasterStudies.length == 0">{{
+							errorMessages.error.emptyTable }}</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<div class="text-center">
-							<button
-								id="addNewButton"
-								class="btn btn-success btn-large"
-								ng-disabled="isInEditMode()"
-								ng-show="isUser"
+							<button id="addNewButton" class="btn btn-success btn-sm"
+								ng-disabled="isInEditMode()" ng-show="isUser"
 								ng-click="createNewMasterStudies()">
-								<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.professorStudiesButtons.add }}
+								<span class="glyphicon glyphicon-plus"></span> {{
+								resources.buttons.professorStudiesButtons.add }}
+							</button>
+							<button id="cancel_button" class="btn btn-sm"
+								ng-disabled="isInEditMode()" ng-click="goBack()">
+								<span class="glyphicon glyphicon-arrow-left"></span> {{
+								resources.form.back }}
 							</button>
 						</div>
 					</td>
@@ -323,9 +255,7 @@
 		</table>
 	</form>
 
-	<script
-		type="text/ng-template"
-		id="createNewMasterStudiesPopup.html">
+	<script type="text/ng-template" id="createNewMasterStudiesPopup.html">
 		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="masterStudies">
 			<div class="modal-header">
     			<h3 class="modal-title">{{ resources.text.addNewMasterStudiesTitle }}</h3>

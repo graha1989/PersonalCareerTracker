@@ -232,6 +232,10 @@ app
                       controller: createNewSpecialisticStudiesController,
                     });
                   };
+                  
+                  $scope.goBack = function() {
+                    window.history.back();
+                  };
 
                 });
 

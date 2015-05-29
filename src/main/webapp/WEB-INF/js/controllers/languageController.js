@@ -185,6 +185,10 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
 
   $scope.isNewLanguageSelected = function() {
     return jQuery.isEmptyObject($scope.selectedLanguage);
-  }
+  };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });

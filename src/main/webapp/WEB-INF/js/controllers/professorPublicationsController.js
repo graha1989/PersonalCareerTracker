@@ -85,6 +85,10 @@ app.controller("ProfessorPublicationsController", function($scope,
       controller: createNewProfessorPublicationController,
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

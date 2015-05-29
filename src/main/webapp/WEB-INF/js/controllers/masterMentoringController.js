@@ -90,6 +90,10 @@ app.controller("MasterMentoringController", function($scope, $routeParams,
       controller: createNewMasterThesisController
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 
@@ -100,9 +104,8 @@ var editMasterThesisController = function($scope, $modalInstance, $routeParams,
   $scope.thesis.mentorId;
   $scope.thesis.thesisTypeId;
 
-  /*
-   * fields used for detecting if something changed during the edit on the popup
-   */
+  
+  //fields used for detecting if something changed during the edit on the popup
   $scope.master = {};
   $scope.masterSelectedStudent = {};
   $scope.masterSelectedPresident = {};
@@ -112,10 +115,8 @@ var editMasterThesisController = function($scope, $modalInstance, $routeParams,
   $scope.selectedCommissionPresident = {};
   $scope.selectedCommissionMember = {};
 
-  /*
-   * fields used for detecting if student, commission president and commission
-   * member are selected
-   */
+ 
+  //fields used for detecting if student, commission president and commission member are selected
   $scope.studentSelected = false;
   $scope.commissionPresidentSelected = false;
   $scope.commissionMemberSelected = false;

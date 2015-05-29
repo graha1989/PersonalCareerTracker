@@ -90,6 +90,10 @@ app.controller("SpecialisticMentoringController", function($scope,
       controller: createNewSpecialisticThesisController
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

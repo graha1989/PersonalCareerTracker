@@ -10,7 +10,7 @@ app
                   $scope.noResultsFound = true;
                   $scope.resources = {};
                   $scope.errorMessages = {};
-                  
+
                   $scope.isUser = false;
                   $scope.isAdmin = false;
 
@@ -43,7 +43,7 @@ app
                                       }
                                     });
                   };
-                  
+
                   $scope.getCurrentUserRole = function() {
                     if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
                       $scope.isUser = true;
@@ -101,6 +101,10 @@ app
                               templateUrl: 'createNewInternationalPublicationPopup.html',
                               controller: createNewInternationalPublicationController,
                             });
+                  };
+
+                  $scope.goBack = function() {
+                    window.history.back();
                   };
 
                 });

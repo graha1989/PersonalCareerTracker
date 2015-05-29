@@ -96,6 +96,10 @@ app.controller("DoctorMentoringController", function($scope, $routeParams,
       controller: createNewDoctorThesisController
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 

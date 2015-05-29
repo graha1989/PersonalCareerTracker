@@ -90,6 +90,10 @@ app.controller("BachelorMentoringController", function($scope, $routeParams,
       controller: createNewBachelorThesisController
     });
   };
+  
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
 });
 
