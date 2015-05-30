@@ -69,15 +69,18 @@
 						class="control-label col-sm-3"
 						for="j_username"><spring:message code="login.username" /> <span class="required">*</span></label>
 					<div class="col-sm-5">
-						<input
-							id="j_username"
-							class="form-control"
-							type="text"
-							name="j_username"
-							placeholder="<spring:message code="login.username" />"
-							ng-model="user.userName"
-							ng-maxlength="50"
-							required />
+						<div class="inner-addon right-addon">
+							<i class="glyphicon glyphicon-user"></i>
+							<input
+								id="j_username"
+								class="form-control"
+								type="text"
+								name="j_username"
+								placeholder="<spring:message code="login.username" />"
+								ng-model="user.userName"
+								ng-maxlength="50"
+								required />
+						</div>
 						<div
 							ng-show="form.j_username.$dirty && form.j_username.$invalid"
 							class="registerUserFieldError">
@@ -95,15 +98,18 @@
 						class="control-label col-sm-3"
 						for="j_password"><spring:message code="login.password" /> <span class="required">*</span></label>
 					<div class="col-sm-5">
-						<input
-							id="j_password"
-							class="form-control"
-							type="password"
-							name="j_password"
-							placeholder="<spring:message code="login.password" />"
-							ng-model="user.password"
-							ng-maxlength="50"
-							required />
+						<div class="inner-addon right-addon">
+							<i class="glyphicon glyphicon-lock"></i>
+							<input
+								id="j_password"
+								class="form-control"
+								type="password"
+								name="j_password"
+								placeholder="<spring:message code="login.password" />"
+								ng-model="user.password"
+								ng-maxlength="50"
+								required />
+						</div>
 						<div
 							ng-show="form.j_password.$dirty && form.j_password.$invalid"
 							class="registerUserFieldError">
