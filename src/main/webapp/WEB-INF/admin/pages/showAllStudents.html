@@ -8,11 +8,10 @@
 		ng-model="student">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ resources.text.title }}</h3>
+			<h3 class="modal-title">{{ resources.text.studentTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
-
 				<div
 					class="row form-group"
 					ng-show="students != []">
@@ -49,12 +48,12 @@
 							<td class="delete"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteStudent(student.id, $index)">
-									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.delete }}
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.studentButtons.delete }}
 								</button></td>
 							<td class="edit"><button
 									class="btn btn-link btn-xs"
 									ng-click="editStudent(student.id)">
-									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.edit }}
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.studentButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
@@ -69,7 +68,7 @@
 				id="addNewButton"
 				class="btn btn-success btn-sm"
 				ng-click="createNewStudent()">
-				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.add }}
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.studentButtons.addNewStudent }}
 			</button>
 		</div>
 	</form>
@@ -81,7 +80,7 @@
 	id="editStudentPopup.html">
 	<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" novalidate ng-model="student">
 		<div class="modal-header">
-    		<h3 class="modal-title">{{ resources.text.editPopupTitle }}</h3>
+    		<h3 class="modal-title">{{ resources.text.editStudentPopupTitle }}</h3>
    	 	</div>
     	<div class="modal-body">
     		<div class="form-group">
@@ -141,8 +140,8 @@
   			</div>
    		</div>
    		<div class="modal-footer action">
-		 	<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="form.$invalid || isUnchanged(student)" ng-click="saveStudent()"><span class="glyphicon glyphicon-save"></span> {{ resources.studentPopupButtons.edit }}</button>
-		 	<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.studentPopupButtons.close }}</button>
+		 	<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="form.$invalid || isUnchanged(student)" ng-click="saveStudent()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.studentButtons.edit }}</button>
+		 	<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.studentButtons.close }}</button>
   		</div>
 	</form>
 </script>
@@ -152,7 +151,7 @@
 	id="createNewStudentPopup.html">
 	<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" novalidate ng-model="student">
 		<div class="modal-header">
-    		<h3 class="modal-title">{{ resources.text.newPopupTitle }}</h3>
+    		<h3 class="modal-title">{{ resources.text.newStudentPopupTitle }}</h3>
    	 	</div>
     	<div class="modal-body">
     		<div class="form-group">
@@ -212,8 +211,8 @@
   			</div>
    		</div>
    		<div class="modal-footer action">
-		 	<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="form.$invalid" ng-click="saveNewStudent()"><span class="glyphicon glyphicon-save"></span> {{ resources.studentPopupButtons.add }}</button>
-		 	<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.studentPopupButtons.close }}</button>
+		 	<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="form.$invalid" ng-click="saveNewStudent()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.studentButtons.add }}</button>
+		 	<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.studentButtons.close }}</button>
   		</div>
 	</form>
 </script>

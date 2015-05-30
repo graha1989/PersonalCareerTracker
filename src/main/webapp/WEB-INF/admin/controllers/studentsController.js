@@ -34,7 +34,7 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/studentDetails_' + locale.value + '.json').success(
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
             function(response) {
               $scope.resources = angular.fromJson(response);
             });
@@ -112,7 +112,7 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/studentDetails_' + locale.value + '.json').success(
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
             function(response) {
               $scope.resources = angular.fromJson(response);
             });
@@ -187,7 +187,7 @@ var createNewStudentController = function($scope, $modalInstance, $routeParams,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/studentDetails_' + locale.value + '.json').success(
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
             function(response) {
               $scope.resources = angular.fromJson(response);
             });

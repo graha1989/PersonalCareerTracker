@@ -57,6 +57,10 @@
         "professorSpecialisticStudiesTitle": "Specijalističke studije",
         "professorDoctorStudiesTitle": "Doktorske studije",
         "specializationTitle": "Specijalizacija i studijski boravak u inostranstvu",
+        "studentTitle":"Prikaz studenata",
+        "introText":"Spisak studenata registrovanih u sistemu za praćenje lične karijere",
+        "editStudentPopupTitle":"Izmena podataka o studentu",
+        "newStudentPopupTitle":"Unos novog studenta",
         "sortBy": "Sortiraj po..."
     },
     "profesorLabels": {
@@ -321,6 +325,14 @@
             "close": "Zatvori",
             "save": "Sačuvaj",
             "cancel": "Odustani"
+        },
+        "studentButtons": {
+        	"delete":"Izbriši",
+			"edit":"Izmeni",
+			"addNewStudent":"Dodaj novog studenta",
+			"editStudent":"Izmeni",
+        	"add":"Dodaj",
+			"close":"Zatvori"
         }
     },
     "mentoringTableLabels": {
@@ -577,5 +589,15 @@
         "institutionCity": "Grad",
         "institutionCountry": "Država",
         "purpose": "Vrsta (cilj) boravka"
+    },
+    "studentsTableLabels" : {
+		"firstNameLabel":"Ime",
+		"transcriptNumberLabel":"Broj indeksa",
+		"lastNameLabel":"Prezime"
+	},
+	"studentPopupLabels": {
+        "firstNameLabel":"Ime",
+		"transcriptNumberLabel":"Broj indeksa",
+		"lastNameLabel":"Prezime"
     }
 }
