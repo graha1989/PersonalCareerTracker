@@ -88,7 +88,7 @@
 					<span class="required">*</span>
 				</label>
     			<div class="col-sm-6">
-      				<input type="text" class="form-control" id="inputTranscriptNumber" name="inputTranscriptNumber" ng-model="student.transcriptNumber" ng-maxlength="10" required />
+      				<input type="text" class="form-control" id="inputTranscriptNumber" name="inputTranscriptNumber" ng-model="student.transcriptNumber" placeholder="{{ resources.studentPopupLabels.transcriptNumberLabel }}" ng-maxlength="10" required />
 					<div
 						ng-show="form.inputTranscriptNumber.$dirty && form.inputTranscriptNumber.$invalid"
 						class="transcriptNumberFieldError">
@@ -105,7 +105,7 @@
 					<span class="required">*</span>
 				</label>
     			<div class="col-sm-6">
-      				<input type="text" class="form-control" id="inputFirstName" name="inputFirstName" ng-model="student.name" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
+      				<input type="text" class="form-control" id="inputFirstName" name="inputFirstName" ng-model="student.name" placeholder="{{ resources.studentPopupLabels.firstNameLabel }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
 					<div
 						ng-show="form.inputFirstName.$dirty && form.inputFirstName.$invalid"
 						class="firstNameFieldError">
@@ -124,7 +124,7 @@
 					<span class="required">*</span>
 				</label>
     			<div class="col-sm-6">
-      				<input type="text" class="form-control" id="inputLastName" name="inputLastName" ng-model="student.surname" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
+      				<input type="text" class="form-control" id="inputLastName" name="inputLastName" ng-model="student.surname" placeholder="{{ resources.studentPopupLabels.lastNameLabel }}" ng-pattern="patterns.onlyLetters" ng-maxlength="50" required />
 					<div
 						ng-show="form.inputLastName.$dirty && form.inputLastName.$invalid"
 						class="lastNameFieldError">

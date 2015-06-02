@@ -13,7 +13,7 @@
 						<a href="" ng-click="home()"><span class="glyphicon glyphicon-home"></span></a>
 					</li>
 					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">{{ resources.professorMenuLabels.studies }}<span
+						role="button" aria-expanded="false">{{ resources.professorMenuLabels.studies }}<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="" ng-click="openProfessorBachelorStudies()">{{ resources.professorMenuLabels.studyTypes.bachelorStudies }}</a></li>
@@ -24,7 +24,7 @@
 						</ul>
 					</li>
 					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">{{ resources.professorMenuLabels.mentoring }}<span
+						role="button" aria-expanded="false">{{ resources.professorMenuLabels.mentoring }}<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="" ng-click="openBachelorMentoring()">{{ resources.professorMenuLabels.mentoringTypes.bachelorMentoring }}</a></li>
@@ -40,7 +40,7 @@
 						<a href="" ng-click="openProfessorLanguageExperiences()">{{ resources.professorMenuLabels.languageExperiences }}</a>
 					</li>
 					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">{{ resources.professorMenuLabels.publications }}<span
+						role="button" aria-expanded="false">{{ resources.professorMenuLabels.publications }}<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="" ng-click="openProfessorPublications()">{{ resources.professorMenuLabels.publicationTypes.personalPublications }}</a></li>
