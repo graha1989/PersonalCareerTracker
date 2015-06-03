@@ -191,4 +191,22 @@ public class UserServiceImpl implements UserService {
 		throw new UserNotFoundException();
 	}
 
+	@Override
+	@Transactional
+	public UserDto findUserByUserName(String userName) throws UserNotFoundException {
+		
+		UserDto userDto;
+		if (userName != null) {
+			User user = userRepository.findByUserName(userName);
+			if (user != null) {
+				userDto = new UserDto(user.getUserName(), user.getPassword(), user.getEmail(),
+						user.getName(), user.getSurname(), user.getId());
+
+				return userDto;
+			}
+		}
+
+		throw new UserNotFoundException();
+	}
+
 }

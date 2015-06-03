@@ -1,140 +1,178 @@
-app.controller("ProjectExperienceController", function($scope, $routeParams,
-        $http, $route, $modal, PctService) {
+app
+        .controller(
+                "ProjectExperienceController",
+                function($scope, $routeParams, $http, $route, $modal,
+                        PctService) {
 
-  $scope.allProjectExperiences = [];
-  $scope.projectExperience = {};
-  $scope.noResultsFound = true;
-  $scope.resources = {};
-  $scope.errorMessages = {};
+                  $scope.allProjectExperiences = [];
+                  $scope.projectExperience = {};
+                  $scope.noResultsFound = true;
+                  $scope.resources = {};
+                  $scope.errorMessages = {};
 
-  $scope.project = {};
-  $scope.completeProjecExperienceDataArray = [];
-  
-  $scope.isUser = false;
-  $scope.isAdmin = false;
+                  $scope.project = {};
+                  $scope.completeProjecExperienceDataArray = [];
 
-  $scope.loadResources = function() {
-    var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
-  };
+                  $scope.isUser = false;
+                  $scope.isAdmin = false;
+                  $scope.professorId = '';
 
-  $scope.constructLeadersString = function(array) {
-    var leadersString = "";
-    for (var i = 0; i < array.length; i++) {
-      leadersString = leadersString + ((i > 0 && i < array.length) ? "; " : "")
-              + array[i].name + " " + array[i].surname;
-    }
-    return leadersString;
-  };
+                  $scope.loadResources = function() {
+                    var locale = document.getElementById('localeCode');
+                    $http.get(
+                            'messages/profesorDetails_' + locale.value
+                                    + '.json').success(function(response) {
+                      $scope.resources = angular.fromJson(response);
+                    });
+                    $http.get('messages/errors_' + locale.value + '.json')
+                            .success(
+                                    function(response) {
+                                      $scope.errorMessages = angular
+                                              .fromJson(response);
+                                    });
+                  };
 
-  $scope.loadSelectedProject = function(id, index) {
-    PctService.loadSelectedProject(id, function(data) {
-      if (angular.isObject(data)) {
-        $scope.project = data;
-        var projectLeaders = $scope
-                .constructLeadersString($scope.project.projectLeaderDtos);
-        $scope.completeProjecExperienceDataArray.push({
-          project: $scope.project,
-          projectLeaders: projectLeaders,
-          projectExperience: $scope.allProjectExperiences[index]
-        });
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
-  };
+                  $scope.constructLeadersString = function(array) {
+                    var leadersString = "";
+                    for (var i = 0; i < array.length; i++) {
+                      leadersString = leadersString
+                              + ((i > 0 && i < array.length) ? "; " : "")
+                              + array[i].name + " " + array[i].surname;
+                    }
+                    return leadersString;
+                  };
 
-  $scope.loadProjectExperiences = function(professorId) {
-    return PctService.loadProfessorProjectExperiences(professorId).then(
-            function(response) {
-              if (angular.isObject(response) && response.length > 0) {
-                $scope.allProjectExperiences = response;
-                $scope.completeProjecExperienceDataArray = [];
-                for (var i = 0; i < $scope.allProjectExperiences.length; i++) {
-                  $scope.loadSelectedProject(
-                          $scope.allProjectExperiences[i].projectId, i);
-                }
-                $scope.noResultsFound = false;
-              } else {
-                $scope.noResultsFound = true;
-              }
-            });
-  };
-  
-  $scope.getCurrentUserRole = function() {
-    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
-      $scope.isUser = true;
-    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
-      $scope.isAdmin = true;
-    }
-  };
+                  $scope.loadSelectedProject = function(id, index) {
+                    PctService
+                            .loadSelectedProject(
+                                    id,
+                                    function(data) {
+                                      if (angular.isObject(data)) {
+                                        $scope.project = data;
+                                        var projectLeaders = $scope
+                                                .constructLeadersString($scope.project.projectLeaderDtos);
+                                        $scope.completeProjecExperienceDataArray
+                                                .push({
+                                                  project: $scope.project,
+                                                  projectLeaders: projectLeaders,
+                                                  projectExperience: $scope.allProjectExperiences[index]
+                                                });
+                                        $scope.noResultsFound = false;
+                                      } else {
+                                        $scope.noResultsFound = true;
+                                      }
+                                    });
+                  };
 
-  $scope.init = function() {
-    $scope.loadProjectExperiences($routeParams.professorId);
-    $scope.loadResources();
-    $scope.getCurrentUserRole();
-  };
+                  $scope.loadProjectExperiences = function(professorId) {
+                    return PctService
+                            .loadProfessorProjectExperiences(professorId)
+                            .then(
+                                    function(response) {
+                                      if (angular.isObject(response)
+                                              && response.length > 0) {
+                                        $scope.allProjectExperiences = response;
+                                        $scope.completeProjecExperienceDataArray = [];
+                                        for (var i = 0; i < $scope.allProjectExperiences.length; i++) {
+                                          $scope
+                                                  .loadSelectedProject(
+                                                          $scope.allProjectExperiences[i].projectId,
+                                                          i);
+                                        }
+                                        $scope.noResultsFound = false;
+                                      } else {
+                                        $scope.noResultsFound = true;
+                                      }
+                                    });
+                  };
 
-  $scope.init();
+                  $scope.getCurrentUserRole = function() {
+                    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+                      $scope.isUser = true;
+                    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+                      $scope.isAdmin = true;
+                    }
+                  };
 
-  $scope.goBack = function() {
-    window.history.back();
-  };
+                  $scope.initUserId = function() {
+                    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+                      $scope.professorId = $routeParams.professorId;
+                    } else {
+                      $scope.professorId = document.getElementById('currentUserId').value;
+                    }
+                  };
 
-  $scope.editProjectExperience = function(id) {
-    $modal.open({
-      templateUrl: 'editProjectExperiencePopup.html',
-      controller: editProjectExperiencePopupController,
-      resolve: {
-        projectExperienceId: function() {
-          return id;
-        }
-      }
-    });
-  };
+                  $scope.init = function() {
+                    $scope.initUserId();
+                    $scope.loadProjectExperiences($scope.professorId);
+                    $scope.loadResources();
+                    $scope.getCurrentUserRole();
+                  };
 
-  $scope.createNewProjectExperience = function() {
-    $modal.open({
-      templateUrl: 'createNewProjectExperiencePopup.html',
-      controller: createNewProjectExperienceController,
-      resolve: {
-        projectExperiences: function() {
-          return $scope.allProjectExperiences;
-        }
-      }
-    });
-  };
+                  $scope.init();
 
-  $scope.deleteProjectExperience = function(id, index) {
-    PctService.deleteProjectExperience(id, function(data) {
-      if (angular.isObject(data)) {
-        $scope.errorStatus = data.status;
-      } else {
-        $scope.successStatus = "Successfully deleted teaching experience.";
-        $scope.completeProjecExperienceDataArray.splice(index, 1);
-        $scope.allProjectExperiences.splice(index, 1);
-        $scope.loadProjectExperiences($routeParams.professorId);
-      }
-    });
-  };
-  
-  $scope.goBack = function() {
-    window.history.back();
-  };
+                  $scope.goBack = function() {
+                    window.history.back();
+                  };
 
-});
+                  $scope.editProjectExperience = function(id) {
+                    $modal.open({
+                      templateUrl: 'editProjectExperiencePopup.html',
+                      controller: editProjectExperiencePopupController,
+                      resolve: {
+                        projectExperienceId: function() {
+                          return id;
+                        },
+                        professorId: function() {
+                          return $scope.professorId;
+                        }
+                      }
+                    });
+                  };
+
+                  $scope.createNewProjectExperience = function() {
+                    $modal.open({
+                      templateUrl: 'createNewProjectExperiencePopup.html',
+                      controller: createNewProjectExperienceController,
+                      resolve: {
+                        projectExperiences: function() {
+                          return $scope.allProjectExperiences;
+                        },
+                        professorId: function() {
+                          return $scope.professorId;
+                        }
+                      }
+                    });
+                  };
+
+                  $scope.deleteProjectExperience = function(id, index) {
+                    PctService
+                            .deleteProjectExperience(
+                                    id,
+                                    function(data) {
+                                      if (angular.isObject(data)) {
+                                        $scope.errorStatus = data.status;
+                                      } else {
+                                        $scope.successStatus = "Successfully deleted teaching experience.";
+                                        $scope.completeProjecExperienceDataArray
+                                                .splice(index, 1);
+                                        $scope.allProjectExperiences.splice(
+                                                index, 1);
+                                        $scope
+                                                .loadProjectExperiences($scope.professorId);
+                                      }
+                                    });
+                  };
+
+                  $scope.goBack = function() {
+                    window.history.back();
+                  };
+
+                });
 
 var editProjectExperiencePopupController = function($scope, $modalInstance,
         $routeParams, $http, $route, $templateCache, projectExperienceId,
-        PctService) {
+        PctService, professorId) {
 
   $scope.projectExperience = {};
   $scope.master = {};
@@ -278,7 +316,7 @@ var editProjectExperiencePopupController = function($scope, $modalInstance,
 
   $scope.isProfessorLeader = function() {
     var index = $scope.arrayContainsElement($scope.project.projectLeaderDtos,
-            $routeParams.professorId);
+            professorId);
     if (index == -1) { return false; }
     return true;
   };
@@ -295,7 +333,7 @@ var editProjectExperiencePopupController = function($scope, $modalInstance,
 
 var createNewProjectExperienceController = function($scope, $modalInstance,
         $routeParams, $http, $route, $templateCache, PctService,
-        projectExperiences) {
+        projectExperiences, professorId) {
 
   $scope.projectExperience = {};
   $scope.master = {};
@@ -419,7 +457,7 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
 
   $scope.saveProjectExperience = function() {
     $scope.projectExperience.projectId = $scope.selectedProject.id;
-    $scope.projectExperience.professorId = $routeParams.professorId;
+    $scope.projectExperience.professorId = professorId;
     $http({
       method: 'POST',
       url: "api/projectExperiences",
@@ -458,7 +496,7 @@ var createNewProjectExperienceController = function($scope, $modalInstance,
 
   $scope.isProfessorLeader = function() {
     var index = $scope.arrayContainsElement(
-            $scope.selectedProject.projectLeaderDtos, $routeParams.professorId);
+            $scope.selectedProject.projectLeaderDtos, professorId);
     if (index == -1) { return false; }
     return true;
   };

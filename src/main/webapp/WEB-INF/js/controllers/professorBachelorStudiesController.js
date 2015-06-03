@@ -14,6 +14,7 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
   
   $scope.isUser = false;
   $scope.isAdmin = false;
+  $scope.professorId = '';
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -119,8 +120,17 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
     }
   };
   
+  $scope.initUserId = function() {
+    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+      $scope.professorId = $routeParams.professorId;
+    } else {
+      $scope.professorId = document.getElementById('currentUserId').value;
+    }
+  };
+  
   $scope.init = function() {
-    $scope.loadProfessorsBachelorStudies($routeParams.professorId,
+    $scope.initUserId();
+    $scope.loadProfessorsBachelorStudies($scope.professorId,
             $routeParams.thesisTypeId);
     $scope.loadAllStudyPrograms();
     $scope.loadResources();
@@ -194,7 +204,7 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
       } else {
         $scope.successStatus = "Successfully deleted bachelor studies.";
         $scope.allBachelorStudies.splice(index, 1);
-        $scope.loadProfessorsBachelorStudies($routeParams.professorId,
+        $scope.loadProfessorsBachelorStudies($scope.professorId,
                 $routeParams.thesisTypeId);
       }
     });
@@ -204,6 +214,11 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
     $modal.open({
       templateUrl: 'createNewBachelorStudiesPopup.html',
       controller: createNewBachelorStudiesController,
+      resolve: {
+        professorId: function() {
+          return $scope.professorId;
+        }
+      }
     });
   };
   
@@ -214,7 +229,7 @@ app.controller("ProfessorBachelorStudiesController", function($scope,
 });
 
 var createNewBachelorStudiesController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, PctService) {
+        $routeParams, $http, $route, $templateCache, PctService, professorId) {
 
   $scope.bachelorStudies = {};
   $scope.noResultsFound = true;
@@ -334,7 +349,7 @@ var createNewBachelorStudiesController = function($scope, $modalInstance,
     if (!$scope.isExistingFaculty) {
       $scope.bachelorStudies.facultyName = $scope.selectedFaculty;
     }
-    $scope.bachelorStudies.professorId = $routeParams.professorId;
+    $scope.bachelorStudies.professorId = professorId;
     $scope.bachelorStudies.thesisTypeId = $routeParams.thesisTypeId;
     $http({
       method: 'POST',

@@ -13,6 +13,7 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
   
   $scope.isUser = false;
   $scope.isAdmin = false;
+  $scope.professorId = '';
   
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -106,9 +107,18 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
       $scope.isAdmin = true;
     }
   };
+  
+  $scope.initUserId = function() {
+    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+      $scope.professorId = $routeParams.professorId;
+    } else {
+      $scope.professorId = document.getElementById('currentUserId').value;
+    }
+  };
 
   $scope.init = function() {
-    $scope.loadProfessorsSpecializationsAbroad($routeParams.professorId);
+    $scope.initUserId();
+    $scope.loadProfessorsSpecializationsAbroad($scope.professorId);
     $scope.loadResources();
     $scope.getCurrentUserRole();
   };
@@ -180,7 +190,7 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
       } else {
         $scope.successStatus = "Successfully deleted specialization.";
         $scope.allSpecializations.splice(index, 1);
-        $scope.loadProfessorsSpecializationsAbroad($routeParams.professorId);
+        $scope.loadProfessorsSpecializationsAbroad($scope.professorId);
       }
     });
   };
@@ -189,6 +199,11 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
     $modal.open({
       templateUrl: 'createNewSpecializationPopup.html',
       controller: createNewSpecializationController,
+      resolve: {
+        professorId: function() {
+          return $scope.professorId;
+        }
+      }
     });
   };
   
@@ -199,7 +214,7 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
 });
 
 var createNewSpecializationController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, PctService) {
+        $routeParams, $http, $route, $templateCache, PctService, professorId) {
 
   $scope.specialization = {};
   $scope.noResultsFound = true;
@@ -304,7 +319,7 @@ var createNewSpecializationController = function($scope, $modalInstance,
     if (!$scope.isExistingInstitution) {
       $scope.specialization.institutionName = $scope.selectedInstitution;
     }
-    $scope.specialization.professorId = $routeParams.professorId;
+    $scope.specialization.professorId = professorId;
     $http({
       method: 'POST',
       url: "api/specialization",

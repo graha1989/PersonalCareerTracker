@@ -10,6 +10,7 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
   
   $scope.isUser = false;
   $scope.isAdmin = false;
+  $scope.professorId = '';
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -41,9 +42,18 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
       $scope.isAdmin = true;
     }
   };
+  
+  $scope.initUserId = function() {
+    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+      $scope.professorId = $routeParams.professorId;
+    } else {
+      $scope.professorId = document.getElementById('currentUserId').value;
+    }
+  };
 
   $scope.init = function() {
-    $scope.loadWorkExperiences($routeParams.professorId);
+    $scope.initUserId();
+    $scope.loadWorkExperiences($scope.professorId);
     $scope.loadResources();
     $scope.getCurrentUserRole();
   };
@@ -61,7 +71,7 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
       } else {
         $scope.successStatus = "Successfully deleted work experience.";
         $scope.workExperiences.splice(index, 1);
-        $scope.loadWorkExperiences($routeParams.professorId);
+        $scope.loadWorkExperiences($scope.professorId);
       }
     });
   };
@@ -73,6 +83,9 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
       resolve: {
         workExperienceId: function() {
           return id;
+        },
+        professorId: function() {
+          return $scope.professorId;
         }
       }
     });
@@ -85,6 +98,9 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
       resolve: {
         workExperiences: function() {
           return $scope.workExperiences;
+        },
+        professorId: function() {
+          return $scope.professorId;
         }
       }
     });
@@ -98,7 +114,7 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
 
 var editWorkExperiencePopupController = function($scope, $modalInstance,
         $routeParams, $http, $route, $templateCache, workExperienceId,
-        PctService) {
+        PctService, professorId) {
 
   $scope.workExperience = {};
   $scope.master = {};
@@ -215,7 +231,7 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
 
 var createNewWorkExperienceController = function($scope, $modalInstance,
         $routeParams, $http, $route, $templateCache, workExperiences,
-        PctService) {
+        PctService, professorId) {
 
   $scope.workExperience = {};
   $scope.allInstitutionTypes = [];
@@ -330,7 +346,7 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
     if (!$scope.isExistingInstitution) {
       $scope.workExperience.institutionName = $scope.selectedInstitution;
     }
-    $scope.workExperience.professorId = $routeParams.professorId;
+    $scope.workExperience.professorId = professorId;
     $http({
       method: 'POST',
       url: "api/workExperiences",

@@ -2,7 +2,7 @@ app.controller("AdminDetailsController", function($scope, $routeParams, $http,
         $location, $modal, PctService) {
 
   $scope.admin = {};
-  $scope.id;
+  $scope.id = '';
   $scope.resources = {};
   $scope.errorMessages = {};
   $scope.master = {};
@@ -51,9 +51,17 @@ app.controller("AdminDetailsController", function($scope, $routeParams, $http,
     }).error(function(data, status) {
     });
   };
+  
+  $scope.initUserId = function() {
+    if ($routeParams.id != null && $routeParams.id != '') {
+      $scope.id = $routeParams.id;
+    } else {
+      $scope.id = document.getElementById('currentUserId').value;
+    }
+  };
 
   $scope.init = function() {
-    $scope.id = $routeParams.id;
+    $scope.initUserId();
     $scope.loadAdminDetails($scope.id);
     $scope.loadResources();
   };

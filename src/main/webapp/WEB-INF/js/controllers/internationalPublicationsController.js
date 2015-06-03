@@ -13,6 +13,7 @@ app
 
                   $scope.isUser = false;
                   $scope.isAdmin = false;
+                  $scope.professorId = '';
 
                   $scope.loadResources = function() {
                     var locale = document.getElementById('localeCode');
@@ -52,9 +53,17 @@ app
                     }
                   };
 
+                  $scope.initUserId = function() {
+                    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+                      $scope.professorId = $routeParams.professorId;
+                    } else {
+                      $scope.professorId = document.getElementById('currentUserId').value;
+                    }
+                  };
+
                   $scope.init = function() {
-                    $scope
-                            .loadInternationalPublications($routeParams.professorId);
+                    $scope.initUserId();
+                    $scope.loadInternationalPublications($scope.professorId);
                     $scope.loadResources();
                     $scope.getCurrentUserRole();
                   };
@@ -78,7 +87,7 @@ app
                                         $scope.internationalPublications
                                                 .splice(index, 1);
                                         $scope
-                                                .loadInternationalPublications($routeParams.professorId);
+                                                .loadInternationalPublications($scope.professorId);
                                       }
                                     });
                   };
@@ -90,6 +99,9 @@ app
                       resolve: {
                         publicationId: function() {
                           return id;
+                        },
+                        professorId: function() {
+                          return $scope.professorId;
                         }
                       }
                     });
@@ -100,6 +112,11 @@ app
                             .open({
                               templateUrl: 'createNewInternationalPublicationPopup.html',
                               controller: createNewInternationalPublicationController,
+                              resolve: {
+                                professorId: function() {
+                                  return $scope.professorId;
+                                }
+                              }
                             });
                   };
 
@@ -110,7 +127,8 @@ app
                 });
 
 var editInternationalPublicationPopupController = function($scope,
-        $modalInstance, $routeParams, $http, $route, publicationId, PctService) {
+        $modalInstance, $routeParams, $http, $route, publicationId, PctService,
+        professorId) {
 
   $scope.internationalPublication = {};
   $scope.master = {};
@@ -165,7 +183,7 @@ var editInternationalPublicationPopupController = function($scope,
   };
 
   $scope.loadProfessorNameAndSurname = function() {
-    PctService.loadProfesor($routeParams.professorId, function(data) {
+    PctService.loadProfesor(professorId, function(data) {
       if (angular.isObject(data)) {
         $scope.professor = data;
         $scope.professorNameAndSurname = $scope.professor.name + " "
@@ -403,7 +421,7 @@ var editInternationalPublicationPopupController = function($scope,
 };
 
 var createNewInternationalPublicationController = function($scope,
-        $modalInstance, $routeParams, $http, $route, PctService) {
+        $modalInstance, $routeParams, $http, $route, PctService, professorId) {
 
   $scope.internationalPublication = {};
   $scope.allPublicationTypes = [];
@@ -455,7 +473,7 @@ var createNewInternationalPublicationController = function($scope,
   };
 
   $scope.loadProfessorNameAndSurname = function() {
-    PctService.loadProfesor($routeParams.professorId, function(data) {
+    PctService.loadProfesor(professorId, function(data) {
       if (angular.isObject(data)) {
         $scope.professor = data;
         $scope.professorNameAndSurname = $scope.professor.name + " "
@@ -556,7 +574,7 @@ var createNewInternationalPublicationController = function($scope,
   };
 
   $scope.saveInternationalPublication = function() {
-    $scope.internationalPublication.professorId = $routeParams.professorId;
+    $scope.internationalPublication.professorId = professorId;
     $http({
       method: 'POST',
       url: "api/publications/internationalPublication",

@@ -9,6 +9,7 @@ app.controller("MasterMentoringController", function($scope, $routeParams,
   
   $scope.isUser = false;
   $scope.isAdmin = false;
+  $scope.mentorId = '';
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -46,10 +47,19 @@ app.controller("MasterMentoringController", function($scope, $routeParams,
       $scope.isAdmin = true;
     }
   };
+  
+  $scope.initUserId = function() {
+    if ($routeParams.mentorId != null && $routeParams.mentorId != '') {
+      $scope.mentorId = $routeParams.mentorId;
+    } else {
+      $scope.mentorId = document.getElementById('currentUserId').value;
+    }
+  };
 
   $scope.init = function() {
     $scope.thesis = {};
-    $scope.loadThesis($routeParams.mentorId, $routeParams.thesisTypeId);
+    $scope.initUserId();
+    $scope.loadThesis($scope.mentorId, $routeParams.thesisTypeId);
     $scope.loadResources();
     $scope.getCurrentUserRole();
   };
@@ -67,7 +77,7 @@ app.controller("MasterMentoringController", function($scope, $routeParams,
       } else {
         $scope.successStatus = "Successfully deleted thesis.";
         $scope.allMasterThesis.splice(index, 1);
-        $scope.loadThesis($routeParams.mentorId, $routeParams.thesisTypeId);
+        $scope.loadThesis($scope.mentorId, $routeParams.thesisTypeId);
       }
     });
   };
@@ -79,6 +89,9 @@ app.controller("MasterMentoringController", function($scope, $routeParams,
       resolve: {
         thesisId: function() {
           return id;
+        },
+        mentorId: function() {
+          return $scope.mentorId;
         }
       }
     });
@@ -87,7 +100,12 @@ app.controller("MasterMentoringController", function($scope, $routeParams,
   $scope.createNewMasterThesis = function() {
     $modal.open({
       templateUrl: 'createNewMasterThesisPopup.html',
-      controller: createNewMasterThesisController
+      controller: createNewMasterThesisController,
+      resolve: {
+        mentorId: function() {
+          return $scope.mentorId;
+        }
+      }
     });
   };
   
@@ -98,7 +116,7 @@ app.controller("MasterMentoringController", function($scope, $routeParams,
 });
 
 var editMasterThesisController = function($scope, $modalInstance, $routeParams,
-        $http, $route, thesisId, PctService) {
+        $http, $route, thesisId, PctService, mentorId) {
 
   $scope.thesis = {};
   $scope.thesis.mentorId;
@@ -231,7 +249,7 @@ var editMasterThesisController = function($scope, $modalInstance, $routeParams,
 
     inputLabel.$setValidity("commissionPresidentInvalid", true);
     return PctService.findProfessorsStartsWith(val,
-            $scope.selectedCommissionMember.id, $routeParams.mentorId).then(
+            $scope.selectedCommissionMember.id, mentorId).then(
             function(response) {
               var professors = [];
               for (var i = 0; i < response.length; i++) {
@@ -251,7 +269,7 @@ var editMasterThesisController = function($scope, $modalInstance, $routeParams,
 
     inputLabel.$setValidity("commissionMemberInvalid", true);
     return PctService.findProfessorsStartsWith(val,
-            $scope.selectedCommissionPresident.id, $routeParams.mentorId).then(
+            $scope.selectedCommissionPresident.id, mentorId).then(
             function(response) {
               var professors = [];
               for (var i = 0; i < response.length; i++) {
@@ -277,7 +295,7 @@ var editMasterThesisController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.refreshMentorData = function() {
-    $scope.thesis.mentorId = $routeParams.mentorId;
+    $scope.thesis.mentorId = mentorId;
   };
 
   $scope.refreshCommissionPresidentData = function() {
@@ -378,7 +396,7 @@ var editMasterThesisController = function($scope, $modalInstance, $routeParams,
 };
 
 var createNewMasterThesisController = function($scope, $modalInstance,
-        $routeParams, $http, $route, PctService) {
+        $routeParams, $http, $route, PctService, mentorId) {
 
   $scope.thesis = {};
   $scope.thesis.mentorId;
@@ -466,7 +484,7 @@ var createNewMasterThesisController = function($scope, $modalInstance,
 
     inputLabel.$setValidity("commissionPresidentInvalid", true);
     return PctService.findProfessorsStartsWith(val,
-            $scope.selectedCommissionMember.id, $routeParams.mentorId).then(
+            $scope.selectedCommissionMember.id, mentorId).then(
             function(response) {
               var professors = [];
               for (var i = 0; i < response.length; i++) {
@@ -486,7 +504,7 @@ var createNewMasterThesisController = function($scope, $modalInstance,
 
     inputLabel.$setValidity("commissionMemberInvalid", true);
     return PctService.findProfessorsStartsWith(val,
-            $scope.selectedCommissionPresident.id, $routeParams.mentorId).then(
+            $scope.selectedCommissionPresident.id, mentorId).then(
             function(response) {
               var professors = [];
               for (var i = 0; i < response.length; i++) {
@@ -501,7 +519,7 @@ var createNewMasterThesisController = function($scope, $modalInstance,
   };
 
   $scope.saveNewThesis = function() {
-    $scope.thesis.mentorId = $routeParams.mentorId;
+    $scope.thesis.mentorId = mentorId;
     $scope.thesis.thesisTypeId = $routeParams.thesisTypeId;
     $scope.thesis.studentId = $scope.selectedStudent.id;
     $scope.thesis.commissionPresidentId = $scope.selectedCommissionPresident.id;

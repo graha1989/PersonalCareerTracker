@@ -10,6 +10,7 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
   
   $scope.isUser = false;
   $scope.isAdmin = false;
+  $scope.professorId = '';
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -42,9 +43,18 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
       $scope.isAdmin = true;
     }
   };
+  
+  $scope.initUserId = function() {
+    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+      $scope.professorId = $routeParams.professorId;
+    } else {
+      $scope.professorId = document.getElementById('currentUserId').value;
+    }
+  };
 
   $scope.init = function() {
-    $scope.loadTeachingExperiences($routeParams.professorId);
+    $scope.initUserId();
+    $scope.loadTeachingExperiences($scope.professorId);
     $scope.loadResources();
     $scope.getCurrentUserRole();
   };
@@ -62,6 +72,9 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
       resolve: {
         teachingExperiences: function() {
           return $scope.teachingExperiences;
+        },
+        professorId: function() {
+          return $scope.professorId;
         }
       }
     });
@@ -74,14 +87,19 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
       } else {
         $scope.successStatus = "Successfully deleted teaching experience.";
         $scope.teachingExperiences.splice(index, 1);
-        $scope.loadTeachingExperiences($routeParams.professorId);
+        $scope.loadTeachingExperiences($scope.professorId);
       }
     });
   };
 
   $scope.showSurveysForSubject = function(professorId, subjectId) {
-    $location.path('/surveys/professorId/' + professorId + '/subjectId/'
-            + subjectId);
+    if (professorId != null && professorId != '') {
+      $location.path('/surveys/professorId/' + professorId + '/subjectId/'
+              + subjectId);
+    } else {
+      $location.path('/surveys/professorId/' + $scope.professorId + '/subjectId/'
+              + subjectId);
+    }
   };
   
   $scope.goBack = function() {
@@ -92,7 +110,7 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
 
 var createTeachingExperiencePopupController = function($scope, $modalInstance,
         $routeParams, $http, $route, $templateCache, PctService,
-        teachingExperiences) {
+        teachingExperiences, professorId) {
 
   $scope.teachingExperience = {};
   $scope.selectedSubject = [];
@@ -157,7 +175,7 @@ var createTeachingExperiencePopupController = function($scope, $modalInstance,
     $scope.teachingExperience.subjectDto.studyProgram = $scope.selectedSubject.studyProgram;
     $scope.teachingExperience.subjectDto.institutionName = $scope.selectedSubject.institutionName;
     $scope.teachingExperience.subjectDto.universityName = $scope.selectedSubject.universityName;
-    $scope.teachingExperience.subjectDto.institutionName = $scope.selectedSubject.institutionName;
+    $scope.teachingExperience.subjectDto.institutionCity = $scope.selectedSubject.institutionCity;
     $scope.teachingExperience.subjectDto.institutionCountry = $scope.selectedSubject.institutionCountry;
     $scope.teachingExperience.subjectDto.studiesThesisType = $scope.selectedSubject.studiesThesisType;
     $scope.teachingExperience.subjectDto.numberOfTeachingLessons = $scope.selectedSubject.numberOfTeachingLessons;
@@ -197,7 +215,7 @@ var createTeachingExperiencePopupController = function($scope, $modalInstance,
     if (!$scope.isExistingSubject) {
       $scope.teachingExperience.subjectDto.subjectName = $scope.selectedSubject;
     }
-    $scope.teachingExperience.professorId = $routeParams.professorId;
+    $scope.teachingExperience.professorId = professorId;
     $http({
       method: 'POST',
       url: "api/teachingExperiences",

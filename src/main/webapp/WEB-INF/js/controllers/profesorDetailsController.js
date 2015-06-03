@@ -7,6 +7,7 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
   $scope.errorMessages = {};
   $scope.master = {};
   $scope.editMode = false;
+  $scope.id = '';
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -58,9 +59,17 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
   };
 
   $scope.setMaxDate();
+  
+  $scope.initUserId = function() {
+    if ($routeParams.id != null && $routeParams.id != '') {
+      $scope.id = $routeParams.id;
+    } else {
+      $scope.id = document.getElementById('currentUserId').value;
+    }
+  };
 
   $scope.init = function() {
-    $scope.id = $routeParams.id;
+    $scope.initUserId();
     $scope.loadProfessorDetails($scope.id);
     $scope.loadResources();
   };

@@ -1,6 +1,7 @@
 package com.pct.controller.api;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -11,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,10 +26,13 @@ import com.pct.constants.RequestMappings;
 import com.pct.domain.Language;
 import com.pct.domain.dto.LanguageDto;
 import com.pct.domain.dto.LanguageExperienceDto;
+import com.pct.domain.dto.UserDto;
 import com.pct.service.LanguageService;
+import com.pct.service.UserService;
 import com.pct.validation.LanguageExperienceNotFoundException;
 import com.pct.validation.LanguageNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.UserNotFoundException;
 
 @RestController
 @RequestMapping("/api/languages")
@@ -35,10 +42,25 @@ public class LanguageController {
 
 	@Autowired
 	LanguageService languageService;
+	
+	@Autowired
+	UserService userService;
 
 	@RequestMapping(value = "allProfessorLanguages", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<LanguageExperienceDto>> showAllProfessorLanguages(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
+		
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		UserDto userDto;
+		try {
+			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		List<LanguageExperienceDto> languages = languageService.findAllLanguageExperiences(professorId);
 
 		return new ResponseEntity<List<LanguageExperienceDto>>(languages, HttpStatus.OK);

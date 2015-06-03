@@ -73,9 +73,9 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 		request.getSession().setAttribute("currentUserId", user.getId().toString());
 		
 		if (isUser) {
-			return "/#/professorDetails/id/" + user.getId();
+			return "/#/professorDetails";
 		} else if (isAdmin) {
-			return "/#/adminDetails/id/" + user.getId();
+			return "/#/adminDetails";
 		} else {
 			throw new IllegalStateException();
 		}

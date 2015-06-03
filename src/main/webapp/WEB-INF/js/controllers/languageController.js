@@ -6,7 +6,7 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
   $scope.languageExperienceIdsList = [];
   $scope.language = {};
   $scope.language.languageId;
-  $scope.language.professorId = $routeParams.professorId;
+  $scope.language.professorId;
   $scope.language.languageName;
   $scope.language.reading = false;
   $scope.language.writing = false;
@@ -21,6 +21,7 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
   
   $scope.isUser = false;
   $scope.isAdmin = false;
+  $scope.professorId = '';
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -59,8 +60,17 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
     }
   };
   
+  $scope.initUserId = function() {
+    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+      $scope.professorId = $routeParams.professorId;
+    } else {
+      $scope.professorId = document.getElementById('currentUserId').value;
+    }
+  };
+  
   $scope.init = function() {
-    $scope.loadLanguages($routeParams.professorId);
+    $scope.initUserId();
+    $scope.loadLanguages($scope.professorId);
     $scope.loadResources();
     $scope.getCurrentUserRole();
   };
@@ -111,6 +121,7 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
   $scope.saveNewLanguageExperience = function() {
     $scope.language.languageId = $scope.selectedLanguage.id;
     $scope.language.languageName = $scope.selectedLanguage.languageName;
+    $scope.language.professorId = $scope.professorId;
     $http({
       method: 'POST',
       url: "api/languages",
@@ -142,7 +153,7 @@ app.controller("LanguageController", function($scope, $routeParams, $http,
       } else {
         $scope.successStatus = "Successfully deleted language experience.";
         $scope.allLanguages.splice(index, 1);
-        $scope.loadLanguages($routeParams.professorId);
+        $scope.loadLanguages($scope.professorId);
       }
     });
   };

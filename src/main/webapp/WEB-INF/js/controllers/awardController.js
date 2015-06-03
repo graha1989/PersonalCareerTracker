@@ -9,6 +9,7 @@ app.controller("AwardController", function($scope, $routeParams, $http, $route,
   
   $scope.isUser = false;
   $scope.isAdmin = false;
+  $scope.professorId = '';
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -40,9 +41,18 @@ app.controller("AwardController", function($scope, $routeParams, $http, $route,
       $scope.isAdmin = true;
     }
   };
+  
+  $scope.initUserId = function() {
+    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+      $scope.professorId = $routeParams.professorId;
+    } else {
+      $scope.professorId = document.getElementById('currentUserId').value;
+    }
+  };
 
   $scope.init = function() {
-    $scope.loadAwards($routeParams.professorId);
+    $scope.initUserId();
+    $scope.loadAwards($scope.professorId);
     $scope.loadResources();
     $scope.getCurrentUserRole();
   };
@@ -81,6 +91,11 @@ app.controller("AwardController", function($scope, $routeParams, $http, $route,
     $modal.open({
       templateUrl: 'createNewAwardPopup.html',
       controller: createNewAwardController,
+      resolve: {
+        professorId: function() {
+          return $scope.professorId;
+        }
+      }
     });
   };
   
@@ -202,7 +217,7 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
 };
 
 var createNewAwardController = function($scope, $modalInstance, $routeParams,
-        $http, $route, PctService) {
+        $http, $route, PctService, professorId) {
 
   $scope.award = {};
 
@@ -259,7 +274,7 @@ var createNewAwardController = function($scope, $modalInstance, $routeParams,
   $scope.init = function() {
     $scope.loadAllAwardTypes();
     $scope.loadAllAwardFields();
-    $scope.award.professorId = $routeParams.professorId;
+    $scope.award.professorId = professorId;
     $scope.status = $routeParams.status;
     $scope.loadResources();
   };

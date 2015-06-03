@@ -14,6 +14,7 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
   
   $scope.isUser = false;
   $scope.isAdmin = false;
+  $scope.professorId = '';
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -119,8 +120,17 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
     }
   };
   
+  $scope.initUserId = function() {
+    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+      $scope.professorId = $routeParams.professorId;
+    } else {
+      $scope.professorId = document.getElementById('currentUserId').value;
+    }
+  };
+  
   $scope.init = function() {
-    $scope.loadProfessorsDoctorStudies($routeParams.professorId,
+    $scope.initUserId();
+    $scope.loadProfessorsDoctorStudies($scope.professorId,
             $routeParams.thesisTypeId);
     $scope.loadAllStudyPrograms();
     $scope.loadResources();
@@ -194,7 +204,7 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
       } else {
         $scope.successStatus = "Successfully deleted doctor studies.";
         $scope.allDoctorStudies.splice(index, 1);
-        $scope.loadProfessorsDoctorStudies($routeParams.professorId,
+        $scope.loadProfessorsDoctorStudies($scope.professorId,
                 $routeParams.thesisTypeId);
       }
     });
@@ -204,6 +214,11 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
     $modal.open({
       templateUrl: 'createNewDoctorStudiesPopup.html',
       controller: createNewDoctorStudiesController,
+      resolve: {
+        professorId: function() {
+          return $scope.professorId;
+        }
+      }
     });
   };
   
@@ -214,7 +229,7 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
 });
 
 var createNewDoctorStudiesController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, PctService) {
+        $routeParams, $http, $route, $templateCache, PctService, professorId) {
 
   $scope.doctorStudies = {};
   $scope.noResultsFound = true;
@@ -334,7 +349,7 @@ var createNewDoctorStudiesController = function($scope, $modalInstance,
     if (!$scope.isExistingFaculty) {
       $scope.doctorStudies.facultyName = $scope.selectedFaculty;
     }
-    $scope.doctorStudies.professorId = $routeParams.professorId;
+    $scope.doctorStudies.professorId = professorId;
     $scope.doctorStudies.thesisTypeId = $routeParams.thesisTypeId;
     $http({
       method: 'POST',

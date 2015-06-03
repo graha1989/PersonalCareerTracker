@@ -12,6 +12,7 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
   
   $scope.isUser = false;
   $scope.isAdmin = false;
+  $scope.professorId = '';
 
   $scope.sortType = '';
 
@@ -101,9 +102,18 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
       $scope.isAdmin = true;
     }
   };
+  
+  $scope.initUserId = function() {
+    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+      $scope.professorId = $routeParams.professorId;
+    } else {
+      $scope.professorId = document.getElementById('currentUserId').value;
+    }
+  };
 
   $scope.init = function() {
-    $scope.loadAllSurveys($routeParams.professorId, $routeParams.subjectId);
+    $scope.initUserId();
+    $scope.loadAllSurveys($scope.professorId, $routeParams.subjectId);
     $scope.loadResources();
     $scope.getCurrentUserRole();
   };
@@ -126,6 +136,11 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
     $modal.open({
       templateUrl: 'createNewSurveyPopup.html',
       controller: createNewSurveyController,
+      resolve: {
+        professorId: function() {
+          return $scope.professorId;
+        }
+      }
     });
   };
 
@@ -137,7 +152,7 @@ app.controller("ProfessorSubjectsSurveysController", function($scope,
               } else {
                 $scope.successStatus = "Successfully deleted survey.";
                 $scope.allSurveys.splice(index, 1);
-                $scope.loadAllSurveys($routeParams.professorId,
+                $scope.loadAllSurveys($scope.professorId,
                         $routeParams.subjectId);
               }
             });
@@ -223,7 +238,7 @@ var editSurveyPopupController = function($scope, $modalInstance, $routeParams,
 };
 
 var createNewSurveyController = function($scope, $modalInstance, $routeParams,
-        $http, $route, $templateCache, PctService) {
+        $http, $route, $templateCache, PctService, professorId) {
 
   $scope.survey = {};
 
@@ -247,7 +262,7 @@ var createNewSurveyController = function($scope, $modalInstance, $routeParams,
   $scope.init();
 
   $scope.saveNewSurvey = function() {
-    $scope.survey.professorId = $routeParams.professorId;
+    $scope.survey.professorId = professorId;
     $scope.survey.subjectId = $routeParams.subjectId;
     $http({
       method: 'POST',

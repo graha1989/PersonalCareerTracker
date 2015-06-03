@@ -21,9 +21,7 @@ app.controller("AdminMenuController", function($scope, $http, $location,
   };
 
   $scope.initUserId = function() {
-    console.log('Setting professor id: ');
     $scope.adminId = document.getElementById('currentUserId').value;
-    console.log($scope.adminId);
   };
 
   $scope.init = function() {
@@ -34,7 +32,7 @@ app.controller("AdminMenuController", function($scope, $http, $location,
   $scope.init();
   
   $scope.home = function() {
-    $location.path('/adminDetails/id/' + $scope.adminId);
+    $location.path('/adminDetails');
   };
 
 });

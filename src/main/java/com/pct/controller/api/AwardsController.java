@@ -1,5 +1,6 @@
 package com.pct.controller.api;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -9,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,11 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.AwardDto;
+import com.pct.domain.dto.UserDto;
 import com.pct.domain.enums.AwardField;
 import com.pct.domain.enums.AwardType;
 import com.pct.service.AwardService;
+import com.pct.service.UserService;
 import com.pct.validation.AwardNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.UserNotFoundException;
 
 @RestController
 @RequestMapping("/api/awards")
@@ -32,6 +39,9 @@ public class AwardsController {
 
 	@Autowired
 	AwardService awardService;
+	
+	@Autowired
+	UserService userService;
 
 	@RequestMapping(value = "allAwards", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<AwardDto>> showAllAwards() {
@@ -43,6 +53,18 @@ public class AwardsController {
 	@RequestMapping(value = "allProfessorAwards", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<AwardDto>> showAllProfessorAwards(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
+		
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		UserDto userDto;
+		try {
+			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		List<AwardDto> awards = null;
 		try {
 			awards = awardService.findAllAwards(professorId);

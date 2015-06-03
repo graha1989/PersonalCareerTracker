@@ -17,6 +17,7 @@ app
 
                   $scope.isUser = false;
                   $scope.isAdmin = false;
+                  $scope.professorId = '';
 
                   $scope.patterns = {
                     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -133,11 +134,18 @@ app
                     }
                   };
 
+                  $scope.initUserId = function() {
+                    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+                      $scope.professorId = $routeParams.professorId;
+                    } else {
+                      $scope.professorId = document.getElementById('currentUserId').value;
+                    }
+                  };
+
                   $scope.init = function() {
-                    $scope
-                            .loadProfessorsSpecialisticStudies(
-                                    $routeParams.professorId,
-                                    $routeParams.thesisTypeId);
+                    $scope.initUserId();
+                    $scope.loadProfessorsSpecialisticStudies(
+                            $scope.professorId, $routeParams.thesisTypeId);
                     $scope.loadAllStudyPrograms();
                     $scope.loadResources();
                     $scope.getCurrentUserRole();
@@ -220,7 +228,7 @@ app
                                                 index, 1);
                                         $scope
                                                 .loadProfessorsSpecialisticStudies(
-                                                        $routeParams.professorId,
+                                                        $scope.professorId,
                                                         $routeParams.thesisTypeId);
                                       }
                                     });
@@ -230,9 +238,14 @@ app
                     $modal.open({
                       templateUrl: 'createNewSpecialisticStudiesPopup.html',
                       controller: createNewSpecialisticStudiesController,
+                      resolve: {
+                        professorId: function() {
+                          return $scope.professorId;
+                        }
+                      }
                     });
                   };
-                  
+
                   $scope.goBack = function() {
                     window.history.back();
                   };
@@ -240,7 +253,7 @@ app
                 });
 
 var createNewSpecialisticStudiesController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, PctService) {
+        $routeParams, $http, $route, $templateCache, PctService, professorId) {
 
   $scope.specialisticStudies = {};
   $scope.noResultsFound = true;
@@ -360,7 +373,7 @@ var createNewSpecialisticStudiesController = function($scope, $modalInstance,
     if (!$scope.isExistingFaculty) {
       $scope.specialisticStudies.facultyName = $scope.selectedFaculty;
     }
-    $scope.specialisticStudies.professorId = $routeParams.professorId;
+    $scope.specialisticStudies.professorId = professorId;
     $scope.specialisticStudies.thesisTypeId = $routeParams.thesisTypeId;
     $http({
       method: 'POST',

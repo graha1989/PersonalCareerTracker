@@ -1,6 +1,7 @@
 package com.pct.controller.api;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,11 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.domain.dto.ProfessorDto;
+import com.pct.domain.dto.UserDto;
 import com.pct.service.ProfessorService;
 import com.pct.service.UserService;
 import com.pct.validation.EmailExistException;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.UserNameExistException;
+import com.pct.validation.UserNotFoundException;
 
 @RestController
 @RequestMapping("/api/professors")
@@ -65,6 +71,18 @@ public class ProfessorController {
 
 	@RequestMapping(value = "loadProfessorDetails", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProfessorDto> getProfessorById(@RequestParam(value = "id", required = true) Long id) {
+		
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		UserDto userDto;
+		try {
+			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != id){
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		ProfessorDto professorDto = new ProfessorDto();
 		try {
 			professorDto = professorService.findProfesorById(id);

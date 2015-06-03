@@ -10,6 +10,7 @@ app.controller("ProfessorPublicationsController", function($scope,
   
   $scope.isUser = false;
   $scope.isAdmin = false;
+  $scope.professorId = '';
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -42,9 +43,18 @@ app.controller("ProfessorPublicationsController", function($scope,
       $scope.isAdmin = true;
     }
   };
+  
+  $scope.initUserId = function() {
+    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+      $scope.professorId = $routeParams.professorId;
+    } else {
+      $scope.professorId = document.getElementById('currentUserId').value;
+    }
+  };
 
   $scope.init = function() {
-    $scope.loadProfessorsPublications($routeParams.professorId);
+    $scope.initUserId();
+    $scope.loadProfessorsPublications($scope.professorId);
     $scope.loadResources();
     $scope.getCurrentUserRole();
   };
@@ -62,7 +72,7 @@ app.controller("ProfessorPublicationsController", function($scope,
       } else {
         $scope.successStatus = "Successfully deleted professor publication.";
         $scope.publications.splice(index, 1);
-        $scope.loadProfessorsPublications($routeParams.professorId);
+        $scope.loadProfessorsPublications($scope.professorId);
       }
     });
   };
@@ -74,6 +84,9 @@ app.controller("ProfessorPublicationsController", function($scope,
       resolve: {
         publicationId: function() {
           return id;
+        },
+        professorId: function() {
+          return $scope.professorId;
         }
       }
     });
@@ -83,6 +96,11 @@ app.controller("ProfessorPublicationsController", function($scope,
     $modal.open({
       templateUrl: 'createNewProfessorPublicationPopup.html',
       controller: createNewProfessorPublicationController,
+      resolve: {
+        professorId: function() {
+          return $scope.professorId;
+        }
+      }
     });
   };
   
@@ -93,7 +111,7 @@ app.controller("ProfessorPublicationsController", function($scope,
 });
 
 var editProfessorPublicationPopupController = function($scope, $modalInstance,
-        $routeParams, $http, $route, publicationId, PctService) {
+        $routeParams, $http, $route, publicationId, PctService, professorId) {
 
   $scope.publication = {};
   $scope.master = {};
@@ -148,7 +166,7 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
   };
 
   $scope.loadProfessorNameAndSurname = function() {
-    PctService.loadProfesor($routeParams.professorId, function(data) {
+    PctService.loadProfesor(professorId, function(data) {
       if (angular.isObject(data)) {
         $scope.professor = data;
         $scope.professorNameAndSurname = $scope.professor.name + " "
@@ -380,7 +398,7 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
 };
 
 var createNewProfessorPublicationController = function($scope, $modalInstance,
-        $routeParams, $http, $route, PctService) {
+        $routeParams, $http, $route, PctService, professorId) {
 
   $scope.publication = {};
   $scope.allPublicationTypes = [];
@@ -434,7 +452,7 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
   $scope.loadProfessorNameAndSurname = function() {
     PctService
             .loadProfesor(
-                    $routeParams.professorId,
+                    professorId,
                     function(data) {
                       if (angular.isObject(data)) {
                         $scope.professor = data;
@@ -537,7 +555,7 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
   };
 
   $scope.saveProfessorPublication = function() {
-    $scope.publication.professorId = $routeParams.professorId;
+    $scope.publication.professorId = professorId;
     $http({
       method: 'POST',
       url: "api/publications/professorPublication",

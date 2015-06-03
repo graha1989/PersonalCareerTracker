@@ -1,5 +1,6 @@
 package com.pct.controller.api;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -9,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,11 +23,14 @@ import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
 import com.pct.domain.StudiesThesisType;
 import com.pct.domain.dto.ThesisDto;
+import com.pct.domain.dto.UserDto;
 import com.pct.service.ThesisService;
+import com.pct.service.UserService;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.StudentNotFoundException;
-import com.pct.validation.ThesisNotFoundException;
 import com.pct.validation.StudiesThesisTypeNotFoundException;
+import com.pct.validation.ThesisNotFoundException;
+import com.pct.validation.UserNotFoundException;
 
 @RestController
 @RequestMapping("/api/thesis")
@@ -33,11 +40,26 @@ public class ThesisController {
 
 	@Autowired
 	ThesisService thesisService;
+	
+	@Autowired
+	UserService userService;
 
 	@RequestMapping(value = "allThesis", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ThesisDto>> showAllThesis(
 			@RequestParam(value = "mentorId", required = true) Long mentorId,
 			@RequestParam(value = "thesisTypeId", required = true) Long thesisTypeId) {
+		
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		UserDto userDto;
+		try {
+			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != mentorId){
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		List<ThesisDto> thesis = thesisService.findAllThesis(mentorId, thesisTypeId);
 
 		return new ResponseEntity<List<ThesisDto>>(thesis, HttpStatus.OK);
@@ -75,7 +97,6 @@ public class ThesisController {
 		try {
 			studiesThesisType = thesisService.findThesisTypeById(id);
 		} catch (StudiesThesisTypeNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ResponseEntity<StudiesThesisType>(studiesThesisType, HttpStatus.OK);

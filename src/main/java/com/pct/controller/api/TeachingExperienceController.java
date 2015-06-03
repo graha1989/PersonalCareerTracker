@@ -1,6 +1,7 @@
 package com.pct.controller.api;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -11,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,11 +25,14 @@ import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.SubjectDto;
 import com.pct.domain.dto.TeachingExperienceDto;
+import com.pct.domain.dto.UserDto;
 import com.pct.service.SubjectService;
 import com.pct.service.TeachingExperienceService;
+import com.pct.service.UserService;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.SubjectNotFoundException;
 import com.pct.validation.TeachingExperienceNotFoundException;
+import com.pct.validation.UserNotFoundException;
 
 @RestController
 @RequestMapping("/api/teachingExperiences")
@@ -35,6 +42,9 @@ public class TeachingExperienceController {
 
 	@Autowired
 	TeachingExperienceService teachingExperienceService;
+	
+	@Autowired
+	UserService userService;
 
 	@Autowired
 	SubjectService subjectService;
@@ -43,6 +53,17 @@ public class TeachingExperienceController {
 	public ResponseEntity<List<TeachingExperienceDto>> showAllProfessorTeachingExperiences(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
 
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		UserDto userDto;
+		try {
+			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		List<TeachingExperienceDto> experiences = null;
 		try {
 			experiences = teachingExperienceService.findAllTeachingExperiences(professorId);
