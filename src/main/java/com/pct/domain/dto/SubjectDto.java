@@ -71,13 +71,16 @@ public class SubjectDto implements Serializable {
 	@Nullable
 	protected Long institutionId;
 
+	@Nullable
+	protected Long professorId;
+
 	public SubjectDto() {
 	}
 
 	public SubjectDto(String institutionName, String universityName, String institutionCity, String institutionCountry,
 			Long id, String subjectName, String studyProgram, StudiesThesisType studiesThesisType,
 			Integer numberOfTheoreticalLessons, Integer numberOfPracticalLessons, Integer numberOfTeachingLessons,
-			Long institutionId) {
+			Long institutionId, Long professorId) {
 		super();
 		this.institutionName = institutionName;
 		this.universityName = universityName;
@@ -91,6 +94,7 @@ public class SubjectDto implements Serializable {
 		this.numberOfPracticalLessons = numberOfPracticalLessons;
 		this.numberOfTeachingLessons = numberOfTeachingLessons;
 		this.institutionId = institutionId;
+		this.professorId = professorId;
 	}
 
 	public SubjectDto(Subject subject) {
@@ -106,6 +110,7 @@ public class SubjectDto implements Serializable {
 		this.numberOfPracticalLessons = subject.getNumberOfPracticalLessons();
 		this.numberOfTeachingLessons = subject.getNumberOfTeachingLessons();
 		this.institutionId = subject.getInstitution().getId();
+		this.professorId = subject.getProfessor().getId();
 	}
 
 	public String getInstitutionName() {
@@ -206,6 +211,14 @@ public class SubjectDto implements Serializable {
 
 	public void setInstitutionId(Long institutionId) {
 		this.institutionId = institutionId;
+	}
+
+	public Long getProfessorId() {
+		return professorId;
+	}
+
+	public void setProfessorId(Long professorId) {
+		this.professorId = professorId;
 	}
 
 }

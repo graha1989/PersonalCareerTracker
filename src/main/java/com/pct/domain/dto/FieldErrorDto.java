@@ -2,7 +2,7 @@ package com.pct.domain.dto;
 
 import java.io.Serializable;
 
-public class FieldErrorDTO implements Serializable {
+public class FieldErrorDto implements Serializable {
 
 	private static final long serialVersionUID = 1814768318941064464L;
 
@@ -18,7 +18,7 @@ public class FieldErrorDTO implements Serializable {
 	 * @param field
 	 * @param message
 	 */
-	public FieldErrorDTO(String field, String message) {
+	public FieldErrorDto(String field, String message) {
 		this.field = field;
 		this.message = message;
 	}

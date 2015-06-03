@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.pct.domain.dto.ValidationErrorDTO;
+import com.pct.domain.dto.ValidationErrorDto;
 import com.pct.validation.EmailExistException;
 import com.pct.validation.UserNameExistException;
 
@@ -44,12 +44,12 @@ public class ErrorControllerAdvice {
 	 * Processes situation when user or professor enter existing user name during registration.
 	 * 
 	 * @param ex {@link UserNameExistException}
-	 * @return {@link ValidationErrorDTO}
+	 * @return {@link ValidationErrorDto}
 	 */
 	@ExceptionHandler(UserNameExistException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ValidationErrorDTO processUserNameValidationError(UserNameExistException ex) {
+	public ValidationErrorDto processUserNameValidationError(UserNameExistException ex) {
 		String[] codes = { USERNAME_EXIST_CODE };
 		FieldError userNameError = new FieldError(USERNAME_EXIST_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(),
 				false, codes, null, USERNAME_EXIST_DEFAULT_MESSAGE);
@@ -62,12 +62,12 @@ public class ErrorControllerAdvice {
 	 * Processes situation when user or professor enter existing email during registration.
 	 * 
 	 * @param ex {@link EmailExistException}
-	 * @return {@link ValidationErrorDTO}
+	 * @return {@link ValidationErrorDto}
 	 */
 	@ExceptionHandler(EmailExistException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ValidationErrorDTO processEmailValidationError(EmailExistException ex) {
+	public ValidationErrorDto processEmailValidationError(EmailExistException ex) {
 		String[] codes = { EMAIL_EXIST_CODE };
 		FieldError emailError = new FieldError(EMAIL_EXIST_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(),
 				false, codes, null, EMAIL_EXIST_DEFAULT_MESSAGE);
@@ -80,12 +80,12 @@ public class ErrorControllerAdvice {
 	 * Processes validation for user's input during registration process.
 	 * 
 	 * @param ex {@link MethodArgumentNotValidException}
-	 * @return {@link ValidationErrorDTO}
+	 * @return {@link ValidationErrorDto}
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ValidationErrorDTO processValidationError(MethodArgumentNotValidException ex) {
+	public ValidationErrorDto processValidationError(MethodArgumentNotValidException ex) {
 		BindingResult result = ex.getBindingResult();
 		List<FieldError> fieldErrors = result.getFieldErrors();
 
@@ -93,13 +93,13 @@ public class ErrorControllerAdvice {
 	}
 
 	/**
-	 * Adds field errors to {@link ValidationErrorDTO} object.
+	 * Adds field errors to {@link ValidationErrorDto} object.
 	 * 
 	 * @param fieldErrors
 	 * @return
 	 */
-	private ValidationErrorDTO processFieldErrors(List<FieldError> fieldErrors) {
-		ValidationErrorDTO dto = new ValidationErrorDTO();
+	private ValidationErrorDto processFieldErrors(List<FieldError> fieldErrors) {
+		ValidationErrorDto dto = new ValidationErrorDto();
 
 		for (FieldError fieldError : fieldErrors) {
 			String localizedErrorMessage = resolveLocalizedErrorMessage(fieldError);
