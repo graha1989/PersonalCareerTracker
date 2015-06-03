@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.Institution;
+import com.pct.domain.Professor;
 import com.pct.domain.Subject;
 import com.pct.domain.dto.SubjectDto;
 import com.pct.repository.InstitutionRepository;
+import com.pct.repository.ProfesorRepository;
 import com.pct.repository.SubjectRepository;
 import com.pct.service.SubjectService;
 import com.pct.validation.InstitutionNotFoundException;
@@ -26,6 +28,9 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Autowired
 	private InstitutionRepository institutionRepository;
+	
+	@Autowired
+	private ProfesorRepository professorRepository; 
 
 	@Override
 	@Transactional
@@ -112,7 +117,11 @@ public class SubjectServiceImpl implements SubjectService {
 
 	public Subject createOrUpdateSubjectInstanceFromSubjectDto(@Nonnull SubjectDto subjectDto,
 			@Nonnull Institution institution) {
-
+		
+		Professor professor = null;
+		if (subjectDto.getProfessorId() != null && subjectDto.getProfessorId() > 0L) {
+			professor = professorRepository.findOne(subjectDto.getProfessorId());
+		}
 		Subject subject = null;
 		if (subjectDto.getId() == null) {
 			subject = new Subject();
@@ -120,6 +129,7 @@ public class SubjectServiceImpl implements SubjectService {
 			subject = subjectRepository.findOne(subjectDto.getId());
 		}
 		subject.setInstitution(institution);
+		subject.setProfessor(professor);
 		subject.setName(subjectDto.getSubjectName());
 		subject.setProgram(subjectDto.getStudyProgram());
 		subject.setStudiesThesisType(subjectDto.getStudiesThesisType());

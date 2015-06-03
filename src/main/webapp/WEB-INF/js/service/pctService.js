@@ -71,6 +71,19 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        findProfessorsStartsWith: function(value) {
+          var deferred = $q.defer();
+          $http.get("api/professors/findAllProfessorStartsWith", {
+            params: {
+              value: value
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
         loadLanguages: function(professorId) {
           var deferred = $q.defer();
           $http.get("api/languages/allProfessorLanguages", {

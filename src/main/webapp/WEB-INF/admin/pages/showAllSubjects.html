@@ -26,6 +26,7 @@
 							<td>{{ resources.subjectsTableLabels.facultyCity }}</td>
 							<td>{{ resources.subjectsTableLabels.studyType }}</td>
 							<td>{{ resources.subjectsTableLabels.lessonsNumber }}</td>
+							<td>{{ resources.subjectsTableLabels.introducedBy }}</td>
 							<td colspan="2"></td>
 						</tr>
 						<tr
@@ -37,6 +38,7 @@
 							<td>{{ subjectData.faculty.city }}</td>
 							<td>{{ subjectData.subject.studiesThesisType.type }}</td>
 							<td>{{ subjectData.subject.numberOfTeachingLessons }} + {{ subjectData.subject.numberOfTheoreticalLessons }} + {{ subjectData.subject.numberOfPracticalLessons }}</td>
+							<td>{{ subjectData.professor.name }} {{ subjectData.professor.surname }}</td>
 							<td class="delete"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteSubject(subjectData.subject.id, $index)">
@@ -49,7 +51,7 @@
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="8">{{ errorMessages.error.emptyTable }}</td>
+							<td colspan="9">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -294,6 +296,37 @@
 								class="ng-binding">{{ errorMessages.error.invalidLessonsNumberLength }}</span> <span
 								ng-show="form.inputNumberOfPracticalLessons.$error.min"
 								class="ng-binding">{{ errorMessages.error.minLessonsNumberNumber }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProfessor"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.introducedBy }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputProfessor"
+							name="inputProfessor"
+							ng-model="$parent.selectedProfessor"
+							placeholder="{{ resources.subjectPopupLabels.introducedBy }}"
+							typeahead="professor as professor.name + ' ' + professor.surname for professor in getProfessors($viewValue) | limitTo:8"
+							typeahead-on-select="onSelectProfessor()"
+							typeahead-loading="loadingProfessor"
+							autocomplete="off"
+							required /> <span
+							ng-show="loadingProfessor"
+							class="glyphicon glyphicon-refresh"></span>
+						<div
+							ng-show="form.inputProfessor.$dirty && form.inputProfessor.$invalid"
+							class="professorFieldError">
+							<span
+								ng-show="form.inputProfessor.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputProfessor.$error.professorInvalid"
+								class="ng-binding">{{errorMessages.error.emptyTable}}</span>
 						</div>
 					</div>
 				</div>
@@ -581,6 +614,37 @@
 								class="ng-binding">{{ errorMessages.error.invalidLessonsNumberLength }}</span> <span
 								ng-show="form.inputNumberOfPracticalLessons.$error.min"
 								class="ng-binding">{{ errorMessages.error.minLessonsNumberNumber }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputProfessor"
+						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.introducedBy }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputProfessor"
+							name="inputProfessor"
+							ng-model="$parent.selectedProfessor"
+							placeholder="{{ resources.subjectPopupLabels.introducedBy }}"
+							typeahead="professor as professor.name + ' ' + professor.surname for professor in getProfessors($viewValue) | limitTo:8"
+							typeahead-on-select="onSelectProfessor()"
+							typeahead-loading="loadingProfessor"
+							autocomplete="off"
+							required /> <span
+							ng-show="loadingProfessor"
+							class="glyphicon glyphicon-refresh"></span>
+						<div
+							ng-show="form.inputProfessor.$dirty && form.inputProfessor.$invalid"
+							class="professorFieldError">
+							<span
+								ng-show="form.inputProfessor.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputProfessor.$error.professorInvalid"
+								class="ng-binding">{{errorMessages.error.emptyTable}}</span>
 						</div>
 					</div>
 				</div>

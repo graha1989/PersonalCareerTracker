@@ -3,6 +3,7 @@ app.controller("SubjectsController", function($scope, $routeParams, $http,
 
   $scope.subject = {};
   $scope.allSubjects = [];
+  $scope.professor = {};
 
   $scope.completeSubjectDataArray = [];
 
@@ -22,14 +23,28 @@ app.controller("SubjectsController", function($scope, $routeParams, $http,
             });
   };
 
+  $scope.loadSelectedProfessor = function(index) {
+    PctService.loadProfesor($scope.allSubjects[index].professorId, function(
+            data) {
+      if (angular.isObject(data)) {
+        $scope.professor = data;
+        $scope.completeSubjectDataArray.push({
+          faculty: $scope.faculty,
+          subject: $scope.allSubjects[index],
+          professor: $scope.professor
+        });
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
+  };
+
   $scope.loadSelectedInstitution = function(id, index) {
     PctService.loadSelectedInstitution(id, function(data) {
       if (angular.isObject(data)) {
         $scope.faculty = data;
-        $scope.completeSubjectDataArray.push({
-          faculty: $scope.faculty,
-          subject: $scope.allSubjects[index]
-        });
+        $scope.loadSelectedProfessor(index);
         $scope.noResultsFound = false;
       } else {
         $scope.noResultsFound = true;
@@ -89,6 +104,9 @@ var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
   $scope.allStudiesThesisTypes = [];
   $scope.master = {};
   $scope.allFacultyDataShown = false;
+  $scope.selectedProfessor = [];
+  $scope.masterSelectedProfessor = [];
+  $scope.professorSelected = false;
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -113,12 +131,28 @@ var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
     });
   };
 
+  $scope.loadSelectedProfessor = function(id) {
+    PctService.loadProfesor(id,
+            function(data) {
+              if (angular.isObject(data)) {
+                $scope.selectedProfessor = data;
+                $scope.professorSelected = true;
+                $scope.masterSelectedProfessor = angular
+                        .copy($scope.selectedProfessor);
+                $scope.noResultsFound = false;
+              } else {
+                $scope.noResultsFound = true;
+              }
+            });
+  };
+
   $scope.loadSelectedSubject = function(id) {
     PctService.loadSelectedSubject(id, function(data) {
       if (angular.isObject(data)) {
         $scope.subject = data;
         $scope.master = angular.copy($scope.subject);
         $scope.loadSelectedFaculty($scope.subject.institutionId);
+        $scope.loadSelectedProfessor($scope.subject.professorId)
         $scope.noResultsFound = false;
       } else {
         $scope.noResultsFound = true;
@@ -153,6 +187,38 @@ var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
   $scope.collapseFacultyData = function() {
     $scope.allFacultyDataShown = false;
   };
+
+  $scope.getProfessors = function(val) {
+    var inputLabel = this.form.inputProfessor;
+
+    inputLabel.$setValidity("professorInvalid", true);
+    return PctService.findProfessorsStartsWith(val).then(function(response) {
+      var professors = [];
+      for (var i = 0; i < response.length; i++) {
+        professors.push(response[i]);
+        inputLabel.$setValidity("professorInvalid", true);
+      }
+      if (val.length >= 3 && professors.length == 0) {
+        inputLabel.$setValidity("professorInvalid", false);
+      }
+      return professors;
+    });
+  };
+
+  $scope.onSelectProfessor = function() {
+    $scope.subject.professorId = $scope.selectedProfessor.id;
+    $scope.masterSelectedProfessor = angular.copy($scope.selectedProfessor);
+    $scope.professorSelected = true;
+  };
+
+  $scope.$watch('selectedProfessor', function() {
+    if ($scope.professorSelected
+            && !angular.equals($scope.selectedProfessor,
+                    $scope.masterSelectedProfessor)) {
+      $scope.selectedProfessor = null;
+      $scope.professorSelected = false;
+    }
+  });
 
   $scope.saveSubject = function() {
     $http({
@@ -198,6 +264,9 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
   $scope.masterSelectedFaculty = [];
   $scope.isExistingFaculty = false;
   $scope.allStudiesThesisTypes = [];
+  $scope.selectedProfessor = [];
+  $scope.masterSelectedProfessor = [];
+  $scope.professorSelected = false;
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -297,6 +366,38 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
     });
   };
 
+  $scope.getProfessors = function(val) {
+    var inputLabel = this.form.inputProfessor;
+
+    inputLabel.$setValidity("professorInvalid", true);
+    return PctService.findProfessorsStartsWith(val).then(function(response) {
+      var professors = [];
+      for (var i = 0; i < response.length; i++) {
+        professors.push(response[i]);
+        inputLabel.$setValidity("professorInvalid", true);
+      }
+      if (val.length >= 3 && professors.length == 0) {
+        inputLabel.$setValidity("professorInvalid", false);
+      }
+      return professors;
+    });
+  };
+
+  $scope.onSelectProfessor = function() {
+    $scope.subject.professorId = $scope.selectedProfessor.id;
+    $scope.masterSelectedProfessor = angular.copy($scope.selectedProfessor);
+    $scope.professorSelected = true;
+  };
+
+  $scope.$watch('selectedProfessor', function() {
+    if ($scope.professorSelected
+            && !angular.equals($scope.selectedProfessor,
+                    $scope.masterSelectedProfessor)) {
+      $scope.selectedProfessor = null;
+      $scope.professorSelected = false;
+    }
+  });
+
   $scope.validateForm = function() {
     if ((($scope.subject.institutionName != null && $scope.subject.institutionName != '') || ($scope.selectedFaculty != null && $scope.selectedFaculty != ''))
             && $scope.subject.universityName != null
@@ -316,7 +417,8 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
             && $scope.subject.numberOfTheoreticalLessons != null
             && $scope.subject.numberOfTheoreticalLessons != ''
             && $scope.subject.numberOfPracticalLessons != null
-            && $scope.subject.numberOfPracticalLessons != '') {
+            && $scope.subject.numberOfPracticalLessons != ''
+            && $scope.selectedProfessor != null && $scope.selectedProfessor != '') {
       return true;
     } else {
       return false;

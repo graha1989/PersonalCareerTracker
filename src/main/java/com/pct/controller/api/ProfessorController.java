@@ -71,18 +71,19 @@ public class ProfessorController {
 
 	@RequestMapping(value = "loadProfessorDetails", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProfessorDto> getProfessorById(@RequestParam(value = "id", required = true) Long id) {
-		
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != id){
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != id) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		ProfessorDto professorDto = new ProfessorDto();
 		try {
 			professorDto = professorService.findProfesorById(id);
@@ -101,6 +102,18 @@ public class ProfessorController {
 		List<ProfessorDto> professors = new ArrayList<ProfessorDto>();
 		if (value.length() >= 3) {
 			professors = professorService.findProfessorsStartsWith(value, idProf, idMentor);
+		}
+
+		return new ResponseEntity<List<ProfessorDto>>(professors, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "findAllProfessorStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<List<ProfessorDto>> findProfessorStartsWith(
+			@RequestParam(value = "value", required = true) String value) throws ProfessorNotFoundException {
+
+		List<ProfessorDto> professors = new ArrayList<ProfessorDto>();
+		if (value.length() >= 3) {
+			professors = professorService.findProfessorsStartsWith(value);
 		}
 
 		return new ResponseEntity<List<ProfessorDto>>(professors, HttpStatus.OK);

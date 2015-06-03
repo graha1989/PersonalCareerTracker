@@ -16,6 +16,8 @@ public interface ProfessorService {
 	void saveProfesor(ProfessorDto ProfessorDto) throws UserNameExistException, EmailExistException;
 
 	List<ProfessorDto> findProfessorsStartsWith(String value, Long idProf, Long idMentor) throws ProfessorNotFoundException;
+	
+	List<ProfessorDto> findProfessorsStartsWith(String value) throws ProfessorNotFoundException;
 
 	List<ProfessorDto> findAllProfessors();
 

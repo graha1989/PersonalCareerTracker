@@ -374,7 +374,8 @@
         "facultyCity": "Grad",
         "facultyCountry": "Država",
         "studyType": "Stepen studija",
-        "lessonsNumber": "Fond časova"
+        "lessonsNumber": "Fond časova",
+        "introducedBy": "Uveden od strane"
     },
     "awardPopupLabels": {
         "awardNameLabel": "Naziv priznanja",
@@ -405,7 +406,8 @@
         "numberOfLessons": "Fond časova",
         "teachingLessons": "Predavanja",
         "practicalLessons": "Praktične vežbe",
-        "theoreticalLessons": "Teorijske vežbe"
+        "theoreticalLessons": "Teorijske vežbe",
+        "introducedBy": "Uveden od strane"
     },
     "professorPublicationsTableLabels": {
         "publicationType": "Tip publikacije",

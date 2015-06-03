@@ -226,6 +226,23 @@ public class ProfesorServiceImpl implements ProfessorService {
 
 	@Override
 	@Transactional
+	public List<ProfessorDto> findProfessorsStartsWith(String value) throws ProfessorNotFoundException {
+
+		List<ProfessorDto> professorsDtoList = new ArrayList<ProfessorDto>();
+		List<Professor> professorsList = new ArrayList<Professor>();
+
+		professorsList = profesorRepository.findByNameLikeOrSurnameLike(value);
+		for (Professor p : professorsList) {
+			ProfessorDto professorDto = new ProfessorDto(p);
+			professorDto.setId(p.getId());
+			professorsDtoList.add(professorDto);
+		}
+
+		return professorsDtoList;
+	}
+
+	@Override
+	@Transactional
 	public List<ProfessorDto> findAllProfessors() {
 
 		List<ProfessorDto> professorDtos = new ArrayList<ProfessorDto>();
