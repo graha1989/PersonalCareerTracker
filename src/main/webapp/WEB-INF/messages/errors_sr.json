@@ -1,7 +1,7 @@
 {
 "error" : {
 		"invalidInput" : "Unos nije validan.",
-		"invalidMaxLength" : "Max. 50 karaktera.",
+		"invalidMaxLength" : "Max. 100 karaktera.",
 		"invalidUniversityNameMaxLength" : "Max. 50 karaktera.",
 		"invalidFacultyNameMaxLength" : "Max. 50 karaktera.",
 		"invalidThesisTitleMaxLength" : "Max. 200 karaktera.",

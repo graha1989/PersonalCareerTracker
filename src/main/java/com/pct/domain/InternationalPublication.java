@@ -24,11 +24,11 @@ public class InternationalPublication extends AbstractEntity {
 	@Column(name = "isbn", unique = true, length = 30)
 	private String isbn;
 
-	@Column(name = "journalTitle", length = 50)
+	@Column(name = "journalTitle", length = 100)
 	@Nullable
 	private String journalTitle;
 
-	@Column(name = "title", length = 50)
+	@Column(name = "title", length = 100)
 	private String title;
 
 	@Column(name = "authors")

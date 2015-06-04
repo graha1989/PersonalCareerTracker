@@ -27,11 +27,11 @@ public class InternationalPublicationDto implements Serializable {
 	private String isbn;
 
 	@NotEmpty
-	@Length(max = 50)
+	@Length(max = 100)
 	@SafeHtml
 	private String title;
 
-	@Length(max = 50)
+	@Length(max = 100)
 	@SafeHtml
 	private String journalTitle;
 
