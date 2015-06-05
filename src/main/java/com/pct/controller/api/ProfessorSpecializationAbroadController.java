@@ -31,26 +31,27 @@ import com.pct.validation.ProfessorSpecializationNotFoundException;
 import com.pct.validation.UserNotFoundException;
 
 @RestController
-@RequestMapping("/api/specialization")
+@RequestMapping(RequestMappings.SPECIALIZATION_API)
 public class ProfessorSpecializationAbroadController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProfessorSpecializationAbroadController.class);
 
 	@Autowired
 	ProfessorSpecializationService professorSpecializationService;
-	
+
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "allProfessorSpecializations", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROFESSOR_SPECIALIZATIONS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<SpecializationAbroadDto>> showAllProfessorSpecializations(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
-		
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 		} catch (UserNotFoundException e) {

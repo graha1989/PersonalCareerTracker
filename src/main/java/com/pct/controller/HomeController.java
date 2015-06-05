@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pct.constants.RequestMappings;
+
 @Controller
-@RequestMapping("/")
+@RequestMapping(RequestMappings.ROOT)
 public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);

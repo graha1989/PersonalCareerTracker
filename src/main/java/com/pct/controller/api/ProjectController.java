@@ -28,7 +28,7 @@ import com.pct.service.ProjectService;
 import com.pct.validation.ProjectNotFoundException;
 
 @RestController
-@RequestMapping("/api/projects")
+@RequestMapping(RequestMappings.PROJECTS_API)
 public class ProjectController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
@@ -42,7 +42,7 @@ public class ProjectController {
 	@Autowired
 	ProjectLeaderService projectLeaderService;
 
-	@RequestMapping(value = "allProjects", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROJECTS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProjectDto>> showAllProjects() {
 
 		List<ProjectDto> projectDtos = projectService.findAllProjects();
@@ -51,7 +51,7 @@ public class ProjectController {
 		return new ResponseEntity<List<ProjectDto>>(projectDtos, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allProjectTypes", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROJECT_TYPES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProjectType>> showAllProjectTypes() {
 		List<ProjectType> projectTypes = projectService.findAllProjectTypes();
 
@@ -88,7 +88,7 @@ public class ProjectController {
 		return new ResponseEntity<ProjectDto>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "findProfessorsOrLeadersStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROJECT_PROFESSORS_OR_LEADERS_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<PersonDto>> findProfessorsOrLeadersStartsWith(
 			@RequestParam(value = "value", required = true) String value,
 			@RequestParam(value = "projectId", required = false) @Nullable Long projectId,

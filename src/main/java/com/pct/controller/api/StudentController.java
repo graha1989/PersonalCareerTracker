@@ -23,7 +23,7 @@ import com.pct.service.StudentService;
 import com.pct.validation.StudentNotFoundException;
 
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping(RequestMappings.STUDENTS_API)
 public class StudentController {
 
 	private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
@@ -31,15 +31,16 @@ public class StudentController {
 	@Autowired
 	StudentService studentService;
 
-	@RequestMapping(value = "allStudents", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_STUDENTS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<StudentDto>> showAllStudents() {
 		List<StudentDto> students = studentService.findAll();
 
 		return new ResponseEntity<List<StudentDto>>(students, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedStudent", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<StudentDto> showStudent(@RequestParam(value = RequestMappings.ID, required = true) Long id) throws StudentNotFoundException {
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_STUDENT, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<StudentDto> showStudent(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws StudentNotFoundException {
 		StudentDto student = studentService.findStudentById(id);
 
 		return new ResponseEntity<StudentDto>(student, HttpStatus.OK);
@@ -66,10 +67,11 @@ public class StudentController {
 
 		return new ResponseEntity<StudentDto>(student, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "findStudentStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<List<StudentDto>> findStudentStartsWith(@RequestParam(value = "value", required = true) String value) throws StudentNotFoundException {
-		
+
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_STUDENT, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<List<StudentDto>> findStudentStartsWith(
+			@RequestParam(value = "value", required = true) String value) throws StudentNotFoundException {
+
 		List<StudentDto> students = new ArrayList<StudentDto>();
 		if (value.length() >= 3) {
 			students = studentService.findStudentsStartsWith(value);

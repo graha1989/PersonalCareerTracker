@@ -23,7 +23,7 @@ import com.pct.validation.InstitutionNotFoundException;
 import com.pct.validation.SubjectNotFoundException;
 
 @RestController
-@RequestMapping("/api/subjects")
+@RequestMapping(RequestMappings.SUBJECTS_API)
 public class SubjectController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SubjectController.class);
@@ -31,7 +31,7 @@ public class SubjectController {
 	@Autowired
 	SubjectService subjectService;
 
-	@RequestMapping(value = "allSubjects", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_SUBJECTS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<SubjectDto>> showAllSubjects() {
 
 		List<SubjectDto> subjectDtos = subjectService.findAllSubjects();
@@ -40,7 +40,7 @@ public class SubjectController {
 		return new ResponseEntity<List<SubjectDto>>(subjectDtos, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedSubject", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_SUBJECT, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<SubjectDto> showSubject(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws SubjectNotFoundException {
 		SubjectDto subjectDto = subjectService.findSubjectById(id);

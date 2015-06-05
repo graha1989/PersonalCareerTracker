@@ -34,32 +34,33 @@ import com.pct.validation.ProjectNotFoundException;
 import com.pct.validation.UserNotFoundException;
 
 @RestController
-@RequestMapping("/api/projectExperiences")
+@RequestMapping(RequestMappings.PROJECT_EXPERIENCES_API)
 public class ProjectExperienceController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProjectExperienceController.class);
 
 	@Autowired
 	ProjectExperienceService projectExperienceService;
-	
+
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "allProfessorProjecExperiences", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROFESSOR_PROJECT_EXPERIENCES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProjectExperienceDto>> showAllProfessorProjectExperiencess(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
-		
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		List<ProjectExperienceDto> projectExperienceDtos = projectExperienceService
 				.findAllProjectExperiences(professorId);
 
@@ -68,14 +69,14 @@ public class ProjectExperienceController {
 		return new ResponseEntity<List<ProjectExperienceDto>>(projectExperienceDtos, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allProjectTypes", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROJECT_TYPES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProjectType>> showAllProjectTypes() {
 		List<ProjectType> projectTypes = projectExperienceService.findAllProjectTypes();
 
 		return new ResponseEntity<List<ProjectType>>(projectTypes, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedProjectExperience", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_PROJECT_EXPERIENCE, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProjectExperienceDto> showProject(
 			@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws ProjectExperienceNotFoundException {
@@ -102,7 +103,7 @@ public class ProjectExperienceController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "findProjectStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROJECTS_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProjectDto>> findProjectStartsWith(
 			@RequestParam(value = "value", required = true) String value,
 			@RequestParam(value = "projectIds", required = false) List<Long> projectIds)

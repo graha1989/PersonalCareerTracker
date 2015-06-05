@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
+import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.UserDto;
 import com.pct.service.UserService;
 import com.pct.validation.UserNotFoundException;
 
 @RestController
-@RequestMapping("/api/admins")
+@RequestMapping(RequestMappings.ADMINS_API)
 public class AdminController {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
@@ -24,7 +25,7 @@ public class AdminController {
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(value = "loadAdminDetails", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ADMIN_DETAILS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<UserDto> getAdminById(@RequestParam(value = "id", required = true) Long id) {
 		UserDto userDto = new UserDto();
 		try {

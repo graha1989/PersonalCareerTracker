@@ -36,26 +36,27 @@ import com.pct.validation.UserNotFoundException;
 import com.pct.validation.WorkExperienceNotFoundException;
 
 @RestController
-@RequestMapping("/api/workExperiences")
+@RequestMapping(RequestMappings.WORK_EXPERIENCES_API)
 public class WorkExperienceController {
 
 	private static final Logger logger = LoggerFactory.getLogger(WorkExperienceController.class);
 
 	@Autowired
 	WorkExperienceService workExperienceService;
-	
+
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "allWorkExperiences", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_WORK_EXPERIENCES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<WorkExperienceDto>> showAllProfessorWorkExperiences(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
-		
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 		} catch (UserNotFoundException e) {
@@ -74,7 +75,7 @@ public class WorkExperienceController {
 		return new ResponseEntity<List<WorkExperienceDto>>(experiences, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedWorkExperience", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_WORK_EXPERIENCE, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<WorkExperienceDto> showWorkExperience(
 			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws WorkExperienceNotFoundException {
 		WorkExperienceDto workExperienceDto = workExperienceService.findWorkExperienceById(id);
@@ -100,7 +101,7 @@ public class WorkExperienceController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "findInstitutionStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_INSTITUTIONS_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<Institution>> findInstitutionStartsWith(
 			@RequestParam(value = "value", required = true) String value,
 			@RequestParam(value = "institutionType", required = false) @JsonDeserialize(using = InstitutionTypeEnumDeserializer.class) InstitutionType institutionType)

@@ -33,27 +33,28 @@ import com.pct.validation.StudiesThesisTypeNotFoundException;
 import com.pct.validation.UserNotFoundException;
 
 @RestController
-@RequestMapping("/api/studies")
+@RequestMapping(RequestMappings.PROFESSOR_STUDIES_API)
 public class ProfessorStudiesController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProfessorStudiesController.class);
 
 	@Autowired
 	ProfessorStudiesService professorStudiesService;
-	
+
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "allProfessorStudies", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROFESSOR_STUDIES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<StudiesDto>> showAllProfessorStudies(
 			@RequestParam(value = "professorId", required = true) Long professorId,
 			@RequestParam(value = "thesisTypeId", required = true) Long thesisTypeId) {
-		
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 		} catch (UserNotFoundException e) {
@@ -72,7 +73,7 @@ public class ProfessorStudiesController {
 		return new ResponseEntity<List<StudiesDto>>(studiesDtos, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allStudyPrograms", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_STUDY_PROGRAMS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<StudyProgram>> showAllStudyPrograms() {
 		List<StudyProgram> studyPrograms = professorStudiesService.findAllStudyPrograms();
 

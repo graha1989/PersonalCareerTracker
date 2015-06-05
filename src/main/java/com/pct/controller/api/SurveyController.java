@@ -31,27 +31,28 @@ import com.pct.validation.SurveyNotFoundException;
 import com.pct.validation.UserNotFoundException;
 
 @RestController
-@RequestMapping("/api/surveys")
+@RequestMapping(RequestMappings.SURVEYS_API)
 public class SurveyController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SurveyController.class);
 
 	@Autowired
 	SurveyService surveyService;
-	
+
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "allSurveys", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_SURVEYS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<SurveyDto>> showAllSurveys(
 			@RequestParam(value = "professorId", required = true) Long professorId,
 			@RequestParam(value = "subjectId", required = true) Long subjectId) {
-		
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 		} catch (UserNotFoundException e) {
@@ -65,7 +66,7 @@ public class SurveyController {
 		return new ResponseEntity<List<SurveyDto>>(surveyDtos, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedSurvey", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_SURVEY, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<SurveyDto> showSurvey(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws SurveyNotFoundException {
 		SurveyDto surveyDto = surveyService.findSurveyById(id);

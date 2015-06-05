@@ -33,39 +33,40 @@ import com.pct.validation.ThesisNotFoundException;
 import com.pct.validation.UserNotFoundException;
 
 @RestController
-@RequestMapping("/api/thesis")
+@RequestMapping(RequestMappings.THESIS_API)
 public class ThesisController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ThesisController.class);
 
 	@Autowired
 	ThesisService thesisService;
-	
+
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "allThesis", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_THESIS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ThesisDto>> showAllThesis(
 			@RequestParam(value = "mentorId", required = true) Long mentorId,
 			@RequestParam(value = "thesisTypeId", required = true) Long thesisTypeId) {
-		
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != mentorId){
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != mentorId) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		List<ThesisDto> thesis = thesisService.findAllThesis(mentorId, thesisTypeId);
 
 		return new ResponseEntity<List<ThesisDto>>(thesis, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allThesisTypes", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_THESIS_TYPES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<StudiesThesisType>> showAllThesisTypes() {
 		List<StudiesThesisType> studiesThesisTypes = thesisService.findAllThesisType();
 
@@ -91,7 +92,7 @@ public class ThesisController {
 		return new ResponseEntity<ThesisDto>(thesis, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "loadThesisTypeDetails", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_THESIS_TYPE_DETAILS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<StudiesThesisType> getThesisTypeById(@RequestParam(value = "id", required = true) Long id) {
 		StudiesThesisType studiesThesisType = new StudiesThesisType();
 		try {
@@ -110,7 +111,7 @@ public class ThesisController {
 		return new ResponseEntity<ThesisDto>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedThesis", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_THESIS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ThesisDto> showThesis(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws ThesisNotFoundException {
 		ThesisDto thesis = thesisService.findThesisById(id);

@@ -35,38 +35,39 @@ import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.UserNotFoundException;
 
 @RestController
-@RequestMapping("/api/languages")
+@RequestMapping(RequestMappings.LANGUAGES_API)
 public class LanguageController {
 
 	private static final Logger logger = LoggerFactory.getLogger(LanguageController.class);
 
 	@Autowired
 	LanguageService languageService;
-	
+
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "allProfessorLanguages", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROFESSOR_LANGUAGES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<LanguageExperienceDto>> showAllProfessorLanguages(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
-		
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		List<LanguageExperienceDto> languages = languageService.findAllLanguageExperiences(professorId);
 
 		return new ResponseEntity<List<LanguageExperienceDto>>(languages, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allLanguages", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_LANGUAGES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<LanguageDto>> showAllLanguages(
 			@RequestParam(value = "languageExperienceIdsList", required = false) @Nullable List<Long> languageExperienceIdsList) {
 		List<LanguageDto> languages = new ArrayList<LanguageDto>();
@@ -97,7 +98,7 @@ public class LanguageController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedLanguage", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_LANGUAGE, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<Language> loadLanguage(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws LanguageNotFoundException {
 

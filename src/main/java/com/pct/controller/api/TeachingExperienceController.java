@@ -35,35 +35,36 @@ import com.pct.validation.TeachingExperienceNotFoundException;
 import com.pct.validation.UserNotFoundException;
 
 @RestController
-@RequestMapping("/api/teachingExperiences")
+@RequestMapping(RequestMappings.TEACHING_EXPERIENCES_API)
 public class TeachingExperienceController {
 
 	private static final Logger logger = LoggerFactory.getLogger(TeachingExperienceController.class);
 
 	@Autowired
 	TeachingExperienceService teachingExperienceService;
-	
+
 	@Autowired
 	UserService userService;
 
 	@Autowired
 	SubjectService subjectService;
 
-	@RequestMapping(value = "allTeachingExperiences", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_TEACHING_EXPERIENCES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<TeachingExperienceDto>> showAllProfessorTeachingExperiences(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
 
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		List<TeachingExperienceDto> experiences = null;
 		try {
 			experiences = teachingExperienceService.findAllTeachingExperiences(professorId);
@@ -75,7 +76,7 @@ public class TeachingExperienceController {
 		return new ResponseEntity<List<TeachingExperienceDto>>(experiences, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedTeachingExperience", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_TEACHING_EXPERIENCE, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<TeachingExperienceDto> showTeachingExperience(
 			@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws TeachingExperienceNotFoundException {
@@ -84,7 +85,7 @@ public class TeachingExperienceController {
 		return new ResponseEntity<TeachingExperienceDto>(teachingExperienceDto, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "findSubjectsStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SUBJECTS_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<SubjectDto>> findSubjectsStartsWith(
 			@RequestParam(value = "value", required = true) String value,
 			@RequestParam(value = "subjectIds", required = false) @Nullable List<Long> subjectIds)
@@ -117,10 +118,11 @@ public class TeachingExperienceController {
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.DELETE)
 	public ResponseEntity<TeachingExperienceDto> deleteTeachingExperience(
-			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws TeachingExperienceNotFoundException {
+			@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws TeachingExperienceNotFoundException {
 		teachingExperienceService.deleteTeachingExperience(id);
 
 		return new ResponseEntity<TeachingExperienceDto>(HttpStatus.OK);

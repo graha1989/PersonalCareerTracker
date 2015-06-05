@@ -23,7 +23,7 @@ import com.pct.service.InstitutionsService;
 import com.pct.validation.InstitutionNotFoundException;
 
 @RestController
-@RequestMapping("/api/institutions")
+@RequestMapping(RequestMappings.INSTITUTIONS_API)
 public class InstitutionController {
 
 	private static final Logger logger = LoggerFactory.getLogger(InstitutionController.class);
@@ -31,7 +31,7 @@ public class InstitutionController {
 	@Autowired
 	InstitutionsService institutionsService;
 
-	@RequestMapping(value = "allInstitutions", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_INSTITUTIONS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<InstitutionDto>> showAllInstitutions() {
 
 		List<InstitutionDto> institutionDtos = institutionsService.findAllInstitutions();
@@ -40,14 +40,14 @@ public class InstitutionController {
 		return new ResponseEntity<List<InstitutionDto>>(institutionDtos, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "allInstitutionTypes", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_INSTITUTION_TYPES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<InstitutionType>> showAllInstitutionTypes() {
 		List<InstitutionType> institutionTypes = institutionsService.findAllInstitutionTypes();
 
 		return new ResponseEntity<List<InstitutionType>>(institutionTypes, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedInstitution", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_INSTITUTION, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<InstitutionDto> showInstitution(
 			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws InstitutionNotFoundException {
 		InstitutionDto institutionDto = institutionsService.findInstitutionById(id);

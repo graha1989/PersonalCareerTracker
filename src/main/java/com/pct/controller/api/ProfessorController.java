@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
+import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.ProfessorDto;
 import com.pct.domain.dto.UserDto;
 import com.pct.service.ProfessorService;
@@ -33,7 +34,7 @@ import com.pct.validation.UserNameExistException;
 import com.pct.validation.UserNotFoundException;
 
 @RestController
-@RequestMapping("/api/professors")
+@RequestMapping(RequestMappings.PROFESSORS_API)
 public class ProfessorController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProfessorController.class);
@@ -44,7 +45,7 @@ public class ProfessorController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "persistProfessor", method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.PERSIST_PROFESSOR, method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<String> persistProfessor(@Valid @RequestBody ProfessorDto professorDto)
 			throws UserNameExistException, EmailExistException {
 
@@ -63,14 +64,15 @@ public class ProfessorController {
 		return new ResponseEntity<String>("Successfully persisted user", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedProfesor", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_PROFESSOR, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProfessorDto> showProfesor(String userName) throws ProfessorNotFoundException {
 		ProfessorDto profesor = professorService.findProfesorByUserName(userName);
 		return new ResponseEntity<ProfessorDto>(profesor, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "loadProfessorDetails", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<ProfessorDto> getProfessorById(@RequestParam(value = "id", required = true) Long id) {
+	@RequestMapping(value = RequestMappings.LOAD_PROFESSOR_DETAILS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<ProfessorDto> getProfessorById(
+			@RequestParam(value = RequestMappings.ID, required = true) Long id) {
 
 		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
 				.getAuthorities();
@@ -93,7 +95,7 @@ public class ProfessorController {
 		return new ResponseEntity<ProfessorDto>(professorDto, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "findProfessorStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_PROFESSOR_STARTS_WITH_AND_DIFFERENT_ID, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProfessorDto>> findProfessorStartsWith(
 			@RequestParam(value = "value", required = true) String value,
 			@RequestParam(value = "idProf", required = false) Long idProf,
@@ -107,7 +109,7 @@ public class ProfessorController {
 		return new ResponseEntity<List<ProfessorDto>>(professors, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "findAllProfessorStartsWith", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_PROFESSOR_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProfessorDto>> findProfessorStartsWith(
 			@RequestParam(value = "value", required = true) String value) throws ProfessorNotFoundException {
 
@@ -120,7 +122,7 @@ public class ProfessorController {
 	}
 
 	@Secured(value = "ROLE_ADMIN")
-	@RequestMapping(value = "allProfessors", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROFESSORS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<ProfessorDto>> showAllProfessors() {
 
 		List<ProfessorDto> professorDtos = professorService.findAllProfessors();
