@@ -63,12 +63,12 @@ public class StudentController {
 		} catch (StudentNotFoundException e) {
 			e.printStackTrace();
 		}
-		logger.debug("Student:" + studentDto.getName() + " " + studentDto.getSurname() + " successfully saved.");
+		logger.debug("Student: " + studentDto.getName() + " " + studentDto.getSurname() + " successfully saved.");
 
 		return new ResponseEntity<StudentDto>(student, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = RequestMappings.LOAD_SELECTED_STUDENT, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_ALL_STUDENTS_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<StudentDto>> findStudentStartsWith(
 			@RequestParam(value = "value", required = true) String value) throws StudentNotFoundException {
 
