@@ -1,7 +1,6 @@
 package com.pct.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -13,12 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pct.domain.Professor;
 import com.pct.domain.Project;
 import com.pct.domain.ProjectExperience;
+import com.pct.domain.ProjectType;
 import com.pct.domain.dto.ProjectDto;
 import com.pct.domain.dto.ProjectExperienceDto;
-import com.pct.domain.enums.ProjectType;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProjectExperienceRepository;
 import com.pct.repository.ProjectRepository;
+import com.pct.repository.ProjectTypeRepository;
 import com.pct.service.ProjectExperienceService;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.ProjectExperienceNotFoundException;
@@ -30,13 +30,16 @@ public class ProjectExperienceServiceImpl implements ProjectExperienceService {
 	private ProjectExperienceRepository projectExperienceRepository;
 	private ProfesorRepository professorRepository;
 	private ProjectRepository projectRepository;
+	private ProjectTypeRepository projectTypeRepository;
 
 	@Autowired
 	public ProjectExperienceServiceImpl(ProjectExperienceRepository projectExperienceRepository,
-			ProfesorRepository professorRepository, ProjectRepository projectRepository) {
+			ProfesorRepository professorRepository, ProjectRepository projectRepository,
+			ProjectTypeRepository projectTypeRepository) {
 		this.projectExperienceRepository = projectExperienceRepository;
 		this.professorRepository = professorRepository;
 		this.projectRepository = projectRepository;
+		this.projectTypeRepository = projectTypeRepository;
 	}
 
 	@Override
@@ -61,7 +64,15 @@ public class ProjectExperienceServiceImpl implements ProjectExperienceService {
 	@Override
 	@Transactional
 	public List<ProjectType> findAllProjectTypes() {
-		return new ArrayList<ProjectType>(Arrays.asList(ProjectType.values()));
+
+		List<ProjectType> projectTypes = null;
+		try {
+			projectTypes = projectTypeRepository.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return projectTypes;
 	}
 
 	@Override

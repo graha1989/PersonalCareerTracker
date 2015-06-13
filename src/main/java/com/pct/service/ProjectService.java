@@ -2,8 +2,8 @@ package com.pct.service;
 
 import java.util.List;
 
+import com.pct.domain.ProjectType;
 import com.pct.domain.dto.ProjectDto;
-import com.pct.domain.enums.ProjectType;
 import com.pct.validation.ProjectNotFoundException;
 
 public interface ProjectService {

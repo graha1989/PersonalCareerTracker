@@ -25,7 +25,7 @@ import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.ProjectDto;
 import com.pct.domain.dto.ProjectExperienceDto;
 import com.pct.domain.dto.UserDto;
-import com.pct.domain.enums.ProjectType;
+import com.pct.domain.ProjectType;
 import com.pct.service.ProjectExperienceService;
 import com.pct.service.UserService;
 import com.pct.validation.ProfessorNotFoundException;

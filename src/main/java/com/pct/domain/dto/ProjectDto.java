@@ -6,25 +6,22 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.Project;
 import com.pct.domain.ProjectLeader;
-import com.pct.domain.enums.ProjectType;
-import com.pct.domain.enums.deserializers.ProjectTypeEnumDeserializer;
 
 public class ProjectDto implements Serializable {
 
 	private static final long serialVersionUID = 7801612436888907315L;
 
-	@NotNull
-	@JsonDeserialize(using = ProjectTypeEnumDeserializer.class)
-	private ProjectType projectType;
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private String projectType;
 
 	@NotEmpty
 	@Length(max = 200)
@@ -44,9 +41,8 @@ public class ProjectDto implements Serializable {
 	public ProjectDto() {
 	}
 
-	public ProjectDto(ProjectType projectType, String name, String financedBy, Long id,
+	public ProjectDto(String projectType, String name, String financedBy, Long id,
 			List<ProjectLeaderDto> projectLeaderDtos) {
-		super();
 		this.projectType = projectType;
 		this.name = name;
 		this.financedBy = financedBy;
@@ -55,7 +51,7 @@ public class ProjectDto implements Serializable {
 	}
 
 	public ProjectDto(Project project) {
-		this.projectType = project.getProjectType();
+		this.projectType = project.getProjectType().getTypeName();
 		this.name = project.getName();
 		this.financedBy = project.getFinancedBy();
 		this.id = project.getId();
@@ -70,11 +66,11 @@ public class ProjectDto implements Serializable {
 		return projectLeaderDtos;
 	}
 
-	public ProjectType getProjectType() {
+	public String getProjectType() {
 		return projectType;
 	}
 
-	public void setProjectType(ProjectType projectType) {
+	public void setProjectType(String projectType) {
 		this.projectType = projectType;
 	}
 

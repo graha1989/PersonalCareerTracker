@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
+import com.pct.domain.ProjectType;
 import com.pct.domain.dto.PersonDto;
 import com.pct.domain.dto.ProjectDto;
-import com.pct.domain.enums.ProjectType;
 import com.pct.service.ProfessorService;
 import com.pct.service.ProjectLeaderService;
 import com.pct.service.ProjectService;

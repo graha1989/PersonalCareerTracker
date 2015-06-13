@@ -29,7 +29,7 @@
 						<tr
 							class="active ng-scope"
 							ng-repeat="project in completeProjectData">
-							<td>{{ project.projectType.title }}</td>
+							<td>{{ project.projectType }}</td>
 							<td>{{ project.name }}</td>
 							<td>{{ project.financedBy }}</td>
 							<td>{{ project.projectLeaders }}</td>
@@ -85,7 +85,7 @@
 							id="inputProjectType"
 							name="inputProjectType"
 							ng-model="project.projectType"
-							ng-options="projectType.title for projectType in allProjectTypes track by projectType.name"
+							ng-options="projectType.typeName as projectType.typeName for projectType in allProjectTypes"
 							required><option value="">{{ resources.projectPopupLabels.projectType }}</option></select>
 						<div
 							ng-show="form.inputProjectType.$dirty && form.inputProjectType.$invalid"
@@ -261,7 +261,7 @@
 							id="inputProjectType"
 							name="inputProjectType"
 							ng-model="project.projectType"
-							ng-options="projectType.title for projectType in allProjectTypes track by projectType.name"
+							ng-options="projectType.typeName as projectType.typeName for projectType in allProjectTypes"
 							required><option value="">{{ resources.projectPopupLabels.projectType }}</option></select>
 						<div
 							ng-show="form.inputProjectType.$dirty && form.inputProjectType.$invalid"

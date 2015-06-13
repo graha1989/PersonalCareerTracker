@@ -5,23 +5,20 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.pct.domain.enums.ProjectType;
-import com.pct.domain.enums.deserializers.ProjectTypeEnumDeserializer;
 
 @Entity
 @Table(name = "project")
@@ -35,11 +32,12 @@ public class Project extends AbstractEntity {
 	@Column(name = "financedBy", length = 200)
 	private String financedBy;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "projectType")
-	@JsonDeserialize(using = ProjectTypeEnumDeserializer.class)
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "projectTypeId")
+	@JsonBackReference(value = "projectType")
 	private ProjectType projectType;
-
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
 	@Cascade(CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "project")
@@ -56,7 +54,6 @@ public class Project extends AbstractEntity {
 
 	public Project(String name, String financedBy, ProjectType projectType, Set<ProjectExperience> projectExperiences,
 			Set<ProjectLeader> projectLeaders) {
-		super();
 		this.name = name;
 		this.financedBy = financedBy;
 		this.projectType = projectType;

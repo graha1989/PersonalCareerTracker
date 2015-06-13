@@ -1,7 +1,6 @@
 package com.pct.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -16,28 +15,31 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pct.domain.Professor;
 import com.pct.domain.Project;
 import com.pct.domain.ProjectLeader;
+import com.pct.domain.ProjectType;
 import com.pct.domain.dto.ProjectDto;
 import com.pct.domain.dto.ProjectLeaderDto;
-import com.pct.domain.enums.ProjectType;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProjectLeaderRepository;
 import com.pct.repository.ProjectRepository;
+import com.pct.repository.ProjectTypeRepository;
 import com.pct.service.ProjectService;
 import com.pct.validation.ProjectNotFoundException;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
-	ProjectRepository projectRepository;
-	ProfesorRepository professorRepository;
-	ProjectLeaderRepository projectLeaderRepository;
+	private ProjectRepository projectRepository;
+	private ProfesorRepository professorRepository;
+	private ProjectLeaderRepository projectLeaderRepository;
+	private ProjectTypeRepository projectTypeRepository;
 
 	@Autowired
 	public ProjectServiceImpl(ProjectRepository projectRepository, ProfesorRepository professorRepository,
-			ProjectLeaderRepository projectLeaderRepository) {
+			ProjectLeaderRepository projectLeaderRepository, ProjectTypeRepository projectTypeRepository) {
 		this.projectRepository = projectRepository;
 		this.professorRepository = professorRepository;
 		this.projectLeaderRepository = projectLeaderRepository;
+		this.projectTypeRepository = projectTypeRepository;
 	}
 
 	@Override
@@ -68,7 +70,15 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	@Transactional
 	public List<ProjectType> findAllProjectTypes() {
-		return new ArrayList<ProjectType>(Arrays.asList(ProjectType.values()));
+
+		List<ProjectType> projectTypes = null;
+		try {
+			projectTypes = projectTypeRepository.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return projectTypes;
 	}
 
 	@Override
@@ -117,7 +127,7 @@ public class ProjectServiceImpl implements ProjectService {
 			project = new Project();
 		}
 		project.setName(projectDto.getName());
-		project.setProjectType(projectDto.getProjectType());
+		project.setProjectType(projectTypeRepository.findByTypeName(projectDto.getProjectType()));
 		project.setFinancedBy(projectDto.getFinancedBy());
 
 		Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();

@@ -390,7 +390,7 @@
         "projectFinancedBy": "Finansiran (od koga)",
         "projectStartDate": "Počeo sa radom",
         "projectEndDate": "Završio",
-        "projectLeaders": "Rukovodioci",
+        "projectLeader": "Rukovodilac",
         "newProjectLeader": "Novi rukovodilac",
         "IamLeaderAlso": "Rukovodilac",
         "newProjectLeaderNameAndSurname": "Ime i prezime"

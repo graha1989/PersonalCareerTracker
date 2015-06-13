@@ -25,7 +25,7 @@
 						</tr>
 						<tr class="active ng-scope"
 							ng-repeat="projectExperienceData in completeProjecExperienceDataArray">
-							<td>{{ projectExperienceData.project.projectType.title }}</td>
+							<td>{{ projectExperienceData.project.projectType }}</td>
 							<td>{{ projectExperienceData.project.name }}</td>
 							<td>{{ projectExperienceData.project.financedBy }}</td>
 							<td>{{ projectExperienceData.projectLeaders }}</td>
@@ -116,7 +116,7 @@
 							class="form-control"
 							id="inputProjectType"
 							name="inputProjectType"
-							ng-model="project.projectType.title"
+							ng-model="project.projectType"
 							ng-disabled="true" />
 					</div>
 				</div>
@@ -302,7 +302,7 @@
 							class="form-control"
 							id="inputProjectType"
 							name="inputProjectType"
-							ng-model="selectedProject.projectType.title"
+							ng-model="selectedProject.projectType"
 							ng-disabled="true" />
 					</div>
 				</div>

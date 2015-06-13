@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pct.domain.dto.ProjectDto;
 import com.pct.domain.dto.ProjectExperienceDto;
-import com.pct.domain.enums.ProjectType;
+import com.pct.domain.ProjectType;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.ProjectExperienceNotFoundException;
 import com.pct.validation.ProjectNotFoundException;

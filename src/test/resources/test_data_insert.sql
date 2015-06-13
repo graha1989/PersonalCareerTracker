@@ -93,11 +93,16 @@ INSERT INTO award (awardName, awardedBy, dateOfAward, professorId, awardTypeId, 
 	('Dositej Obradović', 'Univerzitet Novi Sad', '2013-09-15', '3', '2', '2')
 	ON DUPLICATE KEY UPDATE awardName=VALUES(awardName), awardedBy=VALUES(awardedBy), dateOfAward=VALUES(dateOfAward), professorId=VALUES(professorId), awardTypeId=VALUES(awardTypeId), awardFieldId=VALUES(awardFieldId);
 
-INSERT INTO project (name, financedBy, projectType) VALUES
-	('XML Projekat', 'Vlada Republike Srbije', 'SCIENTIFIC'),
-	('Etika u informatici', 'Grad Novi Sad', 'OTHER'),
-	('SQL projekat', 'Grad Beograd', 'SCIENTIFIC')
-	ON DUPLICATE KEY UPDATE name=VALUES(name), financedBy=VALUES(financedBy), projectType=VALUES(projectType);
+INSERT INTO project_type (typeName) VALUES
+	('Naučni'),
+	('Ostali')
+	ON DUPLICATE KEY UPDATE typeName=VALUES(typeName);
+	
+INSERT INTO project (name, financedBy, projectTypeId) VALUES
+	('XML Projekat', 'Vlada Republike Srbije', '1'),
+	('Etika u informatici', 'Grad Novi Sad', '2'),
+	('SQL projekat', 'Grad Beograd', '1')
+	ON DUPLICATE KEY UPDATE name=VALUES(name), financedBy=VALUES(financedBy), projectTypeId=VALUES(projectTypeId);
 	
 INSERT INTO project_leader (professorId, name, surname) VALUES
 	('3', 'Srđan', 'Bojić'),
