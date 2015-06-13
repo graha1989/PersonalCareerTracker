@@ -307,7 +307,7 @@ var createNewDoctorStudiesController = function($scope, $modalInstance,
   $scope.init();
 
   $scope.getFaculties = function(val) {
-    return PctService.findInstutionsStartsWith(val, 'FACULTY').then(
+    return PctService.findInstutionsStartsWith(val, 'Fakultet').then(
             function(response) {
               var faculties = [];
               for (var i = 0; i < response.length; i++) {

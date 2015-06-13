@@ -187,12 +187,19 @@ INSERT INTO work_experience (institutionId, professorId, workStartDate, workEndD
 	('1', '3', '2014-10-07 00:00:00', '2015-02-07 00:00:00', 'asistent')
 	ON DUPLICATE KEY UPDATE institutionId=VALUES(institutionId), professorId=VALUES(professorId), workStartDate=VALUES(workStartDate), workEndDate=VALUES(workEndDate), title=VALUES(title);
 	
-INSERT INTO studies (professorId, institutionId, studiesThesisTypeId, studyProgram, studyArea, studyStartDate, studyEndDate, averageGrade, thesisTitle, acquiredTitle) VALUES
-	('3', '1', '1', 'MATHEMATICS_AND_INFORMATICS', 'Informatika', '2012-04-14 00:00:00', '2014-08-04 00:00:00', '9.50', 'Bachelor teza', 'asistent pripravnik'),
-	('3', '3', '2', 'MATHEMATICS_AND_INFORMATICS', 'Informatika', '2012-04-14 00:00:00', '2014-08-04 00:00:00', '9.88', 'Master teza 1', 'asistent'),
-	('3', '3', '3', 'MATHEMATICS_AND_INFORMATICS', 'Informatika', '2012-04-14 00:00:00', '2014-08-04 00:00:00', '9.88', 'Specialistička teza 1', 'asistent'),
-	('3', '3', '4', 'MATHEMATICS_AND_INFORMATICS', 'Informatika', '2012-04-14 00:00:00', '2014-08-04 00:00:00', '9.88', 'Doktorska teza 1', 'asistent')
-	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), institutionId=VALUES(institutionId), studiesThesisTypeId=VALUES(studiesThesisTypeId), studyProgram=VALUES(studyProgram), studyArea=VALUES(studyArea), studyStartDate=VALUES(studyStartDate), studyEndDate=VALUES(studyEndDate), averageGrade=VALUES(averageGrade), thesisTitle=VALUES(thesisTitle), acquiredTitle=VALUES(acquiredTitle);
+INSERT INTO study_program (name) VALUES
+	('Matematika i informatika'),
+	('Biologija i ekologija'),
+	('Hemija, biohemija i zaštita životne sredine'),
+	('Geografija, turizam i hotelijerstvo')
+	ON DUPLICATE KEY UPDATE name=VALUES(name);
+	
+INSERT INTO studies (professorId, institutionId, studiesThesisTypeId, studyProgramId, studyArea, studyStartDate, studyEndDate, averageGrade, thesisTitle, acquiredTitle) VALUES
+	('3', '1', '1', '1', 'Informatika', '2012-04-14 00:00:00', '2014-08-04 00:00:00', '9.50', 'Bachelor teza', 'asistent pripravnik'),
+	('3', '3', '2', '1', 'Informatika', '2012-04-14 00:00:00', '2014-08-04 00:00:00', '9.88', 'Master teza 1', 'asistent'),
+	('3', '3', '3', '1', 'Informatika', '2012-04-14 00:00:00', '2014-08-04 00:00:00', '9.88', 'Specialistička teza 1', 'asistent'),
+	('3', '3', '4', '1', 'Informatika', '2012-04-14 00:00:00', '2014-08-04 00:00:00', '9.88', 'Doktorska teza 1', 'asistent')
+	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), institutionId=VALUES(institutionId), studiesThesisTypeId=VALUES(studiesThesisTypeId), studyProgramId=VALUES(studyProgramId), studyArea=VALUES(studyArea), studyStartDate=VALUES(studyStartDate), studyEndDate=VALUES(studyEndDate), averageGrade=VALUES(averageGrade), thesisTitle=VALUES(thesisTitle), acquiredTitle=VALUES(acquiredTitle);
 	
 INSERT INTO specialization_abroad (professorId, institutionId, city, country, startDate, endDate, purpose) VALUES
 	('3', '1', 'Sofija', 'Bugarska', '2012-04-14 00:00:00', '2014-08-04 00:00:00', 'usavrsavanje')

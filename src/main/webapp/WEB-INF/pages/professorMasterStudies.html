@@ -121,12 +121,12 @@
 										<select class="ng-binding form-control" id="inputStudyProgram"
 											name="inputStudyProgram"
 											ng-model="masterStudies.studyProgram"
-											ng-options="studyProgram.title for studyProgram in allStudyPrograms track by studyProgram.name"
+											ng-options="studyProgram.name as studyProgram.name for studyProgram in allStudyPrograms"
 											ng-show="editMode[$index]" required><option value="">{{
 												resources.professorMasterStudies.studyProgram }}</option></select> <input
 											type="text" class="form-control" id="inputStudyProgram"
 											name="inputStudyProgram"
-											ng-model="masterStudies.studyProgram.title"
+											ng-model="masterStudies.studyProgram"
 											ng-show="!editMode[$index]" ng-disabled="true" />
 										<div
 											ng-show="form.inputStudyProgram.$dirty && form.inputStudyProgram.$invalid"
@@ -378,7 +378,7 @@
 							id="inputStudyProgram"
 							name="inputStudyProgram"
 							ng-model="masterStudies.studyProgram"
-							ng-options="studyProgram.title for studyProgram in allStudyPrograms track by studyProgram.name"
+							ng-options="studyProgram.name as studyProgram.name for studyProgram in allStudyPrograms"
 							required><option value="">{{ resources.masterStudiesPopupLabels.studyProgram }}</option></select> 
 						<div
 							ng-show="form.inputStudyProgram.$dirty && form.inputStudyProgram.$invalid"

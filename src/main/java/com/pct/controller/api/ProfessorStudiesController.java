@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
+import com.pct.domain.StudyProgram;
 import com.pct.domain.dto.StudiesDto;
 import com.pct.domain.dto.UserDto;
-import com.pct.domain.enums.StudyProgram;
 import com.pct.service.ProfessorStudiesService;
 import com.pct.service.UserService;
 import com.pct.validation.InstitutionNotFoundException;

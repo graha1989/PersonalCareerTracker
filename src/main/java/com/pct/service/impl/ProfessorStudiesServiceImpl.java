@@ -1,7 +1,6 @@
 package com.pct.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -14,13 +13,14 @@ import com.pct.domain.Institution;
 import com.pct.domain.Professor;
 import com.pct.domain.Studies;
 import com.pct.domain.StudiesThesisType;
+import com.pct.domain.StudyProgram;
 import com.pct.domain.dto.StudiesDto;
-import com.pct.domain.enums.StudyProgram;
 import com.pct.repository.InstitutionRepository;
 import com.pct.repository.InstitutionTypeRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProfessorStudiesRepository;
 import com.pct.repository.StudiesThesisTypeRepository;
+import com.pct.repository.StudyProgramRepository;
 import com.pct.service.ProfessorStudiesService;
 import com.pct.validation.InstitutionNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
@@ -35,16 +35,19 @@ public class ProfessorStudiesServiceImpl implements ProfessorStudiesService {
 	private InstitutionRepository institutionRepository;
 	private StudiesThesisTypeRepository studiesRepository;
 	private InstitutionTypeRepository institutionTypeRepository;
-	
+	private StudyProgramRepository studyProgramRepository;
+
 	@Autowired
 	public ProfessorStudiesServiceImpl(ProfessorStudiesRepository professorStudiesRepository,
 			ProfesorRepository professorRepository, InstitutionRepository institutionRepository,
-			StudiesThesisTypeRepository studiesRepository, InstitutionTypeRepository institutionTypeRepository) {
+			StudiesThesisTypeRepository studiesRepository, InstitutionTypeRepository institutionTypeRepository,
+			StudyProgramRepository studyProgramRepository) {
 		this.professorStudiesRepository = professorStudiesRepository;
 		this.professorRepository = professorRepository;
 		this.institutionRepository = institutionRepository;
 		this.studiesRepository = studiesRepository;
 		this.institutionTypeRepository = institutionTypeRepository;
+		this.studyProgramRepository = studyProgramRepository;
 	}
 
 	@Override
@@ -69,7 +72,15 @@ public class ProfessorStudiesServiceImpl implements ProfessorStudiesService {
 	@Override
 	@Transactional
 	public List<StudyProgram> findAllStudyPrograms() {
-		return new ArrayList<StudyProgram>(Arrays.asList(StudyProgram.values()));
+
+		List<StudyProgram> studyPrograms = null;
+		try {
+			studyPrograms = studyProgramRepository.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return studyPrograms;
 	}
 
 	@Override
@@ -127,7 +138,7 @@ public class ProfessorStudiesServiceImpl implements ProfessorStudiesService {
 			studies = professorStudiesRepository.findOne(studiesDto.getId());
 		}
 		studies.setInstitution(institution);
-		studies.setStudyProgram(studiesDto.getStudyProgram());
+		studies.setStudyProgram(studyProgramRepository.findByName(studiesDto.getStudyProgram()));
 		studies.setStudyArea(studiesDto.getStudyArea());
 		studies.setStudyStartDate(studiesDto.getStudyStartDate());
 		studies.setStudyEndDate(studiesDto.getStudyEndDate());
@@ -141,7 +152,7 @@ public class ProfessorStudiesServiceImpl implements ProfessorStudiesService {
 	@Override
 	@Transactional
 	public void deleteStudies(Long id) throws ProfessorStudiesNotFoundException {
-		
+
 		Studies studies = professorStudiesRepository.findOne(id);
 		if (studies == null) {
 			throw new ProfessorStudiesNotFoundException();

@@ -10,19 +10,17 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.constants.MimeTypes;
 import com.pct.domain.Studies;
-import com.pct.domain.enums.StudyProgram;
-import com.pct.domain.enums.deserializers.StudyProgramEnumDeserializer;
 
 public class StudiesDto implements Serializable {
 
 	private static final long serialVersionUID = 7796970503021149480L;
 
-	@NotNull
-	@JsonDeserialize(using = StudyProgramEnumDeserializer.class)
-	private StudyProgram studyProgram;
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private String studyProgram;
 
 	@NotEmpty
 	@Length(max = 100)
@@ -88,11 +86,10 @@ public class StudiesDto implements Serializable {
 	public StudiesDto() {
 	}
 
-	public StudiesDto(StudyProgram studyProgram, String studyArea, Date studyStartDate, Date studyEndDate,
+	public StudiesDto(String studyProgram, String studyArea, Date studyStartDate, Date studyEndDate,
 			Double averageGrade, String thesisTitle, String acquiredTitle, String specialisticStudiesStayPurpose,
 			String facultyName, String universityName, String facultyCity, String facultyCountry,
 			Long professorId, Long institutionId, Long thesisTypeId, Long id) {
-		super();
 		this.studyProgram = studyProgram;
 		this.studyArea = studyArea;
 		this.studyStartDate = studyStartDate;
@@ -111,7 +108,7 @@ public class StudiesDto implements Serializable {
 	}
 
 	public StudiesDto(Studies studies) {
-		this.studyProgram = studies.getStudyProgram();
+		this.studyProgram = studies.getStudyProgram().getName();
 		this.studyArea = studies.getStudyArea();
 		this.studyStartDate = studies.getStudyStartDate();
 		this.studyEndDate = studies.getStudyEndDate();
@@ -128,11 +125,11 @@ public class StudiesDto implements Serializable {
 		this.id = studies.getId();
 	}
 
-	public StudyProgram getStudyProgram() {
+	public String getStudyProgram() {
 		return studyProgram;
 	}
 
-	public void setStudyProgram(StudyProgram studyProgram) {
+	public void setStudyProgram(String studyProgram) {
 		this.studyProgram = studyProgram;
 	}
 

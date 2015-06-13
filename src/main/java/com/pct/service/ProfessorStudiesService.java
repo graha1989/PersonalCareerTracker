@@ -3,7 +3,7 @@ package com.pct.service;
 import java.util.List;
 
 import com.pct.domain.dto.StudiesDto;
-import com.pct.domain.enums.StudyProgram;
+import com.pct.domain.StudyProgram;
 import com.pct.validation.InstitutionNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.ProfessorStudiesNotFoundException;

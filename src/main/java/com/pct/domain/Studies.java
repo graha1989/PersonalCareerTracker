@@ -4,8 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -15,9 +13,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.pct.domain.enums.StudyProgram;
-import com.pct.domain.enums.deserializers.StudyProgramEnumDeserializer;
+import com.pct.domain.StudyProgram;
 
 @Entity
 @Table(name = "studies")
@@ -41,9 +37,10 @@ public class Studies extends AbstractEntity {
 	@JoinColumn(name = "studiesThesisTypeId")
 	private StudiesThesisType studiesThesisType;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "studyProgram")
-	@JsonDeserialize(using = StudyProgramEnumDeserializer.class)
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "studyProgramId")
+	@JsonBackReference(value = "studyProgram")
 	private StudyProgram studyProgram;
 
 	@Column(name = "studyArea", length = 100)
@@ -72,7 +69,6 @@ public class Studies extends AbstractEntity {
 			String thesisTitle, String acquiredTitle, String specialisticStudiesStayPurpose,
 			Date specialisticStudiesAbroadStartDate, Date specialisticStudiesAbroadEndDate,
 			String specialisticStudiesAbroadCity, String specialisticStudiesAbroadCountry) {
-		super();
 		this.professor = professor;
 		this.institution = institution;
 		this.studiesThesisType = studiesThesisType;

@@ -279,7 +279,7 @@ var createNewSpecializationController = function($scope, $modalInstance,
   $scope.init();
 
   $scope.getInstitutions = function(val) {
-    return PctService.findInstutionsStartsWith(val, 'OTHER').then(
+    return PctService.findInstutionsStartsWith(val, 'Ostale ustanove').then(
             function(response) {
               var institutions = [];
               for (var i = 0; i < response.length; i++) {
