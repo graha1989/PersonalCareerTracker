@@ -171,6 +171,7 @@ public class ProjectServiceImpl implements ProjectService {
 			ProjectLeader projectLeader = newLeadersIterator.next();
 			if (!project.getProjectLeaders().contains(projectLeader)) {
 				project.getProjectLeaders().add(projectLeader);
+				projectLeaderRepository.save(projectLeader);
 			}
 		}
 

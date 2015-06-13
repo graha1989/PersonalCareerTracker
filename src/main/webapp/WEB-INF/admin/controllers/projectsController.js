@@ -45,6 +45,8 @@ app.controller("ProjectsController", function($scope, $routeParams, $http,
 
   $scope.loadAllProjects = function() {
     PctService.loadAllProjects($routeParams, function(data) {
+      $scope.allProjects = [];
+      $scope.completeProjectData = [];
       if (angular.isObject(data) && data.length > 0) {
         $scope.allProjects = data;
         for (var i = 0; i < $scope.allProjects.length; i++) {

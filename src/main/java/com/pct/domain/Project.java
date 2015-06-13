@@ -45,7 +45,6 @@ public class Project extends AbstractEntity {
 	private Set<ProjectExperience> projectExperiences = new HashSet<ProjectExperience>();
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@Cascade({ CascadeType.ALL })
 	@JoinTable(name = "project_leader_intersecting_table", joinColumns = @JoinColumn(name = "projectId"), inverseJoinColumns = @JoinColumn(name = "leaderId"))
 	private Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
 
