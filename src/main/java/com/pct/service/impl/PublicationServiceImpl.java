@@ -1,7 +1,6 @@
 package com.pct.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -15,14 +14,15 @@ import com.pct.domain.InternationalPublication;
 import com.pct.domain.Professor;
 import com.pct.domain.ProfessorPublication;
 import com.pct.domain.PublicationCategory;
+import com.pct.domain.PublicationType;
 import com.pct.domain.dto.InternationalPublicationDto;
 import com.pct.domain.dto.ProfessorPublicationDto;
 import com.pct.domain.dto.PublicationCategoryDto;
-import com.pct.domain.enums.PublicationType;
 import com.pct.repository.InternationalPublicationsRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProfessorPublicationsRepository;
 import com.pct.repository.PublicationCategoryRepository;
+import com.pct.repository.PublicationTypeRepository;
 import com.pct.service.PublicationService;
 import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.PublicationCategoryNotFoundException;
@@ -32,22 +32,21 @@ import com.pct.validation.PublicationNotFoundException;
 public class PublicationServiceImpl implements PublicationService {
 
 	private ProfessorPublicationsRepository professorPublicationsRepository;
-
 	private PublicationCategoryRepository publicationCategoryRepository;
-
 	private ProfesorRepository professorRepository;
-
 	private InternationalPublicationsRepository internationalPublicationsRepository;
+	private PublicationTypeRepository publicationTypeRepository;
 
 	@Autowired
 	public PublicationServiceImpl(ProfessorPublicationsRepository professorPublicationsRepository,
 			PublicationCategoryRepository publicationCategoryRepository, ProfesorRepository professorRepository,
-			InternationalPublicationsRepository internationalPublicationsRepository) {
-		super();
+			InternationalPublicationsRepository internationalPublicationsRepository,
+			PublicationTypeRepository publicationTypeRepository) {
 		this.professorPublicationsRepository = professorPublicationsRepository;
 		this.publicationCategoryRepository = publicationCategoryRepository;
 		this.professorRepository = professorRepository;
 		this.internationalPublicationsRepository = internationalPublicationsRepository;
+		this.publicationTypeRepository = publicationTypeRepository;
 	}
 
 	@Override
@@ -72,7 +71,15 @@ public class PublicationServiceImpl implements PublicationService {
 	@Override
 	@Transactional
 	public List<PublicationType> findAllPublicationTypes() {
-		return new ArrayList<PublicationType>(Arrays.asList(PublicationType.values()));
+
+		List<PublicationType> publicationTypes = null;
+		try {
+			publicationTypes = publicationTypeRepository.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return publicationTypes;
 	}
 
 	@Override
@@ -100,7 +107,7 @@ public class PublicationServiceImpl implements PublicationService {
 				return professorPublicationDto;
 			}
 		}
-		
+
 		throw new PublicationNotFoundException();
 	}
 
@@ -116,7 +123,7 @@ public class PublicationServiceImpl implements PublicationService {
 				return internationalPublicationDto;
 			}
 		}
-		
+
 		throw new PublicationNotFoundException();
 	}
 
@@ -138,7 +145,7 @@ public class PublicationServiceImpl implements PublicationService {
 
 	public PublicationCategory initializeProfessorPublicationCategory(
 			@Nonnull ProfessorPublicationDto professorPublicationDto) {
-		
+
 		PublicationCategory category = null;
 		if (professorPublicationDto.getPublicationCategoryDto() != null
 				&& professorPublicationDto.getPublicationCategoryDto().getId() != null) {
@@ -167,7 +174,8 @@ public class PublicationServiceImpl implements PublicationService {
 		professorPublication.setAuthors(professorPublicationDto.getAuthors());
 		professorPublication.setPublisher(professorPublicationDto.getPublisher());
 		professorPublication.setPageRange(professorPublicationDto.getPageRange());
-		professorPublication.setPublicationType(professorPublicationDto.getPublicationType());
+		professorPublication.setPublicationType(publicationTypeRepository.findByTypeName(professorPublicationDto
+				.getPublicationType()));
 		professorPublication.setQuoted(professorPublicationDto.getQuoted());
 		professorPublication.setYear(professorPublicationDto.getYear());
 
@@ -192,7 +200,7 @@ public class PublicationServiceImpl implements PublicationService {
 
 	public PublicationCategory initializeInternationalPublicationCategory(
 			@Nonnull InternationalPublicationDto internationalPublicationDto) {
-		
+
 		PublicationCategory category = null;
 		if (internationalPublicationDto.getPublicationCategoryDto() != null
 				&& internationalPublicationDto.getPublicationCategoryDto().getId() != null) {
@@ -221,7 +229,8 @@ public class PublicationServiceImpl implements PublicationService {
 		internationalPublication.setAuthors(internationalPublicationDto.getAuthors());
 		internationalPublication.setPublisher(internationalPublicationDto.getPublisher());
 		internationalPublication.setPagesWithQuotes(internationalPublicationDto.getPagesWithQuotes());
-		internationalPublication.setPublicationType(internationalPublicationDto.getPublicationType());
+		internationalPublication.setPublicationType(publicationTypeRepository
+				.findByTypeName(internationalPublicationDto.getPublicationType()));
 		internationalPublication.setYear(internationalPublicationDto.getYear());
 
 		return internationalPublication;

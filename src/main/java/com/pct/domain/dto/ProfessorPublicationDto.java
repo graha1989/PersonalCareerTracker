@@ -10,18 +10,16 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.ProfessorPublication;
-import com.pct.domain.enums.PublicationType;
-import com.pct.domain.enums.deserializers.PublicationTypeEnumDeserializer;
 
 public class ProfessorPublicationDto implements Serializable {
 
 	private static final long serialVersionUID = 8325577395997414231L;
 
-	@NotNull
-	@JsonDeserialize(using = PublicationTypeEnumDeserializer.class)
-	private PublicationType publicationType;
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private String publicationType;
 
 	@NotEmpty
 	@Length(max = 30)
@@ -71,10 +69,9 @@ public class ProfessorPublicationDto implements Serializable {
 	public ProfessorPublicationDto() {
 	}
 
-	public ProfessorPublicationDto(PublicationType publicationType, String isbn, String title, String journalTitle,
+	public ProfessorPublicationDto(String publicationType, String isbn, String title, String journalTitle,
 			String authors, String publisher, String pageRange, Integer quoted, String year,
 			PublicationCategoryDto publicationCategoryDto, Long professorId, Long id) {
-		super();
 		this.publicationType = publicationType;
 		this.isbn = isbn;
 		this.title = title;
@@ -90,7 +87,7 @@ public class ProfessorPublicationDto implements Serializable {
 	}
 
 	public ProfessorPublicationDto(ProfessorPublication p) {
-		this.publicationType = p.getPublicationType();
+		this.publicationType = p.getPublicationType().getTypeName();
 		this.isbn = p.getIsbn();
 		this.title = p.getTitle();
 		this.journalTitle = p.getJournalTitle();
@@ -104,11 +101,11 @@ public class ProfessorPublicationDto implements Serializable {
 		this.id = p.getId();
 	}
 
-	public PublicationType getPublicationType() {
+	public String getPublicationType() {
 		return publicationType;
 	}
 
-	public void setPublicationType(PublicationType publicationType) {
+	public void setPublicationType(String publicationType) {
 		this.publicationType = publicationType;
 	}
 

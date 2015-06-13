@@ -125,6 +125,12 @@ INSERT INTO project_experience (projectId, professorId, startDate, endDate) VALU
 	('2', '3', '2009-09-15', '2011-09-15')
 	ON DUPLICATE KEY UPDATE projectId=VALUES(projectId), professorId=VALUES(professorId), startDate=VALUES(startDate), endDate=VALUES(endDate);
 
+INSERT INTO publication_type (typeName) VALUES
+	('Naučna'),
+	('Udžbenik'),
+	('Ostala didaktička sredstva')
+	ON DUPLICATE KEY UPDATE typeName=VALUES(typeName);
+	
 INSERT INTO publication_category (code, description, nsmPoints, ttbtPoints, shPoints) VALUES
 	('M11', 'Istaknuta monografija međunarodnog značaja', '15', '15', '15'),
 	('M12', 'Monografija međunarodnog značaja', '10', '10', '10'),
@@ -150,17 +156,17 @@ INSERT INTO publication_category (code, description, nsmPoints, ttbtPoints, shPo
 	('M36', 'Uređivanje zbornika saopštenja međunarodnog naučnog skupa', '1', '1', '1')
 	ON DUPLICATE KEY UPDATE code=VALUES(code), description=VALUES(description), nsmPoints=VALUES(nsmPoints), ttbtPoints=VALUES(ttbtPoints), shPoints=VALUES(shPoints);
 	
-INSERT INTO professor_publication (isbn, title, journalTitle, authors, publisher, pageRange, publicationType, quoted, publicationCategoryId, professorId, year) VALUES
-	('ISBN:978-1-56619-909-4', 'Uvod u programiranje', 'Časopis informacione tehnologije', 'Mirjana Ivanović; Đura Paunić; Srđan Bojić', 'PMF', '50-90', 'SCIENTIFIC', '10', '5', '3', '2011'),
-	('ISBN:32-10-20022-879-1', 'XML tehnologije u primeni', 'Časopis informacione tehnologije', 'Đorđe Herceg; Srđan Bojić', 'Stylos', '1-300', 'SCIENTIFIC', '19', '13', '3', '2013'),
-	('ISBN:555-3-67780-010-5', 'Matematička logika', null, 'Gradimir Vojvodić; Srđan Bojić', 'PMF', '1-120', 'TEXTBOOK', '20', null, '3', '2012'),
-	('ISBN:222-3-99633-011-4', 'Matematička analiza', null, 'Arpad Takači; Srđan Bojić', 'PMF', '1-120', 'TEXTBOOK', '6', null, '3', '2014')
-	ON DUPLICATE KEY UPDATE isbn=VALUES(isbn), title=VALUES(title), journalTitle=VALUES(journalTitle), authors=VALUES(authors), publisher=VALUES(publisher), pageRange=VALUES(pageRange), publicationType=VALUES(publicationType), quoted=VALUES(quoted), publicationCategoryId=VALUES(publicationCategoryId), professorId=VALUES(professorId), year=VALUES(year);
+INSERT INTO professor_publication (isbn, title, journalTitle, authors, publisher, pageRange, publicationTypeId, quoted, publicationCategoryId, professorId, year) VALUES
+	('ISBN:978-1-56619-909-4', 'Uvod u programiranje', 'Časopis informacione tehnologije', 'Mirjana Ivanović; Đura Paunić; Srđan Bojić', 'PMF', '50-90', '1', '10', '5', '3', '2011'),
+	('ISBN:32-10-20022-879-1', 'XML tehnologije u primeni', 'Časopis informacione tehnologije', 'Đorđe Herceg; Srđan Bojić', 'Stylos', '1-300', '1', '19', '13', '3', '2013'),
+	('ISBN:555-3-67780-010-5', 'Matematička logika', null, 'Gradimir Vojvodić; Srđan Bojić', 'PMF', '1-120', '2', '20', null, '3', '2012'),
+	('ISBN:222-3-99633-011-4', 'Matematička analiza', null, 'Arpad Takači; Srđan Bojić', 'PMF', '1-120', '2', '6', null, '3', '2014')
+	ON DUPLICATE KEY UPDATE isbn=VALUES(isbn), title=VALUES(title), journalTitle=VALUES(journalTitle), authors=VALUES(authors), publisher=VALUES(publisher), pageRange=VALUES(pageRange), publicationTypeId=VALUES(publicationTypeId), quoted=VALUES(quoted), publicationCategoryId=VALUES(publicationCategoryId), professorId=VALUES(professorId), year=VALUES(year);
 	
-INSERT INTO international_publication (isbn, title, journalTitle, authors, publisher, pagesWithQuotes, year, publicationType, publicationCategoryId, professorId) VALUES
-	('ISBN:444-1-57200-544-1', 'Fuzzy Information Processing', 'International IT magazine', 'Srđan Bojić', 'PMF', '50-52', '2011', 'SCIENTIFIC', '5', '3'),
-	('ISBN:544-3-25698-332-3', 'Fuzzy Database', null, 'Miloš Racković; Srđan Bojić', 'PMF', '40-50', '2009', 'SCIENTIFIC', '10', '3')
-	ON DUPLICATE KEY UPDATE isbn=VALUES(isbn), title=VALUES(title), journalTitle=VALUES(journalTitle), authors=VALUES(authors), publisher=VALUES(publisher), pagesWithQuotes=VALUES(pagesWithQuotes), year=VALUES(year), publicationType=VALUES(publicationType), publicationCategoryId=VALUES(publicationCategoryId), professorId=VALUES(professorId);
+INSERT INTO international_publication (isbn, title, journalTitle, authors, publisher, pagesWithQuotes, year, publicationTypeId, publicationCategoryId, professorId) VALUES
+	('ISBN:444-1-57200-544-1', 'Fuzzy Information Processing', 'International IT magazine', 'Srđan Bojić', 'PMF', '50-52', '2011', '1', '5', '3'),
+	('ISBN:544-3-25698-332-3', 'Fuzzy Database', null, 'Miloš Racković; Srđan Bojić', 'PMF', '40-50', '2009', '1', '10', '3')
+	ON DUPLICATE KEY UPDATE isbn=VALUES(isbn), title=VALUES(title), journalTitle=VALUES(journalTitle), authors=VALUES(authors), publisher=VALUES(publisher), pagesWithQuotes=VALUES(pagesWithQuotes), year=VALUES(year), publicationTypeId=VALUES(publicationTypeId), publicationCategoryId=VALUES(publicationCategoryId), professorId=VALUES(professorId);
 	
 INSERT INTO institution_type (typeName) VALUES
 	('Firma'),

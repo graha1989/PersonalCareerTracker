@@ -2,7 +2,11 @@ package com.pct.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+/**
+ * 
+ * TODO Remove
+ *
+ */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum PublicationType {
 

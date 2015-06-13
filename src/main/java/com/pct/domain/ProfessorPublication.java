@@ -3,8 +3,6 @@ package com.pct.domain;
 import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -14,9 +12,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.pct.domain.enums.PublicationType;
-import com.pct.domain.enums.deserializers.PublicationTypeEnumDeserializer;
+import com.pct.domain.PublicationType;
 
 @Entity
 @Table(name = "professor_publication")
@@ -44,9 +40,10 @@ public class ProfessorPublication extends AbstractEntity {
 	@Column(name = "pageRange", length = 100)
 	private String pageRange;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "publicationType")
-	@JsonDeserialize(using = PublicationTypeEnumDeserializer.class)
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "publicationTypeId")
+	@JsonBackReference(value = "publicationType")
 	private PublicationType publicationType;
 
 	@Column(name = "quoted")
@@ -69,13 +66,11 @@ public class ProfessorPublication extends AbstractEntity {
 	private String year;
 
 	public ProfessorPublication() {
-		super();
 	}
 
 	public ProfessorPublication(String isbn, String title, String jurnalTitle, String authors, String publisher,
 			String pageRange, PublicationType publicationType, Integer quoted, PublicationCategory publicationCategory,
 			Professor professor, String year) {
-		super();
 		this.isbn = isbn;
 		this.title = title;
 		this.journalTitle = jurnalTitle;

@@ -35,7 +35,7 @@
 						<tr
 							class="active ng-scope"
 							ng-repeat="publication in publications">
-							<td>{{ publication.publicationType.title }}</td>
+							<td>{{ publication.publicationType }}</td>
 							<td>{{ publication.isbn }}</td>
 							<td>{{ publication.title }}</td>
 							<td>{{ publication.journalTitle }}</td>
@@ -472,7 +472,7 @@
 							id="inputPublicationType"
 							name="inputPublicationType"
 							ng-model="publication.publicationType"
-							ng-options="publicationType.title for publicationType in allPublicationTypes track by publicationType.name"
+							ng-options="publicationType.typeName as publicationType.typeName for publicationType in allPublicationTypes"
 							required><option value="">{{ resources.publicationPopupLabels.publicationType }}</option></select>
 						<div
 							ng-show="form.inputPublicationType.$dirty && form.inputPublicationType.$invalid"
@@ -913,7 +913,7 @@
 							id="inputPublicationType"
 							name="inputPublicationType"
 							ng-model="publication.publicationType"
-							ng-options="publicationType.title for publicationType in allPublicationTypes track by publicationType.name"
+							ng-options="publicationType.typeName as publicationType.typeName for publicationType in allPublicationTypes"
 							required><option value="">{{ resources.publicationPopupLabels.publicationType }}</option></select>
 						<div
 							ng-show="form.inputPublicationType.$dirty && form.inputPublicationType.$invalid"

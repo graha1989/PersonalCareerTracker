@@ -383,7 +383,7 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
             || $scope.publication.publicationType === '') {
       $scope.publication.publicationCategoryDto = null;
       return true;
-    } else if ($scope.publication.publicationType.name == "SCIENTIFIC") {
+    } else if ($scope.publication.publicationType == "Naučna") {
       return false;
     } else {
       $scope.publication.publicationCategoryDto = null;
@@ -621,11 +621,11 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
             && $scope.publication.year != ''
             && $scope.publication.publicationType != null
             && $scope.publication.publicationType != '') {
-      if ($scope.publication.publicationType.name === "SCIENTIFIC"
+      if ($scope.publication.publicationType === "Naučna"
               && $scope.publication.publicationCategoryDto != null
               && $scope.publication.publicationCategoryDto != '') {
         return true;
-      } else if ($scope.publication.publicationType.name === "SCIENTIFIC"
+      } else if ($scope.publication.publicationType === "Naučna"
               && ($scope.publication.publicationCategoryDto == null || $scope.publication.publicationCategoryDto == '')) {
         return false;
       } else {
@@ -647,7 +647,7 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
             || $scope.publication.publicationType === '') {
       $scope.publication.publicationCategoryDto = null;
       return true;
-    } else if ($scope.publication.publicationType.name === "SCIENTIFIC") {
+    } else if ($scope.publication.publicationType === "Naučna") {
       return false;
     } else {
       $scope.publication.publicationCategoryDto = null;

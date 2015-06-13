@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
+import com.pct.domain.PublicationType;
 import com.pct.domain.dto.InternationalPublicationDto;
 import com.pct.domain.dto.ProfessorPublicationDto;
 import com.pct.domain.dto.PublicationCategoryDto;
 import com.pct.domain.dto.UserDto;
-import com.pct.domain.enums.PublicationType;
 import com.pct.service.PublicationService;
 import com.pct.service.UserService;
 import com.pct.validation.ProfessorNotFoundException;
