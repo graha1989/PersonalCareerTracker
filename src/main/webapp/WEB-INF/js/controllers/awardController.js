@@ -170,7 +170,6 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
     PctService.loadSelectedAward(id, function(data) {
       if (angular.isObject(data)) {
         $scope.award = data;
-        $scope.award.awardType = data.awardType.name;
         $scope.master = angular.copy($scope.award);
         $scope.noResultsFound = false;
       } else {
@@ -217,7 +216,8 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
   $scope.isUnchanged = function(award) {
 
     award.dateOfAward = new Date(award.dateOfAward).getTime();
-    return angular.isUndefined(award.awardField)
+    return angular.isUndefined(award.awardType)
+            || angular.isUndefined(award.awardField)
             || angular.equals(award, $scope.master);
   };
 

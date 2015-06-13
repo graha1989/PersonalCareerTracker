@@ -1,7 +1,6 @@
 package com.pct.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -12,11 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.Award;
 import com.pct.domain.AwardField;
+import com.pct.domain.AwardType;
 import com.pct.domain.Professor;
 import com.pct.domain.dto.AwardDto;
-import com.pct.domain.enums.AwardType;
 import com.pct.repository.AwardFieldRepository;
 import com.pct.repository.AwardRepository;
+import com.pct.repository.AwardTypeRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.service.AwardService;
 import com.pct.validation.AwardNotFoundException;
@@ -28,13 +28,15 @@ public class AwardServiceImpl implements AwardService {
 	private AwardRepository awardRepository;
 	private ProfesorRepository professorRepository;
 	private AwardFieldRepository awardFieldRepository;
+	private AwardTypeRepository awardTypeRepository;
 
 	@Autowired
 	public AwardServiceImpl(AwardRepository awardRepository, ProfesorRepository professorRepository,
-			AwardFieldRepository awardFieldRepository) {
+			AwardFieldRepository awardFieldRepository, AwardTypeRepository awardTypeRepository) {
 		this.awardRepository = awardRepository;
 		this.professorRepository = professorRepository;
 		this.awardFieldRepository = awardFieldRepository;
+		this.awardTypeRepository = awardTypeRepository;
 	}
 
 	@Override
@@ -55,7 +57,15 @@ public class AwardServiceImpl implements AwardService {
 	@Override
 	@Transactional
 	public List<AwardType> findAllAwardTypes() {
-		return new ArrayList<AwardType>(Arrays.asList(AwardType.values()));
+
+		List<AwardType> awardTypes = null;
+		try {
+			awardTypes = awardTypeRepository.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return awardTypes;
 	}
 
 	@Override
@@ -95,7 +105,7 @@ public class AwardServiceImpl implements AwardService {
 		}
 		award.setAwardName(awardDto.getAwardName());
 		award.setAwardedBy(awardDto.getAwardedBy());
-		award.setAwardType(awardDto.getAwardType());
+		award.setAwardType(awardTypeRepository.findByTypeName(awardDto.getAwardType()));
 		award.setAwardField(awardFieldRepository.findByFieldName(awardDto.getAwardField()));
 		award.setDateOfAward(awardDto.getDateOfAward());
 

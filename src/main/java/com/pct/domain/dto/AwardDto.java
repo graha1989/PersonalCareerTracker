@@ -3,14 +3,11 @@ package com.pct.domain.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import com.pct.domain.Award;
-import com.pct.domain.enums.AwardType;
 
 public class AwardDto implements Serializable {
 
@@ -20,28 +17,33 @@ public class AwardDto implements Serializable {
 	@Length(max = 200)
 	@SafeHtml
 	private String awardName;
-	
+
 	@NotEmpty
 	@Length(max = 200)
 	@SafeHtml
 	private String awardedBy;
-	
+
 	private Date dateOfAward;
-	
-	@NotNull
-	private AwardType awardType;
-	
+
 	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private String awardType;
+
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
 	private String awardField;
-	
+
 	protected Long professorId;
-	
+
 	protected Long id;
-	
+
 	public AwardDto() {
 	}
 
-	public AwardDto(String awardName, String awardedBy, Date dateOfAward, AwardType awardType, String awardField, Long id, Long professorId) {
+	public AwardDto(String awardName, String awardedBy, Date dateOfAward, String awardType, String awardField, Long id,
+			Long professorId) {
 		super();
 		this.awardName = awardName;
 		this.awardedBy = awardedBy;
@@ -56,7 +58,7 @@ public class AwardDto implements Serializable {
 		this.awardName = award.getAwardName();
 		this.awardedBy = award.getAwardedBy();
 		this.dateOfAward = award.getDateOfAward();
-		this.awardType = award.getAwardType();
+		this.awardType = award.getAwardType().getTypeName();
 		this.awardField = award.getAwardField().getFieldName();
 		this.id = award.getId();
 		this.professorId = award.getProfessor().getId();
@@ -86,11 +88,11 @@ public class AwardDto implements Serializable {
 		this.dateOfAward = dateOfAward;
 	}
 
-	public AwardType getAwardType() {
+	public String getAwardType() {
 		return awardType;
 	}
 
-	public void setAwardType(AwardType awardType) {
+	public void setAwardType(String awardType) {
 		this.awardType = awardType;
 	}
 
@@ -117,5 +119,5 @@ public class AwardDto implements Serializable {
 	public void setProfessorId(Long professorId) {
 		this.professorId = professorId;
 	}
-	
+
 }

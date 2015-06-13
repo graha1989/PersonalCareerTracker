@@ -81,11 +81,17 @@ INSERT INTO award_field (fieldName) VALUES
 	('Pedagoška oblast')
 	ON DUPLICATE KEY UPDATE fieldName=VALUES(fieldName);
 	
-INSERT INTO award (awardName, awardedBy, dateOfAward, professorId, awardType, awardFieldId) VALUES
-	('Mileva Marić Anštajn', 'Univerzitet Novi Sad', '2006-09-15', '3', 'PRIZE', '1'),
-	('Mihajlo Pupin', 'Univerzitet Novi Sad', '2008-09-15', '3', 'PRIZE', '1'),
-	('Dositej Obradović', 'Univerzitet Novi Sad', '2013-09-15', '3', 'PRIZE', '2')
-	ON DUPLICATE KEY UPDATE awardName=VALUES(awardName), awardedBy=VALUES(awardedBy), dateOfAward=VALUES(dateOfAward), professorId=VALUES(professorId), awardType=VALUES(awardType), awardFieldId=VALUES(awardFieldId);
+INSERT INTO award_type (typeName) VALUES
+	('Priznanje'),
+	('Nagrada'),
+	('Odlikovanje')
+	ON DUPLICATE KEY UPDATE typeName=VALUES(typeName);
+	
+INSERT INTO award (awardName, awardedBy, dateOfAward, professorId, awardTypeId, awardFieldId) VALUES
+	('Mileva Marić Anštajn', 'Univerzitet Novi Sad', '2006-09-15', '3', '2', '1'),
+	('Mihajlo Pupin', 'Univerzitet Novi Sad', '2008-09-15', '3', '2', '1'),
+	('Dositej Obradović', 'Univerzitet Novi Sad', '2013-09-15', '3', '2', '2')
+	ON DUPLICATE KEY UPDATE awardName=VALUES(awardName), awardedBy=VALUES(awardedBy), dateOfAward=VALUES(dateOfAward), professorId=VALUES(professorId), awardTypeId=VALUES(awardTypeId), awardFieldId=VALUES(awardFieldId);
 
 INSERT INTO project (name, financedBy, projectType) VALUES
 	('XML Projekat', 'Vlada Republike Srbije', 'SCIENTIFIC'),

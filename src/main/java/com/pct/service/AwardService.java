@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pct.domain.dto.AwardDto;
 import com.pct.domain.AwardField;
-import com.pct.domain.enums.AwardType;
+import com.pct.domain.AwardType;
 import com.pct.validation.AwardNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
 
