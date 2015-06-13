@@ -14,6 +14,7 @@ import com.pct.domain.Professor;
 import com.pct.domain.Subject;
 import com.pct.domain.dto.SubjectDto;
 import com.pct.repository.InstitutionRepository;
+import com.pct.repository.InstitutionTypeRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.SubjectRepository;
 import com.pct.service.SubjectService;
@@ -23,14 +24,19 @@ import com.pct.validation.SubjectNotFoundException;
 @Service
 public class SubjectServiceImpl implements SubjectService {
 
-	@Autowired
 	private SubjectRepository subjectRepository;
+	private InstitutionRepository institutionRepository;
+	private ProfesorRepository professorRepository;
+	private InstitutionTypeRepository institutionTypeRepository;
 
 	@Autowired
-	private InstitutionRepository institutionRepository;
-	
-	@Autowired
-	private ProfesorRepository professorRepository; 
+	public SubjectServiceImpl(SubjectRepository subjectRepository, InstitutionRepository institutionRepository,
+			ProfesorRepository professorRepository, InstitutionTypeRepository institutionTypeRepository) {
+		this.subjectRepository = subjectRepository;
+		this.institutionRepository = institutionRepository;
+		this.professorRepository = professorRepository;
+		this.institutionTypeRepository = institutionTypeRepository;
+	}
 
 	@Override
 	@Transactional
@@ -110,14 +116,14 @@ public class SubjectServiceImpl implements SubjectService {
 		institution.setCountry(subjectDto.getInstitutionCountry());
 		institution.setName(subjectDto.getInstitutionName());
 		institution.setUniversity(subjectDto.getUniversityName());
-		institution.setInstitutionType(subjectDto.getInstitutionType());
+		institution.setInstitutionType(institutionTypeRepository.findByTypeName(subjectDto.getInstitutionType()));
 
 		return institution;
 	}
 
 	public Subject createOrUpdateSubjectInstanceFromSubjectDto(@Nonnull SubjectDto subjectDto,
 			@Nonnull Institution institution) {
-		
+
 		Professor professor = null;
 		if (subjectDto.getProfessorId() != null && subjectDto.getProfessorId() > 0L) {
 			professor = professorRepository.findOne(subjectDto.getProfessorId());

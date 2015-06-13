@@ -8,13 +8,16 @@ import javax.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.pct.domain.Institution;
+import com.pct.domain.InstitutionType;
 import com.pct.domain.Professor;
 import com.pct.domain.WorkExperience;
+import com.pct.domain.dto.InstitutionDto;
 import com.pct.domain.dto.WorkExperienceDto;
-import com.pct.domain.enums.InstitutionType;
 import com.pct.repository.InstitutionRepository;
+import com.pct.repository.InstitutionTypeRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.WorkExperienceRepository;
 import com.pct.service.WorkExperienceService;
@@ -26,18 +29,18 @@ import com.pct.validation.WorkExperienceNotFoundException;
 public class WorkExperiencesServiceImpl implements WorkExperienceService {
 
 	private WorkExperienceRepository workExperienceRepository;
-
 	private ProfesorRepository professorRepository;
-
 	private InstitutionRepository institutionRepository;
+	private InstitutionTypeRepository institutionTypeRepository;
 
 	@Autowired
 	public WorkExperiencesServiceImpl(WorkExperienceRepository workExperienceRepository,
-			ProfesorRepository professorRepository, InstitutionRepository institutionRepository) {
-		super();
+			ProfesorRepository professorRepository, InstitutionRepository institutionRepository,
+			InstitutionTypeRepository institutionTypeRepository) {
 		this.workExperienceRepository = workExperienceRepository;
 		this.professorRepository = professorRepository;
 		this.institutionRepository = institutionRepository;
+		this.institutionTypeRepository = institutionTypeRepository;
 	}
 
 	@Override
@@ -108,19 +111,29 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 		institution.setCountry(workExperienceDto.getInstitutionCountry());
 		institution.setName(workExperienceDto.getInstitutionName());
 		institution.setUniversity(workExperienceDto.getUniversityName());
-		institution.setInstitutionType(workExperienceDto.getInstitutionType());
+		institution
+				.setInstitutionType(institutionTypeRepository.findByTypeName(workExperienceDto.getInstitutionType()));
 
 		return institution;
 	}
 
 	@Override
 	@Transactional
-	public List<Institution> findInstitutionsStartsWith(String value, InstitutionType institutionType) {
-		if (institutionType != null) {
-			return institutionRepository.findByNameAndInstitutionTypeLike(value, institutionType);
+	public List<InstitutionDto> findInstitutionsStartsWith(String value, String institutionType) {
+
+		List<Institution> institutions = new ArrayList<Institution>();
+		List<InstitutionDto> institutionDtos = new ArrayList<InstitutionDto>();
+		if (!StringUtils.isEmpty(institutionType)) {
+			InstitutionType type = institutionTypeRepository.findByTypeName(institutionType);
+			institutions = institutionRepository.findByNameAndInstitutionTypeLike(value, type);
 		} else {
-			return institutionRepository.findByNameLike(value);
+			institutions = institutionRepository.findByNameLike(value);
 		}
+		for (Institution institution : institutions) {
+			InstitutionDto institutionDto = new InstitutionDto(institution);
+			institutionDtos.add(institutionDto);
+		}
+		return institutionDtos;
 	}
 
 	@Override

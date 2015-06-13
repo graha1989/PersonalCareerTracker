@@ -157,11 +157,19 @@ INSERT INTO international_publication (isbn, title, journalTitle, authors, publi
 	('ISBN:544-3-25698-332-3', 'Fuzzy Database', null, 'Miloš Racković; Srđan Bojić', 'PMF', '40-50', '2009', 'SCIENTIFIC', '10', '3')
 	ON DUPLICATE KEY UPDATE isbn=VALUES(isbn), title=VALUES(title), journalTitle=VALUES(journalTitle), authors=VALUES(authors), publisher=VALUES(publisher), pagesWithQuotes=VALUES(pagesWithQuotes), year=VALUES(year), publicationType=VALUES(publicationType), publicationCategoryId=VALUES(publicationCategoryId), professorId=VALUES(professorId);
 	
-INSERT INTO institution (institutionType, name, university, country, city) VALUES
-	('FACULTY', 'Prirodno-matematički fakultet', 'Univerzitet u Novom Sadu', 'Srbija', 'Novi Sad'),
-	('UNIVERSITY', 'Univerzitet u Beogradu', null, 'Srbija', 'Beograd'),
-	('FACULTY', 'Prirodno-matematički fakultet', 'Univerzitet u Nišu', 'Srbija', 'Niš')
-	ON DUPLICATE KEY UPDATE institutionType=VALUES(institutionType), name=VALUES(name), university=VALUES(university), country=VALUES(country), city=VALUES(city);
+INSERT INTO institution_type (typeName) VALUES
+	('Firma'),
+	('Škola'),
+	('Fakultet'),
+	('Univerzitet'),
+	('Ostale ustanove')
+	ON DUPLICATE KEY UPDATE typeName=VALUES(typeName);
+	
+INSERT INTO institution (institutionTypeId, name, university, country, city) VALUES
+	('3', 'Prirodno-matematički fakultet', 'Univerzitet u Novom Sadu', 'Srbija', 'Novi Sad'),
+	('4', 'Univerzitet u Beogradu', null, 'Srbija', 'Beograd'),
+	('3', 'Prirodno-matematički fakultet', 'Univerzitet u Nišu', 'Srbija', 'Niš')
+	ON DUPLICATE KEY UPDATE institutionTypeId=VALUES(institutionTypeId), name=VALUES(name), university=VALUES(university), country=VALUES(country), city=VALUES(city);
 	
 INSERT INTO work_experience (institutionId, professorId, workStartDate, workEndDate, title) VALUES
 	('1', '3', '2012-04-14 00:00:00', '2014-08-04 00:00:00', 'asistent pripravnik'),

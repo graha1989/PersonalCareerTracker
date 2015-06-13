@@ -10,10 +10,8 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.pct.constants.MimeTypes;
 import com.pct.domain.SpecializationAbroad;
-import com.pct.domain.enums.InstitutionType;
-import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
 
 public class SpecializationAbroadDto implements Serializable {
 
@@ -45,8 +43,10 @@ public class SpecializationAbroadDto implements Serializable {
 	@SafeHtml
 	private String purpose;
 	
-	@JsonDeserialize(using = InstitutionTypeEnumDeserializer.class)
-	private final InstitutionType institutionType = InstitutionType.OTHER;
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private final String institutionType = MimeTypes.INSTITUTION_TYPE_OTHER;
 	
 	@NotNull
 	protected Long professorId;
@@ -135,7 +135,7 @@ public class SpecializationAbroadDto implements Serializable {
 		this.purpose = purpose;
 	}
 
-	public InstitutionType getInstitutionType() {
+	public String getInstitutionType() {
 		return institutionType;
 	}
 

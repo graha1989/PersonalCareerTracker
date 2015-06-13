@@ -11,10 +11,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.pct.constants.MimeTypes;
 import com.pct.domain.Studies;
-import com.pct.domain.enums.InstitutionType;
 import com.pct.domain.enums.StudyProgram;
-import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
 import com.pct.domain.enums.deserializers.StudyProgramEnumDeserializer;
 
 public class StudiesDto implements Serializable {
@@ -59,9 +58,10 @@ public class StudiesDto implements Serializable {
 	@SafeHtml
 	private String universityName;
 
-	@Nullable
-	@JsonDeserialize(using = InstitutionTypeEnumDeserializer.class)
-	private final InstitutionType institutionType = InstitutionType.FACULTY;
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private final String institutionType = MimeTypes.INSTITUTION_TYPE_FACULTY;
 
 	@Nullable
 	@Length(max = 50)
@@ -200,7 +200,7 @@ public class StudiesDto implements Serializable {
 		this.universityName = universityName;
 	}
 
-	public InstitutionType getInstitutionType() {
+	public String getInstitutionType() {
 		return institutionType;
 	}
 

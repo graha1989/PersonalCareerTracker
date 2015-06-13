@@ -1,7 +1,6 @@
 package com.pct.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -11,21 +10,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.Institution;
+import com.pct.domain.InstitutionType;
 import com.pct.domain.dto.InstitutionDto;
-import com.pct.domain.enums.InstitutionType;
 import com.pct.repository.InstitutionRepository;
-import com.pct.repository.ProfesorRepository;
+import com.pct.repository.InstitutionTypeRepository;
 import com.pct.service.InstitutionsService;
 import com.pct.validation.InstitutionNotFoundException;
 
 @Service
 public class InstitutionsServiceImpl implements InstitutionsService {
 
+	private InstitutionRepository institutionRepository;
+	private InstitutionTypeRepository institutionTypeRepository;
+
 	@Autowired
-	InstitutionRepository institutionRepository;
-	
-	@Autowired
-	ProfesorRepository professorRepository;
+	public InstitutionsServiceImpl(InstitutionRepository institutionRepository,
+			InstitutionTypeRepository institutionTypeRepository) {
+		this.institutionRepository = institutionRepository;
+		this.institutionTypeRepository = institutionTypeRepository;
+	}
 
 	@Override
 	@Transactional
@@ -48,16 +51,24 @@ public class InstitutionsServiceImpl implements InstitutionsService {
 	@Override
 	@Transactional
 	public List<InstitutionType> findAllInstitutionTypes() {
-		return new ArrayList<InstitutionType>(Arrays.asList(InstitutionType.values()));
+
+		List<InstitutionType> institutionTypes = null;
+		try {
+			institutionTypes = institutionTypeRepository.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return institutionTypes;
 	}
 
 	@Override
 	@Transactional
 	public InstitutionDto findInstitutionById(Long id) throws InstitutionNotFoundException {
-		
+
 		InstitutionDto institutionDto;
 		if (id != null) {
-			Institution  institution = institutionRepository.findOne(id);
+			Institution institution = institutionRepository.findOne(id);
 			if (institution != null) {
 				institutionDto = new InstitutionDto(institution);
 				return institutionDto;
@@ -73,7 +84,7 @@ public class InstitutionsServiceImpl implements InstitutionsService {
 		Institution institution = initializeInstitution(institutionDto);
 		institutionRepository.saveAndFlush(institution);
 	}
-	
+
 	/**
 	 * Creates new Institution entity object or retrieves existing from the database and sets field values from
 	 * InstitutionDto.
@@ -92,19 +103,18 @@ public class InstitutionsServiceImpl implements InstitutionsService {
 		institution.setCountry(institutionDto.getCountry());
 		institution.setName(institutionDto.getName());
 		institution.setUniversity(institutionDto.getUniversity());
-		institution.setInstitutionType(institutionDto.getInstitutionType());
+		institution.setInstitutionType(institutionTypeRepository.findByTypeName(institutionDto.getInstitutionType()));
 
 		return institution;
 	}
-	
-	/* 
-	 * TODO
-	 * Not delete institution completely, just set it to inactive  from some reason
+
+	/*
+	 * TODO Not delete institution completely, just set it to inactive from some reason
 	 */
 	@Override
 	@Transactional
 	public void deleteInstitution(Long id) throws InstitutionNotFoundException {
-		
+
 		Institution institution = institutionRepository.findOne(id);
 		if (institution == null) {
 			throw new InstitutionNotFoundException();

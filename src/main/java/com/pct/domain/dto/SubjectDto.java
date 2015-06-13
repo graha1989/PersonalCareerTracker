@@ -9,19 +9,18 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.pct.constants.MimeTypes;
 import com.pct.domain.StudiesThesisType;
 import com.pct.domain.Subject;
-import com.pct.domain.enums.InstitutionType;
-import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
 
 public class SubjectDto implements Serializable {
 
 	private static final long serialVersionUID = 1126081919536192074L;
 
-	@NotNull
-	@JsonDeserialize(using = InstitutionTypeEnumDeserializer.class)
-	private final InstitutionType institutionType = InstitutionType.FACULTY;
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private final String institutionType = MimeTypes.INSTITUTION_TYPE_FACULTY;
 
 	@NotEmpty
 	@Length(max = 50)
@@ -145,7 +144,7 @@ public class SubjectDto implements Serializable {
 		this.institutionCountry = institutionCountry;
 	}
 
-	public InstitutionType getInstitutionType() {
+	public String getInstitutionType() {
 		return institutionType;
 	}
 

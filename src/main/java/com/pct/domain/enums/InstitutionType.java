@@ -1,7 +1,11 @@
 package com.pct.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
+/**
+ * 
+ * TODO Remove
+ *
+ */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum InstitutionType {
 

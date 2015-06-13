@@ -10,18 +10,16 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.domain.WorkExperience;
-import com.pct.domain.enums.InstitutionType;
-import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
 
 public class WorkExperienceDto implements Serializable {
 
 	private static final long serialVersionUID = 138813807628111267L;
 
-	@NotNull
-	@JsonDeserialize(using = InstitutionTypeEnumDeserializer.class)
-	private InstitutionType institutionType;
+	@NotEmpty
+	@Length(max = 50)
+	@SafeHtml
+	private String institutionType;
 
 	@NotEmpty
 	@Length(max = 50)
@@ -66,7 +64,7 @@ public class WorkExperienceDto implements Serializable {
 	public WorkExperienceDto() {
 	}
 
-	public WorkExperienceDto(InstitutionType institutionType, String institutionName, String universityName,
+	public WorkExperienceDto(String institutionType, String institutionName, String universityName,
 			String institutionCity, String institutionCountry, Date workStartDate, Date workEndDate, String title,
 			Long professorId, Long institutionId, Long id) {
 		super();
@@ -84,7 +82,7 @@ public class WorkExperienceDto implements Serializable {
 	}
 
 	public WorkExperienceDto(WorkExperience workExperience) {
-		this.institutionType = workExperience.getInstitution().getInstitutionType();
+		this.institutionType = workExperience.getInstitution().getInstitutionType().getTypeName();
 		this.institutionName = workExperience.getInstitution().getName();
 		this.universityName = workExperience.getInstitution().getUniversity();
 		this.institutionCity = workExperience.getInstitution().getCity();
@@ -97,11 +95,11 @@ public class WorkExperienceDto implements Serializable {
 		this.id = workExperience.getId();
 	}
 
-	public InstitutionType getInstitutionType() {
+	public String getInstitutionType() {
 		return institutionType;
 	}
 
-	public void setInstitutionType(InstitutionType institutionType) {
+	public void setInstitutionType(String institutionType) {
 		this.institutionType = institutionType;
 	}
 

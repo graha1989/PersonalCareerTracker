@@ -14,6 +14,7 @@ import com.pct.domain.Professor;
 import com.pct.domain.SpecializationAbroad;
 import com.pct.domain.dto.SpecializationAbroadDto;
 import com.pct.repository.InstitutionRepository;
+import com.pct.repository.InstitutionTypeRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProfessorSpecializationRepository;
 import com.pct.service.ProfessorSpecializationService;
@@ -25,18 +26,18 @@ import com.pct.validation.ProfessorSpecializationNotFoundException;
 public class ProfessorSpecializationServiceImpl implements ProfessorSpecializationService {
 
 	private ProfessorSpecializationRepository professorSpecializationRepository;
-
 	private ProfesorRepository professorRepository;
-
 	private InstitutionRepository institutionRepository;
+	private InstitutionTypeRepository institutionTypeRepository;
 
 	@Autowired
 	public ProfessorSpecializationServiceImpl(ProfessorSpecializationRepository professorSpecializationRepository,
-			ProfesorRepository professorRepository, InstitutionRepository institutionRepository) {
-		super();
+			ProfesorRepository professorRepository, InstitutionRepository institutionRepository,
+			InstitutionTypeRepository institutionTypeRepository) {
 		this.professorSpecializationRepository = professorSpecializationRepository;
 		this.professorRepository = professorRepository;
 		this.institutionRepository = institutionRepository;
+		this.institutionTypeRepository = institutionTypeRepository;
 	}
 
 	@Override
@@ -93,7 +94,8 @@ public class ProfessorSpecializationServiceImpl implements ProfessorSpecializati
 		institution.setCity(specializationAbroadDto.getCity());
 		institution.setCountry(specializationAbroadDto.getCountry());
 		institution.setName(specializationAbroadDto.getInstitutionName());
-		institution.setInstitutionType(specializationAbroadDto.getInstitutionType());
+		institution.setInstitutionType(institutionTypeRepository.findByTypeName(specializationAbroadDto
+				.getInstitutionType()));
 
 		return institution;
 	}

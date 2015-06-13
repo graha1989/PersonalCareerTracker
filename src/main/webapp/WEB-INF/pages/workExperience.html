@@ -32,7 +32,7 @@
 						</tr>
 						<tr class="active ng-scope"
 							ng-repeat="workExperience in workExperiences">
-							<td>{{ workExperience.institutionType.title }}</td>
+							<td>{{ workExperience.institutionType }}</td>
 							<td>{{ workExperience.institutionName }}</td>
 							<td>{{ workExperience.universityName }}</td>
 							<td>{{ workExperience.institutionCity }}</td>
@@ -88,8 +88,8 @@
 			<div class="modal-body">
 				<div class="form-group">
 					<label
-						for="inputInstitutionType"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionType }}
+						for="inputInstitutionName"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionName }}
 					</label>
 					<div class="col-sm-6">
 						<div class="input-group">
@@ -113,8 +113,8 @@
 				</div>
 				<div class="form-group" ng-show="allInstitutionDataShown">
 					<label
-						for="inputInstitutionName"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionName }}
+						for="inputInstitutionType"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionType }}
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -122,11 +122,11 @@
 							class="ng-binding form-control"
 							id="inputInstitutionType"
 							name="inputInstitutionType"
-							ng-model="workExperience.institutionType.title"
+							ng-model="workExperience.institutionType"
 							ng-disabled="true" />
 					</div>
 				</div>
-				<div class="form-group" ng-show="workExperience.institutionType.name == 'FACULTY' && allInstitutionDataShown">
+				<div class="form-group" ng-show="workExperience.institutionType == 'Fakultet' && allInstitutionDataShown">
 					<label
 						for="inputUniversityName"
 						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.universityName }}
@@ -305,7 +305,7 @@
 							id="inputInstitutionName"
 							name="inputInstitutionName"
 							ng-model="$parent.selectedInstitution"
-							typeahead="institution as institution.name for institution in getInstitutions($viewValue, workExperience.institutionType.name) | limitTo:8"
+							typeahead="institution as institution.name for institution in getInstitutions($viewValue, workExperience.institutionType) | limitTo:8"
 							typeahead-on-select="onSelectInstitution()"
 							placeholder="{{ resources.workExperiencePopupLabels.institutionName }}"
 							autocomplete="off"
@@ -330,7 +330,7 @@
 							id="inputInstitutionType"
 							name="inputInstitutionType"
 							ng-model="workExperience.institutionType"
-							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
+							ng-options="institutionType.typeName as institutionType.typeName for institutionType in allInstitutionTypes"
 							ng-disabled="isExistingInstitution"
 							ng-required="!isExistingInstitution" ><option value="">{{ resources.workExperiencePopupLabels.institutionType }}</option></select>
 						<div
@@ -342,10 +342,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group" ng-show="workExperience.institutionType.name == 'FACULTY'">
+				<div class="form-group" ng-show="workExperience.institutionType == 'Fakultet'">
 					<label
 						for="inputUniversityName"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.universityName }} <span class="required" ng-show="workExperience.institutionType.name == 'FACULTY' && !isExistingInstitution">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.universityName }} <span class="required" ng-show="workExperience.institutionType == 'Fakultet' && !isExistingInstitution">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -356,7 +356,7 @@
 							ng-model="workExperience.universityName"
 							placeholder="{{ resources.workExperiencePopupLabels.universityName }}"
 							ng-maxlength="50"
-							ng-required="workExperience.institutionType.name == 'FACULTY' && !isExistingInstitution"
+							ng-required="workExperience.institutionType == 'Fakultet' && !isExistingInstitution"
 							ng-disabled="isExistingInstitution" />
 						<div
 							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"

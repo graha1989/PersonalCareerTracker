@@ -247,7 +247,7 @@ var createNewInstitutionController = function($scope, $modalInstance,
   $scope.validateForm = function() {
     if ($scope.institution.institutionType != null
             && $scope.institution.institutionType != ''
-            && ($scope.institution.institutionType == 'FACULTY'
+            && ($scope.institution.institutionType == 'Fakultet'
                     ? ($scope.institution.university != null && $scope.institution.university != '')
                     : true) && $scope.institution.city != null
             && $scope.institution.city != ''

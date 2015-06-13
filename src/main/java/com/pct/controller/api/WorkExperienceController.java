@@ -20,14 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
-import com.pct.domain.Institution;
+import com.pct.domain.dto.InstitutionDto;
 import com.pct.domain.dto.UserDto;
 import com.pct.domain.dto.WorkExperienceDto;
-import com.pct.domain.enums.InstitutionType;
-import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
 import com.pct.service.UserService;
 import com.pct.service.WorkExperienceService;
 import com.pct.validation.InstitutionNotFoundException;
@@ -102,17 +99,17 @@ public class WorkExperienceController {
 	}
 
 	@RequestMapping(value = RequestMappings.LOAD_INSTITUTIONS_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<List<Institution>> findInstitutionStartsWith(
+	public ResponseEntity<List<InstitutionDto>> findInstitutionStartsWith(
 			@RequestParam(value = "value", required = true) String value,
-			@RequestParam(value = "institutionType", required = false) @JsonDeserialize(using = InstitutionTypeEnumDeserializer.class) InstitutionType institutionType)
+			@RequestParam(value = "institutionType", required = false) String institutionType)
 			throws InstitutionNotFoundException {
 
-		List<Institution> institutions = new ArrayList<Institution>();
+		List<InstitutionDto> institutions = new ArrayList<InstitutionDto>();
 		if (value.length() >= 3) {
 			institutions = workExperienceService.findInstitutionsStartsWith(value, institutionType);
 		}
 
-		return new ResponseEntity<List<Institution>>(institutions, HttpStatus.OK);
+		return new ResponseEntity<List<InstitutionDto>>(institutions, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)

@@ -5,29 +5,30 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.pct.domain.enums.InstitutionType;
-import com.pct.domain.enums.deserializers.InstitutionTypeEnumDeserializer;
+import com.pct.domain.InstitutionType;
 
 @Entity
 @Table(name = "institution")
 public class Institution extends AbstractEntity {
 
-	private static final long serialVersionUID = 8497802320598563400L;
+	private static final long serialVersionUID = -4628944206386466321L;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "institutionType")
-	@JsonDeserialize(using = InstitutionTypeEnumDeserializer.class)
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "institutionTypeId")
+	@JsonBackReference(value = "institutionType")
 	private InstitutionType institutionType;
 
 	@Column(name = "name", length = 50)

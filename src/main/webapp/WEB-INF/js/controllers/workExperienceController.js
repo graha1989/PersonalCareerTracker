@@ -379,7 +379,7 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
     if ((($scope.workExperience.institutionName != null && $scope.workExperience.institutionName != '') || ($scope.selectedInstitution != null && $scope.selectedInstitution != ''))
             && $scope.workExperience.institutionType != null
             && $scope.workExperience.institutionType != ''
-            && ($scope.workExperience.institutionType == 'FACULTY'
+            && ($scope.workExperience.institutionType == 'Fakultet'
                     ? ($scope.workExperience.universityName != null && $scope.workExperience.universityName != '')
                     : true)
             && $scope.workExperience.institutionCity != null

@@ -30,7 +30,7 @@
 						<tr
 							class="active ng-scope"
 							ng-repeat="institution in allInstitutions">
-							<td>{{ institution.institutionType.title }}</td>
+							<td>{{ institution.institutionType }}</td>
 							<td>{{ institution.name }}</td>
 							<td>{{ institution.university }}</td>
 							<td>{{ institution.city }}</td>
@@ -87,7 +87,7 @@
 							id="inputInstitutionType"
 							name="inputInstitutionType"
 							ng-model="institution.institutionType"
-							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
+							ng-options="institutionType.typeName as institutionType.typeName for institutionType in allInstitutionTypes"
 							ng-change="resetInsitutionData()"
 							required><option value="">{{ resources.institutionPopupLabels.institutionType }}</option></select>
 						<div
@@ -125,7 +125,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group" ng-show="institution.institutionType.name == 'FACULTY'">
+				<div class="form-group" ng-show="institution.institutionType == 'Fakultet'">
 					<label
 						for="inputUniversityName"
 						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.universityName }} <span class="required">*</span>
@@ -139,7 +139,7 @@
 							ng-model="institution.university"
 							placeholder="{{ resources.institutionPopupLabels.universityName }}"
 							ng-maxlength="50"
-							ng-required="institution.institutionType.name == 'FACULTY'" />
+							ng-required="institution.institutionType == 'Fakultet'" />
 						<div
 							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
 							class="universityNameFieldError">
@@ -251,7 +251,7 @@
 							id="inputInstitutionType"
 							name="inputInstitutionType"
 							ng-model="institution.institutionType"
-							ng-options="institutionType.title for institutionType in allInstitutionTypes track by institutionType.name"
+							ng-options="institutionType.typeName as institutionType.typeName for institutionType in allInstitutionTypes"
 							required><option value="">{{ resources.institutionPopupLabels.institutionType }}</option></select>
 						<div
 							ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
@@ -288,7 +288,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group" ng-show="institution.institutionType.name == 'FACULTY'">
+				<div class="form-group" ng-show="institution.institutionType == 'Fakultet'">
 					<label
 						for="inputUniversityName"
 						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.universityName }} <span class="required">*</span>
@@ -302,7 +302,7 @@
 							ng-model="institution.university"
 							placeholder="{{ resources.institutionPopupLabels.universityName }}"
 							ng-maxlength="50"
-							ng-required="institution.institutionType.name == 'FACULTY'" />
+							ng-required="institution.institutionType == 'Fakultet'" />
 						<div
 							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
 							class="universityNameFieldError">

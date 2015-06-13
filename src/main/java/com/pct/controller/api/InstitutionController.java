@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.InstitutionDto;
-import com.pct.domain.enums.InstitutionType;
+import com.pct.domain.InstitutionType;
 import com.pct.service.InstitutionsService;
 import com.pct.validation.InstitutionNotFoundException;
 

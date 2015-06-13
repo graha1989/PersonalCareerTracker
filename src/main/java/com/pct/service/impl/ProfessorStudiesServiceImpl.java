@@ -17,6 +17,7 @@ import com.pct.domain.StudiesThesisType;
 import com.pct.domain.dto.StudiesDto;
 import com.pct.domain.enums.StudyProgram;
 import com.pct.repository.InstitutionRepository;
+import com.pct.repository.InstitutionTypeRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.ProfessorStudiesRepository;
 import com.pct.repository.StudiesThesisTypeRepository;
@@ -30,22 +31,20 @@ import com.pct.validation.StudiesThesisTypeNotFoundException;
 public class ProfessorStudiesServiceImpl implements ProfessorStudiesService {
 
 	private ProfessorStudiesRepository professorStudiesRepository;
-
 	private ProfesorRepository professorRepository;
-
 	private InstitutionRepository institutionRepository;
-
 	private StudiesThesisTypeRepository studiesRepository;
+	private InstitutionTypeRepository institutionTypeRepository;
 	
 	@Autowired
 	public ProfessorStudiesServiceImpl(ProfessorStudiesRepository professorStudiesRepository,
 			ProfesorRepository professorRepository, InstitutionRepository institutionRepository,
-			StudiesThesisTypeRepository studiesRepository) {
-		super();
+			StudiesThesisTypeRepository studiesRepository, InstitutionTypeRepository institutionTypeRepository) {
 		this.professorStudiesRepository = professorStudiesRepository;
 		this.professorRepository = professorRepository;
 		this.institutionRepository = institutionRepository;
 		this.studiesRepository = studiesRepository;
+		this.institutionTypeRepository = institutionTypeRepository;
 	}
 
 	@Override
@@ -111,7 +110,7 @@ public class ProfessorStudiesServiceImpl implements ProfessorStudiesService {
 		institution.setCountry(studiesDto.getFacultyCountry());
 		institution.setName(studiesDto.getFacultyName());
 		institution.setUniversity(studiesDto.getUniversityName());
-		institution.setInstitutionType(studiesDto.getInstitutionType());
+		institution.setInstitutionType(institutionTypeRepository.findByTypeName(studiesDto.getInstitutionType()));
 
 		return institution;
 	}
