@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.Award;
+import com.pct.domain.AwardField;
 import com.pct.domain.Professor;
 import com.pct.domain.dto.AwardDto;
-import com.pct.domain.enums.AwardField;
 import com.pct.domain.enums.AwardType;
+import com.pct.repository.AwardFieldRepository;
 import com.pct.repository.AwardRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.service.AwardService;
@@ -25,14 +26,15 @@ import com.pct.validation.ProfessorNotFoundException;
 public class AwardServiceImpl implements AwardService {
 
 	private AwardRepository awardRepository;
-
 	private ProfesorRepository professorRepository;
+	private AwardFieldRepository awardFieldRepository;
 
 	@Autowired
-	public AwardServiceImpl(AwardRepository awardRepository, ProfesorRepository professorRepository) {
-		super();
+	public AwardServiceImpl(AwardRepository awardRepository, ProfesorRepository professorRepository,
+			AwardFieldRepository awardFieldRepository) {
 		this.awardRepository = awardRepository;
 		this.professorRepository = professorRepository;
+		this.awardFieldRepository = awardFieldRepository;
 	}
 
 	@Override
@@ -59,7 +61,15 @@ public class AwardServiceImpl implements AwardService {
 	@Override
 	@Transactional
 	public List<AwardField> findAllAwardFields() {
-		return new ArrayList<AwardField>(Arrays.asList(AwardField.values()));
+
+		List<AwardField> awardFields = null;
+		try {
+			awardFields = awardFieldRepository.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return awardFields;
 	}
 
 	@Override
@@ -86,7 +96,7 @@ public class AwardServiceImpl implements AwardService {
 		award.setAwardName(awardDto.getAwardName());
 		award.setAwardedBy(awardDto.getAwardedBy());
 		award.setAwardType(awardDto.getAwardType());
-		award.setAwardField(awardDto.getAwardField());
+		award.setAwardField(awardFieldRepository.findByFieldName(awardDto.getAwardField()));
 		award.setDateOfAward(awardDto.getDateOfAward());
 
 		return award;

@@ -10,7 +10,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import com.pct.domain.Award;
-import com.pct.domain.enums.AwardField;
 import com.pct.domain.enums.AwardType;
 
 public class AwardDto implements Serializable {
@@ -32,8 +31,8 @@ public class AwardDto implements Serializable {
 	@NotNull
 	private AwardType awardType;
 	
-	@NotNull
-	private AwardField awardField;
+	@NotEmpty
+	private String awardField;
 	
 	protected Long professorId;
 	
@@ -42,7 +41,7 @@ public class AwardDto implements Serializable {
 	public AwardDto() {
 	}
 
-	public AwardDto(String awardName, String awardedBy, Date dateOfAward, AwardType awardType, AwardField awardField, Long id, Long professorId) {
+	public AwardDto(String awardName, String awardedBy, Date dateOfAward, AwardType awardType, String awardField, Long id, Long professorId) {
 		super();
 		this.awardName = awardName;
 		this.awardedBy = awardedBy;
@@ -58,7 +57,7 @@ public class AwardDto implements Serializable {
 		this.awardedBy = award.getAwardedBy();
 		this.dateOfAward = award.getDateOfAward();
 		this.awardType = award.getAwardType();
-		this.awardField = award.getAwardField();
+		this.awardField = award.getAwardField().getFieldName();
 		this.id = award.getId();
 		this.professorId = award.getProfessor().getId();
 	}
@@ -95,11 +94,11 @@ public class AwardDto implements Serializable {
 		this.awardType = awardType;
 	}
 
-	public AwardField getAwardField() {
+	public String getAwardField() {
 		return awardField;
 	}
 
-	public void setAwardField(AwardField awardField) {
+	public void setAwardField(String awardField) {
 		this.awardField = awardField;
 	}
 

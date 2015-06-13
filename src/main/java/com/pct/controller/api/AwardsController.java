@@ -23,7 +23,7 @@ import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.AwardDto;
 import com.pct.domain.dto.UserDto;
-import com.pct.domain.enums.AwardField;
+import com.pct.domain.AwardField;
 import com.pct.domain.enums.AwardType;
 import com.pct.service.AwardService;
 import com.pct.service.UserService;
@@ -39,7 +39,7 @@ public class AwardsController {
 
 	@Autowired
 	AwardService awardService;
-	
+
 	@Autowired
 	UserService userService;
 
@@ -53,18 +53,19 @@ public class AwardsController {
 	@RequestMapping(value = RequestMappings.LOAD_ALL_PROFESSOR_AWARDS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<AwardDto>> showAllProfessorAwards(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
-		
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
+				.getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-			if(!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId){
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		List<AwardDto> awards = null;
 		try {
 			awards = awardService.findAllAwards(professorId);

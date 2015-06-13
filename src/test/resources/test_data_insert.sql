@@ -75,12 +75,17 @@ INSERT INTO language_experience (professorId, languageId, writing, reading, pron
 	('3', '7', '1', '0', '1'),
 	('3', '15', '0', '0', '1')
 	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), languageId=VALUES(languageId), writing=VALUES(writing), reading=VALUES(reading), pronouncing=VALUES(pronouncing);
+
+INSERT INTO award_field (fieldName) VALUES
+	('Naučna oblast'),
+	('Pedagoška oblast')
+	ON DUPLICATE KEY UPDATE fieldName=VALUES(fieldName);
 	
-INSERT INTO award (awardName, awardedBy, dateOfAward, professorId, awardType, awardField) VALUES
-	('Mileva Marić Anštajn', 'Univerzitet Novi Sad', '2006-09-15', '3', 'PRIZE', 'SCIENTIFIC_FIELD'),
-	('Mihajlo Pupin', 'Univerzitet Novi Sad', '2008-09-15', '3', 'PRIZE', 'SCIENTIFIC_FIELD'),
-	('Dositej Obradović', 'Univerzitet Novi Sad', '2013-09-15', '3', 'PRIZE', 'PEDAGOGICAL_FIELD')
-	ON DUPLICATE KEY UPDATE awardName=VALUES(awardName), awardedBy=VALUES(awardedBy), dateOfAward=VALUES(dateOfAward), professorId=VALUES(professorId), awardType=VALUES(awardType), awardField=VALUES(awardField);
+INSERT INTO award (awardName, awardedBy, dateOfAward, professorId, awardType, awardFieldId) VALUES
+	('Mileva Marić Anštajn', 'Univerzitet Novi Sad', '2006-09-15', '3', 'PRIZE', '1'),
+	('Mihajlo Pupin', 'Univerzitet Novi Sad', '2008-09-15', '3', 'PRIZE', '1'),
+	('Dositej Obradović', 'Univerzitet Novi Sad', '2013-09-15', '3', 'PRIZE', '2')
+	ON DUPLICATE KEY UPDATE awardName=VALUES(awardName), awardedBy=VALUES(awardedBy), dateOfAward=VALUES(dateOfAward), professorId=VALUES(professorId), awardType=VALUES(awardType), awardFieldId=VALUES(awardFieldId);
 
 INSERT INTO project (name, financedBy, projectType) VALUES
 	('XML Projekat', 'Vlada Republike Srbije', 'SCIENTIFIC'),

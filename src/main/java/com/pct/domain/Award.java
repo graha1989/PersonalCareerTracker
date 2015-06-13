@@ -14,7 +14,6 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.pct.domain.enums.AwardField;
 import com.pct.domain.enums.AwardType;
 
 @Entity
@@ -42,8 +41,10 @@ public class Award extends AbstractEntity {
 	@Column(name = "awardType")
 	private AwardType awardType;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "awardField")
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "awardFieldId")
+	@JsonBackReference(value = "awardField")
 	private AwardField awardField;
 
 	public Award() {

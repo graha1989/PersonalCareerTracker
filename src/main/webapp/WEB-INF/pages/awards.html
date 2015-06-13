@@ -27,7 +27,7 @@
 							<td>{{ award.awardName }}</td>
 							<td>{{ award.dateOfAward | date:'dd-MM-yyyy' }}</td>
 							<td>{{ award.awardedBy }}</td>
-							<td>{{ award.awardField.title }}</td>
+							<td>{{ award.awardField }}</td>
 							<td class="delete" ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteAward(award.id, $index)">
@@ -66,7 +66,7 @@
 	</form>
 
 	<script type="text/ng-template" id="editAwardPopup.html">
-		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="award">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" novalidate role="form" ng-model="award">
 			<div class="modal-header">
     			<h3 class="modal-title">{{ resources.text.editAwardPopupTitle }}</h3>
    	 		</div>
@@ -163,7 +163,7 @@
     				<div class="col-sm-6">
 						<select class="ng-binding form-control" id="inputAwardField"
 							name="inputAwardField" ng-model="award.awardField"
-							ng-options="awardField.name as awardField.title for awardField in allAwardFields"
+							ng-options="awardField.fieldName as awardField.fieldName for awardField in allAwardFields"
 							required><option value="">{{
 							resources.awardPopupLabels.awardField }}</option></select>
 							<div
@@ -183,7 +183,7 @@
 	</script>
 
 	<script type="text/ng-template" id="createNewAwardPopup.html">
-		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="award">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" novalidate role="form" ng-model="award">
 			<div class="modal-header">
     			<h3 class="modal-title">{{ resources.text.addAwardPopupTitle }}</h3>
    	 		</div>
@@ -280,7 +280,7 @@
     				<div class="col-sm-6">
 						<select class="ng-binding form-control" id="inputAwardField"
 							name="inputAwardField" ng-model="award.awardField"
-							ng-options="awardField.name as awardField.title for awardField in $parent.allAwardFields"
+							ng-options="awardField.fieldName as awardField.fieldName for awardField in $parent.allAwardFields"
 							required><option value="">{{
 							resources.awardPopupLabels.awardField }}</option></select>
 							<div

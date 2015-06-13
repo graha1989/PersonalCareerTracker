@@ -1,109 +1,119 @@
-app.controller("AwardController", function($scope, $routeParams, $http, $route,
-        $modal, PctService) {
+app
+        .controller(
+                "AwardController",
+                function($scope, $routeParams, $http, $route, $modal,
+                        PctService) {
 
-  $scope.awards = [];
-  $scope.award = {};
-  $scope.noResultsFound = true;
-  $scope.resources = {};
-  $scope.errorMessages = {};
-  
-  $scope.isUser = false;
-  $scope.isAdmin = false;
-  $scope.professorId = '';
+                  $scope.awards = [];
+                  $scope.award = {};
+                  $scope.noResultsFound = true;
+                  $scope.resources = {};
+                  $scope.errorMessages = {};
 
-  $scope.loadResources = function() {
-    var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
-  };
+                  $scope.isUser = false;
+                  $scope.isAdmin = false;
+                  $scope.professorId = '';
 
-  $scope.loadAwards = function(professorId) {
-    return PctService.loadProfessorAwards(professorId).then(function(response) {
-      if (angular.isObject(response) && response.length > 0) {
-        $scope.awards = response;
-        $scope.noResultsFound = false;
-      } else {
-        $scope.noResultsFound = true;
-      }
-    });
-  };
-  
-  $scope.getCurrentUserRole = function() {
-    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
-      $scope.isUser = true;
-    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
-      $scope.isAdmin = true;
-    }
-  };
-  
-  $scope.initUserId = function() {
-    if ($routeParams.professorId != null && $routeParams.professorId != '') {
-      $scope.professorId = $routeParams.professorId;
-    } else {
-      $scope.professorId = document.getElementById('currentUserId').value;
-    }
-  };
+                  $scope.loadResources = function() {
+                    var locale = document.getElementById('localeCode');
+                    $http.get(
+                            'messages/profesorDetails_' + locale.value
+                                    + '.json').success(function(response) {
+                      $scope.resources = angular.fromJson(response);
+                    });
+                    $http.get('messages/errors_' + locale.value + '.json')
+                            .success(
+                                    function(response) {
+                                      $scope.errorMessages = angular
+                                              .fromJson(response);
+                                    });
+                  };
 
-  $scope.init = function() {
-    $scope.initUserId();
-    $scope.loadAwards($scope.professorId);
-    $scope.loadResources();
-    $scope.getCurrentUserRole();
-  };
+                  $scope.loadAwards = function(professorId) {
+                    return PctService.loadProfessorAwards(professorId).then(
+                            function(response) {
+                              if (angular.isObject(response)
+                                      && response.length > 0) {
+                                $scope.awards = response;
+                                $scope.noResultsFound = false;
+                              } else {
+                                $scope.noResultsFound = true;
+                              }
+                            });
+                  };
 
-  $scope.init();
+                  $scope.getCurrentUserRole = function() {
+                    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+                      $scope.isUser = true;
+                    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+                      $scope.isAdmin = true;
+                    }
+                  };
 
-  $scope.goBack = function() {
-    window.history.back();
-  };
+                  $scope.initUserId = function() {
+                    if ($routeParams.professorId != null
+                            && $routeParams.professorId != '') {
+                      $scope.professorId = $routeParams.professorId;
+                    } else {
+                      $scope.professorId = document
+                              .getElementById('currentUserId').value;
+                    }
+                  };
 
-  $scope.deleteAward = function(id, index) {
-    PctService.deleteAward(id, function(data) {
-      if (angular.isObject(data)) {
-        $scope.errorStatus = data.status;
-      } else {
-        $scope.successStatus = "Successfully deleted award.";
-        $scope.awards.splice(index, 1);
-        $scope.loadAwards();
-      }
-    });
-  };
+                  $scope.init = function() {
+                    $scope.initUserId();
+                    $scope.loadAwards($scope.professorId);
+                    $scope.loadResources();
+                    $scope.getCurrentUserRole();
+                  };
 
-  $scope.editAward = function(id) {
-    $modal.open({
-      templateUrl: 'editAwardPopup.html',
-      controller: editAwardController,
-      resolve: {
-        awardId: function() {
-          return id;
-        }
-      }
-    });
-  };
+                  $scope.init();
 
-  $scope.createNewAward = function() {
-    $modal.open({
-      templateUrl: 'createNewAwardPopup.html',
-      controller: createNewAwardController,
-      resolve: {
-        professorId: function() {
-          return $scope.professorId;
-        }
-      }
-    });
-  };
-  
-  $scope.goBack = function() {
-    window.history.back();
-  };
+                  $scope.goBack = function() {
+                    window.history.back();
+                  };
 
-});
+                  $scope.deleteAward = function(id, index) {
+                    PctService.deleteAward(id, function(data) {
+                      if (angular.isObject(data)) {
+                        $scope.errorStatus = data.status;
+                      } else {
+                        $scope.successStatus = "Successfully deleted award.";
+                        $scope.awards.splice(index, 1);
+                        $scope.loadAwards($scope.professorId);
+                      }
+                    });
+                  };
+
+                  $scope.editAward = function(id) {
+                    $modal.open({
+                      templateUrl: 'editAwardPopup.html',
+                      controller: editAwardController,
+                      resolve: {
+                        awardId: function() {
+                          return id;
+                        }
+                      }
+                    });
+                  };
+
+                  $scope.createNewAward = function() {
+                    $modal.open({
+                      templateUrl: 'createNewAwardPopup.html',
+                      controller: createNewAwardController,
+                      resolve: {
+                        professorId: function() {
+                          return $scope.professorId;
+                        }
+                      }
+                    });
+                  };
+
+                  $scope.goBack = function() {
+                    window.history.back();
+                  };
+
+                });
 
 var editAwardController = function($scope, $modalInstance, $routeParams, $http,
         $route, awardId, PctService) {
@@ -161,7 +171,6 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
       if (angular.isObject(data)) {
         $scope.award = data;
         $scope.award.awardType = data.awardType.name;
-        $scope.award.awardField = data.awardField.name;
         $scope.master = angular.copy($scope.award);
         $scope.noResultsFound = false;
       } else {
@@ -206,8 +215,10 @@ var editAwardController = function($scope, $modalInstance, $routeParams, $http,
   };
 
   $scope.isUnchanged = function(award) {
+
     award.dateOfAward = new Date(award.dateOfAward).getTime();
-    return angular.equals(award, $scope.master);
+    return angular.isUndefined(award.awardField)
+            || angular.equals(award, $scope.master);
   };
 
   $scope.cancel = function() {
