@@ -103,7 +103,7 @@ public class SubjectDto implements Serializable {
 		this.institutionCountry = subject.getInstitution().getCountry();
 		this.id = subject.getId();
 		this.subjectName = subject.getName();
-		this.studyProgram = subject.getProgram();
+		this.studyProgram = subject.getStudyProgram().getName();
 		this.studiesThesisType = subject.getStudiesThesisType();
 		this.numberOfTheoreticalLessons = subject.getNumberOfTheoreticalLessons();
 		this.numberOfPracticalLessons = subject.getNumberOfPracticalLessons();

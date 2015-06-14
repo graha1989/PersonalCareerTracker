@@ -179,15 +179,13 @@
 						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.studyProgram }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputProgram"
 							name="inputProgram"
 							ng-model="subject.studyProgram"
-							placeholder="{{ resources.subjectPopupLabels.studyProgram }}"
-							ng-maxlength="50"
-							required />
+							ng-options="studyProgram.name as studyProgram.name for studyProgram in allStudyPrograms"
+							required><option value="">{{ resources.subjectPopupLabels.studyProgram }}</option></select>
 						<div
 							ng-show="form.inputProgram.$dirty && form.inputProgram.$invalid"
 							class="programFieldError">
@@ -497,15 +495,13 @@
 						class="col-sm-4 control-label">{{ resources.subjectPopupLabels.studyProgram }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputProgram"
 							name="inputProgram"
 							ng-model="subject.studyProgram"
-							placeholder="{{ resources.subjectPopupLabels.studyProgram }}"
-							ng-maxlength="50"
-							required />
+							ng-options="studyProgram.name as studyProgram.name for studyProgram in allStudyPrograms"
+							required><option value="">{{ resources.subjectPopupLabels.studyProgram }}</option></select>
 						<div
 							ng-show="form.inputProgram.$dirty && form.inputProgram.$invalid"
 							class="programFieldError">

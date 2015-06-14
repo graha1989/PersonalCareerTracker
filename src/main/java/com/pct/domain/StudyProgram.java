@@ -29,12 +29,19 @@ public class StudyProgram extends AbstractEntity {
 	@JsonIgnore
 	private Set<Studies> studies = new HashSet<Studies>();
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "studyProgram")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "studyProgram")
+	@JsonIgnore
+	private Set<Subject> subjects = new HashSet<Subject>();
+
 	public StudyProgram() {
 	}
 
-	public StudyProgram(String name, Set<Studies> studies) {
+	public StudyProgram(String name, Set<Studies> studies, Set<Subject> subjects) {
 		this.name = name;
 		this.studies = studies;
+		this.subjects = subjects;
 	}
 
 	public String getName() {
@@ -57,4 +64,16 @@ public class StudyProgram extends AbstractEntity {
 		}
 	}
 
+	public Set<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(Set<Subject> subjects) {
+		this.subjects.clear();
+
+		if (subjects != null) {
+			this.subjects.addAll(subjects);
+		}
+	}
+	
 }

@@ -24,7 +24,6 @@ public class TeachingExperienceDto implements Serializable {
 	}
 
 	public TeachingExperienceDto(SubjectDto subjectDto, Long professorId, Long id) {
-		super();
 		this.subjectDto = subjectDto;
 		this.professorId = professorId;
 		this.id = id;
@@ -32,7 +31,7 @@ public class TeachingExperienceDto implements Serializable {
 
 	public TeachingExperienceDto(TeachingExperience teachingExperience) {
 		this.subjectDto.setSubjectName(teachingExperience.getSubject().getName());
-		this.subjectDto.setStudyProgram(teachingExperience.getSubject().getProgram());
+		this.subjectDto.setStudyProgram(teachingExperience.getSubject().getStudyProgram().getName());
 		this.subjectDto.setInstitutionName(teachingExperience.getSubject().getInstitution().getName());
 		this.subjectDto.setUniversityName(teachingExperience.getSubject().getInstitution().getUniversity());
 		this.subjectDto.setInstitutionCity(teachingExperience.getSubject().getInstitution().getCity());

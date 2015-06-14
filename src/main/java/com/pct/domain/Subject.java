@@ -8,12 +8,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -26,8 +29,11 @@ public class Subject extends AbstractEntity {
 	@Column(name = "name", length = 100)
 	private String name;
 
-	@Column(name = "program", length = 50)
-	private String program;
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "studyProgramId")
+	@JsonBackReference(value = "studyProgram")
+	private StudyProgram studyProgram;
 
 	@Column(name = "numberOfTheoreticalLessons")
 	private Integer numberOfTheoreticalLessons;
@@ -61,7 +67,7 @@ public class Subject extends AbstractEntity {
 	@JsonManagedReference(value = "subject")
 	@JsonIgnore
 	private Set<Survey> surveys = new HashSet<Survey>();
-	
+
 	@Nullable
 	@Column(name = "active")
 	private Boolean active;
@@ -69,13 +75,13 @@ public class Subject extends AbstractEntity {
 	public Subject() {
 	}
 
-	public Subject(String name, String program, Integer numberOfTheoreticalLessons, Integer numberOfPracticalLessons,
-			Integer numberOfTeachingLessons, Institution institution, Professor professor,
-			StudiesThesisType studiesThesisType, Set<TeachingExperience> teachingExperiences, Set<Survey> surveys,
-			Boolean active) {
+	public Subject(String name, StudyProgram studyProgram, Integer numberOfTheoreticalLessons,
+			Integer numberOfPracticalLessons, Integer numberOfTeachingLessons, Institution institution,
+			Professor professor, StudiesThesisType studiesThesisType, Set<TeachingExperience> teachingExperiences,
+			Set<Survey> surveys, Boolean active) {
 		super();
 		this.name = name;
-		this.program = program;
+		this.studyProgram = studyProgram;
 		this.numberOfTheoreticalLessons = numberOfTheoreticalLessons;
 		this.numberOfPracticalLessons = numberOfPracticalLessons;
 		this.numberOfTeachingLessons = numberOfTeachingLessons;
@@ -95,12 +101,12 @@ public class Subject extends AbstractEntity {
 		this.name = name;
 	}
 
-	public String getProgram() {
-		return program;
+	public StudyProgram getStudyProgram() {
+		return studyProgram;
 	}
 
-	public void setProgram(String program) {
-		this.program = program;
+	public void setStudyProgram(StudyProgram studyProgram) {
+		this.studyProgram = studyProgram;
 	}
 
 	public Integer getNumberOfTheoreticalLessons() {

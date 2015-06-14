@@ -106,6 +106,7 @@ var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
   $scope.allFacultyDataShown = false;
   $scope.selectedProfessor = [];
   $scope.masterSelectedProfessor = [];
+  $scope.allStudyPrograms = [];
   $scope.professorSelected = false;
 
   $scope.loadResources = function() {
@@ -171,7 +172,19 @@ var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
     });
   };
 
+  $scope.loadAllStudyPrograms = function() {
+    PctService.loadAllStudyPrograms($routeParams, function(data) {
+      if (angular.isObject(data) && data.length > 0) {
+        $scope.allStudyPrograms = data;
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
+  };
+
   $scope.init = function() {
+    $scope.loadAllStudyPrograms();
     $scope.loadAllStudyTypes();
     $scope.loadSelectedSubject(subjectId);
     $scope.status = $routeParams.status;
@@ -266,6 +279,7 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
   $scope.allStudiesThesisTypes = [];
   $scope.selectedProfessor = [];
   $scope.masterSelectedProfessor = [];
+  $scope.allStudyPrograms = [];
   $scope.professorSelected = false;
 
   $scope.loadResources = function() {
@@ -302,7 +316,19 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
     });
   };
 
+  $scope.loadAllStudyPrograms = function() {
+    PctService.loadAllStudyPrograms($routeParams, function(data) {
+      if (angular.isObject(data) && data.length > 0) {
+        $scope.allStudyPrograms = data;
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
+  };
+
   $scope.init = function() {
+    $scope.loadAllStudyPrograms();
     $scope.loadAllStudyTypes();
     $scope.status = $routeParams.status;
     $scope.loadResources();
@@ -418,7 +444,8 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
             && $scope.subject.numberOfTheoreticalLessons != ''
             && $scope.subject.numberOfPracticalLessons != null
             && $scope.subject.numberOfPracticalLessons != ''
-            && $scope.selectedProfessor != null && $scope.selectedProfessor != '') {
+            && $scope.selectedProfessor != null
+            && $scope.selectedProfessor != '') {
       return true;
     } else {
       return false;

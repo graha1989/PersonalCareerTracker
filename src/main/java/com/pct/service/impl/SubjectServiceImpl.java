@@ -16,6 +16,7 @@ import com.pct.domain.dto.SubjectDto;
 import com.pct.repository.InstitutionRepository;
 import com.pct.repository.InstitutionTypeRepository;
 import com.pct.repository.ProfesorRepository;
+import com.pct.repository.StudyProgramRepository;
 import com.pct.repository.SubjectRepository;
 import com.pct.service.SubjectService;
 import com.pct.validation.InstitutionNotFoundException;
@@ -28,14 +29,17 @@ public class SubjectServiceImpl implements SubjectService {
 	private InstitutionRepository institutionRepository;
 	private ProfesorRepository professorRepository;
 	private InstitutionTypeRepository institutionTypeRepository;
+	private StudyProgramRepository studyProgramRepository;
 
 	@Autowired
 	public SubjectServiceImpl(SubjectRepository subjectRepository, InstitutionRepository institutionRepository,
-			ProfesorRepository professorRepository, InstitutionTypeRepository institutionTypeRepository) {
+			ProfesorRepository professorRepository, InstitutionTypeRepository institutionTypeRepository,
+			StudyProgramRepository studyProgramRepository) {
 		this.subjectRepository = subjectRepository;
 		this.institutionRepository = institutionRepository;
 		this.professorRepository = professorRepository;
 		this.institutionTypeRepository = institutionTypeRepository;
+		this.studyProgramRepository = studyProgramRepository;
 	}
 
 	@Override
@@ -137,7 +141,7 @@ public class SubjectServiceImpl implements SubjectService {
 		subject.setInstitution(institution);
 		subject.setProfessor(professor);
 		subject.setName(subjectDto.getSubjectName());
-		subject.setProgram(subjectDto.getStudyProgram());
+		subject.setStudyProgram(studyProgramRepository.findByName(subjectDto.getStudyProgram()));
 		subject.setStudiesThesisType(subjectDto.getStudiesThesisType());
 		subject.setNumberOfTeachingLessons(subjectDto.getNumberOfTeachingLessons());
 		subject.setNumberOfTheoreticalLessons(subjectDto.getNumberOfTheoreticalLessons());
