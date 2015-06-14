@@ -308,6 +308,7 @@
 							typeahead="institution as institution.name for institution in getInstitutions($viewValue, workExperience.institutionType) | limitTo:8"
 							typeahead-on-select="onSelectInstitution()"
 							placeholder="{{ resources.workExperiencePopupLabels.institutionName }}"
+							tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 							autocomplete="off"
 							required />
 						<div

@@ -61,7 +61,8 @@
         "introText":"Spisak studenata registrovanih u sistemu za praćenje lične karijere",
         "editStudentPopupTitle":"Izmena podataka o studentu",
         "newStudentPopupTitle":"Unos novog studenta",
-        "sortBy": "Sortiraj po..."
+        "sortBy": "Sortiraj po...",
+        "startTypingTooltip": "Počnite sa kucanjem"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
@@ -109,7 +110,9 @@
 	 	"publications": "Publikacije",
 	 	"publicationTypes": {
         	"personalPublications": "Lične publikacije",
-	        "internationalPublications": "Međunarodne publikacije"
+	        "internationalPublications": "Međunarodne publikacije",
+	        "personalPublicationsTooltip": "Publikacije u kojima je trenutni korisnik jedan od autora",
+	        "internationalPublicationsTooltip": "Publikacije koje citiraju trenutnog korisnika"
 	    }
     },
     "adminMenuLabels": {

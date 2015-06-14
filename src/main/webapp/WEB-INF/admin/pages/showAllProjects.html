@@ -198,6 +198,7 @@
 								typeahead="person as person.name + ' ' + person.surname for person in getAllPotentalLeaders($viewValue) | limitTo:8"
 								typeahead-on-select="onSelectPerson()"
 								placeholder="{{ resources.projectPopupLabels.newProjectLeaderNameAndSurname }}"
+								tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 								autocomplete="off"
 								ng-disabled="isExistingPerson"
 								ng-required="projectLeadersArray.length == 0" /> 
@@ -374,6 +375,7 @@
 								typeahead="person as person.name + ' ' + person.surname for person in getAllPotentalLeaders($viewValue) | limitTo:8"
 								typeahead-on-select="onSelectPerson()"
 								placeholder="{{ resources.projectPopupLabels.newProjectLeaderNameAndSurname }}"
+								tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 								autocomplete="off"
 								ng-disabled="isExistingPerson"
 								ng-required="projectLeadersArray.length == 0" /> 

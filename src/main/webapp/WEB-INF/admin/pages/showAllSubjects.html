@@ -313,6 +313,7 @@
 							typeahead="professor as professor.name + ' ' + professor.surname for professor in getProfessors($viewValue) | limitTo:8"
 							typeahead-on-select="onSelectProfessor()"
 							typeahead-loading="loadingProfessor"
+							tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 							autocomplete="off"
 							required /> <span
 							ng-show="loadingProfessor"
@@ -374,6 +375,7 @@
 							typeahead="faculty as faculty.name for faculty in getFaculties($viewValue) | limitTo:8"
 							typeahead-on-select="onSelectFaculty()"
 							placeholder="{{ resources.subjectPopupLabels.facultyName }}"
+							tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 							autocomplete="off"
 							required /> 
 						<div
@@ -629,6 +631,7 @@
 							typeahead="professor as professor.name + ' ' + professor.surname for professor in getProfessors($viewValue) | limitTo:8"
 							typeahead-on-select="onSelectProfessor()"
 							typeahead-loading="loadingProfessor"
+							tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 							autocomplete="off"
 							required /> <span
 							ng-show="loadingProfessor"

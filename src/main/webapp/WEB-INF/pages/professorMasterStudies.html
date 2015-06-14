@@ -276,6 +276,7 @@
 							typeahead="faculty as faculty.name for faculty in getFaculties($viewValue) | limitTo:8"
 							typeahead-on-select="onSelectFaculty()"
 							placeholder="{{ resources.masterStudiesPopupLabels.facultyName }}"
+							tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 							autocomplete="off"
 							required />
 						<div

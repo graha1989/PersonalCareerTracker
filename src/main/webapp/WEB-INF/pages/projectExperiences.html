@@ -280,6 +280,7 @@
 							typeahead="project as project.name for project in getProjects($viewValue) | limitTo:8"
 							typeahead-on-select="onSelectProject()"
 							placeholder="{{ resources.projectPopupLabels.projectName }}"
+							tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 							autocomplete="off"
 							required />
 						<div
