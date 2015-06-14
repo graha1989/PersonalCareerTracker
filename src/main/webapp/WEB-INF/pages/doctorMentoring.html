@@ -130,7 +130,6 @@
 						typeahead="student as student.transcriptNumber + ' ' + student.name + ' ' + student.surname for student in getStudents($viewValue) | limitTo:8"
 						typeahead-on-select="onSelectStudent($parent.selectedStudent)"
 						typeahead-loading="loadingStudents"
-						tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 						autocomplete="off"
 						required /> <span
 						ng-show="loadingStudents"
@@ -161,7 +160,6 @@
 						typeahead="commissionPresident as commissionPresident.name + ' ' + commissionPresident.surname for commissionPresident in getCommissionPresident($viewValue) | limitTo:8"
 						typeahead-on-select="onSelectCommisionPresident($parent.selectedCommissionPresident)"
 						typeahead-loading="loadingCommisionPresident"
-						tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 						autocomplete="off"
 						required /> <span
 						ng-show="loadingCommisionPresident"
@@ -192,7 +190,6 @@
 						typeahead="commissionMember as commissionMember.name + ' ' + commissionMember.surname for commissionMember in getCommissionMember($viewValue) | limitTo:8"
 						typeahead-on-select="onSelectCommisionMember($parent.selectedCommissionMember)"
 						typeahead-loading="loadingCommissionMember"
-						tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 						autocomplete="off"
 						required /> <span
 						ng-show="loadingCommissionMember"
@@ -372,7 +369,6 @@
 						typeahead-on-select="onSelectStudent()"
 						placeholder="{{ resources.thesisPopupLabels.student }}"
 						typeahead-loading="loadingStudents"
-						tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 						autocomplete="off" 
 						required /> <span
 						ng-show="loadingStudents"
@@ -404,7 +400,6 @@
 						typeahead-on-select="onSelectCommissionPresident()"
 						placeholder="{{ resources.thesisPopupLabels.commissionPresident }}"
 						typeahead-loading="loadingCommisionPresident"
-						tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 						autocomplete="off"
 						required /> <span
 						ng-show="loadingCommisionPresident"
@@ -436,7 +431,6 @@
 						typeahead-on-select="onSelectCommissionMember()"
 						placeholder="{{ resources.thesisPopupLabels.commissionMember }}"
 						typeahead-loading="loadingCommissionMember"
-						tooltip-placement="bottom" tooltip="{{ resources.text.startTypingTooltip }}"
 						autocomplete="off"
 						required /> <span
 						ng-show="loadingCommissionMember"
