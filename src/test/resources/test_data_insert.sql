@@ -212,9 +212,9 @@ INSERT INTO subject (name, studyProgramId, numberOfTheoreticalLessons, numberOfP
 	('Razvoj zasnovan na komponentama', '1', '2', '1', '2', '1', '3', '2', true)
 	ON DUPLICATE KEY UPDATE name=VALUES(name), studyProgramId=VALUES(studyProgramId), numberOfTheoreticalLessons=VALUES(numberOfTheoreticalLessons), numberOfPracticalLessons=VALUES(numberOfPracticalLessons), numberOfTeachingLessons=VALUES(numberOfTeachingLessons), institutionId=VALUES(institutionId), professorId=VALUES(professorId), studiesThesisTypeId=VALUES(studiesThesisTypeId), active=VALUES(active);
 	
-INSERT INTO teaching_experience (subjectId, professorId) VALUES
-	('1', '3')
-	ON DUPLICATE KEY UPDATE subjectId=VALUES(subjectId), professorId=VALUES(professorId);
+INSERT INTO teaching_experience (subjectId, professorId, teachingStartDate, teachingEndDate, seminarOrTeachingAbroad) VALUES
+	('1', '3', '2012-04-14 00:00:00', '2014-08-04 00:00:00', false)
+	ON DUPLICATE KEY UPDATE subjectId=VALUES(subjectId), professorId=VALUES(professorId), teachingStartDate=VALUES(teachingStartDate), teachingEndDate=VALUES(teachingEndDate), seminarOrTeachingAbroad=VALUES(seminarOrTeachingAbroad);
 	
 INSERT INTO survey (professorId, subjectId, academicYear, averageGrade, numberOfStudents) VALUES
 	('3', '1', '2011/2012', '8.89', '151'),

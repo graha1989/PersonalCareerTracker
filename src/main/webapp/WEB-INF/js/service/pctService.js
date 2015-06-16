@@ -326,11 +326,12 @@ app.factory("PctService", [
             url: 'api/specialization?id=' + id
           }).success(callback).error(callback);
         },
-        loadTeachingExperiences: function(professorId) {
+        loadTeachingExperiences: function(professorId, seminarOrTeachingAbroad) {
           var deferred = $q.defer();
           $http.get("api/teachingExperiences/allTeachingExperiences", {
             params: {
-              professorId: professorId
+              professorId: professorId,
+              seminarOrTeachingAbroad: seminarOrTeachingAbroad
             }
           }).success(function(response) {
             deferred.resolve(response);

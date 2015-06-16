@@ -3,7 +3,6 @@ package com.pct.domain.dto;
 import java.io.Serializable;
 
 import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -50,21 +49,21 @@ public class SubjectDto implements Serializable {
 	@SafeHtml
 	private String subjectName;
 
-	@NotEmpty
+	@Nullable
 	@Length(max = 50)
 	@SafeHtml
 	private String studyProgram;
 
-	@NotNull
+	@Nullable
 	private StudiesThesisType studiesThesisType;
 
-	@NotNull
+	@Nullable
 	private Integer numberOfTheoreticalLessons;
 
-	@NotNull
+	@Nullable
 	private Integer numberOfPracticalLessons;
 
-	@NotNull
+	@Nullable
 	private Integer numberOfTeachingLessons;
 
 	@Nullable
@@ -80,7 +79,6 @@ public class SubjectDto implements Serializable {
 			Long id, String subjectName, String studyProgram, StudiesThesisType studiesThesisType,
 			Integer numberOfTheoreticalLessons, Integer numberOfPracticalLessons, Integer numberOfTeachingLessons,
 			Long institutionId, Long professorId) {
-		super();
 		this.institutionName = institutionName;
 		this.universityName = universityName;
 		this.institutionCity = institutionCity;

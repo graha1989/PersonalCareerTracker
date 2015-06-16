@@ -35,13 +35,13 @@ public class TeachingExperienceServiceImpl implements TeachingExperienceService 
 
 	@Override
 	@Transactional
-	public List<TeachingExperienceDto> findAllTeachingExperiences(Long professorId)
+	public List<TeachingExperienceDto> findAllTeachingExperiences(Long professorId, Boolean seminarOrTeachingAbroad)
 			throws TeachingExperienceNotFoundException {
 
 		List<TeachingExperienceDto> teachingExperienceDtos = new ArrayList<TeachingExperienceDto>();
 		try {
 			List<TeachingExperience> teachingExperiences = teachingExperienceRepository
-					.findAllTeachingExperiences(professorId);
+					.findAllTeachingExperiences(professorId, seminarOrTeachingAbroad);
 			for (TeachingExperience e : teachingExperiences) {
 				TeachingExperienceDto teachingExperienceDto = new TeachingExperienceDto(e);
 				teachingExperienceDtos.add(teachingExperienceDto);
@@ -104,6 +104,9 @@ public class TeachingExperienceServiceImpl implements TeachingExperienceService 
 			teachingExperience = teachingExperienceRepository.findOne(teachingExperienceDto.getId());
 		}
 		teachingExperience.setSubject(subject);
+		teachingExperience.setTeachingStartDate(teachingExperienceDto.getTeachingStartDate());
+		teachingExperience.setTeachingEndDate(teachingExperienceDto.getTeachingEndDate());
+		teachingExperience.setSeminarOrTeachingAbroad(teachingExperienceDto.getSeminarOrTeachingAbroad());
 
 		return teachingExperience;
 	}

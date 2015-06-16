@@ -51,7 +51,8 @@ public class TeachingExperienceController {
 
 	@RequestMapping(value = RequestMappings.LOAD_ALL_TEACHING_EXPERIENCES, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<TeachingExperienceDto>> showAllProfessorTeachingExperiences(
-			@RequestParam(value = "professorId", required = true) Long professorId) {
+			@RequestParam(value = "professorId", required = true) Long professorId,
+			@RequestParam(value = "seminarOrTeachingAbroad", required = true) Boolean seminarOrTeachingAbroad) {
 
 		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
 				.getAuthorities();
@@ -67,7 +68,7 @@ public class TeachingExperienceController {
 
 		List<TeachingExperienceDto> experiences = null;
 		try {
-			experiences = teachingExperienceService.findAllTeachingExperiences(professorId);
+			experiences = teachingExperienceService.findAllTeachingExperiences(professorId, seminarOrTeachingAbroad);
 		} catch (TeachingExperienceNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -9,7 +9,7 @@ import com.pct.validation.TeachingExperienceNotFoundException;
 
 public interface TeachingExperienceService {
 	
-	List<TeachingExperienceDto> findAllTeachingExperiences(Long professorId) throws TeachingExperienceNotFoundException;
+	List<TeachingExperienceDto> findAllTeachingExperiences(Long professorId, Boolean seminarOrTeachingAbroad) throws TeachingExperienceNotFoundException;
 
 	TeachingExperienceDto findTeachingExperienceById(Long id) throws TeachingExperienceNotFoundException;
 

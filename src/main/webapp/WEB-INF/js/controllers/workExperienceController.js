@@ -118,7 +118,6 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
 
   $scope.workExperience = {};
   $scope.master = {};
-  $scope.selectedInstitution = [];
   $scope.allInstitutionDataShown = false;
 
   $scope.patterns = {

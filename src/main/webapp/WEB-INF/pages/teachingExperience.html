@@ -1,87 +1,313 @@
 <div>
 
-	<form name="form" id="showProfessorTeachingExperienceForm" novalidate
-		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
-		ng-model="teachingExperience">
+	<form name="form" id="showProfessorTeachingExperienceForm" novalidate class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form" ng-model="teachingExperience">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{
-				resources.text.teachingExperiencesTitle }}</h3>
+			<h3 class="modal-title">{{ resources.text.teachingExperiencesTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
 
-				<table ng-show="teachingExperiences != []"
-					class="table table-condensed table-striped table-hover"
-					cellspacing="0" cellpadding="0">
+				<table ng-show="teachingExperiences != []" class="table table-condensed table-striped table-hover" cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
-							<td>{{ resources.teachingExperienceTableLabels.subjectName
-								}}</td>
-							<td>{{ resources.teachingExperienceTableLabels.studyProgram
-								}}</td>
-							<td>{{ resources.teachingExperienceTableLabels.facultyName
-								}}</td>
-							<td>{{
-								resources.teachingExperienceTableLabels.universityName }}</td>
-							<td>{{ resources.teachingExperienceTableLabels.facultyCity
-								}}</td>
+							<td>{{ resources.teachingExperienceTableLabels.subjectName }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.studyProgram }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.facultyName }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.universityName }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.facultyCity }}</td>
 							<td>{{ resources.teachingExperienceTableLabels.studyType }}</td>
-							<td>{{ resources.teachingExperienceTableLabels.lessonsNumber
-								}}</td>
-							<td ng-show="isUser" colspan="2"></td>
-							<td ng-show="isAdmin" colspan="1"></td>
+							<td>{{ resources.teachingExperienceTableLabels.lessonsNumber }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.teachingStartDate }}</td>
+							<td>{{ resources.teachingExperienceTableLabels.teachingEndDate }}</td>
+							<td ng-show="isUser" colspan="3"></td>
+							<td ng-show="isAdmin" colspan="2"></td>
 						</tr>
-						<tr class="active ng-scope"
-							ng-repeat="teachingExperience in teachingExperiences">
+						<tr class="active ng-scope" ng-repeat="teachingExperience in teachingExperiences">
 							<td>{{ teachingExperience.subjectDto.subjectName }}</td>
 							<td>{{ teachingExperience.subjectDto.studyProgram }}</td>
 							<td>{{ teachingExperience.subjectDto.institutionName }}</td>
 							<td>{{ teachingExperience.subjectDto.universityName }}</td>
 							<td>{{ teachingExperience.subjectDto.institutionCity }}</td>
-							<td>{{ teachingExperience.subjectDto.studiesThesisType.type
-								}}</td>
-							<td>{{ teachingExperience.subjectDto.numberOfTeachingLessons
-								}} + {{ teachingExperience.subjectDto.numberOfTheoreticalLessons
-								}} + {{ teachingExperience.subjectDto.numberOfPracticalLessons
-								}}</td>
-							<td class="delete" ng-show="isUser"><button
-									class="btn btn-link btn-xs"
-									ng-click="deleteTeachingExperience(teachingExperience.id, $index)">
-									<span class="glyphicon glyphicon-trash"></span> {{
-									resources.buttons.teachingExperienceButtons.delete }}
+							<td>{{ teachingExperience.subjectDto.studiesThesisType.type }}</td>
+							<td>{{ teachingExperience.subjectDto.numberOfTeachingLessons }} + {{ teachingExperience.subjectDto.numberOfTheoreticalLessons }} + {{ teachingExperience.subjectDto.numberOfPracticalLessons }}</td>
+							<td>{{ teachingExperience.teachingStartDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ teachingExperience.teachingEndDate | date:'dd-MM-yyyy' }}</td>
+							<td class="delete" ng-show="isUser"><button class="btn btn-link btn-xs" ng-click="deleteTeachingExperience(teachingExperience.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.teachingExperienceButtons.delete }}
 								</button></td>
-							<td class="showSurveys"><button class="btn btn-link btn-xs"
-									ng-click="showSurveysForSubject(teachingExperience.professorId, teachingExperience.subjectDto.id)">
-									<span class="glyphicon glyphicon-list-alt"></span> {{
-									resources.buttons.teachingExperienceButtons.survey }}
+							<td class="edit"><button class="btn btn-link btn-xs" ng-click="editTeachingExperience(teachingExperience.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.teachingExperienceButtons.edit }}
+								</button></td>
+							<td class="showSurveys"><button class="btn btn-link btn-xs" ng-click="showSurveysForSubject(teachingExperience.professorId, teachingExperience.subjectDto.id)">
+									<span class="glyphicon glyphicon-list-alt"></span> {{ resources.buttons.teachingExperienceButtons.survey }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td ng-show="isUser" colspan="10">{{
-								errorMessages.error.emptyTable }}</td>
-							<td ng-show="isAdmin" colspan="9">{{
-								errorMessages.error.emptyTable }}</td>
+							<td ng-show="isUser" colspan="11">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isAdmin" colspan="10">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
 			</fieldset>
 		</div>
 		<div class="modal-footer action">
-			<button id="addNewButton" class="btn btn-success btn-sm"
-				ng-click="createNewTeachingExperience()" ng-show="isUser">
-				<span class="glyphicon glyphicon-plus"></span> {{
-				resources.buttons.teachingExperienceButtons.add }}
+			<button id="addNewButton" class="btn btn-success btn-sm" ng-click="createNewTeachingExperience()" ng-show="isUser">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.teachingExperienceButtons.add }}
 			</button>
 			<button id="cancel_button" class="btn btn-sm" ng-click="goBack()">
-				<span class="glyphicon glyphicon-arrow-left"></span> {{
-				resources.form.back }}
+				<span class="glyphicon glyphicon-arrow-left"></span> {{ resources.form.back }}
 			</button>
 		</div>
 	</form>
+	
+	<script type="text/ng-template" id="editTeachingExperiencePopup.html">
+		<form
+			name="form"
+			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+			role="form"
+			novalidate
+			ng-model="teachingExperience">
+			<div class="modal-header">
+				<h3 class="modal-title">{{ resources.text.createNewTeachingExperiencePopupTitle }}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label
+						for="inputSubjectName"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.subjectName }}
+					</label>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<input
+								type="text"
+								class="ng-binding form-control"
+								id="inputSubjectName"
+								name="inputSubjectName"
+								ng-model="teachingExperience.subjectDto.subjectName"
+								ng-disabled="true" />
+							<span class="input-group-addon"> <span
+								class="glyphicon glyphicon-expand"
+								ng-click="expandSubjectData()"
+								ng-show="!allSubjectDataShown"></span> <span
+								class="glyphicon glyphicon-collapse-down"
+								ng-click="collapseSubjectData()"
+								ng-show="allSubjectDataShown"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-show="allSubjectDataShown">
+					<label
+						for="inputProgram"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.studyProgram }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputProgram"
+							name="inputProgram"
+							ng-model="teachingExperience.subjectDto.studyProgram"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allSubjectDataShown">
+					<label
+						for="inputFacultyName"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyName }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputFacultyName"
+							name="inputFacultyName"
+							ng-model="teachingExperience.subjectDto.institutionName"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allSubjectDataShown">
+					<label
+						for="inputUniversityName"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.universityName }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputUniversityName"
+							name="inputUniversityName"
+							ng-model="teachingExperience.subjectDto.universityName"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allSubjectDataShown">
+					<label
+						for="inputFacultyCity"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyCity }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputFacultyCity"
+							name="inputFacultyCity"
+							ng-model="teachingExperience.subjectDto.institutionCity"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allSubjectDataShown">
+					<label
+						for="inputFacultyCountry"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyCountry }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputFacultyCountry"
+							name="inputFacultyCountry"
+							ng-model="teachingExperience.subjectDto.institutionCountry"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allSubjectDataShown">
+					<label
+						for="inputStudyType"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.studyType }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputStudyType"
+							name="inputStudyType"
+							ng-model="teachingExperience.subjectDto.studiesThesisType.type"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allSubjectDataShown">
+					<label
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.numberOfLessons }}	
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNumberOfTeachingLessons"
+							name="inputNumberOfTeachingLessons"
+							ng-model="teachingExperience.subjectDto.numberOfTeachingLessons"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allSubjectDataShown">
+					<label
+						class="col-sm-4 control-label"></label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNumberOfTheoreticalLessons"
+							name="inputNumberOfTheoreticalLessons"
+							ng-model="teachingExperience.subjectDto.numberOfTheoreticalLessons"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allSubjectDataShown">
+					<label
+						class="col-sm-4 control-label"></label>
+					<div class="col-sm-6">
+						<input
+							type="number"
+							class="form-control"
+							id="inputNumberOfPracticalLessons"
+							name="inputNumberOfPracticalLessons"
+							ng-model="teachingExperience.subjectDto.numberOfPracticalLessons"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputTeachingStartDate"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.teachingStartDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputTeachingStartDate"
+								name="inputTeachingStartDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputTeachingStartDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="teachingExperience.teachingStartDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openTeachingStartDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputTeachingStartDate.$dirty && form.inputTeachingStartDate.$invalid"
+							class="teachingStartDateFieldError">
+							<span
+								ng-show="form.inputTeachingStartDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputTeachingEndDate"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.teachingEndDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputTeachingEndDate"
+								name="inputTeachingEndDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputTeachingEndDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="teachingExperience.teachingEndDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openTeachingEndDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputTeachingEndDate.$dirty && form.inputTeachingEndDate.$invalid"
+							class="teachingEndDateFieldError">
+							<span
+								ng-show="form.inputTeachingEndDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer action">
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="form.$invalid || isUnchanged(teachingExperience)" ng-click="saveTeachingExperience()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.teachingExperienceButtons.edit }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.teachingExperienceButtons.close }}</button>
+  			</div>
+		</form>
+	</script>
 
-	<script type="text/ng-template"
-		id="createNewTeachingExperiencePopup.html">
+	<script type="text/ng-template" id="createNewTeachingExperiencePopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
@@ -366,6 +592,78 @@
 						</div>
 					</div>
 				</div>
+				<div class="form-group">
+					<label
+						for="inputTeachingStartDate"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.teachingStartDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputTeachingStartDate"
+								name="inputTeachingStartDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputTeachingStartDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="teachingExperience.teachingStartDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openTeachingStartDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputTeachingStartDate.$dirty && form.inputTeachingStartDate.$invalid"
+							class="teachingStartDateFieldError">
+							<span
+								ng-show="form.inputTeachingStartDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputTeachingEndDate"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.teachingEndDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputTeachingEndDate"
+								name="inputTeachingEndDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputTeachingEndDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="teachingExperience.teachingEndDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openTeachingEndDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputTeachingEndDate.$dirty && form.inputTeachingEndDate.$invalid"
+							class="teachingEndDateFieldError">
+							<span
+								ng-show="form.inputTeachingEndDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer action">
 		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="!validateForm()" ng-click="saveNewTeachingExperience()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.teachingExperienceButtons.save }}</button>
@@ -373,5 +671,5 @@
   			</div>
 		</form>
 	</script>
-
+	
 </div>

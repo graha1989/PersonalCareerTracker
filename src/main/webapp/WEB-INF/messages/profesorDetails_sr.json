@@ -487,7 +487,9 @@
         "facultyCity": "Grad",
         "facultyCountry": "Država",
         "studyType": "Stepen studija",
-        "lessonsNumber": "Fond časova"
+        "lessonsNumber": "Fond časova",
+        "teachingStartDate": "Početak",
+        "teachingEndDate": "Kraj"
     },
     "workExperiencePopupLabels": {
     	"institutionType": "Tip ustanove",
@@ -533,7 +535,9 @@
         "numberOfLessons": "Fond časova",
         "teachingLessons": "Predavanja",
         "practicalLessons": "Praktične vežbe",
-        "theoreticalLessons": "Teorijske vežbe"
+        "theoreticalLessons": "Teorijske vežbe",
+        "teachingStartDate": "Početak",
+        "teachingEndDate": "Kraj"
     },
     "bachelorStudiesPopupLabels": {
     	"facultyName": "Naziv fakulteta",

@@ -25,7 +25,7 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
   };
 
   $scope.loadTeachingExperiences = function(professorId) {
-    return PctService.loadTeachingExperiences(professorId).then(
+    return PctService.loadTeachingExperiences(professorId, false).then(
             function(response) {
               if (angular.isObject(response) && response.length > 0) {
                 $scope.teachingExperiences = response;
@@ -63,6 +63,21 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
   
   $scope.goBack = function() {
     window.history.back();
+  };
+  
+  $scope.editTeachingExperience = function(id) {
+    $modal.open({
+      templateUrl: 'editTeachingExperiencePopup.html',
+      controller: editTeachingExperiencePopupController,
+      resolve: {
+        teachingExperienceId: function() {
+          return id;
+        },
+        professorId: function() {
+          return $scope.professorId;
+        }
+      }
+    });
   };
 
   $scope.createNewTeachingExperience = function() {
@@ -108,6 +123,123 @@ app.controller("TeachingExperienceController", function($scope, $routeParams,
 
 });
 
+var editTeachingExperiencePopupController = function($scope, $modalInstance,
+        $routeParams, $http, $route, $templateCache, PctService,
+        professorId, teachingExperienceId) {
+  
+  $scope.teachingExperience = {};
+  $scope.master = {};
+  $scope.allSubjectDataShown = false;
+
+  $scope.patterns = {
+    onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
+    onlyNumbers: /^[0-9 ]*$/
+  };
+  
+
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
+  /* Date picker functions for start date */
+  $scope.openTeachingStartDate = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.inputTeachingStartDateOpened = true;
+  };
+
+  /* Date picker functions for end date */
+  $scope.openTeachingEndDate = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.inputTeachingEndDateOpened = true;
+  };
+  
+  $scope.loadSelectedTeachingExperience = function(id) {
+    PctService.loadSelectedTeachingExperience(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.teachingExperience = data;
+        $scope.teachingExperience.teachingStartDate = new Date(data.teachingStartDate);
+        $scope.teachingExperience.teachingEndDate = new Date(data.teachingEndDate);
+        $scope.master = angular.copy($scope.teachingExperience);
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
+  };
+
+  $scope.loadResources = function() {
+    var locale = document.getElementById('localeCode');
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
+            function(response) {
+              $scope.resources = angular.fromJson(response);
+            });
+    $http.get('messages/errors_' + locale.value + '.json').success(
+            function(response) {
+              $scope.errorMessages = angular.fromJson(response);
+            });
+  };
+
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
+
+  $scope.init = function() {
+    $scope.loadSelectedTeachingExperience(teachingExperienceId);
+    $scope.status = $routeParams.status;
+    $scope.loadResources();
+  };
+
+  $scope.init();
+  
+  $scope.expandSubjectData = function() {
+    $scope.allSubjectDataShown = true;
+  };
+
+  $scope.collapseSubjectData = function() {
+    $scope.allSubjectDataShown = false;
+  };
+
+  $scope.saveTeachingExperience = function() {
+    $http({
+      method: 'POST',
+      url: "api/teachingExperiences",
+      data: $scope.teachingExperience,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).success(function(data, status) {
+      $("html, body").animate({
+        scrollTop: 0
+      }, "slow");
+      $modalInstance.close();
+      $route.reload();
+    }).error(function(data, status) {
+      if (angular.isObject(data.fieldErrors)) {
+        $scope.fieldErrors = angular.fromJson(data.fieldErrors);
+      }
+      $scope.status = status;
+      $("html, body").animate({
+        scrollTop: 0
+      }, "slow");
+    });
+  };
+  
+  $scope.isUnchanged = function(teachingExperience) {
+    return angular.equals(teachingExperience, $scope.master);
+  };
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
+
+};
+
 var createTeachingExperiencePopupController = function($scope, $modalInstance,
         $routeParams, $http, $route, $templateCache, PctService,
         teachingExperiences, professorId) {
@@ -120,6 +252,27 @@ var createTeachingExperiencePopupController = function($scope, $modalInstance,
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
+  };
+  
+
+  $scope.dateOptions = {
+    "starting-day": "1"
+  };
+
+  /* Date picker functions for start date */
+  $scope.openTeachingStartDate = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.inputTeachingStartDateOpened = true;
+  };
+
+  /* Date picker functions for end date */
+  $scope.openTeachingEndDate = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.inputTeachingEndDateOpened = true;
   };
 
   $scope.loadResources = function() {
@@ -141,6 +294,12 @@ var createTeachingExperiencePopupController = function($scope, $modalInstance,
     }
     return subjectsIdsArray;
   };
+  
+  $scope.setMaxDate = function() {
+    $scope.maxDate = new Date();
+  };
+
+  $scope.setMaxDate();
 
   $scope.init = function() {
     $scope.status = $routeParams.status;
@@ -216,6 +375,7 @@ var createTeachingExperiencePopupController = function($scope, $modalInstance,
       $scope.teachingExperience.subjectDto.subjectName = $scope.selectedSubject;
     }
     $scope.teachingExperience.professorId = professorId;
+    $scope.teachingExperience.seminarOrTeachingAbroad = false;
     $http({
       method: 'POST',
       url: "api/teachingExperiences",
@@ -245,7 +405,11 @@ var createTeachingExperiencePopupController = function($scope, $modalInstance,
   };
 
   $scope.validateForm = function() {
-    if ($scope.isExistingSubject) {
+    if ($scope.isExistingSubject
+            && $scope.teachingExperience.teachingStartDate != null
+            && $scope.teachingExperience.teachingStartDate != ''
+            && $scope.teachingExperience.teachingEndDate != null
+            && $scope.teachingExperience.teachingEndDate != '') {
       return true;
     } else {
       return false;

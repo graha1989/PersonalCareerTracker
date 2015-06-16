@@ -1,6 +1,7 @@
 package com.pct.domain.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
@@ -20,13 +21,26 @@ public class TeachingExperienceDto implements Serializable {
 	@Nullable
 	protected Long id;
 
+	@NotNull
+	private Date teachingStartDate;
+
+	@Nullable
+	private Date teachingEndDate;
+
+	@NotNull
+	private Boolean seminarOrTeachingAbroad;
+
 	public TeachingExperienceDto() {
 	}
-
-	public TeachingExperienceDto(SubjectDto subjectDto, Long professorId, Long id) {
+	
+	public TeachingExperienceDto(SubjectDto subjectDto, Long professorId, Long id, Date teachingStartDate,
+			Date teachingEndDate, Boolean seminarOrTeachingAbroad) {
 		this.subjectDto = subjectDto;
 		this.professorId = professorId;
 		this.id = id;
+		this.teachingStartDate = teachingStartDate;
+		this.teachingEndDate = teachingEndDate;
+		this.seminarOrTeachingAbroad = seminarOrTeachingAbroad;
 	}
 
 	public TeachingExperienceDto(TeachingExperience teachingExperience) {
@@ -44,6 +58,9 @@ public class TeachingExperienceDto implements Serializable {
 		this.subjectDto.setId(teachingExperience.getSubject().getId());
 		this.professorId = teachingExperience.getProfessor().getId();
 		this.id = teachingExperience.getId();
+		this.teachingStartDate = teachingExperience.getTeachingStartDate();
+		this.teachingEndDate = teachingExperience.getTeachingEndDate();
+		this.seminarOrTeachingAbroad = teachingExperience.getSeminarOrTeachingAbroad();
 	}
 
 	public SubjectDto getSubjectDto() {
@@ -68,6 +85,30 @@ public class TeachingExperienceDto implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Date getTeachingStartDate() {
+		return teachingStartDate;
+	}
+
+	public void setTeachingStartDate(Date teachingStartDate) {
+		this.teachingStartDate = teachingStartDate;
+	}
+
+	public Date getTeachingEndDate() {
+		return teachingEndDate;
+	}
+
+	public void setTeachingEndDate(Date teachingEndDate) {
+		this.teachingEndDate = teachingEndDate;
+	}
+
+	public Boolean getSeminarOrTeachingAbroad() {
+		return seminarOrTeachingAbroad;
+	}
+
+	public void setSeminarOrTeachingAbroad(Boolean seminarOrTeachingAbroad) {
+		this.seminarOrTeachingAbroad = seminarOrTeachingAbroad;
 	}
 
 }
