@@ -3,6 +3,7 @@ package com.pct.domain.dto;
 import java.io.Serializable;
 
 import javax.annotation.Nullable;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -72,13 +73,16 @@ public class SubjectDto implements Serializable {
 	@Nullable
 	protected Long professorId;
 
+	@NotNull
+	private Boolean seminarOrTeachingAbroad;
+
 	public SubjectDto() {
 	}
 
 	public SubjectDto(String institutionName, String universityName, String institutionCity, String institutionCountry,
 			Long id, String subjectName, String studyProgram, StudiesThesisType studiesThesisType,
 			Integer numberOfTheoreticalLessons, Integer numberOfPracticalLessons, Integer numberOfTeachingLessons,
-			Long institutionId, Long professorId) {
+			Long institutionId, Long professorId, Boolean seminarOrTeachingAbroad) {
 		this.institutionName = institutionName;
 		this.universityName = universityName;
 		this.institutionCity = institutionCity;
@@ -92,6 +96,7 @@ public class SubjectDto implements Serializable {
 		this.numberOfTeachingLessons = numberOfTeachingLessons;
 		this.institutionId = institutionId;
 		this.professorId = professorId;
+		this.seminarOrTeachingAbroad = seminarOrTeachingAbroad;
 	}
 
 	public SubjectDto(Subject subject) {
@@ -101,13 +106,14 @@ public class SubjectDto implements Serializable {
 		this.institutionCountry = subject.getInstitution().getCountry();
 		this.id = subject.getId();
 		this.subjectName = subject.getName();
-		this.studyProgram = subject.getStudyProgram().getName();
+		this.studyProgram = (subject.getStudyProgram() != null ? subject.getStudyProgram().getName() : null);
 		this.studiesThesisType = subject.getStudiesThesisType();
 		this.numberOfTheoreticalLessons = subject.getNumberOfTheoreticalLessons();
 		this.numberOfPracticalLessons = subject.getNumberOfPracticalLessons();
 		this.numberOfTeachingLessons = subject.getNumberOfTeachingLessons();
 		this.institutionId = subject.getInstitution().getId();
-		this.professorId = subject.getProfessor().getId();
+		this.professorId = (subject.getProfessor() != null ? subject.getProfessor().getId() : null);
+		this.seminarOrTeachingAbroad = subject.getSeminarOrTeachingAbroad();
 	}
 
 	public String getInstitutionName() {
@@ -216,6 +222,14 @@ public class SubjectDto implements Serializable {
 
 	public void setProfessorId(Long professorId) {
 		this.professorId = professorId;
+	}
+
+	public Boolean getSeminarOrTeachingAbroad() {
+		return seminarOrTeachingAbroad;
+	}
+
+	public void setSeminarOrTeachingAbroad(Boolean seminarOrTeachingAbroad) {
+		this.seminarOrTeachingAbroad = seminarOrTeachingAbroad;
 	}
 
 }

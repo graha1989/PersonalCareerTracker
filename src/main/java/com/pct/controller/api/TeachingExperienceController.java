@@ -89,12 +89,13 @@ public class TeachingExperienceController {
 	@RequestMapping(value = RequestMappings.LOAD_SUBJECTS_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<SubjectDto>> findSubjectsStartsWith(
 			@RequestParam(value = "value", required = true) String value,
-			@RequestParam(value = "subjectIds", required = false) @Nullable List<Long> subjectIds)
+			@RequestParam(value = "subjectIds", required = false) @Nullable List<Long> subjectIds,
+			@RequestParam(value = "seminarOrTeachingAbroad", required = true) Boolean seminarOrTeachingAbroad)
 			throws SubjectNotFoundException {
 
 		List<SubjectDto> subjects = new ArrayList<SubjectDto>();
 		if (value.length() >= 3) {
-			subjects = subjectService.findAvailableSubjectsStartsWith(value, subjectIds);
+			subjects = subjectService.findAvailableSubjectsStartsWith(value, subjectIds, seminarOrTeachingAbroad);
 		}
 
 		return new ResponseEntity<List<SubjectDto>>(subjects, HttpStatus.OK);

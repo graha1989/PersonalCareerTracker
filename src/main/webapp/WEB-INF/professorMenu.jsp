@@ -33,7 +33,13 @@
 									resources.professorMenuLabels.publicationTypes.internationalPublications }}</a></li>
 						</ul></li>
 					<li><a href="" ng-click="openProfessorWorkExperiences()">{{ resources.professorMenuLabels.workExperiences }}</a></li>
-					<li><a href="" ng-click="openProfessorTeachingExperiences()">{{ resources.professorMenuLabels.teachingExperiences }}</a></li>
+					<li class="dropdown"><a href="" class="dropdown-toggle" role="button" aria-expanded="false">{{ resources.professorMenuLabels.teachingExperiences }}<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="" ng-click="openProfessorTeachingExperiences()">{{
+									resources.professorMenuLabels.teachingExperienceTypes.professorDomesticTeachingExperience }}</a></li>
+							<li><a href="" ng-click="openProfessorSeminarsOrTeachings()">{{
+									resources.professorMenuLabels.teachingExperienceTypes.professorSeminarsOrTeachingsAbroad }}</a></li>
+						</ul></li>
 					<li><a href="" ng-click="openProfessorProjectExperiences()">{{ resources.professorMenuLabels.projectExperiences }}</a></li>
 				</ul>
 			</div>

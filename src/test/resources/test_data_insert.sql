@@ -205,12 +205,12 @@ INSERT INTO specialization_abroad (professorId, institutionId, city, country, st
 	('3', '1', 'Sofija', 'Bugarska', '2012-04-14 00:00:00', '2014-08-04 00:00:00', 'usavrsavanje')
 	ON DUPLICATE KEY UPDATE professorId=VALUES(professorId), institutionId=VALUES(institutionId), startDate=VALUES(startDate), endDate=VALUES(endDate), purpose=VALUES(purpose);
 
-INSERT INTO subject (name, studyProgramId, numberOfTheoreticalLessons, numberOfPracticalLessons, numberOfTeachingLessons, institutionId, professorId, studiesThesisTypeId, active) VALUES
-	('Paralelno programiranje', '1', '3', '3', '0', '1', '3', '2', true),
-	('Softversko inženjerstvo', '1', '3', '3', '1', '1', '3', '2', false),
-	('Baze podataka', '1', '2', '2', '2', '1', '3', '2', null),
-	('Razvoj zasnovan na komponentama', '1', '2', '1', '2', '1', '3', '2', true)
-	ON DUPLICATE KEY UPDATE name=VALUES(name), studyProgramId=VALUES(studyProgramId), numberOfTheoreticalLessons=VALUES(numberOfTheoreticalLessons), numberOfPracticalLessons=VALUES(numberOfPracticalLessons), numberOfTeachingLessons=VALUES(numberOfTeachingLessons), institutionId=VALUES(institutionId), professorId=VALUES(professorId), studiesThesisTypeId=VALUES(studiesThesisTypeId), active=VALUES(active);
+INSERT INTO subject (name, studyProgramId, numberOfTheoreticalLessons, numberOfPracticalLessons, numberOfTeachingLessons, institutionId, professorId, studiesThesisTypeId, active, seminarOrTeachingAbroad) VALUES
+	('Paralelno programiranje', '1', '3', '3', '0', '1', '3', '2', true, false),
+	('Softversko inženjerstvo', '1', '3', '3', '1', '1', '3', '2', true, false),
+	('Baze podataka', '1', '2', '2', '2', '1', '3', '2', true, false),
+	('Razvoj zasnovan na komponentama', '1', '2', '1', '2', '1', '3', '2', true, false)
+	ON DUPLICATE KEY UPDATE name=VALUES(name), studyProgramId=VALUES(studyProgramId), numberOfTheoreticalLessons=VALUES(numberOfTheoreticalLessons), numberOfPracticalLessons=VALUES(numberOfPracticalLessons), numberOfTeachingLessons=VALUES(numberOfTeachingLessons), institutionId=VALUES(institutionId), professorId=VALUES(professorId), studiesThesisTypeId=VALUES(studiesThesisTypeId), active=VALUES(active), seminarOrTeachingAbroad=VALUES(seminarOrTeachingAbroad);
 	
 INSERT INTO teaching_experience (subjectId, professorId, teachingStartDate, teachingEndDate, seminarOrTeachingAbroad) VALUES
 	('1', '3', '2012-04-14 00:00:00', '2014-08-04 00:00:00', false)

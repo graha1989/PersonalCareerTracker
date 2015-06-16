@@ -83,8 +83,12 @@ app.controller("AllProfessorsController", function($scope, $routeParams, $http,
     });
   };
   
-  $scope.showProfessorTeahingExperience = function(id) {
+  $scope.openProfessorTeachingExperiences = function(id) {
     $location.path('/teachingExperience/professorId/' + id);
+  };
+  
+  $scope.openProfessorSeminarsOrTeachings = function(id) {
+    $location.path('/seminarOrTeachingAbroad/professorId/' + id);
   };
   
   $scope.showProfessorProjectExperience = function(id) {

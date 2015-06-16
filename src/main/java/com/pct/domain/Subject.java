@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -31,17 +32,17 @@ public class Subject extends AbstractEntity {
 
 	@ManyToOne
 	@Cascade(CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "studyProgramId")
+	@JoinColumn(name = "studyProgramId", nullable = true)
 	@JsonBackReference(value = "studyProgram")
 	private StudyProgram studyProgram;
 
-	@Column(name = "numberOfTheoreticalLessons")
+	@Column(name = "numberOfTheoreticalLessons", nullable = true)
 	private Integer numberOfTheoreticalLessons;
 
-	@Column(name = "numberOfPracticalLessons")
+	@Column(name = "numberOfPracticalLessons", nullable = true)
 	private Integer numberOfPracticalLessons;
 
-	@Column(name = "numberOfTeachingLessons")
+	@Column(name = "numberOfTeachingLessons", nullable = true)
 	private Integer numberOfTeachingLessons;
 
 	@OneToOne
@@ -69,8 +70,12 @@ public class Subject extends AbstractEntity {
 	private Set<Survey> surveys = new HashSet<Survey>();
 
 	@Nullable
-	@Column(name = "active")
+	@Column(name = "active", nullable = true)
 	private Boolean active;
+
+	@NotNull
+	@Column(name = "seminarOrTeachingAbroad", nullable = true)
+	private Boolean seminarOrTeachingAbroad;
 
 	public Subject() {
 	}
@@ -78,8 +83,7 @@ public class Subject extends AbstractEntity {
 	public Subject(String name, StudyProgram studyProgram, Integer numberOfTheoreticalLessons,
 			Integer numberOfPracticalLessons, Integer numberOfTeachingLessons, Institution institution,
 			Professor professor, StudiesThesisType studiesThesisType, Set<TeachingExperience> teachingExperiences,
-			Set<Survey> surveys, Boolean active) {
-		super();
+			Set<Survey> surveys, Boolean active, Boolean seminarOrTeachingAbroad) {
 		this.name = name;
 		this.studyProgram = studyProgram;
 		this.numberOfTheoreticalLessons = numberOfTheoreticalLessons;
@@ -91,6 +95,7 @@ public class Subject extends AbstractEntity {
 		this.teachingExperiences = teachingExperiences;
 		this.surveys = surveys;
 		this.active = active;
+		this.seminarOrTeachingAbroad = seminarOrTeachingAbroad;
 	}
 
 	public String getName() {
@@ -187,6 +192,14 @@ public class Subject extends AbstractEntity {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public Boolean getSeminarOrTeachingAbroad() {
+		return seminarOrTeachingAbroad;
+	}
+
+	public void setSeminarOrTeachingAbroad(Boolean seminarOrTeachingAbroad) {
+		this.seminarOrTeachingAbroad = seminarOrTeachingAbroad;
 	}
 
 }

@@ -45,7 +45,7 @@ public class TeachingExperienceDto implements Serializable {
 
 	public TeachingExperienceDto(TeachingExperience teachingExperience) {
 		this.subjectDto.setSubjectName(teachingExperience.getSubject().getName());
-		this.subjectDto.setStudyProgram(teachingExperience.getSubject().getStudyProgram().getName());
+		this.subjectDto.setStudyProgram((teachingExperience.getSubject().getStudyProgram() !=null ? teachingExperience.getSubject().getStudyProgram().getName() : null));
 		this.subjectDto.setInstitutionName(teachingExperience.getSubject().getInstitution().getName());
 		this.subjectDto.setUniversityName(teachingExperience.getSubject().getInstitution().getUniversity());
 		this.subjectDto.setInstitutionCity(teachingExperience.getSubject().getInstitution().getCity());

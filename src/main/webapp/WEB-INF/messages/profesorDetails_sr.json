@@ -106,6 +106,10 @@
 	 	"languageExperiences": "Poznavanje jezika",
 	 	"workExperiences": "Radno iskustvo",
 	 	"teachingExperiences": "Rad u nastavi",
+	 	"teachingExperienceTypes": {
+            "professorDomesticTeachingExperience": "Rad u nastavi u zemlji",
+            "professorSeminarsOrTeachingsAbroad": "Seminari i nastava van zemlje"
+         },
 	 	"projectExperiences": "Rad na projektima",
 	 	"publications": "Publikacije",
 	 	"publicationTypes": {
@@ -306,6 +310,10 @@
 		        "internationalPublications": "Internacionalne publikacije"
 		 	},
             "teachingExperiences": "Rad u nastavi",
+            "teachingExperienceTypes": {
+            	"professorDomesticTeachingExperience": "Rad u nastavi u zemlji",
+           		"professorSeminarsOrTeachingsAbroad": "Seminari i nastava van zemlje"
+         	},
             "projectExperiences": "Rad na projektima",
             "awards": "Priznanja",
             "languages": "Jezici",

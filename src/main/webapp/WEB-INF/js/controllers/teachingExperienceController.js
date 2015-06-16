@@ -316,7 +316,7 @@ var createTeachingExperiencePopupController = function($scope, $modalInstance,
         subjectIdsList.splice(i, 1);
       }
     }
-    return PctService.findSubjectsStartsWith(val, subjectIdsList).then(
+    return PctService.findSubjectsStartsWith(val, subjectIdsList, false).then(
             function(response) {
               var subjects = [];
               for (var i = 0; i < response.length; i++) {

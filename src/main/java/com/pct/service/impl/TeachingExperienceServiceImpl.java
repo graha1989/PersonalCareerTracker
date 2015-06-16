@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pct.domain.Institution;
 import com.pct.domain.Professor;
 import com.pct.domain.Subject;
 import com.pct.domain.TeachingExperience;
 import com.pct.domain.dto.TeachingExperienceDto;
+import com.pct.repository.InstitutionRepository;
+import com.pct.repository.InstitutionTypeRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.SubjectRepository;
 import com.pct.repository.TeachingExperienceRepository;
@@ -32,6 +35,12 @@ public class TeachingExperienceServiceImpl implements TeachingExperienceService 
 
 	@Autowired
 	private SubjectRepository subjectRepository;
+	
+	@Autowired
+	private InstitutionTypeRepository institutionTypeRepository;
+	
+	@Autowired
+	private InstitutionRepository institutionRepository;
 
 	@Override
 	@Transactional
@@ -85,8 +94,20 @@ public class TeachingExperienceServiceImpl implements TeachingExperienceService 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (subject == null) {
-			throw new SubjectNotFoundException();
+		if (subject == null && teachingExperienceDto.getSeminarOrTeachingAbroad()) {
+			Institution institution = new Institution();
+			institution.setInstitutionType(institutionTypeRepository.findByTypeName(teachingExperienceDto.getSubjectDto().getInstitutionType()));
+			institution.setName(teachingExperienceDto.getSubjectDto().getInstitutionName());
+			institution.setCity(teachingExperienceDto.getSubjectDto().getInstitutionCity());
+			institution.setCountry(teachingExperienceDto.getSubjectDto().getInstitutionCountry());
+			institution.setUniversity(teachingExperienceDto.getSubjectDto().getUniversityName());
+			institutionRepository.save(institution);
+			
+			subject = new Subject();
+			subject.setInstitution(institution);
+			subject.setName(teachingExperienceDto.getSubjectDto().getSubjectName());
+			subject.setSeminarOrTeachingAbroad(teachingExperienceDto.getSeminarOrTeachingAbroad() && teachingExperienceDto.getSubjectDto().getSeminarOrTeachingAbroad());
+			subjectRepository.save(subject);
 		}
 
 		teachingExperienceRepository.saveAndFlush(createOrUpdateTeachingExperienceInstanceFromTeachingExperienceDto(

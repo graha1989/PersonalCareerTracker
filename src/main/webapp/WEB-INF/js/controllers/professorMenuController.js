@@ -104,6 +104,10 @@ app.controller("ProfessorMenuController", function($scope, $http, $location,
     $location.path('/teachingExperience');
   };
   
+  $scope.openProfessorSeminarsOrTeachings = function() {
+    $location.path('/seminarOrTeachingAbroad');
+  };
+  
   $scope.openProfessorProjectExperiences = function() {
     $location.path('/projectExperiences');
   };
