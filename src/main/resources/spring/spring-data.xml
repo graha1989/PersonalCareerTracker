@@ -47,8 +47,10 @@
       class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	
 	<!-- Load test data -->
+	<!-- 
 	<jdbc:initialize-database data-source="dataSource">
 		<jdbc:script location="classpath:test_data_insert.sql"/>
 	</jdbc:initialize-database>
+	 -->
 	
 </beans>
