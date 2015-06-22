@@ -95,24 +95,23 @@ public class Professor extends User {
 	@JsonIgnore
 	private Set<Survey> surveys = new HashSet<Survey>();
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "professor")
+	@JsonIgnore
+	private Set<ScientificProfessionalOrgMem> memberships = new HashSet<ScientificProfessionalOrgMem>();
+
 	@OneToOne(mappedBy = "professor")
 	private ProjectLeader projectLeader;
 
-	/*
-	 * @OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
-	 * 
-	 * @JsonIgnore private Set<ProjectLeader> projectLeaders = new HashSet<ProjectLeader>();
-	 */
 	public Professor() {
 	}
 
-	public Professor(String fathersName, Date dateOfBirth, String placeOfBirth, String countryOfBirth,
-			String scientificArea, String specialScientificArea, Set<LanguageExperience> languageExperiences,
-			Set<Award> awards, Set<ProjectExperience> projectExperiences,
+	public Professor(String fathersName, Date dateOfBirth, String placeOfBirth, String countryOfBirth, String scientificArea,
+			String specialScientificArea, Set<LanguageExperience> languageExperiences, Set<Award> awards, Set<ProjectExperience> projectExperiences,
 			Set<ProfessorPublication> professorPublications, Set<InternationalPublication> internationalPublications,
-			Set<WorkExperience> workExperiences, Set<Studies> studies, Set<TeachingExperience> teachingExperiences,
-			Set<Survey> surveys, ProjectLeader projectLeader) {
-		super();
+			Set<WorkExperience> workExperiences, Set<Studies> studies, Set<TeachingExperience> teachingExperiences, Set<Survey> surveys,
+			Set<ScientificProfessionalOrgMem> memberships, ProjectLeader projectLeader) {
 		this.fathersName = fathersName;
 		this.dateOfBirth = dateOfBirth;
 		this.placeOfBirth = placeOfBirth;
@@ -129,6 +128,7 @@ public class Professor extends User {
 		this.teachingExperiences = teachingExperiences;
 		this.surveys = surveys;
 		this.projectLeader = projectLeader;
+		this.memberships = memberships;
 	}
 
 	public String getFathersName() {
@@ -299,13 +299,17 @@ public class Professor extends User {
 		}
 	}
 
-	/*
-	 * public Set<ProjectLeader> getProjectLeaders() { return projectLeaders; }
-	 * 
-	 * public void setProjectLeaders(Set<ProjectLeader> projectLeaders) { this.projectLeaders.clear();
-	 * 
-	 * if (projectLeaders != null) { this.projectLeaders.addAll(projectLeaders); } }
-	 */
+	public Set<ScientificProfessionalOrgMem> getMemberships() {
+		return memberships;
+	}
+
+	public void setMemberships(Set<ScientificProfessionalOrgMem> memberships) {
+		this.memberships.clear();
+
+		if (memberships != null) {
+			this.memberships.addAll(memberships);
+		}
+	}
 
 	public ProjectLeader getProjectLeader() {
 		return projectLeader;

@@ -92,6 +92,10 @@ app.controller("ProfessorMenuController", function($scope, $http, $location,
     $location.path('/awards');
   };
   
+  $scope.openProfessorOrganizationsMemberships = function() {
+    $location.path('/scientificProfessionalOrgMem');
+  };
+  
   $scope.openProfessorLanguageExperiences = function() {
     $location.path('/languageExperience');
   };

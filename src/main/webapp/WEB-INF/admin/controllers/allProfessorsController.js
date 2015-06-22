@@ -151,6 +151,10 @@ app.controller("AllProfessorsController", function($scope, $routeParams, $http,
     $location.path('/awards/professorId/' + id);
   };
   
+  $scope.openProfessorOrganizationsMemberships = function(id) {
+    $location.path('/scientificProfessionalOrgMem/professorId/' + id);
+  };
+  
   $scope.openProfessorLanguageExperiences = function(id) {
     $location.path('/languageExperience/professorId/' + id);
   };

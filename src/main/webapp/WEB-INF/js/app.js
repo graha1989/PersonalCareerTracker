@@ -77,6 +77,14 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         templateUrl: 'pages/awards.html',
         controller: 'AwardController'
       })
+      .when('/scientificProfessionalOrgMem/professorId/:professorId', {
+        templateUrl: 'pages/scientificProfessionalOrgMem.html?professorId=:professorId',
+        controller: 'ScientificProfessionalOrgMemController'
+      })
+      .when('/scientificProfessionalOrgMem', {
+        templateUrl: 'pages/scientificProfessionalOrgMem.html',
+        controller: 'ScientificProfessionalOrgMemController'
+      })
       .when('/projectExperiences/professorId/:professorId', {
         templateUrl: 'pages/projectExperiences.html?professorId=:professorId',
         controller: 'ProjectExperienceController'

@@ -101,11 +101,17 @@
 									ng-click="showProfessorProjectExperience(professor.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.allProfessorsButtons.projectExperiences }}
 								</button></td>
-							<td class="awards"><button
-									class="btn btn-link btn-xs"
-									ng-click="openProfessorAwards(professor.id)">
-									<span class="glyphicon glyphicon-list-alt"></span> {{ resources.buttons.allProfessorsButtons.awards }}
-								</button></td>
+							<td>
+								<div class="btn-group" dropdown>
+									<a class="dropdown-toggle" href="#">{{ resources.buttons.allProfessorsButtons.awardsAndMemberships }}<span class="caret"></span></a>
+                 					<ul class="dropdown-menu" role="menu">
+                    					<li><a href="" ng-click="openProfessorAwards(professor.id)">{{ resources.buttons.allProfessorsButtons.awardTypes.awards }}</a>
+                    					</li>
+					                    <li><a href="" ng-click="openProfessorOrganizationsMemberships(professor.id)">{{ resources.buttons.allProfessorsButtons.awardTypes.mebershipsInOrganisations }}</a>
+					                    </li>
+					                </ul>
+					        	</div>
+							</td>	
 							<td class="workExperience"><button
 									class="btn btn-link btn-xs"
 									ng-click="openProfessorWorkExperiences(professor.id)">

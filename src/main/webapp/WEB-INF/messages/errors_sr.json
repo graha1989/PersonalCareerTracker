@@ -15,6 +15,7 @@
 		"invalidSurveyAcademicYearMinLength" : "Min. 9 karaktera.",
 		"invalidSurveyAcademicYearMaxLength" : "Max. 9 karaktera.",
 		"invalidAwardNameAndAwardedByMaxLength" : "Max. 200 karaktera.",
+		"invalidOrganizationNameMaxLength" : "Max. 200 karaktera.",		
 		"invalidProjectNameFinancedByMaxLength" : "Max. 200 karaktera.",
 		"invalidProjectNameMaxLength" : "Max. 200 karaktera.",
 		"invalidProjectFinancedByMaxLength" : "Max. 200 karaktera.",

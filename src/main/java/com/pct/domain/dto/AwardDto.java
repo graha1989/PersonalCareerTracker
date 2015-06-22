@@ -44,7 +44,6 @@ public class AwardDto implements Serializable {
 
 	public AwardDto(String awardName, String awardedBy, Date dateOfAward, String awardType, String awardField, Long id,
 			Long professorId) {
-		super();
 		this.awardName = awardName;
 		this.awardedBy = awardedBy;
 		this.dateOfAward = dateOfAward;

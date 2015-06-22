@@ -1,0 +1,105 @@
+<div>
+
+	<form name="form" id="showAllScientificAndProfessionalOrgMemForm" novalidate class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form" ng-model="membership">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.membershipsTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+				<table ng-show="memberships != []" class="table table-condensed table-striped table-hover" cellspacing="0" cellpadding="0">
+					<tbody>
+						<tr class="info ng-binding">
+							<td>{{ resources.membershipsTableLabels.name }}</td>
+							<td ng-show="isUser" colspan="2"></td>
+						</tr>
+						<tr class="active ng-scope" ng-repeat="membership in memberships">
+							<td>{{ membership.organizationName}}</td>
+							<td class="delete" ng-show="isUser"><button class="btn btn-link btn-xs" ng-click="deleteMembership(membership.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.membershipButtons.delete }}
+								</button></td>
+							<td class="edit" ng-show="isUser"><button class="btn btn-link btn-xs" ng-click="editMembership(membership.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.membershipButtons.edit }}
+								</button></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td ng-show="isUser" colspan="3">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isAdmin" colspan="1">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button id="addNewButton" class="btn btn-success btn-sm" ng-show="isUser" ng-click="createNewMembership()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.membershipButtons.add }}
+			</button>
+			<button id="cancel_button" class="btn btn-sm" ng-click="goBack()">
+				<span class="glyphicon glyphicon-arrow-left"></span> {{ resources.form.back }}
+			</button>
+		</div>
+	</form>
+
+	<script type="text/ng-template" id="editMembershipPopup.html">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" novalidate role="form" ng-model="membership">
+			<div class="modal-header">
+    			<h3 class="modal-title">{{ resources.text.editMembershipPopupTitle }}</h3>
+   	 		</div>
+    		<div class="modal-body">
+    			<div class="form-group">
+    				<label for="inputOrganizationName" class="col-sm-4 control-label">{{ resources.membershipPopupLabels.organizationNameLabel }} 
+						<span class="required">*</span>
+					</label>
+    				<div class="col-sm-6">
+      					<input type="text" class="form-control" id="inputOrganizationName" name="inputOrganizationName" ng-model="membership.organizationName" placeholder="{{ resources.membershipPopupLabels.organizationNameLabel }}" ng-maxlength="200" required />
+						<div
+							ng-show="form.inputOrganizationName.$dirty && form.inputOrganizationName.$invalid"
+							class="organizationFieldError">
+							<span
+								ng-show="form.inputOrganizationName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputOrganizationName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidOrganizationNameMaxLength }}</span>
+						</div>
+   		 			</div>
+  				</div>
+   			</div>
+   			<div class="modal-footer action">
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="$parent.form.$invalid || isUnchanged(membership)" ng-click="saveMembership()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.membershipButtons.edit }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.membershipButtons.close }}</button>
+  			</div>
+		</form>
+	</script>
+
+	<script type="text/ng-template" id="createNewMembershipPopup.html">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" novalidate role="form" ng-model="membership">
+			<div class="modal-header">
+    			<h3 class="modal-title">{{ resources.text.addMembershipPopupTitle }}</h3>
+   	 		</div>
+    		<div class="modal-body">
+    			<div class="form-group">
+    				<label for="inputOrganizationName" class="col-sm-4 control-label">{{ resources.membershipPopupLabels.organizationNameLabel }} 
+						<span class="required">*</span>
+					</label>
+    				<div class="col-sm-6">
+      					<input type="text" class="form-control" id="inputOrganizationName" name="inputOrganizationName" ng-model="membership.organizationName" placeholder="{{ resources.membershipPopupLabels.organizationNameLabel }}" ng-maxlength="200" required />
+						<div
+							ng-show="form.inputOrganizationName.$dirty && form.inputOrganizationName.$invalid"
+							class="organizationFieldError">
+							<span
+								ng-show="form.inputOrganizationName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputOrganizationName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidOrganizationNameMaxLength }}</span>
+						</div>
+   		 			</div>
+  				</div>
+   			</div>
+   			<div class="modal-footer action">
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="form.$invalid" ng-click="saveNewMembership()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.membershipButtons.save }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.membershipButtons.close }}</button>
+  			</div>
+		</form>
+	</script>
+
+</div>

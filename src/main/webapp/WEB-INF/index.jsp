@@ -73,6 +73,7 @@
 	<script type="text/javascript" src="<spring:url value='js/controllers/doctorMentoringController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/languageController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/awardController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/scientificProfessionalOrgMemController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/projectExperienceController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorPublicationsController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/internationalPublicationsController.js' />"></script>

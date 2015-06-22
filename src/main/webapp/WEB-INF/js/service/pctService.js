@@ -447,5 +447,28 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
+        loadProfessorOrganizationMemberships: function(professorId) {
+          var deferred = $q.defer();
+          $http.get("api/scientificProfessionalOrganisationMembership/allMemberships", {
+            params: {
+              professorId: professorId
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
+        loadProfessorOrganizationMembership: function(id, callback) {
+          $http.get('api/scientificProfessionalOrganisationMembership/selectedMembership?id=' + id)
+                  .success(callback).error(callback);
+        },
+        deleteProfessorMembershipInOrganization: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/scientificProfessionalOrganisationMembership?id=' + id
+          }).success(callback).error(callback);
+        },
       };
     }]);

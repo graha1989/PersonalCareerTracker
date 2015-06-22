@@ -95,6 +95,10 @@ public final class RequestMappings {
 	public static final String LOAD_ALL_WORK_EXPERIENCES = "allWorkExperiences";
 	public static final String LOAD_SELECTED_WORK_EXPERIENCE = "selectedWorkExperience";
 	public static final String LOAD_INSTITUTIONS_STARTS_WITH = "findInstitutionStartsWith";
+	
+	public static final String SCIENTIFIC_AND_PROFESSIONAL_ORGANIZATION_MEMBERSHIP_API = "/api/scientificProfessionalOrganisationMembership";
+	public static final String LOAD_ALL_PROFESSORS_SCIENTIFIC_AND_PROFESSIONAL_ORGANIZATION_MEMBERSHIPS = "allMemberships";
+	public static final String LOAD_SELECTED_PROFESSORS_SCIENTIFIC_AND_PROFESSIONAL_ORGANIZATION_MEMBERSHIP = "selectedMembership";
 
 	public static final String ID = "id";
 

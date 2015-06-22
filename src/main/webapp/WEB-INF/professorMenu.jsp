@@ -23,7 +23,11 @@
 							<li><a href="" ng-click="openSpecialisticMentoring()">{{ resources.professorMenuLabels.mentoringTypes.specialisticMentoring }}</a></li>
 							<li><a href="" ng-click="openDoctorMentoring()">{{ resources.professorMenuLabels.mentoringTypes.doctorMentoring }}</a></li>
 						</ul></li>
-					<li><a href="" ng-click="openProfessorAwards()">{{ resources.professorMenuLabels.awards }}</a></li>
+					<li class="dropdown"><a href="" class="dropdown-toggle" role="button" aria-expanded="false">{{ resources.professorMenuLabels.awardsAndMemberships }}<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="" ng-click="openProfessorAwards()">{{ resources.professorMenuLabels.awardTypes.awards }}</a></li>
+							<li><a href="" ng-click="openProfessorOrganizationsMemberships()">{{ resources.professorMenuLabels.awardTypes.mebershipsInOrganisations }}</a></li>
+						</ul></li>
 					<li><a href="" ng-click="openProfessorLanguageExperiences()">{{ resources.professorMenuLabels.languageExperiences }}</a></li>
 					<li class="dropdown"><a href="" class="dropdown-toggle" role="button" aria-expanded="false">{{ resources.professorMenuLabels.publications }}<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">

@@ -17,7 +17,10 @@
         "editThesisPopupTitle": "Izmena teze",
         "languageExperienceTitle": "Znanje jezika",
         "awardsTitle": "Priznanja, nagrade i odlikovanja",
+        "membershipsTitle": "Članstvo u naučnim i stručnim organizacijama",
         "editAwardPopupTitle": "Izmena priznanja",
+        "editMembershipPopupTitle": "Izmena podataka o članstvu u naučnim i stručnim organizacijama",
+        "addMembershipPopupTitle": "Dodavanje novog članstva u naučnim i stručnim organizacijama",
         "addAwardPopupTitle": "Dodavanje novog priznanja",
         "projectExperiencesTitle": "Rad na projektima",
         "editProjectExperiencePopupTitle": "Promena rada na projektu",
@@ -102,10 +105,14 @@
 	        "doctorStudies": "Doktorske studije",
 	        "specializationAbroad": "Inostrane specijalizacije"
 	 	},
-	 	"awards": "Nagrade i priznanja",
-	 	"languageExperiences": "Poznavanje jezika",
+	 	"awardsAndMemberships": "Nagrade i članstva u organizacijama",
+	 	"awardTypes": {
+	 		"awards": "Priznanja, nagrade i odlikovanja",
+	 		"mebershipsInOrganisations": "Članstvo u naučnim i stručnim organizacijama"
+	 	},
+	 	"languageExperiences": "Jezici",
 	 	"workExperiences": "Radno iskustvo",
-	 	"teachingExperiences": "Rad u nastavi",
+	 	"teachingExperiences": "Nastava",
 	 	"teachingExperienceTypes": {
             "professorDomesticTeachingExperience": "Rad u nastavi u zemlji",
             "professorSeminarsOrTeachingsAbroad": "Seminari i nastava van zemlje"
@@ -238,6 +245,14 @@
             "save": "Sačuvaj",
             "cancel": "Odustani"
         },
+        "membershipButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novo članstvo u organizaciji",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
         "projectButtons": {
             "delete": "Izbriši",
             "edit": "Izmeni",
@@ -309,13 +324,17 @@
 	        	"professorPublications": "Lične publikacije",
 		        "internationalPublications": "Internacionalne publikacije"
 		 	},
-            "teachingExperiences": "Rad u nastavi",
+            "teachingExperiences": "Nastava",
             "teachingExperienceTypes": {
             	"professorDomesticTeachingExperience": "Rad u nastavi u zemlji",
            		"professorSeminarsOrTeachingsAbroad": "Seminari i nastava van zemlje"
          	},
-            "projectExperiences": "Rad na projektima",
-            "awards": "Priznanja",
+            "projectExperiences": "Projekti",
+            "awardsAndMemberships": "Nagrade i članstva u org.",
+		 	"awardTypes": {
+		 		"awards": "Priznanja, nagrade i odlikovanja",
+		 		"mebershipsInOrganisations": "Članstvo u naučnim i stručnim organizacijama"
+		 	},
             "languages": "Jezici",
             "workExperiences": "Radna iskustva",
             "close": "Zatvori"
@@ -369,6 +388,9 @@
         "awardedBy": "Dodeljeno od strane",
         "field": "Oblast"
     },
+    "membershipsTableLabels": {
+        "name": "Naziv organizacije"
+    },
     "projectsTableLabels": {
         "projectName": "Naziv projekta",
         "projectFinancedBy": "Finansiran (od koga)",
@@ -394,6 +416,9 @@
         "dateOfAward": "Datum dodele",
         "awardType": "Tip",
         "awardField": "Oblast"
+    },
+    "membershipPopupLabels": {
+        "organizationNameLabel": "Naziv organizacije"
     },
     "projectPopupLabels": {
         "projectType": "Tip projekta",
