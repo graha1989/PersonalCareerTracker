@@ -14,6 +14,7 @@
 				<li><a href="#/showAllStudents">{{resources.adminMenuLabels.allStudents}}</a></li>
 				<li><a href="#/showAllInstitutions">{{resources.adminMenuLabels.allInstitutions}}</a></li>
 				<li><a href="#/showAllSubjects">{{resources.adminMenuLabels.allSubjects}}</a></li>
+				<li><a href="#/showAllSeminars">{{resources.adminMenuLabels.allSeminars}}</a></li>
 				<li><a href="#/showAllProjects">{{resources.adminMenuLabels.allProjects}}</a></li>
 			</ul>
 		</div>

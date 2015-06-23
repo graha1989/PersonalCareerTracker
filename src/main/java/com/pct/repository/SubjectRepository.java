@@ -17,7 +17,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
 	@Query("SELECT s FROM Subject s WHERE s.seminarOrTeachingAbroad=:seminarOrTeachingAbroad AND s.name LIKE %:value%")
 	List<Subject> findByNameLike(@Param("value") String value, @Param("seminarOrTeachingAbroad") Boolean seminarOrTeachingAbroad);
 
-	@Query("SELECT s FROM Subject s WHERE s.seminarOrTeachingAbroad=false")
-	List<Subject> findAllNotSeminarsOrTeachingAbroad();
+	@Query("SELECT s FROM Subject s WHERE s.seminarOrTeachingAbroad=:seminarOrTeachingAbroad")
+	List<Subject> findAllSubjectsOrSeminars(@Param("seminarOrTeachingAbroad") Boolean seminarOrTeachingAbroad);
 
 }

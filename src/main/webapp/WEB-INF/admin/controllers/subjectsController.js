@@ -1,5 +1,4 @@
-app.controller("SubjectsController", function($scope, $routeParams, $http,
-        $location, $modal, PctService) {
+app.controller("SubjectsController", function($scope, $routeParams, $http, $location, $modal, PctService) {
 
   $scope.subject = {};
   $scope.allSubjects = [];
@@ -13,19 +12,16 @@ app.controller("SubjectsController", function($scope, $routeParams, $http,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadSelectedProfessor = function(index) {
-    PctService.loadProfesor($scope.allSubjects[index].professorId, function(
-            data) {
+    PctService.loadProfesor($scope.allSubjects[index].professorId, function(data) {
       if (angular.isObject(data)) {
         $scope.professor = data;
         $scope.completeSubjectDataArray.push({
@@ -53,13 +49,11 @@ app.controller("SubjectsController", function($scope, $routeParams, $http,
   };
 
   $scope.loadAllSubjects = function() {
-    PctService.loadAllSubjects($routeParams, function(data) {
+    PctService.loadAllSubjectsOrSeminars($routeParams, false, function(data) {
       if (angular.isObject(data) && data.length > 0) {
         $scope.allSubjects = data;
         for (var i = 0; i < $scope.allSubjects.length; i++) {
-          $scope
-                  .loadSelectedInstitution($scope.allSubjects[i].institutionId,
-                          i);
+          $scope.loadSelectedInstitution($scope.allSubjects[i].institutionId, i);
         }
         $scope.noResultsFound = false;
       } else {
@@ -96,8 +90,8 @@ app.controller("SubjectsController", function($scope, $routeParams, $http,
 
 });
 
-var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
-        $http, $route, $templateCache, subjectId, PctService) {
+var editSubjectPopupController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache,
+        subjectId, PctService) {
 
   $scope.subject = {};
   $scope.faculty = {};
@@ -111,14 +105,12 @@ var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadSelectedFaculty = function(id) {
@@ -133,18 +125,16 @@ var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.loadSelectedProfessor = function(id) {
-    PctService.loadProfesor(id,
-            function(data) {
-              if (angular.isObject(data)) {
-                $scope.selectedProfessor = data;
-                $scope.professorSelected = true;
-                $scope.masterSelectedProfessor = angular
-                        .copy($scope.selectedProfessor);
-                $scope.noResultsFound = false;
-              } else {
-                $scope.noResultsFound = true;
-              }
-            });
+    PctService.loadProfesor(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.selectedProfessor = data;
+        $scope.professorSelected = true;
+        $scope.masterSelectedProfessor = angular.copy($scope.selectedProfessor);
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
   };
 
   $scope.loadSelectedSubject = function(id) {
@@ -225,9 +215,7 @@ var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.$watch('selectedProfessor', function() {
-    if ($scope.professorSelected
-            && !angular.equals($scope.selectedProfessor,
-                    $scope.masterSelectedProfessor)) {
+    if ($scope.professorSelected && !angular.equals($scope.selectedProfessor, $scope.masterSelectedProfessor)) {
       $scope.selectedProfessor = null;
       $scope.professorSelected = false;
     }
@@ -268,8 +256,8 @@ var editSubjectPopupController = function($scope, $modalInstance, $routeParams,
 
 };
 
-var createNewSubjectController = function($scope, $modalInstance, $routeParams,
-        $http, $route, $templateCache, PctService) {
+var createNewSubjectController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache,
+        PctService) {
 
   $scope.subject = {};
   $scope.faculty = {};
@@ -284,25 +272,22 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.getFaculties = function(val) {
-    return PctService.findInstutionsStartsWith(val, 'Fakultet').then(
-            function(response) {
-              var faculties = [];
-              for (var i = 0; i < response.length; i++) {
-                faculties.push(response[i]);
-              }
-              return faculties;
-            });
+    return PctService.findInstutionsStartsWith(val, 'Fakultet').then(function(response) {
+      var faculties = [];
+      for (var i = 0; i < response.length; i++) {
+        faculties.push(response[i]);
+      }
+      return faculties;
+    });
   };
 
   $scope.loadAllStudyTypes = function() {
@@ -357,9 +342,7 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.$watch('selectedFaculty', function() {
-    if ($scope.isExistingFaculty
-            && !angular.equals($scope.selectedFaculty,
-                    $scope.masterSelectedFaculty)) {
+    if ($scope.isExistingFaculty && !angular.equals($scope.selectedFaculty, $scope.masterSelectedFaculty)) {
       $scope.resetFacultyData();
     }
   });
@@ -417,9 +400,7 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.$watch('selectedProfessor', function() {
-    if ($scope.professorSelected
-            && !angular.equals($scope.selectedProfessor,
-                    $scope.masterSelectedProfessor)) {
+    if ($scope.professorSelected && !angular.equals($scope.selectedProfessor, $scope.masterSelectedProfessor)) {
       $scope.selectedProfessor = null;
       $scope.professorSelected = false;
     }
@@ -445,8 +426,7 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
             && $scope.subject.numberOfTheoreticalLessons != ''
             && $scope.subject.numberOfPracticalLessons != null
             && $scope.subject.numberOfPracticalLessons != ''
-            && $scope.selectedProfessor != null
-            && $scope.selectedProfessor != '') {
+            && $scope.selectedProfessor != null && $scope.selectedProfessor != '') {
       return true;
     } else {
       return false;

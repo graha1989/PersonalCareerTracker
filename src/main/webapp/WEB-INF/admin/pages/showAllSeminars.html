@@ -1,0 +1,347 @@
+<div>
+
+	<form
+		name="form"
+		id="showAllSeminarsForm"
+		novalidate
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		ng-model="seminar">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.seminarTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+
+				<table
+					ng-show="allSeminars != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr class="info ng-binding">
+							<td>{{ resources.seminarOrSubjectAbroadTableLabels.seminarName }}</td>
+							<td>{{ resources.seminarOrSubjectAbroadTableLabels.facultyName }}</td>
+							<td>{{ resources.seminarOrSubjectAbroadTableLabels.universityName }}</td>
+							<td>{{ resources.seminarOrSubjectAbroadTableLabels.facultyCity }}</td>
+							<td>{{ resources.seminarOrSubjectAbroadTableLabels.facultyCountry }}</td>
+							<td colspan="1"></td>
+						</tr>
+						<tr
+							class="active ng-scope"
+							ng-repeat="seminar in allSeminars">
+							<td>{{ seminar.subjectName }}</td>
+							<td>{{ seminar.institutionName }}</td>
+							<td>{{ seminar.universityName }}</td>
+							<td>{{ seminar.institutionCity }}</td>
+							<td>{{ seminar.institutionCountry }}</td>
+							<td class="edit"><button
+									class="btn btn-link btn-xs"
+									ng-click="editSeminar(seminar.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.seminarButtons.edit }}
+								</button></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td colspan="6">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
+				ng-click="createNewSeminar()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.seminarButtons.add }}
+			</button>
+		</div>
+	</form>
+
+	<script
+		type="text/ng-template"
+		id="editSeminarPopup.html">
+		<form
+			name="form"
+			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+			novalidate
+			role="form"
+			ng-model="seminar">
+			<div class="modal-header">
+				<h3 class="modal-title">{{ resources.text.editSeminarPopupTitle }}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label
+						for="inputFacultyName"
+						class="col-sm-4 control-label">{{ resources.seminarPopupLabels.facultyName }}
+					</label>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<input
+								type="text"
+								class="ng-binding form-control"
+								id="inputFacultyName"
+								name="inputFacultyName"
+								ng-model="seminar.institutionName"
+								ng-disabled="true" /> 
+								<span class="input-group-addon"> <span
+									class="glyphicon glyphicon-expand"
+									ng-click="expandFacultyData()"
+									ng-show="!allFacultyDataShown"></span> <span
+									class="glyphicon glyphicon-collapse-down"
+									ng-click="collapseFacultyData()"
+									ng-show="allFacultyDataShown"></span>
+								</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-show="allFacultyDataShown">
+					<label
+						for="inputUniversityName"
+						class="col-sm-4 control-label">{{ resources.seminarPopupLabels.universityName }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputUniversityName"
+							name="inputUniversityName"
+							ng-model="seminar.universityName"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allFacultyDataShown">
+					<label
+						for="inputInstitutionCity"
+						class="col-sm-4 control-label">{{ resources.seminarPopupLabels.facultyCity }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCity"
+							name="inputInstitutionCity"
+							ng-model="seminar.institutionCity"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allFacultyDataShown">
+					<label
+						for="inputInstitutionCountry"
+						class="col-sm-4 control-label">{{ resources.seminarPopupLabels.facultyCountry }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCountry"
+							name="inputInstitutionCountry"
+							ng-model="seminar.institutionCountry"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputSeminarName"
+						class="col-sm-4 control-label">{{ resources.seminarPopupLabels.seminarName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputSeminarName"
+							name="inputSeminarName"
+							ng-model="seminar.subjectName"
+							placeholder="{{ resources.seminarPopupLabels.seminarName }}"
+							required />
+						<div
+							ng-show="form.inputSeminarName.$dirty && form.inputSeminarName.$invalid"
+							class="subjectNameFieldError">
+							<span
+								ng-show="form.inputSeminarName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer action">
+				<button
+					id="submit_button"
+					type="submit"
+					class="btn btn-success btn-sm"
+					ng-disabled="form.$invalid || isUnchanged(seminar)"
+					ng-click="saveSeminar()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.seminarButtons.edit }}
+				</button>
+				<button
+					id="cancel_button"
+					class="btn btn-sm"
+					ng-click="cancel()">{{ resources.buttons.seminarButtons.close }}</button>
+			</div>
+		</form>
+	</script>
+
+	<script
+		type="text/ng-template"
+		id="createNewSeminarPopup.html">
+		<form
+			name="form"
+			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+			novalidate
+			role="form"
+			ng-model="seminar">
+			<div class="modal-header">
+				<h3 class="modal-title">{{ resources.text.addNewSeminarTitle }}</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label
+						for="inputFacultyName"
+						class="col-sm-4 control-label">{{ resources.seminarPopupLabels.facultyName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputFacultyName"
+							name="inputFacultyName"
+							ng-model="$parent.selectedFaculty"
+							typeahead="faculty as faculty.name for faculty in getFaculties($viewValue) | limitTo:8"
+							typeahead-on-select="onSelectFaculty()"
+							placeholder="{{ resources.seminarPopupLabels.facultyName }}"
+							autocomplete="off"
+							required /> 
+						<div
+							ng-show="form.inputFacultyName.$dirty && form.inputFacultyName.$invalid"
+							class="facultyNameFieldError">
+							<span
+								ng-show="form.inputFacultyName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputUniversityName"
+						class="col-sm-4 control-label">{{ resources.seminarPopupLabels.universityName }} <span class="required" ng-show="!isExistingFaculty">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputUniversityName"
+							name="inputUniversityName"
+							ng-model="seminar.universityName"
+							placeholder="{{ resources.seminarPopupLabels.universityName }}"
+							ng-maxlength="50"
+							ng-disabled="isExistingFaculty"
+							ng-required="!isExistingFaculty" />
+						<div
+							ng-show="form.inputUniversityName.$dirty && form.inputUniversityName.$invalid"
+							class="universityNameFieldError">
+							<span
+								ng-show="form.inputUniversityName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputUniversityName.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidUniversityNameMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionCity"
+						class="col-sm-4 control-label">{{ resources.seminarPopupLabels.facultyCity }} <span class="required" ng-show="!isExistingFaculty">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCity"
+							name="inputInstitutionCity"
+							ng-model="seminar.institutionCity"
+							placeholder="{{ resources.seminarPopupLabels.facultyCity }}"
+							ng-maxlength="50"
+							ng-disabled="isExistingFaculty"
+							ng-requiered="!isExistingFaculty" />
+						<div
+							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
+							class="institutionCityFieldError">
+							<span
+								ng-show="form.inputInstitutionCity.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputInstitutionCity.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionCountry"
+						class="col-sm-4 control-label">{{ resources.seminarPopupLabels.facultyCountry }} <span class="required" ng-show="!isExistingFaculty">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCountry"
+							name="inputInstitutionCountry"
+							ng-model="seminar.institutionCountry"
+							placeholder="{{ resources.seminarPopupLabels.facultyCountry }}"
+							ng-maxlength="50"
+							ng-disabled="isExistingFaculty"
+							ng-requiered="!isExistingFaculty" />
+						<div
+							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
+							class="institutionCountryFieldError">
+							<span
+								ng-show="form.inputInstitutionCountry.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputInstitutionCountry.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputSubjectName"
+						class="col-sm-4 control-label">{{ resources.seminarPopupLabels.seminarName }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="ng-binding form-control"
+							id="inputSubjectName"
+							name="inputSubjectName"
+							ng-model="seminar.subjectName"
+							placeholder="{{ resources.seminarPopupLabels.seminarName }}"
+							required />
+						<div
+							ng-show="form.inputSubjectName.$dirty && form.inputSubjectName.$invalid"
+							class="subjectNameFieldError">
+							<span
+								ng-show="form.inputSubjectName.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer action">
+		 		<button 
+					id="submit_button" 
+					type="submit" 
+					class="btn btn-success btn-sm" 
+					ng-disabled="!validateForm()" 
+					ng-click="saveNewSeminar()">
+					<span class="glyphicon glyphicon-save"></span> {{ resources.buttons.seminarButtons.save }}
+				</button>
+		 		<button 
+					id="cancel_button" 
+					class="btn btn-sm" 
+					ng-click="cancel()">{{ resources.buttons.seminarButtons.close }}
+				</button>
+  			</div>
+		</form>
+	</script>
+
+</div>

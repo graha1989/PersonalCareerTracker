@@ -10,7 +10,7 @@ public interface SubjectService {
 	
 	List<SubjectDto> findAvailableSubjectsStartsWith(String value, List<Long> subjectIds, Boolean seminarOrTeachingAbroad);
 
-	List<SubjectDto> findAllSubjects();
+	List<SubjectDto> findAllSubjectsOrSeminars(Boolean seminarOrTeachingAbroad);
 
 	SubjectDto findSubjectById(Long id) throws SubjectNotFoundException;
 

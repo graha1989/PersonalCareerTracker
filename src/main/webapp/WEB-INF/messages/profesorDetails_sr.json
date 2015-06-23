@@ -39,6 +39,7 @@
         "projectsTitle": "Pregled svih projekata",
         "allProfessorsTitle": "Pregled svih profesora",
         "subjectsTitle": "Pregled svih predmeta",
+        "seminarTitle": "Pregled svih seminara i predmeta koji se predaju u inostranstvu",
         "teachingExperiencesTitle": "Rad u nastavi",
         "editWorkExperiencePopupTitle": "Izmena radnog iskustva",
         "editInstitutionPopupTitle": "Izmena institucije",
@@ -47,6 +48,7 @@
         "editProjectPopupTitle": "Izmena projekta",
         "addNewProjectExperiencePopupTitle": "Dodavanje novog rada na projekta",
         "editSubjectPopupTitle": "Izmena predmeta",
+        "editSeminarPopupTitle": "Izmena seminara",
         "createNewTeachingExperiencePopupTitle": "Dodavanje novog radnog iskustva u nastavi",
         "addNewWorkExperiencePopupTitle": "Dodavanje novog radnog iskustva",
         "addNewBachelorStudiesTitle": "Dodavanje novih osnovnih studija",
@@ -55,6 +57,7 @@
         "addNewDoctorStudiesTitle": "Dodavanje novih doktorskih studija",
         "addNewSpecialization": "Dodavanje nove specijalizacije u inostranstvu",
         "addNewSubjectTitle": "Dodavanje novog predmeta",
+        "addNewSeminarTitle": "Dodavanje novog seminara",
         "professorBachelorStudiesTitle": "Osnovne (bachelor) studije",
         "professorMasterStudiesTitle": "Master studije",
         "professorSpecialisticStudiesTitle": "Specijalističke studije",
@@ -131,6 +134,7 @@
         "allProfessors": "Svi profesori",
         "allStudents": "Svi studenti",
         "allSubjects": "Svi predmeti",
+        "allSeminars": "Svi seminari",
         "allProjects": "Svi projekti",
         "allInstitutions": "Sve institucije"
     },
@@ -266,6 +270,14 @@
             "delete": "Izbriši",
             "edit": "Izmeni",
             "add": "Dodaj novi predmet",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
+        "seminarButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novi seminar",
             "close": "Zatvori",
             "save": "Sačuvaj",
             "cancel": "Odustani"
@@ -410,6 +422,13 @@
         "lessonsNumber": "Fond časova",
         "introducedBy": "Uveden od strane"
     },
+    "seminarOrSubjectAbroadTableLabels": {
+        "seminarName": "Naziv seminara",
+        "facultyName": "Ime fakulteta",
+        "universityName": "Ime univerziteta",
+        "facultyCity": "Grad",
+        "facultyCountry": "Država"
+    },
     "awardPopupLabels": {
         "awardNameLabel": "Naziv priznanja",
         "awardedByLabel": "Dodeljeno od strane",
@@ -444,6 +463,13 @@
         "practicalLessons": "Praktične vežbe",
         "theoreticalLessons": "Teorijske vežbe",
         "introducedBy": "Uveden od strane"
+    },
+    "seminarPopupLabels": {
+        "seminarName": "Naziv seminara",
+        "facultyName": "Fakultet",
+        "universityName": "Univerzitet",
+        "facultyCity": "Grad",
+        "facultyCountry": "Država"
     },
     "professorPublicationsTableLabels": {
         "publicationType": "Tip publikacije",

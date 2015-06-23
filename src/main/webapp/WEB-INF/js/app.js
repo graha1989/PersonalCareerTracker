@@ -185,6 +185,10 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         templateUrl: 'admin/pages/showAllSubjects.html',
         controller: 'SubjectsController'
       })
+      .when('/showAllSeminars', {
+        templateUrl: 'admin/pages/showAllSeminars.html',
+        controller: 'SeminarsController'
+      })
       .when('/surveys/professorId/:professorId/subjectId/:subjectId', {
         templateUrl: 'pages/professorSubjectsSurveys.html?professorId=:professorId&subjectId=:subjectId',
         controller: 'ProfessorSubjectsSurveysController'

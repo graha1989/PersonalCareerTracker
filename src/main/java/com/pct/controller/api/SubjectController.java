@@ -31,20 +31,20 @@ public class SubjectController {
 
 	@Autowired
 	SubjectService subjectService;
-	
-	@Secured(value = "ROLE_ADMIN")
-	@RequestMapping(value = RequestMappings.LOAD_ALL_SUBJECTS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<List<SubjectDto>> showAllSubjects() {
 
-		List<SubjectDto> subjectDtos = subjectService.findAllSubjects();
+	@Secured(value = "ROLE_ADMIN")
+	@RequestMapping(value = RequestMappings.LOAD_ALL_SUBJECTS_OR_SEMINARS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<List<SubjectDto>> showAllSubjectsOrSeminars(
+			@RequestParam(value = "seminarOrTeachingAbroad", required = true) Boolean seminarOrTeachingAbroad) {
+
+		List<SubjectDto> subjectDtos = subjectService.findAllSubjectsOrSeminars(seminarOrTeachingAbroad);
 		logger.debug("Current number of subjects in database is " + subjectDtos.size() + ".");
 
 		return new ResponseEntity<List<SubjectDto>>(subjectDtos, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = RequestMappings.LOAD_SELECTED_SUBJECT, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<SubjectDto> showSubject(@RequestParam(value = RequestMappings.ID, required = true) Long id)
-			throws SubjectNotFoundException {
+	public ResponseEntity<SubjectDto> showSubject(@RequestParam(value = RequestMappings.ID, required = true) Long id) throws SubjectNotFoundException {
 		SubjectDto subjectDto = subjectService.findSubjectById(id);
 
 		return new ResponseEntity<SubjectDto>(subjectDto, HttpStatus.OK);

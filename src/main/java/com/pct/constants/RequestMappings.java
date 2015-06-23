@@ -73,7 +73,7 @@ public final class RequestMappings {
 	public static final String LOAD_ALL_STUDENTS_STARTS_WITH = "findStudentStartsWith";
 
 	public static final String SUBJECTS_API = "/api/subjects";
-	public static final String LOAD_ALL_SUBJECTS = "allSubjects";
+	public static final String LOAD_ALL_SUBJECTS_OR_SEMINARS = "allSubjectsOrSeminars";
 	public static final String LOAD_SELECTED_SUBJECT = "selectedSubject";
 
 	public static final String SURVEYS_API = "/api/surveys";

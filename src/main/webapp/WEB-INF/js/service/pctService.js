@@ -391,8 +391,8 @@ app.factory("PctService", [
             url: 'api/projects?id=' + id
           }).success(callback).error(callback);
         },
-        loadAllSubjects: function(params, callback) {
-          $http.get('api/subjects/allSubjects').success(callback);
+        loadAllSubjectsOrSeminars: function(params, seminarOrTeachingAbroad, callback) {
+          $http.get('api/subjects/allSubjectsOrSeminars?seminarOrTeachingAbroad=' + seminarOrTeachingAbroad).success(callback);
         },
         loadSelectedSubject: function(id, callback) {
           $http.get('api/subjects/selectedSubject?id=' + id)

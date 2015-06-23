@@ -96,6 +96,7 @@
 		<script type="text/javascript" src="<spring:url value='admin/controllers/adminMenuController.js' />"></script>
 		<script type="text/javascript" src="<spring:url value='admin/controllers/projectsController.js' />"></script>
 		<script type="text/javascript" src="<spring:url value='admin/controllers/adminDetailsController.js' />"></script>
+		<script type="text/javascript" src="<spring:url value='admin/controllers/seminarsController.js' />"></script>
 	</c:if>
 	
 </body>

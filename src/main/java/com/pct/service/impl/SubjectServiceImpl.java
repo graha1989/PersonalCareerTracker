@@ -33,8 +33,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Autowired
 	public SubjectServiceImpl(SubjectRepository subjectRepository, InstitutionRepository institutionRepository,
-			ProfesorRepository professorRepository, InstitutionTypeRepository institutionTypeRepository,
-			StudyProgramRepository studyProgramRepository) {
+			ProfesorRepository professorRepository, InstitutionTypeRepository institutionTypeRepository, StudyProgramRepository studyProgramRepository) {
 		this.subjectRepository = subjectRepository;
 		this.institutionRepository = institutionRepository;
 		this.professorRepository = professorRepository;
@@ -44,8 +43,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	@Transactional
-	public List<SubjectDto> findAvailableSubjectsStartsWith(String value, List<Long> subjectIds,
-			Boolean seminarOrTeachingAbroad) {
+	public List<SubjectDto> findAvailableSubjectsStartsWith(String value, List<Long> subjectIds, Boolean seminarOrTeachingAbroad) {
 
 		List<SubjectDto> subjectDtos = new ArrayList<SubjectDto>();
 		List<Subject> subjects = new ArrayList<Subject>();
@@ -63,11 +61,11 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	@Transactional
-	public List<SubjectDto> findAllSubjects() {
+	public List<SubjectDto> findAllSubjectsOrSeminars(Boolean seminarOrTeachingAbroad) {
 
 		List<SubjectDto> subjectDtos = new ArrayList<SubjectDto>();
 		try {
-			List<Subject> subjects = subjectRepository.findAllNotSeminarsOrTeachingAbroad();
+			List<Subject> subjects = subjectRepository.findAllSubjectsOrSeminars(seminarOrTeachingAbroad);
 			for (Subject s : subjects) {
 				SubjectDto subjectDto = new SubjectDto(s);
 				subjectDtos.add(subjectDto);
@@ -126,8 +124,7 @@ public class SubjectServiceImpl implements SubjectService {
 		return institution;
 	}
 
-	public Subject createOrUpdateSubjectInstanceFromSubjectDto(@Nonnull SubjectDto subjectDto,
-			@Nonnull Institution institution) {
+	public Subject createOrUpdateSubjectInstanceFromSubjectDto(@Nonnull SubjectDto subjectDto, @Nonnull Institution institution) {
 
 		Professor professor = null;
 		if (subjectDto.getProfessorId() != null && subjectDto.getProfessorId() > 0L) {
