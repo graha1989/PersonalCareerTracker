@@ -368,6 +368,7 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams,
     if (!$scope.isExistingFaculty) {
       $scope.subject.institutionName = $scope.selectedFaculty;
     }
+    $scope.subject.seminarOrTeachingAbroad = false;
     $http({
       method: 'POST',
       url: "api/subjects",

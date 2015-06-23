@@ -67,7 +67,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 		List<SubjectDto> subjectDtos = new ArrayList<SubjectDto>();
 		try {
-			List<Subject> subjects = subjectRepository.findAll();
+			List<Subject> subjects = subjectRepository.findAllNotSeminarsOrTeachingAbroad();
 			for (Subject s : subjects) {
 				SubjectDto subjectDto = new SubjectDto(s);
 				subjectDtos.add(subjectDto);
@@ -147,6 +147,7 @@ public class SubjectServiceImpl implements SubjectService {
 		subject.setNumberOfTeachingLessons(subjectDto.getNumberOfTeachingLessons());
 		subject.setNumberOfTheoreticalLessons(subjectDto.getNumberOfTheoreticalLessons());
 		subject.setNumberOfPracticalLessons(subjectDto.getNumberOfPracticalLessons());
+		subject.setSeminarOrTeachingAbroad(subjectDto.getSeminarOrTeachingAbroad());
 
 		return subject;
 	}
