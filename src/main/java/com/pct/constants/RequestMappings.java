@@ -99,6 +99,9 @@ public final class RequestMappings {
 	public static final String SCIENTIFIC_AND_PROFESSIONAL_ORGANIZATION_MEMBERSHIP_API = "/api/scientificProfessionalOrganisationMembership";
 	public static final String LOAD_ALL_PROFESSORS_SCIENTIFIC_AND_PROFESSIONAL_ORGANIZATION_MEMBERSHIPS = "allMemberships";
 	public static final String LOAD_SELECTED_PROFESSORS_SCIENTIFIC_AND_PROFESSIONAL_ORGANIZATION_MEMBERSHIP = "selectedMembership";
+	
+	public static final String ACADEMIC_COMMUNITY_CONTRIBUTION_API = "/api/academicCommunityContribution";
+	public static final String LOAD_ALL_FACULTY_OR_UNIVERSITY_WORK = "allFacultyOrUniversityWork";
 
 	public static final String ID = "id";
 

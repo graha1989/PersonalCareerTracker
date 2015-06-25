@@ -69,10 +69,6 @@ app
 
                   $scope.init();
 
-                  $scope.goBack = function() {
-                    window.history.back();
-                  };
-
                   $scope.deleteAward = function(id, index) {
                     PctService.deleteAward(id, function(data) {
                       if (angular.isObject(data)) {

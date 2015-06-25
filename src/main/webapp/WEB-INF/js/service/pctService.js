@@ -8,8 +8,7 @@ app.factory("PctService", [
           $http.get('api/students/allStudents').success(callback);
         },
         loadSelectedStudent: function(id, callback) {
-          $http.get('api/students/selectedStudent?id=' + id).success(callback)
-                  .error(callback);
+          $http.get('api/students/selectedStudent?id=' + id).success(callback).error(callback);
         },
         deleteStudent: function(id, callback) {
           $http({
@@ -18,24 +17,19 @@ app.factory("PctService", [
           }).success(callback).error(callback);
         },
         loadProfesor: function(id, callback) {
-          $http.get('api/professors/loadProfessorDetails?id=' + id).success(
-                  callback).error(callback);
+          $http.get('api/professors/loadProfessorDetails?id=' + id).success(callback).error(callback);
         },
         loadThesis: function(mentorId, thesisTypeId, callback) {
-          $http.get(
-                  'api/thesis/allThesis?mentorId=' + mentorId
-                          + '&thesisTypeId=' + thesisTypeId).success(callback);
+          $http.get('api/thesis/allThesis?mentorId=' + mentorId + '&thesisTypeId=' + thesisTypeId).success(callback);
         },
         loadThesisTypes: function(params, callback) {
           $http.get('api/thesis/allThesisTypes').success(callback);
         },
         loadThesisType: function(id, callback) {
-          $http.get('api/thesis/loadThesisTypeDetails?id=' + id).success(
-                  callback).error(callback);
+          $http.get('api/thesis/loadThesisTypeDetails?id=' + id).success(callback).error(callback);
         },
         loadSelectedThesis: function(id, callback) {
-          $http.get('api/thesis/selectedThesis?id=' + id).success(callback)
-                  .error(callback);
+          $http.get('api/thesis/selectedThesis?id=' + id).success(callback).error(callback);
         },
         deleteThesis: function(id, callback) {
           $http({
@@ -139,8 +133,7 @@ app.factory("PctService", [
           $http.get('api/awards/allAwardFields').success(callback);
         },
         loadSelectedAward: function(id, callback) {
-          $http.get('api/awards/selectedAward?id=' + id).success(callback)
-                  .error(callback);
+          $http.get('api/awards/selectedAward?id=' + id).success(callback).error(callback);
         },
         deleteAward: function(id, callback) {
           $http({
@@ -165,8 +158,7 @@ app.factory("PctService", [
           $http.get('api/projectExperiences/allProjectTypes').success(callback);
         },
         loadSelectedProjectExperience: function(id, callback) {
-          $http.get('api/projectExperiences/selectedProjectExperience?id=' + id).success(callback)
-                  .error(callback);
+          $http.get('api/projectExperiences/selectedProjectExperience?id=' + id).success(callback).error(callback);
         },
         findProjectsStartsWith: function(value, projectIds) {
           var deferred = $q.defer();
@@ -218,17 +210,13 @@ app.factory("PctService", [
           $http.get('api/publications/allPublicationTypes').success(callback);
         },
         loadAllPublicationCategories: function(params, callback) {
-          $http.get('api/publications/allPublicationCategories').success(
-                  callback);
+          $http.get('api/publications/allPublicationCategories').success(callback);
         },
         loadSelectedProfessorPublication: function(id, callback) {
-          $http.get('api/publications/selectedProfessorPublication?id=' + id)
-                  .success(callback).error(callback);
+          $http.get('api/publications/selectedProfessorPublication?id=' + id).success(callback).error(callback);
         },
         loadSelectedInternationalPublication: function(id, callback) {
-          $http.get(
-                  'api/publications/selectedInternationalPublication?id=' + id)
-                  .success(callback).error(callback);
+          $http.get('api/publications/selectedInternationalPublication?id=' + id).success(callback).error(callback);
         },
         deleteProfessorPublication: function(id, callback) {
           $http({
@@ -256,12 +244,10 @@ app.factory("PctService", [
           return deferred.promise;
         },
         loadSelectedWorkExperience: function(id, callback) {
-          $http.get('api/workExperiences/selectedWorkExperience?id=' + id)
-                  .success(callback).error(callback);
+          $http.get('api/workExperiences/selectedWorkExperience?id=' + id).success(callback).error(callback);
         },
         loadAllInstitutionTypes: function(params, callback) {
-          $http.get('api/institutions/allInstitutionTypes')
-                  .success(callback);
+          $http.get('api/institutions/allInstitutionTypes').success(callback);
         },
         findInstutionsStartsWith: function(value, type) {
           var deferred = $q.defer();
@@ -298,8 +284,7 @@ app.factory("PctService", [
           return deferred.promise;
         },
         loadAllStudyPrograms: function(params, callback) {
-          $http.get('api/studies/allStudyPrograms')
-                  .success(callback);
+          $http.get('api/studies/allStudyPrograms').success(callback);
         },
         deleteProfessorStudies: function(id, callback) {
           $http({
@@ -341,8 +326,7 @@ app.factory("PctService", [
           return deferred.promise;
         },
         loadSelectedTeachingExperience: function(id, callback) {
-          $http.get('api/teachingExperiences/selectedTeachingExperience?id=' + id)
-                  .success(callback).error(callback);
+          $http.get('api/teachingExperiences/selectedTeachingExperience?id=' + id).success(callback).error(callback);
         },
         deleteTeachingExperience: function(id, callback) {
           $http({
@@ -369,8 +353,7 @@ app.factory("PctService", [
           $http.get('api/institutions/allInstitutions').success(callback);
         },
         loadSelectedInstitution: function(id, callback) {
-          $http.get('api/institutions/selectedInstitution?id=' + id)
-                  .success(callback).error(callback);
+          $http.get('api/institutions/selectedInstitution?id=' + id).success(callback).error(callback);
         },
         deleteInstitution: function(id, callback) {
           $http({
@@ -382,8 +365,7 @@ app.factory("PctService", [
           $http.get('api/projects/allProjects').success(callback);
         },
         loadSelectedProject: function(id, callback) {
-          $http.get('api/projects/selectedProject?id=' + id)
-                  .success(callback).error(callback);
+          $http.get('api/projects/selectedProject?id=' + id).success(callback).error(callback);
         },
         deleteProject: function(id, callback) {
           $http({
@@ -392,23 +374,20 @@ app.factory("PctService", [
           }).success(callback).error(callback);
         },
         loadAllSubjectsOrSeminars: function(params, seminarOrTeachingAbroad, callback) {
-          $http.get('api/subjects/allSubjectsOrSeminars?seminarOrTeachingAbroad=' + seminarOrTeachingAbroad).success(callback);
+          $http.get('api/subjects/allSubjectsOrSeminars?seminarOrTeachingAbroad=' + seminarOrTeachingAbroad).success(
+                  callback);
         },
         loadSelectedSubject: function(id, callback) {
-          $http.get('api/subjects/selectedSubject?id=' + id)
-                  .success(callback).error(callback);
+          $http.get('api/subjects/selectedSubject?id=' + id).success(callback).error(callback);
         },
         loadAllProfessors: function(params, callback) {
           $http.get('api/professors/allProfessors').success(callback);
         },
         loadAllSurveys: function(professorId, subjectId, callback) {
-          $http.get(
-                  'api/surveys/allSurveys?professorId=' + professorId
-                          + '&subjectId=' + subjectId).success(callback);
+          $http.get('api/surveys/allSurveys?professorId=' + professorId + '&subjectId=' + subjectId).success(callback);
         },
         loadSelectedSurvey: function(id, callback) {
-          $http.get('api/surveys/selectedSurvey?id=' + id)
-                  .success(callback).error(callback);
+          $http.get('api/surveys/selectedSurvey?id=' + id).success(callback).error(callback);
         },
         deleteSurvey: function(id, callback) {
           $http({
@@ -416,7 +395,8 @@ app.factory("PctService", [
             url: 'api/surveys?id=' + id
           }).success(callback).error(callback);
         },
-        findProfessorsOrLeadersStartsWith: function(value, projectId, professorsWhoAreLeadersOnThisProject, leadersOnThisProjectWhoAreNotProfessors) {
+        findProfessorsOrLeadersStartsWith: function(value, projectId, professorsWhoAreLeadersOnThisProject,
+                leadersOnThisProjectWhoAreNotProfessors) {
           var deferred = $q.defer();
           $http.get("api/projects/findProfessorsOrLeadersStartsWith", {
             params: {
@@ -432,7 +412,8 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
-        findAllProfessorsOrLeadersStartsWith: function(value, professorsWhoAreLeadersOnThisProject, leadersOnThisProjectWhoAreNotProfessors) {
+        findAllProfessorsOrLeadersStartsWith: function(value, professorsWhoAreLeadersOnThisProject,
+                leadersOnThisProjectWhoAreNotProfessors) {
           var deferred = $q.defer();
           $http.get("api/projects/findProfessorsOrLeadersStartsWith", {
             params: {
@@ -461,14 +442,28 @@ app.factory("PctService", [
           return deferred.promise;
         },
         loadProfessorOrganizationMembership: function(id, callback) {
-          $http.get('api/scientificProfessionalOrganisationMembership/selectedMembership?id=' + id)
-                  .success(callback).error(callback);
+          $http.get('api/scientificProfessionalOrganisationMembership/selectedMembership?id=' + id).success(callback)
+                  .error(callback);
         },
         deleteProfessorMembershipInOrganization: function(id, callback) {
           $http({
             method: 'DELETE',
             url: 'api/scientificProfessionalOrganisationMembership?id=' + id
           }).success(callback).error(callback);
+        },
+        loadFacultyOrUniversityWork: function(professorId, type) {
+          var deferred = $q.defer();
+          $http.get("api/academicCommunityContribution/allFacultyOrUniversityWork", {
+            params: {
+              professorId: professorId,
+              type: type
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
         },
       };
     }]);

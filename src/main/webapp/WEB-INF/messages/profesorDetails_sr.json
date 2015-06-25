@@ -314,6 +314,14 @@
             "save": "Sačuvaj",
             "cancel": "Odustani"
         },
+        "workButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novo članstvo",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
         "allProfessorsButtons": {
             "details": "Detaljnije",
             "studies": "Studije",
@@ -399,6 +407,12 @@
         "dateOfAward": "Datum dodele",
         "awardedBy": "Dodeljeno od strane",
         "field": "Oblast"
+    },
+    "facultyOrUniversityAuthoritiesWorkTableLabels": {
+        "authority": "Organ ili telo",
+        "facultyOrUniversity": "Fakultet ili Univerzitet",
+        "startDate": "Početak učešća",
+        "endDate": "Kraj učešća"
     },
     "membershipsTableLabels": {
         "name": "Naziv organizacije"

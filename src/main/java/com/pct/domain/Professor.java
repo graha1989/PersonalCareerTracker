@@ -101,6 +101,12 @@ public class Professor extends User {
 	@JsonIgnore
 	private Set<ScientificProfessionalOrgMem> memberships = new HashSet<ScientificProfessionalOrgMem>();
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "professor")
+	@JsonIgnore
+	private Set<AcademicCommunityContribution> contributions = new HashSet<AcademicCommunityContribution>();
+
 	@OneToOne(mappedBy = "professor")
 	private ProjectLeader projectLeader;
 
@@ -111,7 +117,7 @@ public class Professor extends User {
 			String specialScientificArea, Set<LanguageExperience> languageExperiences, Set<Award> awards, Set<ProjectExperience> projectExperiences,
 			Set<ProfessorPublication> professorPublications, Set<InternationalPublication> internationalPublications,
 			Set<WorkExperience> workExperiences, Set<Studies> studies, Set<TeachingExperience> teachingExperiences, Set<Survey> surveys,
-			Set<ScientificProfessionalOrgMem> memberships, ProjectLeader projectLeader) {
+			Set<ScientificProfessionalOrgMem> memberships, Set<AcademicCommunityContribution> contributions, ProjectLeader projectLeader) {
 		this.fathersName = fathersName;
 		this.dateOfBirth = dateOfBirth;
 		this.placeOfBirth = placeOfBirth;
@@ -129,6 +135,7 @@ public class Professor extends User {
 		this.surveys = surveys;
 		this.projectLeader = projectLeader;
 		this.memberships = memberships;
+		this.contributions = contributions;
 	}
 
 	public String getFathersName() {
@@ -308,6 +315,18 @@ public class Professor extends User {
 
 		if (memberships != null) {
 			this.memberships.addAll(memberships);
+		}
+	}
+
+	public Set<AcademicCommunityContribution> getContributions() {
+		return contributions;
+	}
+
+	public void setContributions(Set<AcademicCommunityContribution> contributions) {
+		this.contributions.clear();
+
+		if (contributions != null) {
+			this.contributions.addAll(contributions);
 		}
 	}
 

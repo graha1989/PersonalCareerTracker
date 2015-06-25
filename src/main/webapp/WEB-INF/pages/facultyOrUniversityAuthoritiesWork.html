@@ -1,0 +1,50 @@
+<div>
+
+	<form name="form" id="showAllFacultyOrUniversityAuthoritiesWorksForm" novalidate class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form" ng-model="work">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ work.type.title }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+
+				<table ng-show="works != []" class="table table-condensed table-striped table-hover" cellspacing="0" cellpadding="0">
+					<tbody>
+						<tr class="info ng-binding">
+							<td>{{ resources.facultyOrUniversityAuthoritiesWorkTableLabels.authority }}</td>
+							<td>{{ resources.facultyOrUniversityAuthoritiesWorkTableLabels.facultyOrUniversity }}</td>
+							<td>{{ resources.facultyOrUniversityAuthoritiesWorkTableLabels.startDate }}</td>
+							<td>{{ resources.facultyOrUniversityAuthoritiesWorkTableLabels.endDate }}</td>
+							<td ng-show="isUser" colspan="2"></td>
+						</tr>
+						<tr class="active ng-scope" ng-repeat="work in works">
+							<td>{{ work.authority}}</td>
+							<td>{{ work.institutionType }}</td>
+							<td>{{ work.startDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ work.endDate | date:'dd-MM-yyyy' }}</td>
+							<td class="delete" ng-show="isUser"><button class="btn btn-link btn-xs" ng-click="deleteWork(work.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.workButtons.delete }}
+								</button></td>
+							<td class="edit" ng-show="isUser"><button class="btn btn-link btn-xs" ng-click="editWork(work.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.workButtons.edit }}
+								</button></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td ng-show="isUser" colspan="7">{{ errorMessages.error.emptyTable }}</td>
+							<td ng-show="isAdmin" colspan="5">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button id="addNewButton" class="btn btn-success btn-sm" ng-show="isUser" ng-click="createNewWork()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.workButtons.add }}
+			</button>
+			<button id="cancel_button" class="btn btn-sm" ng-click="goBack()">
+				<span class="glyphicon glyphicon-arrow-left"></span> {{ resources.form.back }}
+			</button>
+		</div>
+	</form>
+
+</div>
