@@ -102,6 +102,9 @@ public final class RequestMappings {
 	
 	public static final String ACADEMIC_COMMUNITY_CONTRIBUTION_API = "/api/academicCommunityContribution";
 	public static final String LOAD_ALL_FACULTY_OR_UNIVERSITY_WORK = "allFacultyOrUniversityWork";
+	public static final String LOAD_SELECTED_FACULTY_OR_UNIVERSITY_WORK = "selectedFacultyOrUniversityAuthorityWork";
+	public static final String SAVE_SELECTED_FACULTY_OR_UNIVERSITY_WORK = "saveFacultyOrUniversityAuthorityWork";
+	public static final String DELETE_FACULTY_OR_UNIVERSITY_WORK = "deleteFacultyOrUniversityWork";
 
 	public static final String ID = "id";
 

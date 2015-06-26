@@ -451,6 +451,12 @@ app.factory("PctService", [
             url: 'api/scientificProfessionalOrganisationMembership?id=' + id
           }).success(callback).error(callback);
         },
+        deleteFacultyOrUniversityAuthoritiesWork: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/academicCommunityContribution/deleteFacultyOrUniversityWork?id=' + id
+          }).success(callback).error(callback);
+        },
         loadFacultyOrUniversityWork: function(professorId, type) {
           var deferred = $q.defer();
           $http.get("api/academicCommunityContribution/allFacultyOrUniversityWork", {
@@ -464,6 +470,9 @@ app.factory("PctService", [
             deferred.reject(response);
           });
           return deferred.promise;
+        },
+        loadSelectedFacultyOruniversityAuthorityWork: function(id, callback) {
+          $http.get('api/academicCommunityContribution/selectedFacultyOrUniversityAuthorityWork?id=' + id).success(callback).error(callback);
         },
       };
     }]);

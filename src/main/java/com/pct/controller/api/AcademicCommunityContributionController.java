@@ -3,6 +3,8 @@ package com.pct.controller.api;
 import java.util.Collection;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +25,8 @@ import com.pct.domain.dto.FacultyOrUniversityAuthoritiesWorkDto;
 import com.pct.domain.dto.UserDto;
 import com.pct.service.AcademicCommunityContributionService;
 import com.pct.service.UserService;
+import com.pct.validation.AcademicCommunityContributionNotFoundException;
+import com.pct.validation.ProfessorNotFoundException;
 import com.pct.validation.UserNotFoundException;
 
 @RestController
@@ -38,8 +43,7 @@ public class AcademicCommunityContributionController {
 
 	@RequestMapping(value = RequestMappings.LOAD_ALL_FACULTY_OR_UNIVERSITY_WORK, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<List<FacultyOrUniversityAuthoritiesWorkDto>> showAllFacultyOrUniversityAuthorityWork(
-			@RequestParam(value = "professorId", required = true) Long professorId,
-			@RequestParam(value = "type", required = true) String type) {
+			@RequestParam(value = "professorId", required = true) Long professorId, @RequestParam(value = "type", required = true) String type) {
 
 		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		UserDto userDto;
@@ -51,11 +55,42 @@ public class AcademicCommunityContributionController {
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
 		}
-		logger.debug("Recived request for professor with (ID {}) faculty or university authorities work.", professorId);
+		logger.debug("Received request for professor with (ID {}) faculty or university authorities work.", professorId);
 		List<FacultyOrUniversityAuthoritiesWorkDto> works = null;
 		works = academicCommunityContributionService.findAllFacultyOrUniversityAuthoritiesWorks(professorId, type);
-		logger.debug("Found " + works.size() + " faculty or university authorities works for professor with ID {}." , professorId);
+		logger.debug("Found " + works.size() + " faculty or university authorities works for professor with ID {}.", professorId);
 		return new ResponseEntity<List<FacultyOrUniversityAuthoritiesWorkDto>>(works, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_FACULTY_OR_UNIVERSITY_WORK, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<FacultyOrUniversityAuthoritiesWorkDto> showWork(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws AcademicCommunityContributionNotFoundException {
+		logger.debug("Received request for AcademicCommunityContribution with ID {}.", id);
+		FacultyOrUniversityAuthoritiesWorkDto workDto = academicCommunityContributionService.findFacultyOrUniversityAuthorityWorkById(id);
+		logger.debug("AcademicCommunityContribution with ID {} successfully founded.", id);
+		return new ResponseEntity<FacultyOrUniversityAuthoritiesWorkDto>(workDto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = RequestMappings.SAVE_SELECTED_FACULTY_OR_UNIVERSITY_WORK, method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<String> persistFacultyOrUniversityAuthoritiesWork(@Valid @RequestBody FacultyOrUniversityAuthoritiesWorkDto workDto) {
+
+		try {
+			academicCommunityContributionService.saveFacultyOrUniversityAuthorityWork(workDto);
+		} catch (ProfessorNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		logger.debug("Work in the institution and authorities of the faculty or univesity: {} successfully saved.", workDto.getAuthority());
+
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = RequestMappings.DELETE_FACULTY_OR_UNIVERSITY_WORK, method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteFacultyOrUniversityAuthorityWork(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws AcademicCommunityContributionNotFoundException {
+		academicCommunityContributionService.deleteFacultyOrUniversityAuthorityWork(id);
+
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 }

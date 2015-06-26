@@ -19,6 +19,9 @@
         "awardsTitle": "Priznanja, nagrade i odlikovanja",
         "membershipsTitle": "Članstvo u naučnim i stručnim organizacijama",
         "editAwardPopupTitle": "Izmena priznanja",
+        "facultyOrUniversityAuthoritiesWorksTitle": "Učešće u radu organa i tela fakulteta i Univerziteta",
+        "editfacultyOrUniversityAuthoritiesWorkPopupTitle": "Izmena podataka o učešću u radu tela fakulteta i Univerziteta",
+        "createNewFacultyOrUniversityAuthoritiesWorkPopupTitle": "Kreiranje novih podataka o učešću u radu tela fakulteta i Univerziteta",
         "editMembershipPopupTitle": "Izmena podataka o članstvu u naučnim i stručnim organizacijama",
         "addMembershipPopupTitle": "Dodavanje novog članstva u naučnim i stručnim organizacijama",
         "addAwardPopupTitle": "Dodavanje novog priznanja",
@@ -449,6 +452,13 @@
         "dateOfAward": "Datum dodele",
         "awardType": "Tip",
         "awardField": "Oblast"
+    },
+    "facultzOrUniversitzAuthoritiesWorkPopupLabels": {
+        "authority": "Organ ili telo",
+        "facultyOrUniversity": "Fakultet ili Univerzitet",
+        "institution": "Institucija",
+        "startDate": "Početak učešća",
+        "endDate": "Kraj učešća"
     },
     "membershipPopupLabels": {
         "organizationNameLabel": "Naziv organizacije"

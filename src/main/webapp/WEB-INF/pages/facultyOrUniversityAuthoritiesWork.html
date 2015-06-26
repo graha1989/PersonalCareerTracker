@@ -1,50 +1,352 @@
 <div>
 
-	<form name="form" id="showAllFacultyOrUniversityAuthoritiesWorksForm" novalidate class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form" ng-model="work">
+	<form
+		name="form"
+		id="showAllFacultyOrUniversityAuthoritiesWorksForm"
+		novalidate
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		ng-model="work">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ work.type.title }}</h3>
+			<h3 class="modal-title">{{ resources.text.facultyOrUniversityAuthoritiesWorksTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
 
-				<table ng-show="works != []" class="table table-condensed table-striped table-hover" cellspacing="0" cellpadding="0">
+				<table
+					ng-show="works != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
 							<td>{{ resources.facultyOrUniversityAuthoritiesWorkTableLabels.authority }}</td>
 							<td>{{ resources.facultyOrUniversityAuthoritiesWorkTableLabels.facultyOrUniversity }}</td>
 							<td>{{ resources.facultyOrUniversityAuthoritiesWorkTableLabels.startDate }}</td>
 							<td>{{ resources.facultyOrUniversityAuthoritiesWorkTableLabels.endDate }}</td>
-							<td ng-show="isUser" colspan="2"></td>
+							<td
+								ng-show="isUser"
+								colspan="2"></td>
 						</tr>
-						<tr class="active ng-scope" ng-repeat="work in works">
+						<tr
+							class="active ng-scope"
+							ng-repeat="work in works">
 							<td>{{ work.authority}}</td>
 							<td>{{ work.institutionType }}</td>
 							<td>{{ work.startDate | date:'dd-MM-yyyy' }}</td>
 							<td>{{ work.endDate | date:'dd-MM-yyyy' }}</td>
-							<td class="delete" ng-show="isUser"><button class="btn btn-link btn-xs" ng-click="deleteWork(work.id, $index)">
+							<td
+								class="delete"
+								ng-show="isUser"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteWork(work.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.workButtons.delete }}
 								</button></td>
-							<td class="edit" ng-show="isUser"><button class="btn btn-link btn-xs" ng-click="editWork(work.id)">
+							<td
+								class="edit"
+								ng-show="isUser"><button
+									class="btn btn-link btn-xs"
+									ng-click="editWork(work.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.workButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td ng-show="isUser" colspan="7">{{ errorMessages.error.emptyTable }}</td>
-							<td ng-show="isAdmin" colspan="5">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isUser"
+								colspan="7">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isAdmin"
+								colspan="5">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
 			</fieldset>
 		</div>
 		<div class="modal-footer action">
-			<button id="addNewButton" class="btn btn-success btn-sm" ng-show="isUser" ng-click="createNewWork()">
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
+				ng-show="isUser"
+				ng-click="createNewWork()">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.workButtons.add }}
 			</button>
-			<button id="cancel_button" class="btn btn-sm" ng-click="goBack()">
+			<button
+				id="cancel_button"
+				class="btn btn-sm"
+				ng-click="goBack()">
 				<span class="glyphicon glyphicon-arrow-left"></span> {{ resources.form.back }}
 			</button>
 		</div>
 	</form>
+
+	<script
+		type="text/ng-template"
+		id="editFacultyOrUniversityAuthoritiesWorkPopup.html">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" novalidate role="form" ng-model="work">
+			<div class="modal-header">
+    			<h3 class="modal-title">{{ resources.text.editfacultyOrUniversityAuthoritiesWorkPopupTitle }}</h3>
+   	 		</div>
+    		<div class="modal-body">
+    			<div class="form-group">
+					<label
+						for="inputAuthority"
+						class="col-sm-4 control-label">{{ resources.facultzOrUniversitzAuthoritiesWorkPopupLabels.authority }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputAuthority"
+							name="inputAuthority"
+							ng-model="work.authority"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputAuthority.$dirty && form.inputAuthority.$invalid"
+							class="authorityFieldError">
+								<span
+									ng-show="form.inputAuthority.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputAuthority.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidAuthorityMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionType"
+						class="col-sm-4 control-label">{{ resources.facultzOrUniversitzAuthoritiesWorkPopupLabels.facultyOrUniversity }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputInstitutionType"
+							name="inputInstitutionType"
+							ng-model="work.institutionType"
+							ng-options="institutionType for institutionType in allInstitutionTypes"
+							required><option value="">{{ resources.facultzOrUniversitzAuthoritiesWorkPopupLabels.institution }}</option></select>
+							<div
+								ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
+								class="institutionTypeFieldError">
+								<span
+									ng-show="form.inputInstitutionType.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span>
+							</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputWorkStartDate"
+						class="col-sm-4 control-label">{{ resources.facultzOrUniversitzAuthoritiesWorkPopupLabels.startDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputStartDate"
+								name="inputStartDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputStartDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="work.startDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openStartDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputStartDate.$dirty && form.inputStartDate.$invalid"
+							class="startDateFieldError">
+							<span
+								ng-show="form.inputStartDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputEndDate"
+						class="col-sm-4 control-label">{{ resources.facultzOrUniversitzAuthoritiesWorkPopupLabels.endDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputEndDate"
+								name="inputEndDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputEndDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="work.endDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openWorkEndDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputEndDate.$dirty && form.inputEndDate.$invalid"
+							class="endDateFieldError">
+							<span
+								ng-show="form.inputEndDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+   			</div>
+   			<div class="modal-footer action">
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="form.$invalid || isUnchanged(work)" ng-click="saveWork()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.workButtons.edit }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.workButtons.close }}</button>
+  			</div>
+		</form>
+	</script>
+
+	<script
+		type="text/ng-template"
+		id="createNewFacultyOrUniversityAuthoritiesWorkPopup.html">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" novalidate role="form" ng-model="work">
+			<div class="modal-header">
+    			<h3 class="modal-title">{{ resources.text.createNewFacultyOrUniversityAuthoritiesWorkPopupTitle }}</h3>
+   	 		</div>
+    		<div class="modal-body">
+    			<div class="form-group">
+					<label
+						for="inputAuthority"
+						class="col-sm-4 control-label">{{ resources.facultzOrUniversitzAuthoritiesWorkPopupLabels.authority }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputAuthority"
+							name="inputAuthority"
+							ng-model="work.authority"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputAuthority.$dirty && form.inputAuthority.$invalid"
+							class="authorityFieldError">
+								<span
+									ng-show="form.inputAuthority.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputAuthority.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidAuthorityMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionType"
+						class="col-sm-4 control-label">{{ resources.facultzOrUniversitzAuthoritiesWorkPopupLabels.facultyOrUniversity }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputInstitutionType"
+							name="inputInstitutionType"
+							ng-model="work.institutionType"
+							ng-options="institutionType for institutionType in allInstitutionTypes"
+							required><option value="">{{ resources.facultzOrUniversitzAuthoritiesWorkPopupLabels.institution }}</option></select>
+							<div
+								ng-show="form.inputInstitutionType.$dirty && form.inputInstitutionType.$invalid"
+								class="institutionTypeFieldError">
+								<span
+									ng-show="form.inputInstitutionType.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span>
+							</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputWorkStartDate"
+						class="col-sm-4 control-label">{{ resources.facultzOrUniversitzAuthoritiesWorkPopupLabels.startDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputStartDate"
+								name="inputStartDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputStartDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="work.startDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openStartDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputStartDate.$dirty && form.inputStartDate.$invalid"
+							class="startDateFieldError">
+							<span
+								ng-show="form.inputStartDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputEndDate"
+						class="col-sm-4 control-label">{{ resources.facultzOrUniversitzAuthoritiesWorkPopupLabels.endDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputEndDate"
+								name="inputEndDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputEndDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="work.endDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openWorkEndDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputEndDate.$dirty && form.inputEndDate.$invalid"
+							class="endDateFieldError">
+							<span
+								ng-show="form.inputEndDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+   			</div>
+   			<div class="modal-footer action">
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="!validateForm()" ng-click="saveNewWork()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.workButtons.save }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.workButtons.close }}</button>
+  			</div>
+		</form>
+	</script>
 
 </div>
