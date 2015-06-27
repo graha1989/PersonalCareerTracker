@@ -91,7 +91,7 @@ app.controller("AllProfessorsController", function($scope, $routeParams, $http,
     $location.path('/seminarOrTeachingAbroad/professorId/' + id);
   };
   
-  $scope.showProfessorProjectExperience = function(id) {
+  $scope.openProfessorProjectExperience = function(id) {
     $location.path('/projectExperiences/professorId/' + id);
   };
   
@@ -161,6 +161,26 @@ app.controller("AllProfessorsController", function($scope, $routeParams, $http,
   
   $scope.openProfessorWorkExperiences = function(id) {
     $location.path('/workExperiences/professorId/' + id);
+  };
+  
+  $scope.openProfessorFacultyOrUniversityAuthoritiesWork = function(id) {
+    $location.path('/facultyOrUniversityAuthoritiesWork/professorId/' + id);
+  };
+  
+  $scope.openProfessorProfessionalOrganizationConduction = function(id) {
+    $location.path('/professionalOrganizationConduction/professorId/' + id);
+  };
+  
+  $scope.openProfessorCommitteesAndLegislativeBodiesWork = function(id) {
+    $location.path('/committeesAndLegislativeBodiesWork/professorId/' + id);
+  };
+  
+  $scope.openProfessorMeetingsConferencesAndEventsConduction = function(id) {
+    $location.path('/meetingsConferencesAndEventsConduction/professorId/' + id);
+  };
+  
+  $scope.openProfessorScientificJournalReviews = function(id) {
+    $location.path('/scientificJournalReviews/professorId/' + id);
   };
   
 });

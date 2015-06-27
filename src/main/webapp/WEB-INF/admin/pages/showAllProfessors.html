@@ -96,11 +96,25 @@
 					                </ul>
 					        	</div>
 							</td>
-							<td class="projectExperiences"><button
-									class="btn btn-link btn-xs"
-									ng-click="showProfessorProjectExperience(professor.id)">
-									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.allProfessorsButtons.projectExperiences }}
-								</button></td>
+							<td>
+								<div class="btn-group" dropdown>
+									<a class="dropdown-toggle" href="#">{{ resources.buttons.allProfessorsButtons.academicCommunity }}<span class="caret"></span></a>
+                 					<ul class="dropdown-menu" role="menu">
+                    					<li><a href="" ng-click="openProfessorProjectExperience(professor.id)">{{ resources.buttons.allProfessorsButtons.academicCommunityWork.projectExperiences }}</a>
+                    					</li>
+					                    <li><a href="" ng-click="openProfessorFacultyOrUniversityAuthoritiesWork(professor.id)">{{ resources.buttons.allProfessorsButtons.academicCommunityWork.facultyOrUniversityAuthoritiesWork }}</a>
+					                    </li>
+					                    <li><a href="" ng-click="openProfessorProfessionalOrganizationConduction(professor.id)">{{ resources.buttons.allProfessorsButtons.academicCommunityWork.professionalOrganizationsConduction }}</a>
+					                    </li>
+					                    <li><a href="" ng-click="openProfessorCommitteesAndLegislativeBodiesWork(professor.id)">{{ resources.buttons.allProfessorsButtons.academicCommunityWork.committeesAndLegislativeBodiesWork }}</a>
+					                    </li>
+					                    <li><a href="" ng-click="openProfessorMeetingsConferencesAndEventsConduction(professor.id)">{{ resources.buttons.allProfessorsButtons.academicCommunityWork.meetingsConferencesAndEventsConducting }}</a>
+					                    </li>
+					                    <li><a href="" ng-click="openProfessorScientificJournalReviews(professor.id)">{{ resources.buttons.allProfessorsButtons.academicCommunityWork.scientificJournalReview }}</a>
+					                    </li>
+					                </ul>
+					        	</div>
+							</td>
 							<td>
 								<div class="btn-group" dropdown>
 									<a class="dropdown-toggle" href="#">{{ resources.buttons.allProfessorsButtons.awardsAndMemberships }}<span class="caret"></span></a>

@@ -44,7 +44,21 @@
 							<li><a href="" ng-click="openProfessorSeminarsOrTeachings()">{{
 									resources.professorMenuLabels.teachingExperienceTypes.professorSeminarsOrTeachingsAbroad }}</a></li>
 						</ul></li>
-					<li><a href="" ng-click="openProfessorProjectExperiences()">{{ resources.professorMenuLabels.projectExperiences }}</a></li>
+					<li class="dropdown"><a href="" class="dropdown-toggle" role="button" aria-expanded="false">{{ resources.professorMenuLabels.academicCommunity }}<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="" ng-click="openProfessorProjectExperiences()">{{
+									resources.professorMenuLabels.academicCommunityWork.projectExperiences }}</a></li>
+							<li><a href="" ng-click="openProfessorFacultyOrUniversityAuthoritiesWork()">{{
+									resources.professorMenuLabels.academicCommunityWork.facultyOrUniversityAuthoritiesWork }}</a></li>
+							<li><a href="" ng-click="openProfessorProfessionalOrganizationsConduction()">{{
+									resources.professorMenuLabels.academicCommunityWork.professionalOrganizationsConduction }}</a></li>
+							<li><a href="" ng-click="openProfessorMeetingsConferencesAndEventsConducting()">{{
+									resources.professorMenuLabels.academicCommunityWork.meetingsConferencesAndEventsConducting }}</a></li>
+							<li><a href="" ng-click="openProfessorCommitteesAndLegislativeBodiesWork()">{{
+									resources.professorMenuLabels.academicCommunityWork.committeesAndLegislativeBodiesWork }}</a></li>
+							<li><a href="" ng-click="openProfessorScientificJournalReview()">{{
+									resources.professorMenuLabels.academicCommunityWork.scientificJournalReview }}</a></li>
+						</ul></li>	
 				</ul>
 			</div>
 		</div>

@@ -123,5 +123,25 @@ app.controller("ProfessorMenuController", function($scope, $http, $location,
   $scope.openInternationalPublications = function() {
     $location.path('/publications/internationalPublications');
   };
+  
+  $scope.openProfessorFacultyOrUniversityAuthoritiesWork = function() {
+    $location.path('/facultyOrUniversityAuthoritiesWork');
+  };
+  
+  $scope.openProfessorProfessionalOrganizationsConduction = function() {
+    $location.path('/professionalOrganizationConduction');
+  };
+  
+  $scope.openProfessorMeetingsConferencesAndEventsConducting = function() {
+    $location.path('/meetingsConferencesAndEventsConduction');
+  };
+  
+  $scope.openProfessorCommitteesAndLegislativeBodiesWork = function() {
+    $location.path('/committeesAndLegislativeBodiesWork');
+  };
+  
+  $scope.openProfessorScientificJournalReview = function() {
+    $location.path('/scientificJournalReviews');
+  };
 
 });

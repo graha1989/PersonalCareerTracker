@@ -135,7 +135,15 @@
             "professorDomesticTeachingExperience": "Rad u nastavi u zemlji",
             "professorSeminarsOrTeachingsAbroad": "Seminari i nastava van zemlje"
          },
-	 	"projectExperiences": "Rad na projektima",
+         "academicCommunity": "Akademska zajednica",
+         "academicCommunityWork": {
+         	"projectExperiences": "Rad na projektima",
+         	"facultyOrUniversityAuthoritiesWork": "Rad u organima fakulteta/univerziteta",
+         	"professionalOrganizationsConduction": "Vođenje profesionalnih organizacija",
+         	"meetingsConferencesAndEventsConducting": "Vođenje skupova/konferencija/manifestacija",
+         	"committeesAndLegislativeBodiesWork": "Rad u odborima i zakonodavnim telima",
+         	"scientificJournalReview": "Recenzije u naučnim časopisima"
+         },
 	 	"publications": "Publikacije",
 	 	"publicationTypes": {
         	"personalPublications": "Lične publikacije",
@@ -396,7 +404,18 @@
             	"professorDomesticTeachingExperience": "Rad u nastavi u zemlji",
            		"professorSeminarsOrTeachingsAbroad": "Seminari i nastava van zemlje"
          	},
-            "projectExperiences": "Projekti",
+         	
+         	
+            "academicCommunity": "Akademska zajednica",
+         	"academicCommunityWork": {
+         		"projectExperiences": "Rad na projektima",
+         		"facultyOrUniversityAuthoritiesWork": "Rad u organima fakulteta/univerziteta",
+         		"professionalOrganizationsConduction": "Vođenje profesionalnih organizacija",
+         		"meetingsConferencesAndEventsConducting": "Vođenje skupova/konferencija/manifestacija",
+         		"committeesAndLegislativeBodiesWork": "Rad u odborima i zakonodavnim telima",
+         		"scientificJournalReview": "Recenzije u naučnim časopisima"
+        	},
+            
             "awardsAndMemberships": "Nagrade i članstva u org.",
 		 	"awardTypes": {
 		 		"awards": "Priznanja, nagrade i odlikovanja",
