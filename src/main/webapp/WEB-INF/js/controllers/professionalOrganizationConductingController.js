@@ -24,7 +24,7 @@ app.controller("ProfessionalOrganizationConductingController", function($scope, 
   };
 
   $scope.loadConductions = function(professorId, type) {
-    return PctService.loadProfessionalOrganizationConductings(professorId, type).then(function(response) {
+    return PctService.loadAcademicCommunityContributions(professorId, type).then(function(response) {
       if (angular.isObject(response) && response.length > 0) {
         $scope.conductings = response;
         $scope.noResultsFound = false;
@@ -91,7 +91,7 @@ app.controller("ProfessionalOrganizationConductingController", function($scope, 
   };
 
   $scope.deleteConduction = function(id, index) {
-    PctService.deleteFacultyOrUniversityAuthoritiesWork(id, function(data) {
+    PctService.deleteAcademicCommunityContribution(id, function(data) {
       if (angular.isObject(data)) {
         $scope.errorStatus = data.status;
       } else {
@@ -141,11 +141,11 @@ var editProfessionalOrganizationConductionController = function($scope, $modalIn
   };
 
   $scope.loadSelectedConduction = function(id) {
-    PctService.loadSelectedProfessionalOrganizationConduction(id, function(data) {
+    PctService.loadSelectedAcademicCommunityContribution(id, function(data) {
       if (angular.isObject(data)) {
         $scope.conduction = data;
-        $scope.conduction.startDate = new Date(data.startDate);
-        $scope.conduction.endDate = new Date(data.endDate);
+        $scope.conduction.authorityOrOrganizationWorkStartDate = new Date(data.authorityOrOrganizationWorkStartDate);
+        $scope.conduction.authorityOrOrganizationWorkEndDate = new Date(data.authorityOrOrganizationWorkEndDate);
         $scope.master = angular.copy($scope.conduction);
         $scope.noResultsFound = false;
       } else {
@@ -171,7 +171,7 @@ var editProfessionalOrganizationConductionController = function($scope, $modalIn
   $scope.saveConduction = function() {
     $http({
       method: 'PUT',
-      url: "api/academicCommunityContribution/saveProfessionalOrganizationConduction",
+      url: "api/academicCommunityContribution/saveAcademicCommunityContribution",
       data: $scope.conduction,
       headers: {
         'Content-Type': 'application/json'
@@ -246,6 +246,10 @@ var createNewProfessionalOrganizationConductionController = function($scope, $mo
 
   $scope.init = function() {
     $scope.conduction.professorId = professorId;
+    $scope.conduction.type = {
+      name: "PROFESSIONAL_ORGANIZATIONS_CONDUCTION",
+      title: "Vođenje profesionalnih i strukovnih organizacija"
+    };
     $scope.status = $routeParams.status;
     $scope.loadResources();
   };
@@ -255,7 +259,7 @@ var createNewProfessionalOrganizationConductionController = function($scope, $mo
   $scope.saveNewConduction = function() {
     $http({
       method: 'POST',
-      url: "api/academicCommunityContribution/saveProfessionalOrganizationConduction",
+      url: "api/academicCommunityContribution/saveAcademicCommunityContribution",
       data: $scope.conduction,
       headers: {
         'Content-Type': 'application/json'
@@ -278,9 +282,14 @@ var createNewProfessionalOrganizationConductionController = function($scope, $mo
   };
 
   $scope.validateForm = function() {
-    if ($scope.conduction.organization != null && $scope.conduction.organization != '' && $scope.conduction.functionDesc != null
-            && $scope.conduction.functionDesc != '' && $scope.conduction.startDate != null && $scope.conduction.startDate != ''
-            && $scope.conduction.endDate != null && $scope.conduction.endDate != '') {
+    if ($scope.conduction.authorityOrganizationOrJournal != null
+            && $scope.conduction.authorityOrganizationOrJournal != ''
+            && $scope.conduction.functionInOrganizationConferenceOrCommittee != null
+            && $scope.conduction.functionInOrganizationConferenceOrCommittee != ''
+            && $scope.conduction.authorityOrOrganizationWorkStartDate != null
+            && $scope.conduction.authorityOrOrganizationWorkStartDate != ''
+            && $scope.conduction.authorityOrOrganizationWorkEndDate != null
+            && $scope.conduction.authorityOrOrganizationWorkEndDate != '') {
       return true;
     } else {
       return false;

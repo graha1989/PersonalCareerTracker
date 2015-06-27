@@ -451,15 +451,15 @@ app.factory("PctService", [
             url: 'api/scientificProfessionalOrganisationMembership?id=' + id
           }).success(callback).error(callback);
         },
-        deleteFacultyOrUniversityAuthoritiesWork: function(id, callback) {
+        deleteAcademicCommunityContribution: function(id, callback) {
           $http({
             method: 'DELETE',
             url: 'api/academicCommunityContribution/deleteAcademicCommunityContribution?id=' + id
           }).success(callback).error(callback);
         },
-        loadFacultyOrUniversityWork: function(professorId, type) {
+        loadAcademicCommunityContributions: function(professorId, type) {
           var deferred = $q.defer();
-          $http.get("api/academicCommunityContribution/allFacultyOrUniversityWork", {
+          $http.get("api/academicCommunityContribution/allAcademicCommunityContributions", {
             params: {
               professorId: professorId,
               type: type
@@ -471,25 +471,8 @@ app.factory("PctService", [
           });
           return deferred.promise;
         },
-        loadSelectedFacultyOruniversityAuthorityWork: function(id, callback) {
-          $http.get('api/academicCommunityContribution/selectedFacultyOrUniversityAuthorityWork?id=' + id).success(callback).error(callback);
-        },
-        loadProfessionalOrganizationConductings: function(professorId, type) {
-          var deferred = $q.defer();
-          $http.get("api/academicCommunityContribution/allProfessionalOrganizationConductions", {
-            params: {
-              professorId: professorId,
-              type: type
-            }
-          }).success(function(response) {
-            deferred.resolve(response);
-          }).error(function(response) {
-            deferred.reject(response);
-          });
-          return deferred.promise;
-        },
-        loadSelectedProfessionalOrganizationConduction: function(id, callback) {
-          $http.get('api/academicCommunityContribution/selectedProfessionalOrganizationConduction?id=' + id).success(callback).error(callback);
+        loadSelectedAcademicCommunityContribution: function(id, callback) {
+          $http.get('api/academicCommunityContribution/selectedAcademicCommunityContribution?id=' + id).success(callback).error(callback);
         },
       };
     }]);

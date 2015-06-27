@@ -31,10 +31,10 @@
 						<tr
 							class="active ng-scope"
 							ng-repeat="work in works">
-							<td>{{ work.authority}}</td>
+							<td>{{ work.authorityOrganizationOrJournal}}</td>
 							<td>{{ work.institutionType }}</td>
-							<td>{{ work.startDate | date:'dd-MM-yyyy' }}</td>
-							<td>{{ work.endDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ work.authorityOrOrganizationWorkStartDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ work.authorityOrOrganizationWorkEndDate | date:'dd-MM-yyyy' }}</td>
 							<td
 								class="delete"
 								ng-show="isUser"><button
@@ -98,7 +98,7 @@
 							class="form-control"
 							id="inputAuthority"
 							name="inputAuthority"
-							ng-model="work.authority"
+							ng-model="work.authorityOrganizationOrJournal"
 							placeholder="{{ resources.facultyOrUniversityAuthoritiesWorkPopupLabels.authority }}"
 							ng-maxlength="200"
 							required />
@@ -156,7 +156,7 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="work.startDate"
+								ng-model="work.authorityOrOrganizationWorkStartDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openStartDate($event)"></span>
@@ -192,7 +192,7 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="work.endDate"
+								ng-model="work.authorityOrOrganizationWorkEndDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openWorkEndDate($event)"></span>
@@ -234,7 +234,8 @@
 							class="form-control"
 							id="inputAuthority"
 							name="inputAuthority"
-							ng-model="work.authority"
+							ng-model="work.authorityOrganizationOrJournal"
+							placeholder="{{ resources.facultyOrUniversityAuthoritiesWorkPopupLabels.authority }}"
 							ng-maxlength="200"
 							required />
 						<div
@@ -291,7 +292,7 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="work.startDate"
+								ng-model="work.authorityOrOrganizationWorkStartDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openStartDate($event)"></span>
@@ -327,7 +328,7 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="work.endDate"
+								ng-model="work.authorityOrOrganizationWorkEndDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openWorkEndDate($event)"></span>

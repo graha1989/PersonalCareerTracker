@@ -9,8 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pct.domain.AcademicCommunityContribution;
 import com.pct.domain.Professor;
-import com.pct.domain.dto.FacultyOrUniversityAuthoritiesWorkDto;
-import com.pct.domain.dto.ProfessionalOrganizationConductionDto;
+import com.pct.domain.dto.AcademicCommunityContributionDto;
 import com.pct.domain.enums.AcademicCommunityContributionType;
 import com.pct.repository.AcademicCommunityContributionRepository;
 import com.pct.repository.ProfesorRepository;
@@ -29,16 +28,16 @@ public class AcademicCommunityContributionServiceImpl implements AcademicCommuni
 
 	@Override
 	@Transactional
-	public List<FacultyOrUniversityAuthoritiesWorkDto> findAllFacultyOrUniversityAuthoritiesWorks(Long professorId, String type) {
+	public List<AcademicCommunityContributionDto> findAllAcademicCommunityContributions(Long professorId, String type) {
 
-		List<FacultyOrUniversityAuthoritiesWorkDto> workDtos = new ArrayList<FacultyOrUniversityAuthoritiesWorkDto>();
+		List<AcademicCommunityContributionDto> workDtos = new ArrayList<AcademicCommunityContributionDto>();
 		AcademicCommunityContributionType contributionType = AcademicCommunityContributionType.getByTitle(type);
 		try {
 			List<AcademicCommunityContribution> contributions = academicCommunityContributionRepository.findAllContributions(professorId,
 					contributionType);
 			for (AcademicCommunityContribution a : contributions) {
-				FacultyOrUniversityAuthoritiesWorkDto workDto = new FacultyOrUniversityAuthoritiesWorkDto(a);
-				workDtos.add(workDto);
+				AcademicCommunityContributionDto contributionDto = new AcademicCommunityContributionDto(a);
+				workDtos.add(contributionDto);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,15 +48,14 @@ public class AcademicCommunityContributionServiceImpl implements AcademicCommuni
 
 	@Override
 	@Transactional
-	public FacultyOrUniversityAuthoritiesWorkDto findFacultyOrUniversityAuthorityWorkById(Long id)
-			throws AcademicCommunityContributionNotFoundException {
+	public AcademicCommunityContributionDto findAcademicCommunityContributionById(Long id) throws AcademicCommunityContributionNotFoundException {
 
-		FacultyOrUniversityAuthoritiesWorkDto workDto;
+		AcademicCommunityContributionDto contributionDto;
 		if (id != null) {
 			AcademicCommunityContribution a = academicCommunityContributionRepository.findOne(id);
 			if (a != null) {
-				workDto = new FacultyOrUniversityAuthoritiesWorkDto(a);
-				return workDto;
+				contributionDto = new AcademicCommunityContributionDto(a);
+				return contributionDto;
 			}
 		}
 		throw new AcademicCommunityContributionNotFoundException();
@@ -65,31 +63,34 @@ public class AcademicCommunityContributionServiceImpl implements AcademicCommuni
 
 	@Override
 	@Transactional
-	public void saveFacultyOrUniversityAuthorityWork(FacultyOrUniversityAuthoritiesWorkDto workDto) throws ProfessorNotFoundException {
+	public void saveAcademicCommunityContribution(AcademicCommunityContributionDto contributionDto) throws ProfessorNotFoundException {
 
-		Professor professor = professorRepository.findOne(workDto.getProfessorId());
+		Professor professor = professorRepository.findOne(contributionDto.getProfessorId());
 		if (professor == null) {
 			throw new ProfessorNotFoundException();
 		}
 
-		academicCommunityContributionRepository.saveAndFlush(createOrUpdateAcademicCommunityContributionInstanceDto(workDto, professor));
+		academicCommunityContributionRepository.saveAndFlush(createOrUpdateAcademicCommunityContributionInstanceDto(contributionDto, professor));
 	}
 
-	private AcademicCommunityContribution createOrUpdateAcademicCommunityContributionInstanceDto(FacultyOrUniversityAuthoritiesWorkDto workDto,
+	private AcademicCommunityContribution createOrUpdateAcademicCommunityContributionInstanceDto(AcademicCommunityContributionDto contributionDto,
 			Professor professor) {
 
 		AcademicCommunityContribution contribution = null;
-		if (workDto.getId() == null) {
+		if (contributionDto.getId() == null) {
 			contribution = new AcademicCommunityContribution();
 			contribution.setProfessor(professor);
-			contribution.setType(workDto.getType());
+			contribution.setType(contributionDto.getType());
 		} else {
-			contribution = academicCommunityContributionRepository.findOne(workDto.getId());
+			contribution = academicCommunityContributionRepository.findOne(contributionDto.getId());
 		}
-		contribution.setAuthorityOrganizationOrJournal(workDto.getAuthority());
-		contribution.setInstitutionType(workDto.getInstitutionType());
-		contribution.setAuthorityOrOrganizationWorkStartDate(workDto.getStartDate());
-		contribution.setAuthorityOrOrganizationWorkEndDate(workDto.getEndDate());
+		contribution.setAuthorityOrganizationOrJournal(contributionDto.getAuthorityOrganizationOrJournal());
+		contribution.setInstitutionType(contributionDto.getInstitutionType());
+		contribution.setAuthorityOrOrganizationWorkStartDate(contributionDto.getAuthorityOrOrganizationWorkStartDate());
+		contribution.setAuthorityOrOrganizationWorkEndDate(contributionDto.getAuthorityOrOrganizationWorkEndDate());
+		contribution.setFunctionInOrganizationConferenceOrCommittee(contributionDto.getFunctionInOrganizationConferenceOrCommittee());
+		contribution.setMeetingConferenceOrEventYear(contributionDto.getMeetingConferenceOrEventYear());
+		contribution.setJournalCategory(contributionDto.getJournalCategory());
 
 		return contribution;
 	}
@@ -104,73 +105,6 @@ public class AcademicCommunityContributionServiceImpl implements AcademicCommuni
 		}
 		academicCommunityContributionRepository.delete(contribution);
 
-	}
-
-	@Override
-	@Transactional
-	public List<ProfessionalOrganizationConductionDto> findAllProfessionalOrganizationConductions(Long professorId, String type) {
-
-		List<ProfessionalOrganizationConductionDto> conductionDtos = new ArrayList<ProfessionalOrganizationConductionDto>();
-		AcademicCommunityContributionType contributionType = AcademicCommunityContributionType.getByTitle(type);
-		try {
-			List<AcademicCommunityContribution> contributions = academicCommunityContributionRepository.findAllContributions(professorId,
-					contributionType);
-			for (AcademicCommunityContribution a : contributions) {
-				ProfessionalOrganizationConductionDto conductionDto = new ProfessionalOrganizationConductionDto(a);
-				conductionDtos.add(conductionDto);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return conductionDtos;
-	}
-
-	@Override
-	@Transactional
-	public ProfessionalOrganizationConductionDto findProfessionalOrganizationConductionById(Long id)
-			throws AcademicCommunityContributionNotFoundException {
-
-		ProfessionalOrganizationConductionDto conductionDto;
-		if (id != null) {
-			AcademicCommunityContribution a = academicCommunityContributionRepository.findOne(id);
-			if (a != null) {
-				conductionDto = new ProfessionalOrganizationConductionDto(a);
-				return conductionDto;
-			}
-		}
-		throw new AcademicCommunityContributionNotFoundException();
-	}
-
-	@Override
-	@Transactional
-	public void saveProfessionalOrganizationConduction(ProfessionalOrganizationConductionDto conductionDto) throws ProfessorNotFoundException {
-
-		Professor professor = professorRepository.findOne(conductionDto.getProfessorId());
-		if (professor == null) {
-			throw new ProfessorNotFoundException();
-		}
-
-		academicCommunityContributionRepository.saveAndFlush(createOrUpdateAcademicCommunityContributionInstanceDto(conductionDto, professor));
-	}
-
-	private AcademicCommunityContribution createOrUpdateAcademicCommunityContributionInstanceDto(ProfessionalOrganizationConductionDto conductionDto,
-			Professor professor) {
-
-		AcademicCommunityContribution contribution = null;
-		if (conductionDto.getId() == null) {
-			contribution = new AcademicCommunityContribution();
-			contribution.setProfessor(professor);
-			contribution.setType(conductionDto.getType());
-		} else {
-			contribution = academicCommunityContributionRepository.findOne(conductionDto.getId());
-		}
-		contribution.setAuthorityOrganizationOrJournal(conductionDto.getOrganization());
-		contribution.setFunctionInOrganizationConferenceOrCommittee(conductionDto.getFunctionDesc());
-		contribution.setAuthorityOrOrganizationWorkStartDate(conductionDto.getStartDate());
-		contribution.setAuthorityOrOrganizationWorkEndDate(conductionDto.getEndDate());
-
-		return contribution;
 	}
 
 }

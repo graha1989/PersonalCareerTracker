@@ -24,7 +24,7 @@ app.controller("FacultyOrUniversityAuthoritiesWorkController", function($scope, 
   };
 
   $scope.loadWorks = function(professorId, type) {
-    return PctService.loadFacultyOrUniversityWork(professorId, type).then(function(response) {
+    return PctService.loadAcademicCommunityContributions(professorId, type).then(function(response) {
       if (angular.isObject(response) && response.length > 0) {
         $scope.works = response;
         $scope.noResultsFound = false;
@@ -91,7 +91,7 @@ app.controller("FacultyOrUniversityAuthoritiesWorkController", function($scope, 
   };
 
   $scope.deleteWork = function(id, index) {
-    PctService.deleteFacultyOrUniversityAuthoritiesWork(id, function(data) {
+    PctService.deleteAcademicCommunityContribution(id, function(data) {
       if (angular.isObject(data)) {
         $scope.errorStatus = data.status;
       } else {
@@ -142,11 +142,11 @@ var editFacultyOrUniversityAuthoritiesWorkController = function($scope, $modalIn
   };
 
   $scope.loadSelectedWork = function(id) {
-    PctService.loadSelectedFacultyOruniversityAuthorityWork(id, function(data) {
+    PctService.loadSelectedAcademicCommunityContribution(id, function(data) {
       if (angular.isObject(data)) {
         $scope.work = data;
-        $scope.work.startDate = new Date(data.startDate);
-        $scope.work.endDate = new Date(data.endDate);
+        $scope.work.authorityOrOrganizationWorkStartDate = new Date(data.authorityOrOrganizationWorkStartDate);
+        $scope.work.authorityOrOrganizationWorkEndDate = new Date(data.authorityOrOrganizationWorkEndDate);
         $scope.master = angular.copy($scope.work);
         $scope.noResultsFound = false;
       } else {
@@ -172,7 +172,7 @@ var editFacultyOrUniversityAuthoritiesWorkController = function($scope, $modalIn
   $scope.saveWork = function() {
     $http({
       method: 'PUT',
-      url: "api/academicCommunityContribution/saveFacultyOrUniversityAuthorityWork",
+      url: "api/academicCommunityContribution/saveAcademicCommunityContribution",
       data: $scope.work,
       headers: {
         'Content-Type': 'application/json'
@@ -248,6 +248,10 @@ var createNewFacultyOrUniversityAuthoritiesWorkController = function($scope, $mo
 
   $scope.init = function() {
     $scope.work.professorId = professorId;
+    $scope.work.type = {
+      name: "WORK_IN_THE_INSTITUTIONS_AND_AUTHORITIES_OF_THE_FACULTY_AND_UNIVERSITY",
+      title: "Učešće u radu organa i tela fakulteta i Univerziteta"
+    };
     $scope.status = $routeParams.status;
     $scope.loadResources();
   };
@@ -257,7 +261,7 @@ var createNewFacultyOrUniversityAuthoritiesWorkController = function($scope, $mo
   $scope.saveNewWork = function() {
     $http({
       method: 'POST',
-      url: "api/academicCommunityContribution/saveFacultyOrUniversityAuthorityWork",
+      url: "api/academicCommunityContribution/saveAcademicCommunityContribution",
       data: $scope.work,
       headers: {
         'Content-Type': 'application/json'
@@ -280,9 +284,12 @@ var createNewFacultyOrUniversityAuthoritiesWorkController = function($scope, $mo
   };
 
   $scope.validateForm = function() {
-    if ($scope.work.authority != null && $scope.work.authority != '' && $scope.work.institutionType != null
-            && $scope.work.institutionType != '' && $scope.work.startDate != null && $scope.work.startDate != ''
-            && $scope.work.endDate != null && $scope.work.endDate != '') {
+    if ($scope.work.authorityOrganizationOrJournal != null && $scope.work.authorityOrganizationOrJournal != ''
+            && $scope.work.institutionType != null && $scope.work.institutionType != ''
+            && $scope.work.authorityOrOrganizationWorkStartDate != null
+            && $scope.work.authorityOrOrganizationWorkStartDate != ''
+            && $scope.work.authorityOrOrganizationWorkEndDate != null
+            && $scope.work.authorityOrOrganizationWorkEndDate != '') {
       return true;
     } else {
       return false;

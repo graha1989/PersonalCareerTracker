@@ -31,10 +31,10 @@
 						<tr
 							class="active ng-scope"
 							ng-repeat="conduction in conductings">
-							<td>{{ conduction.organization}}</td>
-							<td>{{ conduction.functionDesc }}</td>
-							<td>{{ conduction.startDate | date:'dd-MM-yyyy' }}</td>
-							<td>{{ conduction.endDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ conduction.authorityOrganizationOrJournal}}</td>
+							<td>{{ conduction.functionInOrganizationConferenceOrCommittee }}</td>
+							<td>{{ conduction.authorityOrOrganizationWorkStartDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ conduction.authorityOrOrganizationWorkEndDate | date:'dd-MM-yyyy' }}</td>
 							<td
 								class="delete"
 								ng-show="isUser"><button
@@ -98,7 +98,7 @@
 							class="form-control"
 							id="inputOrganization"
 							name="inputOrganization"
-							ng-model="conduction.organization"
+							ng-model="conduction.authorityOrganizationOrJournal"
 							placeholder="{{ resources.professionalOrganizationConductionPopupLabels.organization }}"
 							ng-maxlength="200"
 							required />
@@ -124,7 +124,7 @@
 							class="form-control"
 							id="inputFunction"
 							name="inputFunction"
-							ng-model="conduction.functionDesc"
+							ng-model="conduction.functionInOrganizationConferenceOrCommittee"
 							placeholder="{{ resources.professionalOrganizationConductionPopupLabels.function }}"
 							ng-maxlength="200"
 							required />
@@ -160,7 +160,7 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="conduction.startDate"
+								ng-model="conduction.authorityOrOrganizationWorkStartDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openStartDate($event)"></span>
@@ -196,7 +196,7 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="conduction.endDate"
+								ng-model="conduction.authorityOrOrganizationWorkEndDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openWorkEndDate($event)"></span>
@@ -238,7 +238,7 @@
 							class="form-control"
 							id="inputOrganization"
 							name="inputOrganization"
-							ng-model="conduction.organization"
+							ng-model="conduction.authorityOrganizationOrJournal"
 							placeholder="{{ resources.professionalOrganizationConductionPopupLabels.organization }}"
 							ng-maxlength="200"
 							required />
@@ -264,7 +264,7 @@
 							class="form-control"
 							id="inputFunction"
 							name="inputFunction"
-							ng-model="conduction.functionDesc"
+							ng-model="conduction.functionInOrganizationConferenceOrCommittee"
 							placeholder="{{ resources.professionalOrganizationConductionPopupLabels.function }}"
 							ng-maxlength="200"
 							required />
@@ -300,7 +300,7 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="conduction.startDate"
+								ng-model="conduction.authorityOrOrganizationWorkStartDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openStartDate($event)"></span>
@@ -336,7 +336,7 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="conduction.endDate"
+								ng-model="conduction.authorityOrOrganizationWorkEndDate"
 								required /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openWorkEndDate($event)"></span>
