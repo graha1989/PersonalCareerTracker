@@ -1,36 +1,39 @@
 <div>
 
-	<form name="form" id="showProfessorWorkExperienceForm" novalidate
+	<form
+		name="form"
+		id="showProfessorWorkExperienceForm"
+		novalidate
 		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
 		ng-model="workExperience">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ resources.text.workExperiencesTitle
-				}}</h3>
+			<h3 class="modal-title">{{ resources.text.workExperiencesTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
 
-				<table ng-show="workExperiences != []"
+				<table
+					ng-show="workExperiences != []"
 					class="table table-condensed table-striped table-hover"
-					cellspacing="0" cellpadding="0">
+					cellspacing="0"
+					cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
-							<td>{{ resources.workExperienceTableLabels.institutionType
-								}}</td>
-							<td>{{ resources.workExperienceTableLabels.institutionName
-								}}</td>
+							<td>{{ resources.workExperienceTableLabels.institutionType }}</td>
+							<td>{{ resources.workExperienceTableLabels.institutionName }}</td>
 							<td>{{ resources.workExperienceTableLabels.universityName }}</td>
-							<td>{{ resources.workExperienceTableLabels.institutionCity
-								}}</td>
-							<td>{{
-								resources.workExperienceTableLabels.institutionCountry }}</td>
+							<td>{{ resources.workExperienceTableLabels.institutionCity }}</td>
+							<td>{{ resources.workExperienceTableLabels.institutionCountry }}</td>
 							<td>{{ resources.workExperienceTableLabels.workStartDate }}</td>
 							<td>{{ resources.workExperienceTableLabels.workEndDate }}</td>
 							<td>{{ resources.workExperienceTableLabels.title }}</td>
-							<td ng-show="isUser" colspan="2"></td>
+							<td
+								ng-show="isUser"
+								colspan="2"></td>
 						</tr>
-						<tr class="active ng-scope"
+						<tr
+							class="active ng-scope"
 							ng-repeat="workExperience in workExperiences">
 							<td>{{ workExperience.institutionType }}</td>
 							<td>{{ workExperience.institutionName }}</td>
@@ -40,43 +43,53 @@
 							<td>{{ workExperience.workStartDate | date:'dd-MM-yyyy' }}</td>
 							<td>{{ workExperience.workEndDate | date:'dd-MM-yyyy' }}</td>
 							<td>{{ workExperience.title }}</td>
-							<td class="delete" ng-show="isUser"><button
+							<td
+								class="delete"
+								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteWorkExperience(workExperience.id, $index)">
-									<span class="glyphicon glyphicon-trash"></span> {{
-									resources.buttons.workExperienceButtons.delete }}
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.workExperienceButtons.delete }}
 								</button></td>
-							<td class="edit" ng-show="isUser"><button
+							<td
+								class="edit"
+								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="editWorkExperience(workExperience.id)">
-									<span class="glyphicon glyphicon-pencil"></span> {{
-									resources.buttons.workExperienceButtons.edit }}
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.workExperienceButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td ng-show="isUser" colspan="10">{{
-								errorMessages.error.emptyTable }}</td>
-							<td ng-show="isAdmin" colspan="8">{{
-								errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isUser"
+								colspan="10">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isAdmin"
+								colspan="8">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
 			</fieldset>
 		</div>
 		<div class="modal-footer action">
-			<button id="addNewButton" class="btn btn-success btn-sm"
-				ng-show="isUser" ng-click="createNewWorkExperience()">
-				<span class="glyphicon glyphicon-plus"></span> {{
-				resources.buttons.workExperienceButtons.add }}
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
+				ng-show="isUser"
+				ng-click="createNewWorkExperience()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.workExperienceButtons.add }}
 			</button>
-			<button id="cancel_button" class="btn btn-sm" ng-click="goBack()">
-				<span class="glyphicon glyphicon-arrow-left"></span> {{
-				resources.form.back }}
+			<button
+				id="cancel_button"
+				class="btn btn-sm"
+				ng-click="goBack()">
+				<span class="glyphicon glyphicon-arrow-left"></span> {{ resources.form.back }}
 			</button>
 		</div>
 	</form>
 
-	<script type="text/ng-template" id="editWorkExperiencePopup.html">
+	<script
+		type="text/ng-template"
+		id="editWorkExperiencePopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
@@ -287,7 +300,9 @@
 		</form>
 	</script>
 
-	<script type="text/ng-template" id="createNewWorkExperiencePopup.html">
+	<script
+		type="text/ng-template"
+		id="createNewWorkExperiencePopup.html">
 		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="workExperience">
 			<div class="modal-header">
     			<h3 class="modal-title">{{ resources.text.addNewWorkExperiencePopupTitle }}</h3>

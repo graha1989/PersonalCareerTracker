@@ -20,8 +20,11 @@
         "membershipsTitle": "Članstvo u naučnim i stručnim organizacijama",
         "editAwardPopupTitle": "Izmena priznanja",
         "facultyOrUniversityAuthoritiesWorksTitle": "Učešće u radu organa i tela fakulteta i Univerziteta",
-        "editfacultyOrUniversityAuthoritiesWorkPopupTitle": "Izmena podataka o učešću u radu tela fakulteta i Univerziteta",
+        "professionalOrganizationConductionsTitle": "Vođenje profesionalnih (strukovnih) organizacija",
+        "editFacultyOrUniversityAuthoritiesWorkPopupTitle": "Izmena podataka o učešću u radu tela fakulteta i Univerziteta",
         "createNewFacultyOrUniversityAuthoritiesWorkPopupTitle": "Kreiranje novih podataka o učešću u radu tela fakulteta i Univerziteta",
+        "createNewProfessionalOrganizationConductionPopupTitle": "Kreiranje novih podataka o vođenju profesionalnih (strukovnih) organizacija",
+        "editProfessionalOrganizationConductionPopupTitle": "Izmena podataka o rukovođenju profesionalnom organizacijom",
         "editMembershipPopupTitle": "Izmena podataka o članstvu u naučnim i stručnim organizacijama",
         "addMembershipPopupTitle": "Dodavanje novog članstva u naučnim i stručnim organizacijama",
         "addAwardPopupTitle": "Dodavanje novog priznanja",
@@ -325,6 +328,14 @@
             "save": "Sačuvaj",
             "cancel": "Odustani"
         },
+        "conductionButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novo rukovođenje",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
         "allProfessorsButtons": {
             "details": "Detaljnije",
             "studies": "Studije",
@@ -417,6 +428,12 @@
         "startDate": "Početak učešća",
         "endDate": "Kraj učešća"
     },
+    "professionalOrganizationConductionTableLabels": {
+        "organization": "Organizacija",
+        "function": "Funkcija",
+        "startDate": "Početak učešća",
+        "endDate": "Kraj učešća"
+    },
     "membershipsTableLabels": {
         "name": "Naziv organizacije"
     },
@@ -453,12 +470,18 @@
         "awardType": "Tip",
         "awardField": "Oblast"
     },
-    "facultzOrUniversitzAuthoritiesWorkPopupLabels": {
+    "facultyOrUniversityAuthoritiesWorkPopupLabels": {
         "authority": "Organ ili telo",
         "facultyOrUniversity": "Fakultet ili Univerzitet",
         "institution": "Institucija",
         "startDate": "Početak učešća",
         "endDate": "Kraj učešća"
+    },
+    "professionalOrganizationConductionPopupLabels": {
+        "organization": "Organizacija",
+        "function": "Funkcija",
+        "startDate": "Početak rukovođenja",
+        "endDate": "Kraj rukovođenja"
     },
     "membershipPopupLabels": {
         "organizationNameLabel": "Naziv organizacije"

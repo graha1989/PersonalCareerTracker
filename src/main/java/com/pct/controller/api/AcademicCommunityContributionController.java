@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.FacultyOrUniversityAuthoritiesWorkDto;
+import com.pct.domain.dto.ProfessionalOrganizationConductionDto;
 import com.pct.domain.dto.UserDto;
 import com.pct.service.AcademicCommunityContributionService;
 import com.pct.service.UserService;
@@ -55,10 +56,10 @@ public class AcademicCommunityContributionController {
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
 		}
-		logger.debug("Received request for professor with (ID {}) faculty or university authorities work.", professorId);
+		logger.debug("Received request for professor with (ID {}) academic community contributions.", professorId);
 		List<FacultyOrUniversityAuthoritiesWorkDto> works = null;
 		works = academicCommunityContributionService.findAllFacultyOrUniversityAuthoritiesWorks(professorId, type);
-		logger.debug("Found " + works.size() + " faculty or university authorities works for professor with ID {}.", professorId);
+		logger.debug("Found " + works.size() + " academic community contribution(s) for professor with ID {}.", professorId);
 		return new ResponseEntity<List<FacultyOrUniversityAuthoritiesWorkDto>>(works, HttpStatus.OK);
 	}
 
@@ -85,10 +86,54 @@ public class AcademicCommunityContributionController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = RequestMappings.DELETE_FACULTY_OR_UNIVERSITY_WORK, method = RequestMethod.DELETE)
-	public ResponseEntity<String> deleteFacultyOrUniversityAuthorityWork(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+	@RequestMapping(value = RequestMappings.DELETE_ACADEMIC_COMMUNITY_CONTRIBUTION, method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteAcademicCommunityContribution(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws AcademicCommunityContributionNotFoundException {
-		academicCommunityContributionService.deleteFacultyOrUniversityAuthorityWork(id);
+		academicCommunityContributionService.deleteAcademicCommunityContribution(id);
+
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = RequestMappings.LOAD_ALL_PROFESSIONAL_ORGANIZATION_CONDUCTIONS, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<List<ProfessionalOrganizationConductionDto>> showAllProfessionalOrganizationConductions(
+			@RequestParam(value = "professorId", required = true) Long professorId, @RequestParam(value = "type", required = true) String type) {
+
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		UserDto userDto;
+		try {
+			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+			if (!roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN")) && userDto.getId() != professorId) {
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			}
+		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		}
+		logger.debug("Received request for professor with (ID {}) academic community contributions.", professorId);
+		List<ProfessionalOrganizationConductionDto> conductionDtos = null;
+		conductionDtos = academicCommunityContributionService.findAllProfessionalOrganizationConductions(professorId, type);
+		logger.debug("Found " + conductionDtos.size() + " academic community contribution(s) for professor with ID {}.", professorId);
+		return new ResponseEntity<List<ProfessionalOrganizationConductionDto>>(conductionDtos, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_PROFESSIONAL_ORGANIZATION_CONDUCTION, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<ProfessionalOrganizationConductionDto> showConduction(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws AcademicCommunityContributionNotFoundException {
+		logger.debug("Received request for AcademicCommunityContribution with ID {}.", id);
+		ProfessionalOrganizationConductionDto conductionDto = academicCommunityContributionService.findProfessionalOrganizationConductionById(id);
+		logger.debug("AcademicCommunityContribution with ID {} successfully founded.", id);
+		return new ResponseEntity<ProfessionalOrganizationConductionDto>(conductionDto, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = RequestMappings.SAVE_SELECTED_PROFESSIONAL_ORGANIZATION_CONDUCTION, method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
+	public ResponseEntity<String> persistProfessionalOrganizationConduction(@Valid @RequestBody ProfessionalOrganizationConductionDto conductionDto) {
+
+		try {
+			academicCommunityContributionService.saveProfessionalOrganizationConduction(conductionDto);
+		} catch (ProfessorNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		logger.debug("Professional organization conduction data: {} successfully saved.", conductionDto.getOrganization());
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

@@ -38,7 +38,7 @@ public class AcademicCommunityContribution extends AbstractEntity {
 	@Column(name = "authorityOrOrganizationWorkEndDate", nullable = true)
 	private Date authorityOrOrganizationWorkEndDate;
 
-	@Column(name = "functionInOrganizationConferenceOrCommittee", length = 20, nullable = true)
+	@Column(name = "functionInOrganizationConferenceOrCommittee", length = 40, nullable = true)
 	private String functionInOrganizationConferenceOrCommittee;
 
 	@Column(name = "meetingConferenceOrEventYear", length = 4, nullable = true)

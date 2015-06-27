@@ -95,16 +95,19 @@ public final class RequestMappings {
 	public static final String LOAD_ALL_WORK_EXPERIENCES = "allWorkExperiences";
 	public static final String LOAD_SELECTED_WORK_EXPERIENCE = "selectedWorkExperience";
 	public static final String LOAD_INSTITUTIONS_STARTS_WITH = "findInstitutionStartsWith";
-	
+
 	public static final String SCIENTIFIC_AND_PROFESSIONAL_ORGANIZATION_MEMBERSHIP_API = "/api/scientificProfessionalOrganisationMembership";
 	public static final String LOAD_ALL_PROFESSORS_SCIENTIFIC_AND_PROFESSIONAL_ORGANIZATION_MEMBERSHIPS = "allMemberships";
 	public static final String LOAD_SELECTED_PROFESSORS_SCIENTIFIC_AND_PROFESSIONAL_ORGANIZATION_MEMBERSHIP = "selectedMembership";
-	
+
 	public static final String ACADEMIC_COMMUNITY_CONTRIBUTION_API = "/api/academicCommunityContribution";
 	public static final String LOAD_ALL_FACULTY_OR_UNIVERSITY_WORK = "allFacultyOrUniversityWork";
 	public static final String LOAD_SELECTED_FACULTY_OR_UNIVERSITY_WORK = "selectedFacultyOrUniversityAuthorityWork";
 	public static final String SAVE_SELECTED_FACULTY_OR_UNIVERSITY_WORK = "saveFacultyOrUniversityAuthorityWork";
-	public static final String DELETE_FACULTY_OR_UNIVERSITY_WORK = "deleteFacultyOrUniversityWork";
+	public static final String DELETE_ACADEMIC_COMMUNITY_CONTRIBUTION = "deleteAcademicCommunityContribution";
+	public static final String LOAD_ALL_PROFESSIONAL_ORGANIZATION_CONDUCTIONS = "allProfessionalOrganizationConductions";
+	public static final String LOAD_SELECTED_PROFESSIONAL_ORGANIZATION_CONDUCTION = "selectedProfessionalOrganizationConduction";
+	public static final String SAVE_SELECTED_PROFESSIONAL_ORGANIZATION_CONDUCTION = "saveProfessionalOrganizationConduction";
 
 	public static final String ID = "id";
 

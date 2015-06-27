@@ -454,7 +454,7 @@ app.factory("PctService", [
         deleteFacultyOrUniversityAuthoritiesWork: function(id, callback) {
           $http({
             method: 'DELETE',
-            url: 'api/academicCommunityContribution/deleteFacultyOrUniversityWork?id=' + id
+            url: 'api/academicCommunityContribution/deleteAcademicCommunityContribution?id=' + id
           }).success(callback).error(callback);
         },
         loadFacultyOrUniversityWork: function(professorId, type) {
@@ -473,6 +473,23 @@ app.factory("PctService", [
         },
         loadSelectedFacultyOruniversityAuthorityWork: function(id, callback) {
           $http.get('api/academicCommunityContribution/selectedFacultyOrUniversityAuthorityWork?id=' + id).success(callback).error(callback);
+        },
+        loadProfessionalOrganizationConductings: function(professorId, type) {
+          var deferred = $q.defer();
+          $http.get("api/academicCommunityContribution/allProfessionalOrganizationConductions", {
+            params: {
+              professorId: professorId,
+              type: type
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
+        loadSelectedProfessionalOrganizationConduction: function(id, callback) {
+          $http.get('api/academicCommunityContribution/selectedProfessionalOrganizationConduction?id=' + id).success(callback).error(callback);
         },
       };
     }]);
