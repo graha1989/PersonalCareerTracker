@@ -21,8 +21,11 @@
         "editAwardPopupTitle": "Izmena priznanja",
         "facultyOrUniversityAuthoritiesWorksTitle": "Učešće u radu organa i tela fakulteta i Univerziteta",
         "professionalOrganizationConductionsTitle": "Vođenje profesionalnih (strukovnih) organizacija",
+        "committeesAndLegislativeBodiesWorksTitle": "Učešće u radu odbora i zakonodavnih tela",
         "editFacultyOrUniversityAuthoritiesWorkPopupTitle": "Izmena podataka o učešću u radu tela fakulteta i Univerziteta",
+        "editCommitteeAndLegislativeBodiesWorkPopupTitle": "Izmena podataka o učešću u radu odbora i zakonodavnih tela",
         "createNewFacultyOrUniversityAuthoritiesWorkPopupTitle": "Kreiranje novih podataka o učešću u radu tela fakulteta i Univerziteta",
+        "createNewCommitteeAndLegislativeBodiesWorkPopupTitle": "Kreiranje novih podataka o učešću u radu odbora i zakonodavnih tela",
         "createNewProfessionalOrganizationConductionPopupTitle": "Kreiranje novih podataka o vođenju profesionalnih (strukovnih) organizacija",
         "editProfessionalOrganizationConductionPopupTitle": "Izmena podataka o rukovođenju profesionalnom organizacijom",
         "editMembershipPopupTitle": "Izmena podataka o članstvu u naučnim i stručnim organizacijama",
@@ -336,6 +339,14 @@
             "save": "Sačuvaj",
             "cancel": "Odustani"
         },
+        "committeeWorkButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novo učešće",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
         "allProfessorsButtons": {
             "details": "Detaljnije",
             "studies": "Studije",
@@ -434,6 +445,12 @@
         "startDate": "Početak učešća",
         "endDate": "Kraj učešća"
     },
+    "committeeAndLegislativeBodiesWorkTableLabels": {
+        "committee": "Odbor ili telo",
+        "workType": "Vrsta rada",
+        "startDate": "Početak rada",
+        "endDate": "Kraj rada"
+    },
     "membershipsTableLabels": {
         "name": "Naziv organizacije"
     },
@@ -482,6 +499,12 @@
         "function": "Funkcija",
         "startDate": "Početak rukovođenja",
         "endDate": "Kraj rukovođenja"
+    },
+    "committeeAndLegislativeBodiesWorkPopupLabels": {
+        "committee": "Odbor ili telo",
+        "workType": "Vrsta rada",
+        "startDate": "Početak rada",
+        "endDate": "Kraj rada"
     },
     "membershipPopupLabels": {
         "organizationNameLabel": "Naziv organizacije"

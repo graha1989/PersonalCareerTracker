@@ -1,0 +1,362 @@
+<div>
+
+	<form
+		name="form"
+		id="showAllCommitteeAndLegislativeBodiesWorksForm"
+		novalidate
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		ng-model="work">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.committeesAndLegislativeBodiesWorksTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+
+				<table
+					ng-show="works != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr class="info ng-binding">
+							<td>{{ resources.committeeAndLegislativeBodiesWorkTableLabels.committee }}</td>
+							<td>{{ resources.committeeAndLegislativeBodiesWorkTableLabels.workType }}</td>
+							<td>{{ resources.committeeAndLegislativeBodiesWorkTableLabels.startDate }}</td>
+							<td>{{ resources.committeeAndLegislativeBodiesWorkTableLabels.endDate }}</td>
+							<td
+								ng-show="isUser"
+								colspan="2"></td>
+						</tr>
+						<tr
+							class="active ng-scope"
+							ng-repeat="work in works">
+							<td>{{ work.authorityOrganizationOrJournal}}</td>
+							<td>{{ work.functionInOrganizationConferenceOrCommittee }}</td>
+							<td>{{ work.authorityOrOrganizationWorkStartDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ work.authorityOrOrganizationWorkEndDate | date:'dd-MM-yyyy' }}</td>
+							<td
+								class="delete"
+								ng-show="isUser"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteWork(work.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.committeeWorkButtons.delete }}
+								</button></td>
+							<td
+								class="edit"
+								ng-show="isUser"><button
+									class="btn btn-link btn-xs"
+									ng-click="editWork(work.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.committeeWorkButtons.edit }}
+								</button></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td
+								ng-show="isUser"
+								colspan="7">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isAdmin"
+								colspan="5">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
+				ng-show="isUser"
+				ng-click="createNewWork()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.committeeWorkButtons.add }}
+			</button>
+			<button
+				id="cancel_button"
+				class="btn btn-sm"
+				ng-click="goBack()">
+				<span class="glyphicon glyphicon-arrow-left"></span> {{ resources.form.back }}
+			</button>
+		</div>
+	</form>
+
+	<script
+		type="text/ng-template"
+		id="editCommitteeAndLegislativeBodiesWorkPopup.html">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" novalidate role="form" ng-model="work">
+			<div class="modal-header">
+    			<h3 class="modal-title">{{ resources.text.editCommitteeAndLegislativeBodiesWorkPopupTitle }}</h3>
+   	 		</div>
+    		<div class="modal-body">
+    			<div class="form-group">
+					<label
+						for="inputCommittee"
+						class="col-sm-4 control-label">{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.committee }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputCommittee"
+							name="inputCommittee"
+							ng-model="work.authorityOrganizationOrJournal"
+							placeholder="{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.committee }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputCommittee.$dirty && form.inputCommittee.$invalid"
+							class="committeeFieldError">
+								<span
+									ng-show="form.inputCommittee.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputCommittee.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidCommitteeMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputWorkType"
+						class="col-sm-4 control-label">{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.workType }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputWorkType"
+							name="inputWorkType"
+							ng-model="work.functionInOrganizationConferenceOrCommittee"
+							placeholder="{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.workType }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputWorkType.$dirty && form.inputWorkType.$invalid"
+							class="workTypeFieldError">
+								<span
+									ng-show="form.inputWorkType.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputWorkType.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidFunctionMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputWorkStartDate"
+						class="col-sm-4 control-label">{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.startDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputStartDate"
+								name="inputStartDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputStartDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="work.authorityOrOrganizationWorkStartDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openStartDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputStartDate.$dirty && form.inputStartDate.$invalid"
+							class="startDateFieldError">
+							<span
+								ng-show="form.inputStartDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputEndDate"
+						class="col-sm-4 control-label">{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.endDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputEndDate"
+								name="inputEndDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputEndDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="work.authorityOrOrganizationWorkEndDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openWorkEndDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputEndDate.$dirty && form.inputEndDate.$invalid"
+							class="endDateFieldError">
+							<span
+								ng-show="form.inputEndDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+   			</div>
+   			<div class="modal-footer action">
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="form.$invalid || isUnchanged(work)" ng-click="saveWork()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.committeeWorkButtons.edit }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.committeeWorkButtons.close }}</button>
+  			</div>
+		</form>
+	</script>
+
+	<script
+		type="text/ng-template"
+		id="createNewCommitteeAndLegislativeBodiesWorkPopup.html">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" novalidate role="form" ng-model="work">
+			<div class="modal-header">
+    			<h3 class="modal-title">{{ resources.text.createNewCommitteeAndLegislativeBodiesWorkPopupTitle }}</h3>
+   	 		</div>
+    		<div class="modal-body">
+    			<div class="form-group">
+					<label
+						for="inputCommittee"
+						class="col-sm-4 control-label">{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.committee }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputCommittee"
+							name="inputCommittee"
+							ng-model="work.authorityOrganizationOrJournal"
+							placeholder="{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.committee }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputCommittee.$dirty && form.inputCommittee.$invalid"
+							class="committeeFieldError">
+								<span
+									ng-show="form.inputCommittee.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputCommittee.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidCommitteeMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputWorkType"
+						class="col-sm-4 control-label">{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.workType }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputWorkType"
+							name="inputWorkType"
+							ng-model="work.functionInOrganizationConferenceOrCommittee"
+							placeholder="{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.workType }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputWorkType.$dirty && form.inputWorkType.$invalid"
+							class="workTypeFieldError">
+								<span
+									ng-show="form.inputWorkType.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputWorkType.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidFunctionMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputWorkStartDate"
+						class="col-sm-4 control-label">{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.startDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputStartDate"
+								name="inputStartDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputStartDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="work.authorityOrOrganizationWorkStartDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openStartDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputStartDate.$dirty && form.inputStartDate.$invalid"
+							class="startDateFieldError">
+							<span
+								ng-show="form.inputStartDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputEndDate"
+						class="col-sm-4 control-label">{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.endDate }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<div
+							class="input-group date"
+							id="datepicker">
+							<input
+								type="text"
+								class="form-control"
+								id="inputEndDate"
+								name="inputEndDate"
+								placeholder="DD-MM-GGGG"
+								datepicker-popup="dd-MM-yyyy"
+								is-open="$parent.inputEndDateOpened"
+								min-date="minDate" 
+								max-date="maxDate"
+								datepicker-options="dateOptions"
+								show-button-bar="false"
+								ng-model="work.authorityOrOrganizationWorkEndDate"
+								required /> <span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"
+								ng-click="openWorkEndDate($event)"></span>
+							</span>
+						</div>
+						<div
+							ng-show="form.inputEndDate.$dirty && form.inputEndDate.$invalid"
+							class="endDateFieldError">
+							<span
+								ng-show="form.inputEndDate.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+   			</div>
+   			<div class="modal-footer action">
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="!validateForm()" ng-click="saveNewWork()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.committeeWorkButtons.save }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.committeeWorkButtons.close }}</button>
+  			</div>
+		</form>
+	</script>
+
+</div>

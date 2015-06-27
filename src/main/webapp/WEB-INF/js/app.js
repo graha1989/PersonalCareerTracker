@@ -217,6 +217,14 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         templateUrl: 'pages/professionalOrganizationConduction.html',
         controller: 'ProfessionalOrganizationConductingController'
       })
+      .when('/committeesAndLegislativeBodiesWork/professorId/:professorId', {
+        templateUrl: 'pages/committeesAndLegislativeBodiesWork.html?professorId=:professorId',
+        controller: 'CommitteesAndLegislativeBodiesWorkController'
+      })
+      .when('/committeesAndLegislativeBodiesWork', {
+        templateUrl: 'pages/committeesAndLegislativeBodiesWork.html',
+        controller: 'CommitteesAndLegislativeBodiesWorkController'
+      })
 			.otherwise({
 				redirectTo: '/showAllStudents'
 			});
