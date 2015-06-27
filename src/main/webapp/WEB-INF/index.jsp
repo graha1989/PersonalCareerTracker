@@ -88,7 +88,8 @@
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorSubjectsSurveysController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/facultyOrUniversityAuthoritiesWorkController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/controllers/professionalOrganizationConductingController.js' />"></script>
-	<script type="text/javascript" src="<spring:url value='js/controllers/committeesAndLegislativeBodiesWorkController.js' />"></script>	
+	<script type="text/javascript" src="<spring:url value='js/controllers/committeesAndLegislativeBodiesWorkController.js' />"></script>
+	<script type="text/javascript" src="<spring:url value='js/controllers/meetingsConferencesAndEventsConductingController.js' />"></script>	
 	<script type="text/javascript" src="<spring:url value='js/controllers/professorMenuController.js' />"></script>
 	<script type="text/javascript" src="<spring:url value='js/service/pctService.js' />"></script>
 	<c:if test="${role == 'ROLE_ADMIN'}">
