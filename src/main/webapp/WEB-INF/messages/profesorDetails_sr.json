@@ -404,8 +404,6 @@
             	"professorDomesticTeachingExperience": "Rad u nastavi u zemlji",
            		"professorSeminarsOrTeachingsAbroad": "Seminari i nastava van zemlje"
          	},
-         	
-         	
             "academicCommunity": "Akademska zajednica",
          	"academicCommunityWork": {
          		"projectExperiences": "Rad na projektima",
@@ -415,7 +413,6 @@
          		"committeesAndLegislativeBodiesWork": "Rad u odborima i zakonodavnim telima",
          		"scientificJournalReview": "Recenzije u naučnim časopisima"
         	},
-            
             "awardsAndMemberships": "Nagrade i članstva u org.",
 		 	"awardTypes": {
 		 		"awards": "Priznanja, nagrade i odlikovanja",
