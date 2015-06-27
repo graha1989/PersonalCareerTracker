@@ -1,0 +1,206 @@
+<div>
+
+	<form
+		name="form"
+		id="showAllScientificJournalReviewsForm"
+		novalidate
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		ng-model="review">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.scientificJournalsReviewsTitle }}</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+
+				<table
+					ng-show="reviews != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr class="info ng-binding">
+							<td>{{ resources.scientificJournalReviewsTableLabels.journal }}</td>
+							<td>{{ resources.scientificJournalReviewsTableLabels.category }}</td>
+							<td
+								ng-show="isUser"
+								colspan="2"></td>
+						</tr>
+						<tr
+							class="active ng-scope"
+							ng-repeat="review in reviews">
+							<td>{{ review.authorityOrganizationOrJournal}}</td>
+							<td>{{ review.journalCategory }}</td>
+							<td
+								class="delete"
+								ng-show="isUser"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteReview(review.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.journalReviewButtons.delete }}
+								</button></td>
+							<td
+								class="edit"
+								ng-show="isUser"><button
+									class="btn btn-link btn-xs"
+									ng-click="editReview(review.id)">
+									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.journalReviewButtons.edit }}
+								</button></td>
+						</tr>
+						<tr ng-show="noResultsFound">
+							<td
+								ng-show="isUser"
+								colspan="4">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isAdmin"
+								colspan="2">{{ errorMessages.error.emptyTable }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
+				ng-show="isUser"
+				ng-click="createNewReview()">
+				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.journalReviewButtons.add }}
+			</button>
+			<button
+				id="cancel_button"
+				class="btn btn-sm"
+				ng-click="goBack()">
+				<span class="glyphicon glyphicon-arrow-left"></span> {{ resources.form.back }}
+			</button>
+		</div>
+	</form>
+
+	<script
+		type="text/ng-template"
+		id="editScientificJournalReviewsPopup.html">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" novalidate role="form" ng-model="review">
+			<div class="modal-header">
+    			<h3 class="modal-title">{{ resources.text.editScientificJournalReviewPopupTitle }}</h3>
+   	 		</div>
+    		<div class="modal-body">
+    			<div class="form-group">
+					<label
+						for="inputJournal"
+						class="col-sm-4 control-label">{{ resources.scientificJournalReviewPopupLabels.journal }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputJournal"
+							name="inputJournal"
+							ng-model="review.authorityOrganizationOrJournal"
+							placeholder="{{ resources.scientificJournalReviewPopupLabels.journal }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputJournal.$dirty && form.inputJournal.$invalid"
+							class="journalFieldError">
+								<span
+									ng-show="form.inputJournal.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputJournal.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidJournalNameMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputCategory"
+						class="col-sm-4 control-label">{{ resources.scientificJournalReviewPopupLabels.category }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputCategory"
+							name="inputCategory"
+							ng-model="review.journalCategory"
+							ng-options="category.code  as category.code for category in allCategories"
+							required"><option value="">{{ resources.scientificJournalReviewPopupLabels.category }}</option></select>
+						<div
+							ng-show="form.inputCategory.$dirty && form.inputCategory.$invalid"
+							class="categoryFieldError">
+							<span
+								ng-show="form.inputCategory.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+   			</div>
+   			<div class="modal-footer action">
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="form.$invalid || isUnchanged(review)" ng-click="saveReview()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.journalReviewButtons.edit }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.journalReviewButtons.close }}</button>
+  			</div>
+		</form>
+	</script>
+
+	<script
+		type="text/ng-template"
+		id="createNewScientificJournalReviewsPopup.html">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" novalidate role="form" ng-model="review">
+			<div class="modal-header">
+    			<h3 class="modal-title">{{ resources.text.createNewScientificJournalReviewPopupTitle }}</h3>
+   	 		</div>
+    		<div class="modal-body">
+    			<div class="form-group">
+					<label
+						for="inputJournal"
+						class="col-sm-4 control-label">{{ resources.scientificJournalReviewPopupLabels.journal }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputJournal"
+							name="inputJournal"
+							ng-model="review.authorityOrganizationOrJournal"
+							placeholder="{{ resources.scientificJournalReviewPopupLabels.journal }}"
+							ng-maxlength="200"
+							required />
+						<div
+							ng-show="form.inputJournal.$dirty && form.inputJournal.$invalid"
+							class="journalFieldError">
+								<span
+									ng-show="form.inputJournal.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputJournal.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidJournalNameMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputCategory"
+						class="col-sm-4 control-label">{{ resources.scientificJournalReviewPopupLabels.category }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputCategory"
+							name="inputCategory"
+							ng-model="review.journalCategory"
+							ng-options="category.code as category.code for category in allCategories"
+							required"><option value="">{{ resources.scientificJournalReviewPopupLabels.category }}</option></select>
+						<div
+							ng-show="form.inputCategory.$dirty && form.inputCategory.$invalid"
+							class="categoryFieldError">
+							<span
+								ng-show="form.inputCategory.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span>
+						</div>
+					</div>
+				</div>
+   			</div>
+   			<div class="modal-footer action">
+		 		<button id="submit_button" type="submit" class="btn btn-success btn-sm" ng-disabled="!validateForm()" ng-click="saveNewReview()"><span class="glyphicon glyphicon-save"></span> {{ resources.buttons.journalReviewButtons.save }}</button>
+		 		<button id="cancel_button" class="btn btn-sm" ng-click="cancel()">{{ resources.buttons.journalReviewButtons.close }}</button>
+  			</div>
+		</form>
+	</script>
+
+</div>

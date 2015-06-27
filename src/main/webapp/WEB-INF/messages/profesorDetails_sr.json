@@ -23,10 +23,13 @@
         "professionalOrganizationConductionsTitle": "Vođenje profesionalnih (strukovnih) organizacija",
         "meetingsConferencesAndEventsConductionsTitle": "Učešće u organizaciji i vođenju skupova, konferencija i manifestacija",
         "committeesAndLegislativeBodiesWorksTitle": "Učešće u radu odbora i zakonodavnih tela",
+        "scientificJournalsReviewsTitle": "Recenzije u naučnim časopisima",
         "editFacultyOrUniversityAuthoritiesWorkPopupTitle": "Izmena podataka o učešću u radu tela fakulteta i Univerziteta",
         "editCommitteeAndLegislativeBodiesWorkPopupTitle": "Izmena podataka o učešću u radu odbora i zakonodavnih tela",
+        "editScientificJournalReviewPopupTitle": "Izmena podataka o recenziji u naučnom časopisu",
         "createNewFacultyOrUniversityAuthoritiesWorkPopupTitle": "Kreiranje novih podataka o učešću u radu tela fakulteta i Univerziteta",
         "createNewCommitteeAndLegislativeBodiesWorkPopupTitle": "Kreiranje novih podataka o učešću u radu odbora i zakonodavnih tela",
+        "createNewScientificJournalReviewPopupTitle": "Kreiranje novih podataka o recenziji u naučnom časopisu",
         "createNewProfessionalOrganizationConductionPopupTitle": "Kreiranje novih podataka o vođenju profesionalnih (strukovnih) organizacija",
         "editProfessionalOrganizationConductionPopupTitle": "Izmena podataka o rukovođenju profesionalnom organizacijom",
         "editMeetingsConferencesAndEventsConductionPopupTitle": "Izmena podataka o učešću u organizaciji i vođenju skupova, konferencija i manifestacija",
@@ -358,6 +361,14 @@
             "save": "Sačuvaj",
             "cancel": "Odustani"
         },
+        "journalReviewButtons": {
+            "delete": "Izbriši",
+            "edit": "Izmeni",
+            "add": "Dodaj novu recenziju",
+            "close": "Zatvori",
+            "save": "Sačuvaj",
+            "cancel": "Odustani"
+        },
         "allProfessorsButtons": {
             "details": "Detaljnije",
             "studies": "Studije",
@@ -467,6 +478,10 @@
         "startDate": "Početak rada",
         "endDate": "Kraj rada"
     },
+    "scientificJournalReviewsTableLabels": {
+        "journal": "Časopis",
+        "category": "Kategorija"
+    },
     "membershipsTableLabels": {
         "name": "Naziv organizacije"
     },
@@ -526,6 +541,10 @@
         "event": "Skup/konferencija",
         "function": "Funkcija",
         "year": "Godina održavanja"
+    },
+    "scientificJournalReviewPopupLabels": {
+        "journal": "Časopis",
+        "category": "Kategorija"
     },
     "membershipPopupLabels": {
         "organizationNameLabel": "Naziv organizacije"

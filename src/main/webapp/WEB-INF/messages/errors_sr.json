@@ -19,6 +19,7 @@
 		"invalidOrganizationMaxLength" : "Max. 200 karaktera.",
 		"invalidEventNameMaxLength" : "Max. 200 karaktera.",
 		"invalidCommitteeMaxLength" : "Max. 200 karaktera.",
+		"invalidJournalNameMaxLength" : "Max. 200 karaktera.",
 		"invalidFunctionMaxLength" : "Max. 40 karaktera.",
 		"invalidOrganizationNameMaxLength" : "Max. 200 karaktera.",		
 		"invalidProjectNameFinancedByMaxLength" : "Max. 200 karaktera.",
