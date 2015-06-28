@@ -1,6 +1,7 @@
 package com.pct.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -21,26 +22,28 @@ import com.pct.repository.SubjectRepository;
 import com.pct.repository.TeachingExperienceRepository;
 import com.pct.service.TeachingExperienceService;
 import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.SimilarDataAlreadyExistsException;
 import com.pct.validation.SubjectNotFoundException;
 import com.pct.validation.TeachingExperienceNotFoundException;
 
 @Service
 public class TeachingExperienceServiceImpl implements TeachingExperienceService {
 
-	@Autowired
 	private TeachingExperienceRepository teachingExperienceRepository;
-
-	@Autowired
 	private ProfesorRepository professorRepository;
+	private SubjectRepository subjectRepository;
+	private InstitutionTypeRepository institutionTypeRepository;
+	private InstitutionRepository institutionRepository;
 
 	@Autowired
-	private SubjectRepository subjectRepository;
-	
-	@Autowired
-	private InstitutionTypeRepository institutionTypeRepository;
-	
-	@Autowired
-	private InstitutionRepository institutionRepository;
+	public TeachingExperienceServiceImpl(TeachingExperienceRepository teachingExperienceRepository, ProfesorRepository professorRepository,
+			SubjectRepository subjectRepository, InstitutionTypeRepository institutionTypeRepository, InstitutionRepository institutionRepository) {
+		this.teachingExperienceRepository = teachingExperienceRepository;
+		this.professorRepository = professorRepository;
+		this.subjectRepository = subjectRepository;
+		this.institutionTypeRepository = institutionTypeRepository;
+		this.institutionRepository = institutionRepository;
+	}
 
 	@Override
 	@Transactional
@@ -49,8 +52,8 @@ public class TeachingExperienceServiceImpl implements TeachingExperienceService 
 
 		List<TeachingExperienceDto> teachingExperienceDtos = new ArrayList<TeachingExperienceDto>();
 		try {
-			List<TeachingExperience> teachingExperiences = teachingExperienceRepository
-					.findAllTeachingExperiences(professorId, seminarOrTeachingAbroad);
+			List<TeachingExperience> teachingExperiences = teachingExperienceRepository.findAllTeachingExperiences(professorId,
+					seminarOrTeachingAbroad);
 			for (TeachingExperience e : teachingExperiences) {
 				TeachingExperienceDto teachingExperienceDto = new TeachingExperienceDto(e);
 				teachingExperienceDtos.add(teachingExperienceDto);
@@ -80,38 +83,51 @@ public class TeachingExperienceServiceImpl implements TeachingExperienceService 
 
 	@Override
 	@Transactional
-	public void saveTeachingExperience(TeachingExperienceDto teachingExperienceDto)
-			throws TeachingExperienceNotFoundException, ProfessorNotFoundException, SubjectNotFoundException {
+	public void saveTeachingExperience(TeachingExperienceDto teachingExperienceDto) throws TeachingExperienceNotFoundException,
+			ProfessorNotFoundException, SubjectNotFoundException, SimilarDataAlreadyExistsException {
 
-		Professor professor = professorRepository.findOne(teachingExperienceDto.getProfessorId());
-		if (professor == null) {
-			throw new ProfessorNotFoundException();
+		if (teachingExperienceDto.getId() != null
+				|| (teachingExperienceDto.getId() == null && teachingExperienceRepository.isThereTeachingExperienceWithSimilarPeriod(
+						teachingExperienceDto.getProfessorId(), teachingExperienceDto.getSubjectDto().getId(),
+						teachingExperienceDto.getTeachingStartDate(),
+						(teachingExperienceDto.getTeachingEndDate() != null ? teachingExperienceDto.getTeachingEndDate() : new Date())) == 0)) {
+
+			Professor professor = professorRepository.findOne(teachingExperienceDto.getProfessorId());
+			if (professor == null) {
+				throw new ProfessorNotFoundException();
+			}
+
+			Subject subject = null;
+			try {
+				subject = subjectRepository.findOne(teachingExperienceDto.getSubjectDto().getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (subject == null && teachingExperienceDto.getSeminarOrTeachingAbroad()) {
+				Institution institution = new Institution();
+				institution.setInstitutionType(institutionTypeRepository.findByTypeName(teachingExperienceDto.getSubjectDto().getInstitutionType()));
+				institution.setName(teachingExperienceDto.getSubjectDto().getInstitutionName());
+				institution.setCity(teachingExperienceDto.getSubjectDto().getInstitutionCity());
+				institution.setCountry(teachingExperienceDto.getSubjectDto().getInstitutionCountry());
+				institution.setUniversity(teachingExperienceDto.getSubjectDto().getUniversityName());
+				institutionRepository.save(institution);
+
+				subject = new Subject();
+				subject.setInstitution(institution);
+				subject.setName(teachingExperienceDto.getSubjectDto().getSubjectName());
+				subject.setSeminarOrTeachingAbroad(teachingExperienceDto.getSeminarOrTeachingAbroad()
+						&& teachingExperienceDto.getSubjectDto().getSeminarOrTeachingAbroad());
+				subjectRepository.save(subject);
+			}
+
+			teachingExperienceRepository.saveAndFlush(createOrUpdateTeachingExperienceInstanceFromTeachingExperienceDto(teachingExperienceDto,
+					professor, subject));
+
+		} else {
+			throw new SimilarDataAlreadyExistsException("Teaching experience start date/Teaching experience end date",
+					"teachingStartDate/teachingEndDate");
 		}
 
-		Subject subject = null;
-		try {
-			subject = subjectRepository.findOne(teachingExperienceDto.getSubjectDto().getId());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if (subject == null && teachingExperienceDto.getSeminarOrTeachingAbroad()) {
-			Institution institution = new Institution();
-			institution.setInstitutionType(institutionTypeRepository.findByTypeName(teachingExperienceDto.getSubjectDto().getInstitutionType()));
-			institution.setName(teachingExperienceDto.getSubjectDto().getInstitutionName());
-			institution.setCity(teachingExperienceDto.getSubjectDto().getInstitutionCity());
-			institution.setCountry(teachingExperienceDto.getSubjectDto().getInstitutionCountry());
-			institution.setUniversity(teachingExperienceDto.getSubjectDto().getUniversityName());
-			institutionRepository.save(institution);
-			
-			subject = new Subject();
-			subject.setInstitution(institution);
-			subject.setName(teachingExperienceDto.getSubjectDto().getSubjectName());
-			subject.setSeminarOrTeachingAbroad(teachingExperienceDto.getSeminarOrTeachingAbroad() && teachingExperienceDto.getSubjectDto().getSeminarOrTeachingAbroad());
-			subjectRepository.save(subject);
-		}
-
-		teachingExperienceRepository.saveAndFlush(createOrUpdateTeachingExperienceInstanceFromTeachingExperienceDto(
-				teachingExperienceDto, professor, subject));
 	}
 
 	private TeachingExperience createOrUpdateTeachingExperienceInstanceFromTeachingExperienceDto(

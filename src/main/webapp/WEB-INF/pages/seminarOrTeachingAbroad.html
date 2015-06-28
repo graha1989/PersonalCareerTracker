@@ -188,7 +188,7 @@
 				<div class="form-group">
 					<label
 						for="inputTeachingEndDate"
-						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.teachingEndDate }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.teachingEndDate }}
 					</label>
 					<div class="col-sm-6">
 						<div
@@ -206,18 +206,10 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="teachingExperience.teachingEndDate"
-								required /> <span class="input-group-addon"> <span
+								ng-model="teachingExperience.teachingEndDate" /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openTeachingEndDate($event)"></span>
 							</span>
-						</div>
-						<div
-							ng-show="form.inputTeachingEndDate.$dirty && form.inputTeachingEndDate.$invalid"
-							class="teachingEndDateFieldError">
-							<span
-								ng-show="form.inputTeachingEndDate.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
 						</div>
 					</div>
 				</div>
@@ -239,6 +231,9 @@
 			<div class="modal-header">
 				<h3 class="modal-title">{{ resources.text.createNewTeachingExperiencePopupTitle }}</h3>
 			</div>
+			<div class="alert-warning text-center" ng-show="fieldErrors.length">
+	       	 	<div ng-repeat="error in fieldErrors"> <span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{error.message}}</strong></div>
+	    	</div>
 			<div class="modal-body">
 				<div class="form-group">
 					<label
@@ -410,7 +405,7 @@
 				<div class="form-group">
 					<label
 						for="inputTeachingEndDate"
-						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.teachingEndDate }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.teachingEndDate }}
 					</label>
 					<div class="col-sm-6">
 						<div
@@ -428,18 +423,10 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="teachingExperience.teachingEndDate"
-								required /> <span class="input-group-addon"> <span
+								ng-model="teachingExperience.teachingEndDate" /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openTeachingEndDate($event)"></span>
 							</span>
-						</div>
-						<div
-							ng-show="form.inputTeachingEndDate.$dirty && form.inputTeachingEndDate.$invalid"
-							class="teachingEndDateFieldError">
-							<span
-								ng-show="form.inputTeachingEndDate.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
 						</div>
 					</div>
 				</div>

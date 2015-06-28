@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pct.domain.dto.ValidationErrorDto;
 import com.pct.validation.EmailExistException;
+import com.pct.validation.SimilarDataAlreadyExistsException;
 import com.pct.validation.UserNameExistException;
 
 /**
@@ -37,6 +38,10 @@ public class ErrorControllerAdvice {
 	public static String EMAIL_EXIST_DEFAULT_MESSAGE = "Email already exist";
 	public static String EMAIL_EXIST_OBJECT_NAME = "professorDto";
 
+	public static String SIMILAR_TEACHING_EXPERIENCE_EXIST_CODE = "SimilarTeachingExprerienceExist.experience";
+	public static String SIMILAR_TEACHING_EXPERIENCE_EXIST_DEFAULT_MESSAGE = "Teaching experience with similar(same) data already exist";
+	public static String SIMILAR_TEACHING_EXPERIENCE_EXIST_OBJECT_NAME = "teachingExperienceDto";
+
 	@Autowired
 	private MessageSource messageSource;
 
@@ -51,8 +56,8 @@ public class ErrorControllerAdvice {
 	@ResponseBody
 	public ValidationErrorDto processUserNameValidationError(UserNameExistException ex) {
 		String[] codes = { USERNAME_EXIST_CODE };
-		FieldError userNameError = new FieldError(USERNAME_EXIST_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(),
-				false, codes, null, USERNAME_EXIST_DEFAULT_MESSAGE);
+		FieldError userNameError = new FieldError(USERNAME_EXIST_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(), false, codes, null,
+				USERNAME_EXIST_DEFAULT_MESSAGE);
 		List<FieldError> fieldErrors = new ArrayList<FieldError>();
 		fieldErrors.add(userNameError);
 		return processFieldErrors(fieldErrors);
@@ -69,8 +74,8 @@ public class ErrorControllerAdvice {
 	@ResponseBody
 	public ValidationErrorDto processEmailValidationError(EmailExistException ex) {
 		String[] codes = { EMAIL_EXIST_CODE };
-		FieldError emailError = new FieldError(EMAIL_EXIST_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(),
-				false, codes, null, EMAIL_EXIST_DEFAULT_MESSAGE);
+		FieldError emailError = new FieldError(EMAIL_EXIST_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(), false, codes, null,
+				EMAIL_EXIST_DEFAULT_MESSAGE);
 		List<FieldError> fieldErrors = new ArrayList<FieldError>();
 		fieldErrors.add(emailError);
 		return processFieldErrors(fieldErrors);
@@ -125,6 +130,19 @@ public class ErrorControllerAdvice {
 		}
 
 		return localizedErrorMessage;
+	}
+
+	@ExceptionHandler(SimilarDataAlreadyExistsException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	@ResponseBody
+	public ValidationErrorDto processNewTeachingExperienceValidationError(SimilarDataAlreadyExistsException ex) {
+		String[] codes = { SIMILAR_TEACHING_EXPERIENCE_EXIST_CODE };
+		FieldError teachingExperienceError = new FieldError(SIMILAR_TEACHING_EXPERIENCE_EXIST_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(),
+				false, codes, null, SIMILAR_TEACHING_EXPERIENCE_EXIST_DEFAULT_MESSAGE);
+		List<FieldError> fieldErrors = new ArrayList<FieldError>();
+		fieldErrors.add(teachingExperienceError);
+
+		return processFieldErrors(fieldErrors);
 	}
 
 }

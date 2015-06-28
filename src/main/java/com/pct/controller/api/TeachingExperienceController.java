@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -30,6 +29,7 @@ import com.pct.service.SubjectService;
 import com.pct.service.TeachingExperienceService;
 import com.pct.service.UserService;
 import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.SimilarDataAlreadyExistsException;
 import com.pct.validation.SubjectNotFoundException;
 import com.pct.validation.TeachingExperienceNotFoundException;
 import com.pct.validation.UserNotFoundException;
@@ -54,8 +54,7 @@ public class TeachingExperienceController {
 			@RequestParam(value = "professorId", required = true) Long professorId,
 			@RequestParam(value = "seminarOrTeachingAbroad", required = true) Boolean seminarOrTeachingAbroad) {
 
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
-				.getAuthorities();
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -78,8 +77,7 @@ public class TeachingExperienceController {
 	}
 
 	@RequestMapping(value = RequestMappings.LOAD_SELECTED_TEACHING_EXPERIENCE, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<TeachingExperienceDto> showTeachingExperience(
-			@RequestParam(value = RequestMappings.ID, required = true) Long id)
+	public ResponseEntity<TeachingExperienceDto> showTeachingExperience(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws TeachingExperienceNotFoundException {
 		TeachingExperienceDto teachingExperienceDto = teachingExperienceService.findTeachingExperienceById(id);
 
@@ -87,23 +85,20 @@ public class TeachingExperienceController {
 	}
 
 	@RequestMapping(value = RequestMappings.LOAD_SUBJECTS_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<List<SubjectDto>> findSubjectsStartsWith(
-			@RequestParam(value = "value", required = true) String value,
-			@RequestParam(value = "subjectIds", required = false) @Nullable List<Long> subjectIds,
-			@RequestParam(value = "seminarOrTeachingAbroad", required = true) Boolean seminarOrTeachingAbroad)
-			throws SubjectNotFoundException {
+	public ResponseEntity<List<SubjectDto>> findSubjectsStartsWith(@RequestParam(value = "value", required = true) String value,
+			@RequestParam(value = "seminarOrTeachingAbroad", required = true) Boolean seminarOrTeachingAbroad) throws SubjectNotFoundException {
 
 		List<SubjectDto> subjects = new ArrayList<SubjectDto>();
 		if (value.length() >= 3) {
-			subjects = subjectService.findAvailableSubjectsStartsWith(value, subjectIds, seminarOrTeachingAbroad);
+			subjects = subjectService.findAvailableSubjectsStartsWith(value, seminarOrTeachingAbroad);
 		}
 
 		return new ResponseEntity<List<SubjectDto>>(subjects, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<String> persistTeachingExperience(
-			@Valid @RequestBody TeachingExperienceDto teachingExperienceDto) {
+	public ResponseEntity<String> persistTeachingExperience(@Valid @RequestBody TeachingExperienceDto teachingExperienceDto)
+			throws SimilarDataAlreadyExistsException {
 
 		try {
 			teachingExperienceService.saveTeachingExperience(teachingExperienceDto);
@@ -115,15 +110,13 @@ public class TeachingExperienceController {
 			e.printStackTrace();
 		}
 
-		logger.debug("Teaching experience for: " + teachingExperienceDto.getSubjectDto().getSubjectName()
-				+ " successfully saved.");
+		logger.debug("Teaching experience for: " + teachingExperienceDto.getSubjectDto().getSubjectName() + " successfully saved.");
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ResponseEntity<TeachingExperienceDto> deleteTeachingExperience(
-			@RequestParam(value = RequestMappings.ID, required = true) Long id)
+	public ResponseEntity<TeachingExperienceDto> deleteTeachingExperience(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws TeachingExperienceNotFoundException {
 		teachingExperienceService.deleteTeachingExperience(id);
 

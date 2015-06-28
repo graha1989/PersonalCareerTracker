@@ -43,15 +43,18 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	@Transactional
-	public List<SubjectDto> findAvailableSubjectsStartsWith(String value, List<Long> subjectIds, Boolean seminarOrTeachingAbroad) {
+	public List<SubjectDto> findAvailableSubjectsStartsWith(String value, Boolean seminarOrTeachingAbroad) {
 
 		List<SubjectDto> subjectDtos = new ArrayList<SubjectDto>();
 		List<Subject> subjects = new ArrayList<Subject>();
+		/*
 		if (subjectIds != null && subjectIds.size() > 0) {
 			subjects = subjectRepository.findByNameLikeAndNotInIds(value, subjectIds, seminarOrTeachingAbroad);
 		} else {
 			subjects = subjectRepository.findByNameLike(value, seminarOrTeachingAbroad);
 		}
+		*/
+		subjects = subjectRepository.findByNameLike(value, seminarOrTeachingAbroad);
 		for (Subject subject : subjects) {
 			subjectDtos.add(new SubjectDto(subject));
 		}

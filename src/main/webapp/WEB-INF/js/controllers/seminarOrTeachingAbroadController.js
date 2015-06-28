@@ -1,138 +1,116 @@
-app
-        .controller(
-                "SeminarOrTeachingAbroadController",
-                function($scope, $routeParams, $http, $location, $modal,
-                        PctService) {
+app.controller("SeminarOrTeachingAbroadController", function($scope, $routeParams, $http, $location, $modal, PctService) {
 
-                  $scope.teachingExperiences = [];
-                  $scope.teachingExperience = {};
+  $scope.teachingExperiences = [];
+  $scope.teachingExperience = {};
 
-                  $scope.noResultsFound = true;
-                  $scope.resources = {};
-                  $scope.errorMessages = {};
+  $scope.noResultsFound = true;
+  $scope.resources = {};
+  $scope.errorMessages = {};
 
-                  $scope.isUser = false;
-                  $scope.isAdmin = false;
-                  $scope.professorId = '';
+  $scope.isUser = false;
+  $scope.isAdmin = false;
+  $scope.professorId = '';
 
-                  $scope.loadResources = function() {
-                    var locale = document.getElementById('localeCode');
-                    $http.get(
-                            'messages/profesorDetails_' + locale.value
-                                    + '.json').success(function(response) {
-                      $scope.resources = angular.fromJson(response);
-                    });
-                    $http.get('messages/errors_' + locale.value + '.json')
-                            .success(
-                                    function(response) {
-                                      $scope.errorMessages = angular
-                                              .fromJson(response);
-                                    });
-                  };
+  $scope.loadResources = function() {
+    var locale = document.getElementById('localeCode');
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
+  };
 
-                  $scope.loadTeachingExperiences = function(professorId) {
-                    return PctService
-                            .loadTeachingExperiences(professorId, true).then(
-                                    function(response) {
-                                      if (angular.isObject(response)
-                                              && response.length > 0) {
-                                        $scope.teachingExperiences = response;
-                                        $scope.noResultsFound = false;
-                                      } else {
-                                        $scope.noResultsFound = true;
-                                      }
-                                    });
-                  };
+  $scope.loadTeachingExperiences = function(professorId) {
+    return PctService.loadTeachingExperiences(professorId, true).then(function(response) {
+      if (angular.isObject(response) && response.length > 0) {
+        $scope.teachingExperiences = response;
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
+  };
 
-                  $scope.getCurrentUserRole = function() {
-                    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
-                      $scope.isUser = true;
-                    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
-                      $scope.isAdmin = true;
-                    }
-                  };
+  $scope.getCurrentUserRole = function() {
+    if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
+      $scope.isUser = true;
+    } else if (document.getElementById('currentUserRole').value === 'ROLE_ADMIN') {
+      $scope.isAdmin = true;
+    }
+  };
 
-                  $scope.initUserId = function() {
-                    if ($routeParams.professorId != null
-                            && $routeParams.professorId != '') {
-                      $scope.professorId = $routeParams.professorId;
-                    } else {
-                      $scope.professorId = document
-                              .getElementById('currentUserId').value;
-                    }
-                  };
+  $scope.initUserId = function() {
+    if ($routeParams.professorId != null && $routeParams.professorId != '') {
+      $scope.professorId = $routeParams.professorId;
+    } else {
+      $scope.professorId = document.getElementById('currentUserId').value;
+    }
+  };
 
-                  $scope.init = function() {
-                    $scope.initUserId();
-                    $scope.loadTeachingExperiences($scope.professorId);
-                    $scope.loadResources();
-                    $scope.getCurrentUserRole();
-                  };
+  $scope.init = function() {
+    $scope.initUserId();
+    $scope.loadTeachingExperiences($scope.professorId);
+    $scope.loadResources();
+    $scope.getCurrentUserRole();
+  };
 
-                  $scope.init();
+  $scope.init();
 
-                  $scope.goBack = function() {
-                    window.history.back();
-                  };
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
-                  $scope.editSeminarOrTeachingExperience = function(id) {
-                    $modal
-                            .open({
-                              templateUrl: 'editSeminarOrTeachingExperiencePopup.html',
-                              controller: editSeminarOrTeachingExperiencePopupController,
-                              resolve: {
-                                teachingExperienceId: function() {
-                                  return id;
-                                },
-                                professorId: function() {
-                                  return $scope.professorId;
-                                }
-                              }
-                            });
-                  };
+  $scope.editSeminarOrTeachingExperience = function(id) {
+    $modal.open({
+      templateUrl: 'editSeminarOrTeachingExperiencePopup.html',
+      controller: editSeminarOrTeachingExperiencePopupController,
+      resolve: {
+        teachingExperienceId: function() {
+          return id;
+        },
+        professorId: function() {
+          return $scope.professorId;
+        }
+      }
+    });
+  };
 
-                  $scope.createNewTeachingExperience = function() {
-                    $modal
-                            .open({
-                              templateUrl: 'createNewSeminarOrTeachingExperiencePopup.html',
-                              controller: createNewSeminarOrTeachingExperiencePopupController,
-                              resolve: {
-                                teachingExperiences: function() {
-                                  return $scope.teachingExperiences;
-                                },
-                                professorId: function() {
-                                  return $scope.professorId;
-                                }
-                              }
-                            });
-                  };
+  $scope.createNewTeachingExperience = function() {
+    $modal.open({
+      templateUrl: 'createNewSeminarOrTeachingExperiencePopup.html',
+      controller: createNewSeminarOrTeachingExperiencePopupController,
+      resolve: {
+        teachingExperiences: function() {
+          return $scope.teachingExperiences;
+        },
+        professorId: function() {
+          return $scope.professorId;
+        }
+      }
+    });
+  };
 
-                  $scope.deleteTeachingExperience = function(id, index) {
-                    PctService
-                            .deleteTeachingExperience(
-                                    id,
-                                    function(data) {
-                                      if (angular.isObject(data)) {
-                                        $scope.errorStatus = data.status;
-                                      } else {
-                                        $scope.successStatus = "Successfully deleted teaching experience.";
-                                        $scope.teachingExperiences.splice(
-                                                index, 1);
-                                        $scope
-                                                .loadTeachingExperiences($scope.professorId);
-                                      }
-                                    });
-                  };
+  $scope.deleteTeachingExperience = function(id, index) {
+    PctService.deleteTeachingExperience(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.errorStatus = data.status;
+      } else {
+        $scope.successStatus = "Successfully deleted teaching experience.";
+        $scope.teachingExperiences.splice(index, 1);
+        $scope.loadTeachingExperiences($scope.professorId);
+      }
+    });
+  };
 
-                  $scope.goBack = function() {
-                    window.history.back();
-                  };
+  $scope.goBack = function() {
+    window.history.back();
+  };
 
-                });
+});
 
-var editSeminarOrTeachingExperiencePopupController = function($scope,
-        $modalInstance, $routeParams, $http, $route, $templateCache,
-        PctService, professorId, teachingExperienceId) {
+var editSeminarOrTeachingExperiencePopupController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, PctService,
+        professorId, teachingExperienceId) {
 
   $scope.teachingExperience = {};
   $scope.master = {};
@@ -167,10 +145,8 @@ var editSeminarOrTeachingExperiencePopupController = function($scope,
     PctService.loadSelectedTeachingExperience(id, function(data) {
       if (angular.isObject(data)) {
         $scope.teachingExperience = data;
-        $scope.teachingExperience.teachingStartDate = new Date(
-                data.teachingStartDate);
-        $scope.teachingExperience.teachingEndDate = new Date(
-                data.teachingEndDate);
+        $scope.teachingExperience.teachingStartDate = new Date(data.teachingStartDate);
+        $scope.teachingExperience.teachingEndDate = (data.teachingEndDate != null ? new Date(data.teachingEndDate) : null);
         $scope.master = angular.copy($scope.teachingExperience);
         $scope.noResultsFound = false;
       } else {
@@ -181,14 +157,12 @@ var editSeminarOrTeachingExperiencePopupController = function($scope,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.setMaxDate = function() {
@@ -248,9 +222,8 @@ var editSeminarOrTeachingExperiencePopupController = function($scope,
 
 };
 
-var createNewSeminarOrTeachingExperiencePopupController = function($scope,
-        $modalInstance, $routeParams, $http, $route, $templateCache,
-        PctService, teachingExperiences, professorId) {
+var createNewSeminarOrTeachingExperiencePopupController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, PctService,
+        teachingExperiences, professorId) {
 
   $scope.teachingExperience = {};
   $scope.selectedSubject = [];
@@ -284,22 +257,12 @@ var createNewSeminarOrTeachingExperiencePopupController = function($scope,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
-  };
-
-  $scope.getSubjectIds = function(selectedTeachingExperiences) {
-    var subjectsIdsArray = [];
-    for (var i = 0; i < selectedTeachingExperiences.length; i++) {
-      subjectsIdsArray.push(selectedTeachingExperiences[i].subjectDto.id);
-    }
-    return subjectsIdsArray;
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.setMaxDate = function() {
@@ -316,21 +279,13 @@ var createNewSeminarOrTeachingExperiencePopupController = function($scope,
   $scope.init();
 
   $scope.getSeminarsOrForeignSubjects = function(val) {
-    var subjectIdsList = $scope.getSubjectIds(teachingExperiences);
-    for (var i = 0; i < subjectIdsList.length; i++) {
-      if (angular
-              .equals(subjectIdsList[i], $scope.teachingExperience.subjectId)) {
-        subjectIdsList.splice(i, 1);
+    return PctService.findSubjectsStartsWith(val, true).then(function(response) {
+      var subjects = [];
+      for (var i = 0; i < response.length; i++) {
+        subjects.push(response[i]);
       }
-    }
-    return PctService.findSubjectsStartsWith(val, subjectIdsList, true).then(
-            function(response) {
-              var subjects = [];
-              for (var i = 0; i < response.length; i++) {
-                subjects.push(response[i]);
-              }
-              return subjects;
-            });
+      return subjects;
+    });
   };
 
   $scope.onSelectSubject = function() {
@@ -360,9 +315,7 @@ var createNewSeminarOrTeachingExperiencePopupController = function($scope,
   };
 
   $scope.$watch('selectedSubject', function() {
-    if ($scope.isExistingSubject
-            && !angular.equals($scope.selectedSubject,
-                    $scope.masterSelectedSubject)) {
+    if ($scope.isExistingSubject && !angular.equals($scope.selectedSubject, $scope.masterSelectedSubject)) {
       $scope.restartSubjectData();
     }
   });
@@ -405,18 +358,11 @@ var createNewSeminarOrTeachingExperiencePopupController = function($scope,
   $scope.validateForm = function() {
     if ($scope.teachingExperience.subjectDto != null
             && (($scope.teachingExperience.subjectDto.subjectName != null && $scope.teachingExperience.subjectDto.subjectName != '') || ($scope.selectedSubject != null && $scope.selectedSubject != ''))
-            && $scope.teachingExperience.subjectDto.institutionName != null
-            && $scope.teachingExperience.subjectDto.institutionName != ''
-            && $scope.teachingExperience.subjectDto.universityName != null
-            && $scope.teachingExperience.subjectDto.universityName != ''
-            && $scope.teachingExperience.subjectDto.institutionCity != null
-            && $scope.teachingExperience.subjectDto.institutionCity != ''
-            && $scope.teachingExperience.subjectDto.institutionCountry != null
-            && $scope.teachingExperience.subjectDto.institutionCountry != ''
-            && $scope.teachingExperience.teachingStartDate != null
-            && $scope.teachingExperience.teachingStartDate != ''
-            && $scope.teachingExperience.teachingEndDate != null
-            && $scope.teachingExperience.teachingEndDate != '') {
+            && $scope.teachingExperience.subjectDto.institutionName != null && $scope.teachingExperience.subjectDto.institutionName != ''
+            && $scope.teachingExperience.subjectDto.universityName != null && $scope.teachingExperience.subjectDto.universityName != ''
+            && $scope.teachingExperience.subjectDto.institutionCity != null && $scope.teachingExperience.subjectDto.institutionCity != ''
+            && $scope.teachingExperience.subjectDto.institutionCountry != null && $scope.teachingExperience.subjectDto.institutionCountry != ''
+            && $scope.teachingExperience.teachingStartDate != null && $scope.teachingExperience.teachingStartDate != '') {
       return true;
     } else {
       return false;
