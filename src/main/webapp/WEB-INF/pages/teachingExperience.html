@@ -47,7 +47,7 @@
 							<td>{{ teachingExperience.subjectDto.studiesThesisType.type }}</td>
 							<td>{{ teachingExperience.subjectDto.numberOfTeachingLessons }} + {{ teachingExperience.subjectDto.numberOfTheoreticalLessons }} + {{ teachingExperience.subjectDto.numberOfPracticalLessons }}</td>
 							<td>{{ teachingExperience.teachingStartDate | date:'dd-MM-yyyy' }}</td>
-							<td>{{ teachingExperience.teachingEndDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ teachingExperience.teachingEndDate === null ? resources.text.now : teachingExperience.teachingEndDate | date:'dd-MM-yyyy' }}</td>
 							<td
 								class="delete"
 								ng-show="isUser"><button

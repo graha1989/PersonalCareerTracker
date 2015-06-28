@@ -81,7 +81,7 @@ app.controller("ProfesorDetailsController", function($scope, $routeParams,
   };
 
   $scope.updateProfessor = function() {
-    $scope.professor.id = $routeParams.id;
+    $scope.professor.id = $scope.id;
     $http({
       method: 'PUT',
       url: "api/professors/persistProfessor",

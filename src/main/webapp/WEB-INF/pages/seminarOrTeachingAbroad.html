@@ -27,7 +27,7 @@
 							<td>{{ teachingExperience.subjectDto.institutionCity }}</td>
 							<td>{{ teachingExperience.subjectDto.institutionCountry }}</td>
 							<td>{{ teachingExperience.teachingStartDate | date:'dd-MM-yyyy' }}</td>
-							<td>{{ teachingExperience.teachingEndDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ teachingExperience.teachingEndDate === null ? resources.text.now : teachingExperience.teachingEndDate | date:'dd-MM-yyyy' }}</td>
 							<td class="delete" ng-show="isUser"><button class="btn btn-link btn-xs" ng-click="deleteTeachingExperience(teachingExperience.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.teachingExperienceButtons.delete }}
 								</button></td>

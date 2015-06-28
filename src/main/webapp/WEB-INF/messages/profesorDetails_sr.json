@@ -84,7 +84,8 @@
         "newStudentPopupTitle":"Unos novog studenta",
         "sortBy": "Sortiraj po...",
         "startTypingTooltip": "Počnite sa kucanjem",
-        "isSci": "Radovi sa SCI liste"
+        "isSci": "Radovi sa SCI liste",
+        "now": "sada"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",
