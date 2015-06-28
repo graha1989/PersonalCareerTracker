@@ -3,6 +3,7 @@ package com.pct.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,6 +39,10 @@ public class PublicationCategory extends AbstractEntity {
 	@Column(name = "shPoints", nullable = true, columnDefinition = "Decimal(4,2)")
 	private Double shPoints;
 
+	@Nullable
+	@Column(name = "sci", nullable = true)
+	private Boolean sci;
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "publicationCategory")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "publicationCategory")
@@ -53,13 +58,14 @@ public class PublicationCategory extends AbstractEntity {
 	public PublicationCategory() {
 	}
 
-	public PublicationCategory(String code, String description, Double nsmPoints, Double ttbtPoints, Double shPoints,
+	public PublicationCategory(String code, String description, Double nsmPoints, Double ttbtPoints, Double shPoints, Boolean sci,
 			Set<ProfessorPublication> professorPublications, Set<InternationalPublication> internationalPublications) {
 		this.code = code;
 		this.description = description;
 		this.nsmPoints = nsmPoints;
 		this.ttbtPoints = ttbtPoints;
 		this.shPoints = shPoints;
+		this.sci = sci;
 		this.professorPublications = professorPublications;
 		this.internationalPublications = internationalPublications;
 	}
@@ -102,6 +108,14 @@ public class PublicationCategory extends AbstractEntity {
 
 	public void setShPoints(Double shPoints) {
 		this.shPoints = shPoints;
+	}
+
+	public Boolean getSci() {
+		return sci;
+	}
+
+	public void setSci(Boolean sci) {
+		this.sci = sci;
 	}
 
 	public Set<ProfessorPublication> getProfessorPublications() {

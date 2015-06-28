@@ -12,7 +12,31 @@
 		</div>
 		<div class="modal-body">
 			<fieldset>
-
+				<div
+					class="row form-group"
+					ng-show="publications != []">
+					<label
+						for="inputSortCriteria"
+						class="col-sm-9 control-label"></label>
+					<div class="col-sm-3">
+						<select
+							class="ng-binding form-control"
+							id="inputSortCriteria"
+							name="inputSortCriteria"
+							ng-model="sortType"
+							ng-options="sortType.description for sortType in allSortTypes"><option value="">{{ resources.text.sortBy }}</option></select>
+					</div>
+				</div>
+				<div
+					class="checkbox pull-right"
+					ng-show="publications != []">
+					<label> <input
+						type="checkbox"
+						ng-model="isSci"
+						id="inputFromSciList"
+						name="inputFromSciList"> {{ resources.text.isSci }} </input>
+					</label>
+				</div>
 				<table
 					ng-show="publications != []"
 					class="table table-condensed table-striped table-hover"
@@ -30,11 +54,13 @@
 							<td>{{ resources.professorPublicationsTableLabels.year }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.quoted }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.category }}</td>
-							<td ng-show="isUser" colspan="2"></td>
+							<td
+								ng-show="isUser"
+								colspan="2"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
-							ng-repeat="publication in publications">
+							ng-repeat="publication in publications | filter: customFilter | orderBy: sortType.sortBy">
 							<td>{{ publication.publicationType }}</td>
 							<td>{{ publication.isbn }}</td>
 							<td>{{ publication.title }}</td>
@@ -45,13 +71,15 @@
 							<td>{{ publication.year }}</td>
 							<td>{{ publication.quoted }}</td>
 							<td>{{ publication.publicationCategoryDto.code }}</td>
-							<td class="delete"
+							<td
+								class="delete"
 								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteProfessorPublication(publication.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.publicationsButtons.delete }}
 								</button></td>
-							<td class="edit"
+							<td
+								class="edit"
 								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="editProfessorPublication(publication.id)">
@@ -59,8 +87,12 @@
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td ng-show="isUser" colspan="12">{{ errorMessages.error.emptyTable }}</td>
-							<td ng-show="isAdmin" colspan="10">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isUser"
+								colspan="12">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isAdmin"
+								colspan="10">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -90,6 +122,7 @@
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
 			role="form"
+			novalidate
 			ng-model="publication">
 			<div class="modal-header">
 				<h3 class="modal-title">{{ resources.text.editPublicationPopupTitle }}</h3>
@@ -107,6 +140,7 @@
 							id="inputPublicationIsbn"
 							name="inputPublicationIsbn"
 							ng-model="publication.isbn"
+							placeholder="{{ resources.publicationPopupLabels.publicationIsbn }}"
 							ng-maxlength="30"
 							required />
 						<div
@@ -132,6 +166,7 @@
 							id="inputPublicationTitle"
 							name="inputPublicationTitle"
 							ng-model="publication.title"
+							placeholder="{{ resources.publicationPopupLabels.publicationTitle }}"
 							ng-maxlength="100"
 							required />
 						<div
@@ -157,6 +192,7 @@
 							id="inputPublicationJournalTitle"
 							name="inputPublicationJournalTitle"
 							ng-model="publication.journalTitle"
+							placeholder="{{ resources.publicationPopupLabels.publicationJournalTitle }}"
 							ng-maxlength="100" />
 						<div
 							ng-show="form.inputPublicationJournalTitle.$dirty && form.inputPublicationJournalTitle.$invalid"
@@ -215,6 +251,7 @@
 								name="inputNewPublicationAuthor"
 								ng-model="$parent.newPublicationAuthor"
 								ng-pattern="patterns.onlyLetters"
+								placeholder="{{ resources.publicationPopupLabels.publicationAuthor }}"
 								ng-maxlength="100"
 								ng-required="publicationAuthorsArray.length == 0" /> 
 							<span
@@ -251,6 +288,7 @@
 							id="inputPublicationPublisher"
 							name="inputPublicationPublisher"
 							ng-model="publication.publisher"
+							placeholder="{{ resources.publicationPopupLabels.publicationPublisher }}"
 							ng-maxlength="50"
 							required />
 						<div
@@ -417,6 +455,7 @@
 							id="inputPublicationYear"
 							name="inputPublicationYear"
 							ng-model="publication.year"
+							placeholder="{{ resources.publicationPopupLabels.publicationYear }}"
 							ng-maxlength="4"
 							ng-minlength="4"
 							required />
@@ -445,6 +484,7 @@
 							id="inputPublicationQuotedNum"
 							name="inputPublicationQuotedNum"
 							ng-model="publication.quoted"
+							placeholder="{{ resources.publicationPopupLabels.publicationQuoted }}"
 							min="0"
 							ng-maxlength="5"
 							required />
@@ -531,6 +571,7 @@
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
 			role="form"
+			novalidate
 			ng-model="publication">
 			<div class="modal-header">
 				<h3 class="modal-title">{{ resources.text.newPublicationPopupTitle }}</h3>
@@ -548,6 +589,7 @@
 							id="inputPublicationIsbn"
 							name="inputPublicationIsbn"
 							ng-model="publication.isbn"
+							placeholder="{{ resources.publicationPopupLabels.publicationIsbn }}"
 							ng-maxlength="30"
 							required />
 						<div
@@ -573,6 +615,7 @@
 							id="inputPublicationTitle"
 							name="inputPublicationTitle"
 							ng-model="publication.title"
+							placeholder="{{ resources.publicationPopupLabels.publicationTitle }}"
 							ng-maxlength="100"
 							required />
 						<div
@@ -598,6 +641,7 @@
 							id="inputPublicationJournalTitle"
 							name="inputPublicationJournalTitle"
 							ng-model="publication.journalTitle"
+							placeholder="{{ resources.publicationPopupLabels.publicationJournalTitle }}"
 							ng-maxlength="100" />
 						<div
 							ng-show="form.inputPublicationJournalTitle.$dirty && form.inputPublicationJournalTitle.$invalid"
@@ -655,6 +699,7 @@
 								id="inputNewPublicationAuthor"
 								name="inputNewPublicationAuthor"
 								ng-model="$parent.newPublicationAuthor"
+								placeholder="{{ resources.publicationPopupLabels.publicationAuthor }}"
 								ng-pattern="patterns.onlyLetters"
 								ng-maxlength="100"
 								ng-required="publicationAuthorsArray.length == 0" /> 
@@ -692,6 +737,7 @@
 							id="inputPublicationPublisher"
 							name="inputPublicationPublisher"
 							ng-model="publication.publisher"
+							placeholder="{{ resources.publicationPopupLabels.publicationPublisher }}"
 							ng-maxlength="50"
 							required />
 						<div
@@ -858,6 +904,7 @@
 							id="inputPublicationYear"
 							name="inputPublicationYear"
 							ng-model="publication.year"
+							placeholder="{{ resources.publicationPopupLabels.publicationYear }}"
 							ng-maxlength="4"
 							ng-minlength="4"
 							required />
@@ -885,6 +932,7 @@
 							class="form-control ng-valid ng-valid-number ng-valid-min ng-valid-maxlength ng-dirty"
 							id="inputPublicationQuotedNum"
 							name="inputPublicationQuotedNum"
+							placeholder="{{ resources.publicationPopupLabels.publicationQuoted }}"
 							ng-model="publication.quoted"
 							min="0"
 							ng-maxlength="5"

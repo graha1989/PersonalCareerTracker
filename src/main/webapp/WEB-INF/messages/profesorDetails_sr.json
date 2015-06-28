@@ -83,7 +83,8 @@
         "editStudentPopupTitle":"Izmena podataka o studentu",
         "newStudentPopupTitle":"Unos novog studenta",
         "sortBy": "Sortiraj po...",
-        "startTypingTooltip": "Počnite sa kucanjem"
+        "startTypingTooltip": "Počnite sa kucanjem",
+        "isSci": "Radovi sa SCI liste"
     },
     "profesorLabels": {
         "userNameLabel": "Korisničko ime",

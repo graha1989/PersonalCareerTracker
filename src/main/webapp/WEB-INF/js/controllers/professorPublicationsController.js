@@ -1,5 +1,5 @@
-app.controller("ProfessorPublicationsController", function($scope,
-        $routeParams, $http, $location, $modal, PctService) {
+app.controller("ProfessorPublicationsController", function($scope, $routeParams, $http, $location, $modal, $filter,
+        PctService) {
 
   $scope.publications = [];
   $scope.publication = {};
@@ -7,35 +7,58 @@ app.controller("ProfessorPublicationsController", function($scope,
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
-  
+
   $scope.isUser = false;
   $scope.isAdmin = false;
   $scope.professorId = '';
+  $scope.isSci = false;
+
+  $scope.customFilter = function(publication) {
+    return !$scope.isSci || publication && publication.publicationCategoryDto.sci === true;
+  };
+  
+  $scope.sortType = '';
+
+  $scope.allSortTypes = [{
+    description: "kategoriji-rastuće",
+    sortBy: "+publicationCategoryDto.code"
+  }, {
+    description: "kategoriji-opadajuće",
+    sortBy: "-publicationCategoryDto.code"
+  }, {
+    description: "godini-rastuće",
+    sortBy: "+year"
+  }, {
+    description: "godini-opadajuće",
+    sortBy: "-year"
+  }];
+
+  $scope.patterns = {
+    onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
+    onlyNumbers: /^[0-9 ]*$/
+  };
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadProfessorsPublications = function(professorId) {
-    return PctService.loadProfessorsPublications(professorId).then(
-            function(response) {
-              if (angular.isObject(response) && response.length > 0) {
-                $scope.publications = response;
-                $scope.noResultsFound = false;
-              } else {
-                $scope.noResultsFound = true;
-              }
-            });
+    return PctService.loadProfessorsPublications(professorId).then(function(response) {
+      if (angular.isObject(response) && response.length > 0) {
+        $scope.publications = response;
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
   };
-  
+
   $scope.getCurrentUserRole = function() {
     if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
       $scope.isUser = true;
@@ -43,7 +66,7 @@ app.controller("ProfessorPublicationsController", function($scope,
       $scope.isAdmin = true;
     }
   };
-  
+
   $scope.initUserId = function() {
     if ($routeParams.professorId != null && $routeParams.professorId != '') {
       $scope.professorId = $routeParams.professorId;
@@ -63,6 +86,14 @@ app.controller("ProfessorPublicationsController", function($scope,
 
   $scope.goBack = function() {
     window.history.back();
+  };
+
+  $scope.filter = function() {
+    $filter('filter')($scope.publications, {
+      publicationCategoryDto: {
+        sci: true
+      }
+    });
   };
 
   $scope.deleteProfessorPublication = function(id, index) {
@@ -103,15 +134,15 @@ app.controller("ProfessorPublicationsController", function($scope,
       }
     });
   };
-  
+
   $scope.goBack = function() {
     window.history.back();
   };
 
 });
 
-var editProfessorPublicationPopupController = function($scope, $modalInstance,
-        $routeParams, $http, $route, publicationId, PctService, professorId) {
+var editProfessorPublicationPopupController = function($scope, $modalInstance, $routeParams, $http, $route,
+        publicationId, PctService, professorId) {
 
   $scope.publication = {};
   $scope.master = {};
@@ -133,14 +164,12 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadAllPublicationTypes = function() {
@@ -169,8 +198,7 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
     PctService.loadProfesor(professorId, function(data) {
       if (angular.isObject(data)) {
         $scope.professor = data;
-        $scope.professorNameAndSurname = $scope.professor.name + " "
-                + $scope.professor.surname;
+        $scope.professorNameAndSurname = $scope.professor.name + " " + $scope.professor.surname;
         $scope.noResultsFound = false;
       } else {
         $scope.noResultsFound = true;
@@ -202,17 +230,15 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
   $scope.constructPublicationAuthorsString = function(array) {
     $scope.publication.authors = "";
     for (var i = 0; i < array.length; i++) {
-      $scope.publication.authors = $scope.publication.authors
-              + ((i > 0 && i < array.length) ? "; " : "") + array[i];
+      $scope.publication.authors = $scope.publication.authors + ((i > 0 && i < array.length) ? "; " : "") + array[i];
     }
   };
 
   $scope.constructPublicationPageRangesString = function(array) {
     $scope.publication.pageRange = "";
     for (var i = 0; i < array.length; i++) {
-      $scope.publication.pageRange = $scope.publication.pageRange
-              + ((i > 0 && i < array.length) ? "; " : "") + array[i].startPage
-              + "-" + array[i].endPage;
+      $scope.publication.pageRange = $scope.publication.pageRange + ((i > 0 && i < array.length) ? "; " : "")
+              + array[i].startPage + "-" + array[i].endPage;
     }
   };
 
@@ -228,30 +254,21 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
   };
 
   $scope.loadSelectedProfessorPublication = function(id) {
-    PctService
-            .loadSelectedProfessorPublication(
-                    id,
-                    function(data) {
-                      if (angular.isObject(data)) {
-                        $scope.publication = data;
-                        $scope.master = angular.copy($scope.publication);
-                        $scope.publicationAuthorsArray = $scope
-                                .createAuthorsArray();
-                        $scope.masterPublicationAuthorsArray = angular
-                                .copy($scope.publicationAuthorsArray);
-                        $scope
-                                .constructPublicationAuthorsString($scope.publicationAuthorsArray);
-                        $scope.publicationPageRanges = $scope
-                                .createPageRangesArray();
-                        $scope.masterPublicationPageRanges = angular
-                                .copy($scope.publicationPageRanges);
-                        $scope
-                                .constructPublicationPageRangesString($scope.publicationPageRanges);
-                        $scope.noResultsFound = false;
-                      } else {
-                        $scope.noResultsFound = true;
-                      }
-                    });
+    PctService.loadSelectedProfessorPublication(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.publication = data;
+        $scope.master = angular.copy($scope.publication);
+        $scope.publicationAuthorsArray = $scope.createAuthorsArray();
+        $scope.masterPublicationAuthorsArray = angular.copy($scope.publicationAuthorsArray);
+        $scope.constructPublicationAuthorsString($scope.publicationAuthorsArray);
+        $scope.publicationPageRanges = $scope.createPageRangesArray();
+        $scope.masterPublicationPageRanges = angular.copy($scope.publicationPageRanges);
+        $scope.constructPublicationPageRangesString($scope.publicationPageRanges);
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
   };
 
   $scope.init = function() {
@@ -342,21 +359,15 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
   };
 
   $scope.isUnchanged = function(publication) {
-    if (angular.equals(publication.isbn, $scope.master.isbn)
-            && angular.equals(publication.title, $scope.master.title)
-            && angular.equals(publication.journalTitle,
-                    $scope.master.journalTitle)
+    if (angular.equals(publication.isbn, $scope.master.isbn) && angular.equals(publication.title, $scope.master.title)
+            && angular.equals(publication.journalTitle, $scope.master.journalTitle)
             && angular.equals(publication.publisher, $scope.master.publisher)
-            && angular.equals(publication.publicationType,
-                    $scope.master.publicationType)
+            && angular.equals(publication.publicationType, $scope.master.publicationType)
             && angular.equals(publication.quoted, $scope.master.quoted)
             && angular.equals(publication.year, $scope.master.year)
-            && angular.equals(publication.publicationCategoryDto,
-                    $scope.master.publicationCategoryDto)
-            && $scope.testArrays($scope.publicationAuthorsArray,
-                    $scope.masterPublicationAuthorsArray)
-            && $scope.testArrays($scope.publicationPageRanges,
-                    $scope.masterPublicationPageRanges)) {
+            && angular.equals(publication.publicationCategoryDto, $scope.master.publicationCategoryDto)
+            && $scope.testArrays($scope.publicationAuthorsArray, $scope.masterPublicationAuthorsArray)
+            && $scope.testArrays($scope.publicationPageRanges, $scope.masterPublicationPageRanges)) {
       return true;
     } else {
       return false;
@@ -373,13 +384,11 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
   };
 
   $scope.validatePageRangeInput = function() {
-    return $scope.startPage == 0 || $scope.endPage == 0
-            || $scope.endPage <= $scope.startPage;
+    return $scope.startPage == 0 || $scope.endPage == 0 || $scope.endPage <= $scope.startPage;
   };
 
   $scope.scientificPublicationNotSelected = function() {
-    if (angular.isUndefined($scope.publication.publicationType)
-            || $scope.publication.publicationType === null
+    if (angular.isUndefined($scope.publication.publicationType) || $scope.publication.publicationType === null
             || $scope.publication.publicationType === '') {
       $scope.publication.publicationCategoryDto = null;
       return true;
@@ -397,8 +406,8 @@ var editProfessorPublicationPopupController = function($scope, $modalInstance,
 
 };
 
-var createNewProfessorPublicationController = function($scope, $modalInstance,
-        $routeParams, $http, $route, PctService, professorId) {
+var createNewProfessorPublicationController = function($scope, $modalInstance, $routeParams, $http, $route, PctService,
+        professorId) {
 
   $scope.publication = {};
   $scope.allPublicationTypes = [];
@@ -417,14 +426,12 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadAllPublicationTypes = function() {
@@ -450,23 +457,17 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
   };
 
   $scope.loadProfessorNameAndSurname = function() {
-    PctService
-            .loadProfesor(
-                    professorId,
-                    function(data) {
-                      if (angular.isObject(data)) {
-                        $scope.professor = data;
-                        $scope.professorNameAndSurname = $scope.professor.name
-                                + " " + $scope.professor.surname;
-                        $scope.publicationAuthorsArray
-                                .push($scope.professorNameAndSurname);
-                        $scope
-                                .constructPublicationAuthorsString($scope.publicationAuthorsArray);
-                        $scope.noResultsFound = false;
-                      } else {
-                        $scope.noResultsFound = true;
-                      }
-                    });
+    PctService.loadProfesor(professorId, function(data) {
+      if (angular.isObject(data)) {
+        $scope.professor = data;
+        $scope.professorNameAndSurname = $scope.professor.name + " " + $scope.professor.surname;
+        $scope.publicationAuthorsArray.push($scope.professorNameAndSurname);
+        $scope.constructPublicationAuthorsString($scope.publicationAuthorsArray);
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
   };
 
   $scope.createAuthorsArray = function() {
@@ -493,17 +494,15 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
   $scope.constructPublicationAuthorsString = function(array) {
     $scope.publication.authors = "";
     for (var i = 0; i < array.length; i++) {
-      $scope.publication.authors = $scope.publication.authors
-              + ((i > 0 && i < array.length) ? "; " : "") + array[i];
+      $scope.publication.authors = $scope.publication.authors + ((i > 0 && i < array.length) ? "; " : "") + array[i];
     }
   };
 
   $scope.constructPublicationPageRangesString = function(array) {
     $scope.publication.pageRange = "";
     for (var i = 0; i < array.length; i++) {
-      $scope.publication.pageRange = $scope.publication.pageRange
-              + ((i > 0 && i < array.length) ? "; " : "") + array[i].startPage
-              + "-" + array[i].endPage;
+      $scope.publication.pageRange = $scope.publication.pageRange + ((i > 0 && i < array.length) ? "; " : "")
+              + array[i].startPage + "-" + array[i].endPage;
     }
   };
 
@@ -606,23 +605,14 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
   };
 
   $scope.validateNewProfessorPublicationForm = function() {
-    if ($scope.publication.isbn != null && $scope.publication.isbn != ''
-            && $scope.publication.title != null
-            && $scope.publication.title != ''
-            && $scope.publication.authors != null
-            && $scope.publication.authors != ''
-            && $scope.publication.publisher != null
-            && $scope.publication.publisher != ''
-            && $scope.publication.pageRange != null
-            && $scope.publication.pageRange != ''
-            && $scope.publication.quoted != null
-            && $scope.publication.quoted >= 0
-            && $scope.publication.year != null
-            && $scope.publication.year != ''
-            && $scope.publication.publicationType != null
+    if ($scope.publication.isbn != null && $scope.publication.isbn != '' && $scope.publication.title != null
+            && $scope.publication.title != '' && $scope.publication.authors != null && $scope.publication.authors != ''
+            && $scope.publication.publisher != null && $scope.publication.publisher != ''
+            && $scope.publication.pageRange != null && $scope.publication.pageRange != ''
+            && $scope.publication.quoted != null && $scope.publication.quoted >= 0 && $scope.publication.year != null
+            && $scope.publication.year != '' && $scope.publication.publicationType != null
             && $scope.publication.publicationType != '') {
-      if ($scope.publication.publicationType === "Naučna"
-              && $scope.publication.publicationCategoryDto != null
+      if ($scope.publication.publicationType === "Naučna" && $scope.publication.publicationCategoryDto != null
               && $scope.publication.publicationCategoryDto != '') {
         return true;
       } else if ($scope.publication.publicationType === "Naučna"
@@ -637,13 +627,11 @@ var createNewProfessorPublicationController = function($scope, $modalInstance,
   };
 
   $scope.validatePageRangeInput = function() {
-    return $scope.startPage == 0 || $scope.endPage == 0
-            || $scope.endPage <= $scope.startPage;
+    return $scope.startPage == 0 || $scope.endPage == 0 || $scope.endPage <= $scope.startPage;
   };
 
   $scope.scientificPublicationNotSelected = function() {
-    if (angular.isUndefined($scope.publication.publicationType)
-            || $scope.publication.publicationType === null
+    if (angular.isUndefined($scope.publication.publicationType) || $scope.publication.publicationType === null
             || $scope.publication.publicationType === '') {
       $scope.publication.publicationCategoryDto = null;
       return true;
