@@ -146,6 +146,7 @@ var editInternationalPublicationPopupController = function($scope,
 	$scope.endPage = "";
 	$scope.publicationPageRanges = [];
 	$scope.masterPublicationPageRanges = [];
+	$scope.domesticAndForeign = ["Domaća", "Strana"];
 
 	$scope.patterns = {
 		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -386,6 +387,8 @@ var editInternationalPublicationPopupController = function($scope,
 						$scope.master.publicationType)
 				&& angular.equals(internationalPublication.year,
 						$scope.master.year)
+				&& angular.equals(internationalPublication.origin,
+            $scope.master.origin)
 				&& angular.equals(
 						internationalPublication.publicationCategoryDto,
 						$scope.master.publicationCategoryDto)
@@ -446,6 +449,7 @@ var createNewInternationalPublicationController = function($scope,
 	$scope.startPage = "";
 	$scope.endPage = "";
 	$scope.publicationPageRanges = [];
+	$scope.domesticAndForeign = ["Domaća", "Strana"];
 
 	$scope.patterns = {
 		onlyLetters : /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -659,6 +663,8 @@ var createNewInternationalPublicationController = function($scope,
 				&& $scope.internationalPublication.pagesWithQuotes != ''
 				&& $scope.internationalPublication.year != null
 				&& $scope.internationalPublication.year != ''
+				&& $scope.internationalPublication.origin != null
+	      && $scope.internationalPublication.origin != ''
 				&& $scope.internationalPublication.publicationType != null
 				&& $scope.internationalPublication.publicationType != '') {
 			if ($scope.internationalPublication.publicationType === "Naučna"

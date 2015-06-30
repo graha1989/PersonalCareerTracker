@@ -163,10 +163,10 @@ INSERT INTO professor_publication (isbn, title, journalTitle, authors, publisher
 	('ISBN:222-3-99633-011-4', 'Matematička analiza', null, 'Arpad Takači; Srđan Bojić', 'PMF', '1-120', '2', '6', null, '3', '2014')
 	ON DUPLICATE KEY UPDATE isbn=VALUES(isbn), title=VALUES(title), journalTitle=VALUES(journalTitle), authors=VALUES(authors), publisher=VALUES(publisher), pageRange=VALUES(pageRange), publicationTypeId=VALUES(publicationTypeId), quoted=VALUES(quoted), publicationCategoryId=VALUES(publicationCategoryId), professorId=VALUES(professorId), year=VALUES(year);
 	
-INSERT INTO international_publication (isbn, title, journalTitle, authors, publisher, pagesWithQuotes, year, publicationTypeId, publicationCategoryId, professorId) VALUES
-	('ISBN:444-1-57200-544-1', 'Fuzzy Information Processing', 'International IT magazine', 'Srđan Bojić', 'PMF', '50-52', '2011', '1', '5', '3'),
-	('ISBN:544-3-25698-332-3', 'Fuzzy Database', null, 'Miloš Racković; Srđan Bojić', 'PMF', '40-50', '2009', '1', '10', '3')
-	ON DUPLICATE KEY UPDATE isbn=VALUES(isbn), title=VALUES(title), journalTitle=VALUES(journalTitle), authors=VALUES(authors), publisher=VALUES(publisher), pagesWithQuotes=VALUES(pagesWithQuotes), year=VALUES(year), publicationTypeId=VALUES(publicationTypeId), publicationCategoryId=VALUES(publicationCategoryId), professorId=VALUES(professorId);
+INSERT INTO quoting_publication (isbn, title, journalTitle, authors, publisher, pagesWithQuotes, year, origin, publicationTypeId, publicationCategoryId, professorId) VALUES
+	('ISBN:444-1-57200-544-1', 'Fuzzy Information Processing', 'International IT magazine', 'Srđan Bojić', 'PMF', '50-52', '2011', 'Strana', '1', '5', '3'),
+	('ISBN:544-3-25698-332-3', 'Fuzzy Database', null, 'Miloš Racković; Srđan Bojić', 'PMF', '40-50', '2009', 'Domaća', '1', '10', '3')
+	ON DUPLICATE KEY UPDATE isbn=VALUES(isbn), title=VALUES(title), journalTitle=VALUES(journalTitle), authors=VALUES(authors), publisher=VALUES(publisher), pagesWithQuotes=VALUES(pagesWithQuotes), year=VALUES(year), origin=VALUES(origin), publicationTypeId=VALUES(publicationTypeId), publicationCategoryId=VALUES(publicationCategoryId), professorId=VALUES(professorId);
 	
 INSERT INTO institution_type (typeName) VALUES
 	('Firma'),

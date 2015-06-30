@@ -14,7 +14,7 @@ import org.hibernate.annotations.CascadeType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "international_publication")
+@Table(name = "quoting_publication")
 public class InternationalPublication extends AbstractEntity {
 
 	private static final long serialVersionUID = 7937309852122160026L;
@@ -41,6 +41,9 @@ public class InternationalPublication extends AbstractEntity {
 
 	@Column(name = "year", length = 4)
 	private String year;
+	
+	@Column(name = "origin")
+	private String origin;
 
 	@ManyToOne
 	@Cascade(CascadeType.SAVE_UPDATE)
@@ -61,9 +64,8 @@ public class InternationalPublication extends AbstractEntity {
 	public InternationalPublication() {
 	}
 
-	public InternationalPublication(String isbn, String title, String jurnalTitle, String authors, String publisher,
-			String pagesWithQuotes, String year, PublicationType publicationType,
-			PublicationCategory publicationCategory, Professor professor) {
+	public InternationalPublication(String isbn, String title, String jurnalTitle, String authors, String publisher, String pagesWithQuotes,
+			String year, String origin, PublicationType publicationType, PublicationCategory publicationCategory, Professor professor) {
 		this.isbn = isbn;
 		this.title = title;
 		this.journalTitle = jurnalTitle;
@@ -71,6 +73,7 @@ public class InternationalPublication extends AbstractEntity {
 		this.publisher = publisher;
 		this.pagesWithQuotes = pagesWithQuotes;
 		this.year = year;
+		this.origin = origin;
 		this.publicationType = publicationType;
 		this.publicationCategory = publicationCategory;
 		this.professor = professor;
@@ -130,6 +133,14 @@ public class InternationalPublication extends AbstractEntity {
 
 	public void setYear(String year) {
 		this.year = year;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 
 	public PublicationType getPublicationType() {

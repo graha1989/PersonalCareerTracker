@@ -2,6 +2,8 @@ package com.pct.domain.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -51,6 +53,10 @@ public class InternationalPublicationDto implements Serializable {
 	@SafeHtml
 	private String year;
 
+	@NotNull
+	@Length(max = 6)
+	private String origin;
+
 	private PublicationCategoryDto publicationCategoryDto;
 
 	protected Long professorId;
@@ -60,9 +66,9 @@ public class InternationalPublicationDto implements Serializable {
 	public InternationalPublicationDto() {
 	}
 
-	public InternationalPublicationDto(String publicationType, String isbn, String title, String journalTitle,
-			String authors, String publisher, String pagesWithQuotes, String year, Integer quoted,
-			PublicationCategoryDto publicationCategoryDto, Long professorId, Long id) {
+	public InternationalPublicationDto(String publicationType, String isbn, String title, String journalTitle, String authors, String publisher,
+			String pagesWithQuotes, String year, String origin, Integer quoted, PublicationCategoryDto publicationCategoryDto, Long professorId,
+			Long id) {
 		this.publicationType = publicationType;
 		this.isbn = isbn;
 		this.title = title;
@@ -71,6 +77,7 @@ public class InternationalPublicationDto implements Serializable {
 		this.publisher = publisher;
 		this.pagesWithQuotes = pagesWithQuotes;
 		this.year = year;
+		this.origin = origin;
 		this.publicationCategoryDto = publicationCategoryDto;
 		this.professorId = professorId;
 		this.id = id;
@@ -85,7 +92,8 @@ public class InternationalPublicationDto implements Serializable {
 		this.publisher = p.getPublisher();
 		this.pagesWithQuotes = p.getPagesWithQuotes();
 		this.year = p.getYear();
-		this.publicationCategoryDto = (p.getPublicationCategory() != null ? new PublicationCategoryDto(p.getPublicationCategory()):null);
+		this.origin = p.getOrigin();
+		this.publicationCategoryDto = (p.getPublicationCategory() != null ? new PublicationCategoryDto(p.getPublicationCategory()) : null);
 		this.professorId = p.getProfessor().getId();
 		this.id = p.getId();
 	}
@@ -152,6 +160,14 @@ public class InternationalPublicationDto implements Serializable {
 
 	public void setYear(String year) {
 		this.year = year;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 
 	public PublicationCategoryDto getPublicationCategoryDto() {
