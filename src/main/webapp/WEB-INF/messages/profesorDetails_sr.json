@@ -45,7 +45,7 @@
         "addNewInstitutionPopupTitle": "Dodavanje nove institucije",
         "addNewSurveyPopupTitle": "Dodavanje nove ankete",
         "professorPublicationsTitle": "Sve lične publikacije",
-        "internationalPublicationsTitle": "Sve međunarodne publikacije",
+        "internationalPublicationsTitle": "Sve publikacije koje citiraju profesora",
         "editPublicationPopupTitle": "Izmena publikacije",
         "newPublicationPopupTitle": "Unos nove publikacije",
         "workExperiencesTitle": "Kretanje u profesionalnom radu",
@@ -149,7 +149,7 @@
 	 	"publications": "Publikacije",
 	 	"publicationTypes": {
         	"personalPublications": "Lične publikacije",
-	        "internationalPublications": "Međunarodne publikacije",
+	        "internationalPublications": "Publikacije koje citiraju profesora",
 	        "personalPublicationsTooltip": "Publikacije u kojima je trenutni korisnik jedan od autora",
 	        "internationalPublicationsTooltip": "Publikacije koje citiraju trenutnog korisnika"
 	    }
@@ -399,7 +399,7 @@
 		 	"publications": "Publikacije",
             "publicationTypes": {
 	        	"professorPublications": "Lične publikacije",
-		        "internationalPublications": "Internacionalne publikacije"
+		        "internationalPublications": "Publikacije koje citiraju profesora"
 		 	},
             "teachingExperiences": "Nastava",
             "teachingExperienceTypes": {
