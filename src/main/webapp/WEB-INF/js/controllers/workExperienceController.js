@@ -1,5 +1,4 @@
-app.controller("WorkExperienceController", function($scope, $routeParams,
-        $http, $location, $modal, PctService) {
+app.controller("WorkExperienceController", function($scope, $routeParams, $http, $location, $modal, PctService) {
 
   $scope.workExperiences = [];
   $scope.workExperience = {};
@@ -7,21 +6,19 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
   $scope.noResultsFound = true;
   $scope.resources = {};
   $scope.errorMessages = {};
-  
+
   $scope.isUser = false;
   $scope.isAdmin = false;
   $scope.professorId = '';
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadWorkExperiences = function(professorId) {
@@ -34,7 +31,7 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
       }
     });
   };
-  
+
   $scope.getCurrentUserRole = function() {
     if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
       $scope.isUser = true;
@@ -42,7 +39,7 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
       $scope.isAdmin = true;
     }
   };
-  
+
   $scope.initUserId = function() {
     if ($routeParams.professorId != null && $routeParams.professorId != '') {
       $scope.professorId = $routeParams.professorId;
@@ -105,16 +102,15 @@ app.controller("WorkExperienceController", function($scope, $routeParams,
       }
     });
   };
-  
+
   $scope.goBack = function() {
     window.history.back();
   };
 
 });
 
-var editWorkExperiencePopupController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, workExperienceId,
-        PctService, professorId) {
+var editWorkExperiencePopupController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, workExperienceId, PctService,
+        professorId) {
 
   $scope.workExperience = {};
   $scope.master = {};
@@ -147,14 +143,12 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadSelectedWorkExperience = function(id) {
@@ -162,7 +156,7 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
       if (angular.isObject(data)) {
         $scope.workExperience = data;
         $scope.workExperience.workStartDate = new Date(data.workStartDate);
-        $scope.workExperience.workEndDate = new Date(data.workEndDate);
+        $scope.workExperience.workEndDate = (data.workEndDate != null ? new Date(data.workEndDate) : null);
         $scope.master = angular.copy($scope.workExperience);
         $scope.noResultsFound = false;
       } else {
@@ -228,9 +222,8 @@ var editWorkExperiencePopupController = function($scope, $modalInstance,
 
 };
 
-var createNewWorkExperienceController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, workExperiences,
-        PctService, professorId) {
+var createNewWorkExperienceController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, workExperiences, PctService,
+        professorId) {
 
   $scope.workExperience = {};
   $scope.allInstitutionTypes = [];
@@ -265,14 +258,12 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadAllInstitutionTypes = function() {
@@ -301,14 +292,13 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
   $scope.init();
 
   $scope.getInstitutions = function(val, type) {
-    return PctService.findInstutionsStartsWith(val, type).then(
-            function(response) {
-              var institutions = [];
-              for (var i = 0; i < response.length; i++) {
-                institutions.push(response[i]);
-              }
-              return institutions;
-            });
+    return PctService.findInstutionsStartsWith(val, type).then(function(response) {
+      var institutions = [];
+      for (var i = 0; i < response.length; i++) {
+        institutions.push(response[i]);
+      }
+      return institutions;
+    });
   };
 
   $scope.onSelectInstitution = function() {
@@ -334,9 +324,7 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
   };
 
   $scope.$watch('selectedInstitution', function() {
-    if ($scope.isExistingInstitution
-            && !angular.equals($scope.selectedInstitution,
-                    $scope.masterSelectedInstitution)) {
+    if ($scope.isExistingInstitution && !angular.equals($scope.selectedInstitution, $scope.masterSelectedInstitution)) {
       $scope.restartInsitutionData();
     }
   });
@@ -379,16 +367,13 @@ var createNewWorkExperienceController = function($scope, $modalInstance,
             && $scope.workExperience.institutionType != null
             && $scope.workExperience.institutionType != ''
             && ($scope.workExperience.institutionType == 'Fakultet'
-                    ? ($scope.workExperience.universityName != null && $scope.workExperience.universityName != '')
-                    : true)
+                    ? ($scope.workExperience.universityName != null && $scope.workExperience.universityName != '') : true)
             && $scope.workExperience.institutionCity != null
             && $scope.workExperience.institutionCity != ''
             && $scope.workExperience.institutionCountry != null
             && $scope.workExperience.institutionCountry != ''
             && $scope.workExperience.workStartDate != null
             && $scope.workExperience.workStartDate != ''
-            && $scope.workExperience.workEndDate != null
-            && $scope.workExperience.workEndDate != ''
             && $scope.workExperience.title != null
             && $scope.workExperience.title != '') {
       return true;

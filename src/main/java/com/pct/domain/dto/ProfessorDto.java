@@ -34,14 +34,21 @@ public class ProfessorDto extends UserDto implements Serializable {
 	@SafeHtml
 	private String specialScientificArea;
 
+	@Length(max = 30)
+	@SafeHtml
+	private String title;
+
+	@Length(max = 100)
+	@SafeHtml
+	private String institution;
+
 	protected Long id;
 
 	public ProfessorDto() {
 	}
 
-	public ProfessorDto(String userName, String password, String email, String name, String surname,
-			String fathersName, Date dateOfBirth, String placeOfBirth, String countryOfBirth, String scientificArea,
-			String specialScientificArea, Long id) {
+	public ProfessorDto(String userName, String password, String email, String name, String surname, String fathersName, Date dateOfBirth,
+			String placeOfBirth, String countryOfBirth, String scientificArea, String specialScientificArea, String title, String institution, Long id) {
 		super(userName, password, email, name, surname, id);
 		this.fathersName = fathersName;
 		this.dateOfBirth = dateOfBirth;
@@ -49,6 +56,8 @@ public class ProfessorDto extends UserDto implements Serializable {
 		this.countryOfBirth = countryOfBirth;
 		this.scientificArea = scientificArea;
 		this.specialScientificArea = specialScientificArea;
+		this.title = title;
+		this.institution = institution;
 	}
 
 	public ProfessorDto(Professor p) {
@@ -59,6 +68,8 @@ public class ProfessorDto extends UserDto implements Serializable {
 		this.countryOfBirth = p.getCountryOfBirth();
 		this.scientificArea = p.getScientificArea();
 		this.specialScientificArea = p.getSpecialScientificArea();
+		this.title = p.getTitle();
+		this.institution = p.getInstitution();
 	}
 
 	public String getFathersName() {
@@ -118,6 +129,22 @@ public class ProfessorDto extends UserDto implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(String institution) {
+		this.institution = institution;
 	}
 
 }

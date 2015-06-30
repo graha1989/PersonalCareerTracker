@@ -99,7 +99,9 @@
         "countryOfBirthLabel": "Zemlja rođenja",
         "scientificAreaLabel": "Naučna oblast",
         "specialScientificAreaLabel": "Uža naučna oblast",
-        "professorCheckboxLabel": "Profesor"
+        "professorCheckboxLabel": "Profesor",
+        "currentTitle": "Trenutno zvanje",
+        "currentInstitution": "Trenutna institucija"
     },
     "userLabels": {
         "userNameLabel": "Korisničko ime",

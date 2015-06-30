@@ -42,6 +42,13 @@ public class Professor extends User {
 	@Column(name = "specialScientificArea", length = 50)
 	private String specialScientificArea;
 
+	@Column(name = "title", length = 30)
+	private String title;
+
+	// Institution name + university
+	@Column(name = "institution", length = 100)
+	private String institution;
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
 	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@JsonManagedReference(value = "professor")
@@ -114,16 +121,19 @@ public class Professor extends User {
 	}
 
 	public Professor(String fathersName, Date dateOfBirth, String placeOfBirth, String countryOfBirth, String scientificArea,
-			String specialScientificArea, Set<LanguageExperience> languageExperiences, Set<Award> awards, Set<ProjectExperience> projectExperiences,
-			Set<ProfessorPublication> professorPublications, Set<InternationalPublication> internationalPublications,
-			Set<WorkExperience> workExperiences, Set<Studies> studies, Set<TeachingExperience> teachingExperiences, Set<Survey> surveys,
-			Set<ScientificProfessionalOrgMem> memberships, Set<AcademicCommunityContribution> contributions, ProjectLeader projectLeader) {
+			String specialScientificArea, String title, String institution, Set<LanguageExperience> languageExperiences, Set<Award> awards,
+			Set<ProjectExperience> projectExperiences, Set<ProfessorPublication> professorPublications,
+			Set<InternationalPublication> internationalPublications, Set<WorkExperience> workExperiences, Set<Studies> studies,
+			Set<TeachingExperience> teachingExperiences, Set<Survey> surveys, Set<ScientificProfessionalOrgMem> memberships,
+			Set<AcademicCommunityContribution> contributions, ProjectLeader projectLeader) {
 		this.fathersName = fathersName;
 		this.dateOfBirth = dateOfBirth;
 		this.placeOfBirth = placeOfBirth;
 		this.countryOfBirth = countryOfBirth;
 		this.scientificArea = scientificArea;
 		this.specialScientificArea = specialScientificArea;
+		this.title = title;
+		this.institution = institution;
 		this.languageExperiences = languageExperiences;
 		this.awards = awards;
 		this.projectExperiences = projectExperiences;
@@ -184,6 +194,22 @@ public class Professor extends User {
 
 	public void setSpecialScientificArea(String specialScientificArea) {
 		this.specialScientificArea = specialScientificArea;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(String institution) {
+		this.institution = institution;
 	}
 
 	public void setLanguageExperiences(Set<LanguageExperience> languageExperiences) {

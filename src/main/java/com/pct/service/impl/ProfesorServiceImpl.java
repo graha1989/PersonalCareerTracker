@@ -48,10 +48,10 @@ public class ProfesorServiceImpl implements ProfessorService {
 		if (userName != null) {
 			Professor professor = profesorRepository.findByUserName(userName);
 			if (professor != null) {
-				professorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(), professor.getEmail(),
-						professor.getName(), professor.getSurname(), professor.getFathersName(),
-						professor.getDateOfBirth(), professor.getPlaceOfBirth(), professor.getCountryOfBirth(),
-						professor.getScientificArea(), professor.getSpecialScientificArea(), professor.getId());
+				professorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(), professor.getEmail(), professor.getName(),
+						professor.getSurname(), professor.getFathersName(), professor.getDateOfBirth(), professor.getPlaceOfBirth(),
+						professor.getCountryOfBirth(), professor.getScientificArea(), professor.getSpecialScientificArea(), professor.getTitle(),
+						professor.getInstitution(), professor.getId());
 
 				return professorDto;
 			}
@@ -68,10 +68,10 @@ public class ProfesorServiceImpl implements ProfessorService {
 		if (id != null) {
 			Professor professor = profesorRepository.findOne(id);
 			if (professor != null) {
-				professorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(), professor.getEmail(),
-						professor.getName(), professor.getSurname(), professor.getFathersName(),
-						professor.getDateOfBirth(), professor.getPlaceOfBirth(), professor.getCountryOfBirth(),
-						professor.getScientificArea(), professor.getSpecialScientificArea(), professor.getId());
+				professorDto = new ProfessorDto(professor.getUserName(), professor.getPassword(), professor.getEmail(), professor.getName(),
+						professor.getSurname(), professor.getFathersName(), professor.getDateOfBirth(), professor.getPlaceOfBirth(),
+						professor.getCountryOfBirth(), professor.getScientificArea(), professor.getSpecialScientificArea(), professor.getTitle(),
+						professor.getInstitution(), professor.getId());
 
 				return professorDto;
 			}
@@ -137,8 +137,7 @@ public class ProfesorServiceImpl implements ProfessorService {
 	 * @param professor userName
 	 * @throws UserNameExistException
 	 */
-	public void validateExistingProfessorUserName(Long professorId, String professorUserName)
-			throws UserNameExistException {
+	public void validateExistingProfessorUserName(Long professorId, String professorUserName) throws UserNameExistException {
 		if (StringUtils.isNotBlank(professorUserName)) {
 			Professor professor = profesorRepository.findOne(professorId);
 			if (!StringUtils.equalsIgnoreCase(professor.getUserName(), professorUserName)) {
@@ -204,8 +203,7 @@ public class ProfesorServiceImpl implements ProfessorService {
 
 	@Override
 	@Transactional
-	public List<ProfessorDto> findProfessorsStartsWith(String value, Long idProf, Long idMentor)
-			throws ProfessorNotFoundException {
+	public List<ProfessorDto> findProfessorsStartsWith(String value, Long idProf, Long idMentor) throws ProfessorNotFoundException {
 
 		List<ProfessorDto> professorsDtoList = new ArrayList<ProfessorDto>();
 		List<Professor> professorsList = new ArrayList<Professor>();

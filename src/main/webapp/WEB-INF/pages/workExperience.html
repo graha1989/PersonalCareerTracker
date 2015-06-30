@@ -41,7 +41,7 @@
 							<td>{{ workExperience.institutionCity }}</td>
 							<td>{{ workExperience.institutionCountry }}</td>
 							<td>{{ workExperience.workStartDate | date:'dd-MM-yyyy' }}</td>
-							<td>{{ workExperience.workEndDate | date:'dd-MM-yyyy' }}</td>
+							<td>{{ workExperience.workEndDate === null ? resources.text.now : workExperience.workEndDate | date:'dd-MM-yyyy' }}</td>
 							<td>{{ workExperience.title }}</td>
 							<td
 								class="delete"
@@ -223,7 +223,7 @@
 				<div class="form-group">
 					<label
 						for="inputWorkEndDate"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.workEndDate }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.workEndDate }}
 					</label>
 					<div class="col-sm-6">
 						<div
@@ -241,18 +241,10 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="workExperience.workEndDate"
-								required /> <span class="input-group-addon"> <span
+								ng-model="workExperience.workEndDate" /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openWorkEndDate($event)"></span>
 							</span>
-						</div>
-						<div
-							ng-show="form.inputWorkEndDate.$dirty && form.inputWorkEndDate.$invalid"
-							class="workEndDateFieldError">
-							<span
-								ng-show="form.inputWorkEndDate.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
 						</div>
 					</div>
 				</div>
@@ -477,7 +469,7 @@
 				<div class="form-group">
 					<label
 						for="inputWorkEndDate"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.workEndDate }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.workEndDate }}
 					</label>
 					<div class="col-sm-6">
 						<div
@@ -495,18 +487,10 @@
 								max-date="maxDate"
 								datepicker-options="dateOptions"
 								show-button-bar="false"
-								ng-model="workExperience.workEndDate"
-								required /> <span class="input-group-addon"> <span
+								ng-model="workExperience.workEndDate" /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"
 								ng-click="openWorkEndDate($event)"></span>
 							</span>
-						</div>
-						<div
-							ng-show="form.inputWorkEndDate.$dirty && form.inputWorkEndDate.$invalid"
-							class="workEndDateFieldError">
-							<span
-								ng-show="form.inputWorkEndDate.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span>
 						</div>
 					</div>
 				</div>

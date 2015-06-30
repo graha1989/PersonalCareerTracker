@@ -34,9 +34,8 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 	private InstitutionTypeRepository institutionTypeRepository;
 
 	@Autowired
-	public WorkExperiencesServiceImpl(WorkExperienceRepository workExperienceRepository,
-			ProfesorRepository professorRepository, InstitutionRepository institutionRepository,
-			InstitutionTypeRepository institutionTypeRepository) {
+	public WorkExperiencesServiceImpl(WorkExperienceRepository workExperienceRepository, ProfesorRepository professorRepository,
+			InstitutionRepository institutionRepository, InstitutionTypeRepository institutionTypeRepository) {
 		this.workExperienceRepository = workExperienceRepository;
 		this.professorRepository = professorRepository;
 		this.institutionRepository = institutionRepository;
@@ -79,8 +78,8 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 
 	@Override
 	@Transactional
-	public void saveWorkExperience(WorkExperienceDto workExperienceDto) throws WorkExperienceNotFoundException,
-			ProfessorNotFoundException, InstitutionNotFoundException {
+	public void saveWorkExperience(WorkExperienceDto workExperienceDto) throws WorkExperienceNotFoundException, ProfessorNotFoundException,
+			InstitutionNotFoundException {
 
 		Professor professor = professorRepository.findOne(workExperienceDto.getProfessorId());
 		if (professor == null) {
@@ -89,8 +88,7 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 
 		Institution institution = initializeInstitution(workExperienceDto);
 		institutionRepository.save(institution);
-		workExperienceRepository.saveAndFlush(createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(
-				workExperienceDto, professor, institution));
+		workExperienceRepository.saveAndFlush(createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(workExperienceDto, professor, institution));
 	}
 
 	/**
@@ -111,8 +109,7 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 		institution.setCountry(workExperienceDto.getInstitutionCountry());
 		institution.setName(workExperienceDto.getInstitutionName());
 		institution.setUniversity(workExperienceDto.getUniversityName());
-		institution
-				.setInstitutionType(institutionTypeRepository.findByTypeName(workExperienceDto.getInstitutionType()));
+		institution.setInstitutionType(institutionTypeRepository.findByTypeName(workExperienceDto.getInstitutionType()));
 
 		return institution;
 	}
@@ -147,13 +144,12 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 		workExperienceRepository.delete(workExperience);
 	}
 
-	public WorkExperience createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(
-			@Nonnull WorkExperienceDto workExperienceDto, @Nonnull Professor professor, @Nonnull Institution institution) {
+	private WorkExperience createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(@Nonnull WorkExperienceDto workExperienceDto,
+			@Nonnull Professor professor, @Nonnull Institution institution) {
 
 		WorkExperience workExperience = null;
 		if (workExperienceDto.getId() == null) {
 			workExperience = new WorkExperience();
-			workExperience.setProfessor(professor);
 		} else {
 			workExperience = workExperienceRepository.findOne(workExperienceDto.getId());
 		}
@@ -161,6 +157,13 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 		workExperience.setTitle(workExperienceDto.getTitle());
 		workExperience.setWorkStartDate(workExperienceDto.getWorkStartDate());
 		workExperience.setWorkEndDate(workExperienceDto.getWorkEndDate());
+
+		if (workExperience.getWorkEndDate() == null && workExperience.getInstitution().getInstitutionType().getTypeName().equals("Fakultet")) {
+			professor.setTitle(workExperience.getTitle());
+			professor.setInstitution(workExperience.getInstitution().getName() + ", " + workExperience.getInstitution().getUniversity());
+			professorRepository.saveAndFlush(professor);
+		}
+		workExperience.setProfessor(professor);
 
 		return workExperience;
 	}
