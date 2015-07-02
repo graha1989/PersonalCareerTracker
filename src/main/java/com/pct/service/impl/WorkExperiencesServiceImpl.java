@@ -1,6 +1,7 @@
 package com.pct.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -23,6 +24,7 @@ import com.pct.repository.WorkExperienceRepository;
 import com.pct.service.WorkExperienceService;
 import com.pct.validation.InstitutionNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.SimilarDataAlreadyExistsException;
 import com.pct.validation.WorkExperienceNotFoundException;
 
 @Service
@@ -79,16 +81,24 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 	@Override
 	@Transactional
 	public void saveWorkExperience(WorkExperienceDto workExperienceDto) throws WorkExperienceNotFoundException, ProfessorNotFoundException,
-			InstitutionNotFoundException {
+			InstitutionNotFoundException, SimilarDataAlreadyExistsException {
 
 		Professor professor = professorRepository.findOne(workExperienceDto.getProfessorId());
 		if (professor == null) {
 			throw new ProfessorNotFoundException();
 		}
 
-		Institution institution = initializeInstitution(workExperienceDto);
-		institutionRepository.save(institution);
-		workExperienceRepository.saveAndFlush(createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(workExperienceDto, professor, institution));
+		if (workExperienceRepository.isThereFacultyWorkExperienceWithSimilarPeriod(workExperienceDto.getInstitutionId(), workExperienceDto
+				.getProfessorId(), workExperienceDto.getTitle(), workExperienceDto.getWorkStartDate(),
+				(workExperienceDto.getWorkEndDate() != null ? workExperienceDto.getWorkEndDate() : new Date())) == 0) {
+			Institution institution = initializeInstitution(workExperienceDto);
+			institutionRepository.save(institution);
+			workExperienceRepository
+					.saveAndFlush(createOrUpdateWorkExperienceInstanceFromWorkExperienceDto(workExperienceDto, professor, institution));
+		} else {
+			throw new SimilarDataAlreadyExistsException("Work experience on faculty start date/Work experience on faculty end date",
+					"workStartDate/workEndDate");
+		}
 	}
 
 	/**

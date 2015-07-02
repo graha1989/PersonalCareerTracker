@@ -6,6 +6,7 @@ import com.pct.domain.dto.InstitutionDto;
 import com.pct.domain.dto.WorkExperienceDto;
 import com.pct.validation.InstitutionNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.SimilarDataAlreadyExistsException;
 import com.pct.validation.WorkExperienceNotFoundException;
 
 public interface WorkExperienceService {
@@ -14,7 +15,8 @@ public interface WorkExperienceService {
 
 	WorkExperienceDto findWorkExperienceById(Long id) throws WorkExperienceNotFoundException;
 
-	void saveWorkExperience(WorkExperienceDto workExperienceDto) throws WorkExperienceNotFoundException, ProfessorNotFoundException, InstitutionNotFoundException;
+	void saveWorkExperience(WorkExperienceDto workExperienceDto) throws WorkExperienceNotFoundException, ProfessorNotFoundException,
+			InstitutionNotFoundException, SimilarDataAlreadyExistsException;
 
 	List<InstitutionDto> findInstitutionsStartsWith(String value, String institutionType);
 

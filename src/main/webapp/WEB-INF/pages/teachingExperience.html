@@ -107,6 +107,9 @@
 			<div class="modal-header">
 				<h3 class="modal-title">{{ resources.text.createNewTeachingExperiencePopupTitle }}</h3>
 			</div>
+			<div class="alert-warning text-center" ng-show="fieldErrors.length">
+	       	 	<div ng-repeat="error in fieldErrors"> <span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{error.message}}</strong></div>
+	    	</div>
 			<div class="modal-body">
 				<div class="form-group">
 					<label

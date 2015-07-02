@@ -163,45 +163,53 @@
 			novalidate
 			role="form"
 			ng-model="professor">
-			<div class="modal-header">
+			<div class="modal-header text-center">
 				<h3 class="modal-title">{{ resources.text.professorDetailsPopupTitle }}</h3>
 			</div>
 			<div class="modal-body container-fluid">
 				<div class="row" ng-show="professor.name">
 					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.name }}:</label>
-					<div class="col-sm-4">{{ professor.name }}</div>
+					<div class="col-sm-8">{{ professor.name }}</div>
 				</div>
 				<div class="row" ng-show="professor.fathersName">
 					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.fathersName }}:</label>
-					<div class="col-sm-4">{{ professor.fathersName }}</div>
+					<div class="col-sm-8">{{ professor.fathersName }}</div>
 				</div>
 				<div class="row" ng-show="professor.surname">
 					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.surname }}:</label>
-					<div class="col-sm-4">{{ professor.surname }}</div>
+					<div class="col-sm-8">{{ professor.surname }}</div>
 				</div>
 				<div class="row" ng-show="professor.email">
 					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.email }}:</label>
-					<div class="col-sm-4">{{ professor.email }}</div>
+					<div class="col-sm-8">{{ professor.email }}</div>
 				</div>
 				<div class="row" ng-show="professor.dateOfBirth">
 					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.dateOfBirth }}:</label>
-					<div class="col-sm-4">{{ professor.dateOfBirth | date:'dd-MM-yyyy' }}</div>
+					<div class="col-sm-8">{{ professor.dateOfBirth | date:'dd-MM-yyyy' }}</div>
 				</div>
 				<div class="row" ng-show="professor.placeOfBirth">
 					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.placeOfBirth }}:</label>
-					<div class="col-sm-4">{{ professor.placeOfBirth }}</div>
+					<div class="col-sm-8">{{ professor.placeOfBirth }}</div>
 				</div>
 				<div class="row" ng-show="professor.countryOfBirth">
 					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.countryOfBirth }}:</label>
-					<div class="col-sm-4">{{ professor.countryOfBirth }}</div>
+					<div class="col-sm-8">{{ professor.countryOfBirth }}</div>
 				</div>
 				<div class="row" ng-show="professor.scientificArea">
 					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.scientificArea }}:</label>
-					<div class="col-sm-4">{{ professor.scientificArea }}</div>
+					<div class="col-sm-8">{{ professor.scientificArea }}</div>
 				</div>
 				<div class="row" ng-show="professor.specialScientificArea">
 					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.specialScientificArea }}:</label>
-					<div class="col-sm-4">{{ professor.specialScientificArea }}</div>
+					<div class="col-sm-8">{{ professor.specialScientificArea }}</div>
+				</div>
+				<div class="row" ng-show="professor.title">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.title }}:</label>
+					<div class="col-sm-8">{{ professor.title }}</div>
+				</div>
+				<div class="row" ng-show="professor.institution">
+					<label class="col-sm-4">{{ resources.professorDetailsPopupLabels.institution }}:</label>
+					<div class="col-sm-8">{{ professor.institution }}</div>
 				</div>
 			</div>
 			<div class="modal-footer action">

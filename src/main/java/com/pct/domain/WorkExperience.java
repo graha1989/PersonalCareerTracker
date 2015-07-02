@@ -47,7 +47,6 @@ public class WorkExperience extends AbstractEntity {
 
 	public WorkExperience(Institution institution, Professor professor, Date workStartDate, Date workEndDate,
 			String title) {
-		super();
 		this.institution = institution;
 		this.professor = professor;
 		this.workStartDate = workStartDate;

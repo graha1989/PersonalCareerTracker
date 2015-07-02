@@ -67,7 +67,6 @@ public class WorkExperienceDto implements Serializable {
 	public WorkExperienceDto(String institutionType, String institutionName, String universityName,
 			String institutionCity, String institutionCountry, Date workStartDate, Date workEndDate, String title,
 			Long professorId, Long institutionId, Long id) {
-		super();
 		this.institutionType = institutionType;
 		this.institutionName = institutionName;
 		this.universityName = universityName;

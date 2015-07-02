@@ -29,6 +29,7 @@ import com.pct.service.UserService;
 import com.pct.service.WorkExperienceService;
 import com.pct.validation.InstitutionNotFoundException;
 import com.pct.validation.ProfessorNotFoundException;
+import com.pct.validation.SimilarDataAlreadyExistsException;
 import com.pct.validation.UserNotFoundException;
 import com.pct.validation.WorkExperienceNotFoundException;
 
@@ -48,8 +49,7 @@ public class WorkExperienceController {
 	public ResponseEntity<List<WorkExperienceDto>> showAllProfessorWorkExperiences(
 			@RequestParam(value = "professorId", required = true) Long professorId) {
 
-		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication()
-				.getAuthorities();
+		Collection<? extends GrantedAuthority> roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		UserDto userDto;
 		try {
 			userDto = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -73,15 +73,16 @@ public class WorkExperienceController {
 	}
 
 	@RequestMapping(value = RequestMappings.LOAD_SELECTED_WORK_EXPERIENCE, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<WorkExperienceDto> showWorkExperience(
-			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws WorkExperienceNotFoundException {
+	public ResponseEntity<WorkExperienceDto> showWorkExperience(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws WorkExperienceNotFoundException {
 		WorkExperienceDto workExperienceDto = workExperienceService.findWorkExperienceById(id);
 
 		return new ResponseEntity<WorkExperienceDto>(workExperienceDto, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<String> persistWorkExperience(@Valid @RequestBody WorkExperienceDto workExperienceDto) {
+	public ResponseEntity<String> persistWorkExperience(@Valid @RequestBody WorkExperienceDto workExperienceDto)
+			throws SimilarDataAlreadyExistsException {
 
 		try {
 			workExperienceService.saveWorkExperience(workExperienceDto);
@@ -99,10 +100,8 @@ public class WorkExperienceController {
 	}
 
 	@RequestMapping(value = RequestMappings.LOAD_INSTITUTIONS_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<List<InstitutionDto>> findInstitutionStartsWith(
-			@RequestParam(value = "value", required = true) String value,
-			@RequestParam(value = "institutionType", required = false) String institutionType)
-			throws InstitutionNotFoundException {
+	public ResponseEntity<List<InstitutionDto>> findInstitutionStartsWith(@RequestParam(value = "value", required = true) String value,
+			@RequestParam(value = "institutionType", required = false) String institutionType) throws InstitutionNotFoundException {
 
 		List<InstitutionDto> institutions = new ArrayList<InstitutionDto>();
 		if (value.length() >= 3) {
@@ -113,8 +112,8 @@ public class WorkExperienceController {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ResponseEntity<WorkExperienceDto> deleteWorkExperience(
-			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws WorkExperienceNotFoundException {
+	public ResponseEntity<WorkExperienceDto> deleteWorkExperience(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws WorkExperienceNotFoundException {
 		workExperienceService.deleteWorkExperience(id);
 
 		return new ResponseEntity<WorkExperienceDto>(HttpStatus.OK);

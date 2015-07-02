@@ -711,7 +711,9 @@
         "placeOfBirth": "Mesto rođenja",
         "countryOfBirth": "Država",
         "scientificArea": "Naučna oblast",
-        "specialScientificArea": "Uža naučna oblast"
+        "specialScientificArea": "Uža naučna oblast",
+        "title": "Trenutno zvanje",
+        "institution": "Trenutna institucija"
     },
     "teachingExperiencePopupLabels": {
     	"subjectName": "Naziv predmeta",
