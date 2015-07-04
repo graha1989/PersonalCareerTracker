@@ -102,6 +102,7 @@
 		<script type="text/javascript" src="<spring:url value='admin/controllers/projectsController.js' />"></script>
 		<script type="text/javascript" src="<spring:url value='admin/controllers/adminDetailsController.js' />"></script>
 		<script type="text/javascript" src="<spring:url value='admin/controllers/seminarsController.js' />"></script>
+		<script type="text/javascript" src="<spring:url value='admin/controllers/contestController.js' />"></script>
 	</c:if>
 	
 </body>

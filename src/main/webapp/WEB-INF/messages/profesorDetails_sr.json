@@ -1,7 +1,10 @@
 {
     "text": {
         "professorTitle": "Podaci o profesoru",
+        "addCommissionMemberTooltip": "Dodaj člana komisije",
         "professorAccountTitle": "Podaci o nalogu",
+        "contestDataTitle": "Podaci o konkursu",
+        "commissionDataTitle": "Sastav komisije",
         "professorBiographicDataTitle": "Biografski podaci",
         "professorProfessionalDataTitle": "Profesionalna orijentacija",
         "userTitle": "Podaci o korisniku",
@@ -102,6 +105,21 @@
         "professorCheckboxLabel": "Profesor",
         "currentTitle": "Trenutno zvanje",
         "currentInstitution": "Trenutna institucija"
+    },
+    "contestLabels": {
+        "authority": "Organ koji je raspisao konkurs",
+        "decisionDate": "Datum donošenja odluke o raspisivanju konkursa",
+        "contestPlace": "Mesto objavljivanja konkursa",
+        "announcingDate": "Datum objavljivanja konkursa",
+        "title": "Zvanje u koje se bira",
+        "specificScientificArea": "Uža naučna oblast",
+        "member": "Član komisije",
+        "memberNameAndSurname": "Ime i prezime",
+        "memberTitle": "Zvanje",
+        "memberSpecificScientificArea": "Uža naučna oblast",
+        "institution": "Ustanova u kojoj je zaposlen",
+        "function": "Funkcija u komisiji",
+        "candidateNameAndSurname": "Prijavljeni kandidat"
     },
     "userLabels": {
         "userNameLabel": "Korisničko ime",
@@ -243,7 +261,8 @@
         "back": "Nazad",
         "edit": "Izmeni",
         "delete": "Izbriši",
-        "add": "Dodaj"
+        "add": "Dodaj",
+        "generateReport": "Generiši izveštaj"
     },
     "buttons": {
         "mentorButton": "Mentorstva",

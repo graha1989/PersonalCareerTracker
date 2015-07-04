@@ -241,6 +241,10 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         templateUrl: 'pages/scientificJournalReviews.html',
         controller: 'ScientificJournalReviewsController'
       })
+      .when('/contest', {
+        templateUrl: 'admin/pages/contest.html',
+        controller: 'ContestController'
+      })
 			.otherwise({
 				redirectTo: '/showAllStudents'
 			});

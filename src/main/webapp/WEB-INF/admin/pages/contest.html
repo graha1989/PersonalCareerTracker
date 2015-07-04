@@ -1,0 +1,398 @@
+<div>
+
+	<form
+		name="form"
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
+		role="form"
+		novalidate
+		ng-model="contestData">
+
+		<div class="modal-header">
+			<h3 class="modal-title">{{ resources.text.title }}</h3>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ resources.text.contestDataTitle }}</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label
+							for="inputAuthority"
+							class="col-sm-5 control-label">{{ resources.contestLabels.authority }} <span class="required">*</span></label>
+						<div class="col-sm-7">
+							<input
+								type="text"
+								class="form-control"
+								id="inputAuthority"
+								name="inputAuthority"
+								ng-model="contestData.authority"
+								placeholder="{{ resources.contestLabels.authority }}"
+								ng-maxlength="200"
+								required />
+							<div
+								ng-show="form.inputAuthority.$dirty && form.inputAuthority.$invalid"
+								class="authorityFieldError">
+								<span
+									ng-show="form.inputAuthority.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputAuthority.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidAuthorityMaxLength }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label
+							for="inputDecisionDate"
+							class="col-sm-5 control-label">{{ resources.contestLabels.decisionDate }} <span class="required">*</span></label>
+						<div class="col-sm-7">
+							<div
+								class="input-group date"
+								id="datepicker">
+								<input
+									type="text"
+									class="form-control"
+									id="inputDecisionDate"
+									name="inputDecisionDate"
+									placeholder="DD-MM-GGGG"
+									datepicker-popup="dd-MM-yyyy"
+									is-open="opened"
+									min-date="minDate"
+									max-date="maxDate"
+									datepicker-options="dateOptions"
+									show-button-bar="false"
+									ng-model="contestData.decisionDate"
+									required /> <span class="input-group-addon"> <span
+									class="glyphicon glyphicon-calendar"
+									ng-click="open($event)"></span>
+								</span>
+							</div>
+							<div
+								ng-show="form.inputDecisionDate.$dirty && form.inputDecisionDate.$invalid"
+								class="decisionDateFieldError">
+								<span
+									ng-show="form.inputDecisionDate.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label
+							for="inputContestPlace"
+							class="col-sm-5 control-label">{{ resources.contestLabels.contestPlace }} <span class="required">*</span></label>
+						<div class="col-sm-7">
+							<input
+								type="text"
+								class="form-control"
+								id="inputContestPlace"
+								name="inputContestPlace"
+								ng-model="contestData.contestPlace"
+								placeholder="{{ resources.contestLabels.contestPlace }}"
+								ng-maxlength="200"
+								required />
+							<div
+								ng-show="form.inputContestPlace.$dirty && form.inputContestPlace.$invalid"
+								class="contestPlaceFieldError">
+								<span
+									ng-show="form.inputContestPlace.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputContestPlace.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidContestPlaceMaxLength }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label
+							for="inputAnnouncingDate"
+							class="col-sm-5 control-label">{{ resources.contestLabels.announcingDate }} <span class="required">*</span></label>
+						<div class="col-sm-7">
+							<div
+								class="input-group date"
+								id="datepicker">
+								<input
+									type="text"
+									class="form-control"
+									id="inputAnnouncingDate"
+									name="inputAnnouncingDate"
+									placeholder="DD-MM-GGGG"
+									datepicker-popup="dd-MM-yyyy"
+									is-open="opened"
+									min-date="minDate"
+									max-date="maxDate"
+									datepicker-options="dateOptions"
+									show-button-bar="false"
+									ng-model="contestData.announcingDate"
+									required /> <span class="input-group-addon"> <span
+									class="glyphicon glyphicon-calendar"
+									ng-click="open($event)"></span>
+								</span>
+							</div>
+							<div
+								ng-show="form.inputAnnouncingDate.$dirty && form.inputAnnouncingDate.$invalid"
+								class="announcingDateFieldError">
+								<span
+									ng-show="form.inputAnnouncingDate.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label
+							for="inputTitle"
+							class="col-sm-5 control-label">{{ resources.contestLabels.title }} <span class="required">*</span></label>
+						<div class="col-sm-7">
+							<input
+								type="text"
+								class="form-control"
+								id="inputTitle"
+								name="inputTitle"
+								ng-model="contestData.title"
+								placeholder="{{ resources.contestLabels.title }}"
+								ng-maxlength="50"
+								required />
+							<div
+								ng-show="form.inputContestPlace.$dirty && form.inputContestPlace.$invalid"
+								class="titleFieldError">
+								<span
+									ng-show="form.inputContestPlace.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputContestPlace.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidTitleMaxLength }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label
+							for="inputSpecificScientificArea"
+							class="col-sm-5 control-label">{{ resources.contestLabels.specificScientificArea }} <span class="required">*</span></label>
+						<div class="col-sm-7">
+							<input
+								type="text"
+								class="form-control"
+								id="inputSpecificScientificArea"
+								name="inputSpecificScientificArea"
+								ng-model="contestData.specificScientificArea"
+								placeholder="{{ resources.contestLabels.specificScientificArea }}"
+								ng-maxlength="50"
+								required />
+							<div
+								ng-show="form.inputSpecificScientificArea.$dirty && form.inputSpecificScientificArea.$invalid"
+								class="specScientificAreaFieldError">
+								<span
+									ng-show="form.inputSpecificScientificArea.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputSpecificScientificArea.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidSpecScientificAreaMaxLength }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ resources.text.commissionDataTitle }}</div>
+				<div class="panel-body"></div>
+				<div ng-repeat="member in commissionMembers">
+					<div class="row form-group">
+						<label
+							for="inputNewCommisionMemberNameAndSurname"
+							class="col-sm-2 control-label">{{ resources.contestLabels.member }} {{ $index }} </label>
+						<div class="col-sm-3">
+							<input
+								type="text"
+								class="form-control"
+								id="inputNewCommisionMemberNameAndSurname"
+								name="inputNewCommisionMemberNameAndSurname"
+								ng-model="member.nameAndSuname" />
+						</div>
+						<div class="col-sm-3">
+							<input
+								type="text"
+								class="form-control"
+								id="inputNewCommisionMemberTitle"
+								name="inputNewCommisionMemberTitle"
+								ng-model="member.title" />
+						</div>
+						<div class="col-sm-3">
+							<input
+								type="text"
+								class="form-control"
+								id="inputNewCommisionMemberFunction"
+								name="inputNewCommisionMemberFunction"
+								ng-model="member.function" />
+						</div>
+					</div>
+					<div class="row form-group">
+						<label
+							for="inputNewCommisionMemberInstitution"
+							class="col-sm-2 control-label"></label>
+						<div class="col-sm-6">
+							<input
+								type="text"
+								class="form-control"
+								id="inputNewCommisionMemberInstitution"
+								name="inputNewCommisionMemberInstitution"
+								ng-model="member.institution" />
+						</div>
+						<div class="col-sm-3">
+							<input
+								type="text"
+								class="form-control"
+								id="inputNewCommisionMemberFunction"
+								name="inputNewCommisionMemberFunction"
+								ng-model="member.title" />
+						</div>
+					</div>
+				</div>
+				<!-- New commission member -->
+				<div ng-model="newCommissionMember">
+					<div class="row form-group">
+						<label
+							for="inputNewCommisionMemberNameAndSurname"
+							class="col-sm-2 control-label">{{ resources.contestLabels.member }} <span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input
+								type="text"
+								class="form-control"
+								id="inputNewCommisionMemberNameAndSurname"
+								name="inputNewCommisionMemberNameAndSurname"
+								ng-model="newCommissionMember.nameAndSuname"
+								placeholder="{{ resources.contestLabels.memberNameAndSurname }}"
+								ng-maxlength="40"
+								required />
+							<div
+								ng-show="form.inputNewCommisionMemberNameAndSurname.$dirty && form.inputNewCommisionMemberNameAndSurname.$invalid"
+								class="userNameFieldError">
+								<span
+									ng-show="form.inputNewCommisionMemberNameAndSurname.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputNewCommisionMemberNameAndSurname.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidNameAndSurnameMaxLength }}</span>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<input
+								type="text"
+								class="form-control"
+								id="inputNewCommisionMemberTitle"
+								name="inputNewCommisionMemberTitle"
+								ng-model="newCommissionMember.title"
+								placeholder="{{ resources.contestLabels.memberTitle }}"
+								ng-maxlength="20"
+								required />
+							<div
+								ng-show="form.inputNewCommisionMemberTitle.$dirty && form.inputNewCommisionMemberTitle.$invalid"
+								class="titleFieldError">
+								<span
+									ng-show="form.inputNewCommisionMemberTitle.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputNewCommisionMemberTitle.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidCommissionMemberTitleMaxLength }}</span>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<input
+								type="text"
+								class="form-control"
+								id="inputNewCommisionMemberSpecificScientificArea"
+								name="inputNewCommisionMemberSpecificScientificArea"
+								ng-model="newCommissionMember.function"
+								placeholder="{{ resources.contestLabels.memberSpecificScientificArea }}"
+								ng-maxlength="50"
+								required />
+							<div
+								ng-show="form.inputNewCommisionMemberSpecificScientificArea.$dirty && form.inputNewCommisionMemberSpecificScientificArea.$invalid"
+								class="functionFieldError">
+								<span
+									ng-show="form.inputNewCommisionMemberSpecificScientificArea.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputNewCommisionMemberSpecificScientificArea.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidSpecScientificAreaMaxLength }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label
+							for="inputNewCommisionMemberInstitution"
+							class="col-sm-2 control-label"></label>
+						<div class="col-sm-6">
+							<input
+								type="text"
+								class="form-control"
+								id="inputNewCommisionMemberInstitution"
+								name="inputNewCommisionMemberInstitution"
+								ng-model="newCommissionMember.institution"
+								placeholder="{{ resources.contestLabels.institution }}"
+								ng-maxlength="100"
+								required />
+							<div
+								ng-show="form.inputNewCommisionMemberInstitution.$dirty && form.inputNewCommisionMemberInstitution.$invalid"
+								class="userNameFieldError">
+								<span
+									ng-show="form.inputNewCommisionMemberInstitution.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputNewCommisionMemberInstitution.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidInstitutionMaxLength }}</span>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<input
+								type="text"
+								class="form-control"
+								id="inputNewCommisionMemberFunction"
+								name="inputNewCommisionMemberFunction"
+								ng-model="newCommissionMember.title"
+								placeholder="{{ resources.contestLabels.function }}"
+								ng-maxlength="20"
+								required />
+							<div
+								ng-show="form.inputNewCommisionMemberFunction.$dirty && form.inputNewCommisionMemberFunction.$invalid"
+								class="functionFieldError">
+								<span
+									ng-show="form.inputNewCommisionMemberFunction.$error.required"
+									class="ng-binding">{{ errorMessages.error.required }}</span> <span
+									ng-show="form.inputNewCommisionMemberFunction.$error.maxlength"
+									class="ng-binding">{{ errorMessages.error.invalidCommissionMemberFunctionMaxLength }}</span>
+							</div>
+						</div>
+						<div class="col-sm-1">
+							<button
+								id="submit_button"
+								title="{{ resources.text.addCommissionMemberTooltip }}"
+								class="btn btn-success btn-sm"
+								ng-click="addCommissionMember()">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-body container-fluid">
+			<div
+				class="row">
+				<label class="col-sm-4">{{ resources.contestLabels.candidateNameAndSurname }}:</label>
+				<div class="col-sm-8">{{ professor.name }} {{ professor.surname }}</div>
+			</div>
+		</div>
+		<div class="modal-footer action">
+			<button
+				id="submit_button"
+				type="submit"
+				class="btn btn-success btn-sm"
+				ng-disabled="form.$invalid">
+				<span class="glyphicon glyphicon-save"></span> {{ resources.form.register }}
+			</button>
+			<button
+				id="submit_button"
+				type="submit"
+				class="btn btn-success btn-sm"
+				ng-disabled="form.$invalid">
+				<span class="glyphicon glyphicon-file"></span> {{ resources.form.generateReport }}
+			</button>
+			<button
+				id="cancel_button"
+				class="btn btn-sm"
+				ng-click="cancel()">{{ resources.form.close }}</button>
+		</div>
+	</form>
+
+</div>
