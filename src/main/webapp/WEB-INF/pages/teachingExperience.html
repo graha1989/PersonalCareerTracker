@@ -55,7 +55,9 @@
 									ng-click="deleteTeachingExperience(teachingExperience.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.teachingExperienceButtons.delete }}
 								</button></td>
-							<td class="edit"><button
+							<td
+								class="edit"
+								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="editTeachingExperience(teachingExperience.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.teachingExperienceButtons.edit }}
