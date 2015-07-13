@@ -24,7 +24,7 @@ public class PublicationCategory extends AbstractEntity {
 	@Column(name = "code", unique = true, length = 5)
 	private String code;
 
-	@Column(name = "description", length = 200)
+	@Column(name = "description", length = 400)
 	private String description;
 
 	/* Natural Sciences and Medical value points */
