@@ -15,10 +15,10 @@ public interface TeachingExperienceRepository extends JpaRepository<TeachingExpe
 	List<TeachingExperience> findAllTeachingExperiences(@Param("professorId") Long professorId,
 			@Param("seminarOrTeachingAbroad") Boolean seminarOrTeachingAbroad);
 
-	@Query("SELECT COUNT(e.id) FROM TeachingExperience e JOIN e.professor p JOIN e.subject s " + "WHERE p.id=:professorId AND s.id=:subjectId "
+	@Query("SELECT COUNT(e.id) FROM TeachingExperience e JOIN e.subject s WHERE s.id=:subjectId "
 			+ "AND (:from BETWEEN e.teachingStartDate AND IFNULL(e.teachingEndDate, NOW()) "
-			+ "OR :to BETWEEN e.teachingStartDate AND IFNULL(e.teachingEndDate, NOW())) " + "OR e.teachingStartDate BETWEEN :from AND :to "
-			+ "OR IFNULL(e.teachingEndDate, NOW()) BETWEEN :from AND :to")
-	int isThereTeachingExperienceWithSimilarPeriod(@Param("professorId") Long professorId, @Param("subjectId") Long subjectId,
-			@Param("from") Date from, @Param("to") Date to);
+			+ "OR :to BETWEEN e.teachingStartDate AND IFNULL(e.teachingEndDate, NOW()) OR e.teachingStartDate BETWEEN :from AND :to "
+			+ "OR IFNULL(e.teachingEndDate, NOW()) BETWEEN :from AND :to)")
+	int isThereTeachingExperienceWithSimilarPeriod(@Param("subjectId") Long subjectId, @Param("from") Date from, @Param("to") Date to);
+
 }
