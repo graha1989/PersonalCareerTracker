@@ -241,8 +241,8 @@ var app = angular.module('PersonalCareerTracker',['ngRoute', 'ui.bootstrap'])
         templateUrl: 'pages/scientificJournalReviews.html',
         controller: 'ScientificJournalReviewsController'
       })
-      .when('/contest', {
-        templateUrl: 'admin/pages/contest.html',
+      .when('/contest/professorId/:professorId', {
+        templateUrl: 'admin/pages/contest.html?professorId=:professorId',
         controller: 'ContestController'
       })
 			.otherwise({

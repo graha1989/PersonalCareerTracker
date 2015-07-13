@@ -34,7 +34,6 @@ public class ProjectLeaderDto implements Serializable {
 	}
 
 	public ProjectLeaderDto(String name, String surname, Long professorId, Long projectId, Long id) {
-		super();
 		this.name = name;
 		this.surname = surname;
 		this.professorId = professorId;

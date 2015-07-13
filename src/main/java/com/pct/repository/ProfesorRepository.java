@@ -50,8 +50,7 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	 * @return list of Profesors
 	 */
 	@Query("SELECT p FROM Professor p WHERE concat(p.name, ' ', p.surname) LIKE %:value% AND p.id <> :idProf AND p.id <> :idMentor")
-	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value, @Param("idProf") Long idProf,
-			@Param("idMentor") Long idMentor);
+	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value, @Param("idProf") Long idProf, @Param("idMentor") Long idMentor);
 
 	/**
 	 * Retrieves list of professors with partially matching name or surname, and id not in List of professors who are
@@ -73,7 +72,7 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	 */
 	@Query("SELECT p FROM Professor p WHERE concat(p.name, ' ', p.surname) LIKE %:value%")
 	List<Professor> findProfessorsWhoAreNotLeadersOnSelectedProject(@Param("value") String value);
-	
+
 	/**
 	 * Retrieves list of professors with partially matching name or surname.
 	 * 
@@ -82,5 +81,12 @@ public interface ProfesorRepository extends JpaRepository<Professor, Long> {
 	 */
 	@Query("SELECT p FROM Professor p WHERE concat(p.name, ' ', p.surname) LIKE %:value%")
 	List<Professor> findByNameLikeOrSurnameLike(@Param("value") String value);
+
+	@Query("SELECT p FROM Professor p WHERE p.id NOT IN :professorsWhoAreCommissionMembersOnThisContest AND concat(p.name, ' ', p.surname) LIKE %:value%")
+	List<Professor> findProfessorsWhoAreNotCommissionMembersOnSelectedContest(@Param("value") String value,
+			@Param("professorsWhoAreCommissionMembersOnThisContest") List<Long> professorsWhoAreCommissionMembersOnThisContest);
+
+	@Query("SELECT p FROM Professor p WHERE concat(p.name, ' ', p.surname) LIKE %:value%")
+	List<Professor> findProfessorsWhoAreNotCommissionMembersOnSelectedContest(@Param("value") String value);
 
 }

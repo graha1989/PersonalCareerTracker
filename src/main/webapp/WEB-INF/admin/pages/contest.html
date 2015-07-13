@@ -27,7 +27,8 @@
 								ng-model="contestData.authority"
 								placeholder="{{ resources.contestLabels.authority }}"
 								ng-maxlength="200"
-								required />
+								required
+								ng-disabled="formSaved" />
 							<div
 								ng-show="form.inputAuthority.$dirty && form.inputAuthority.$invalid"
 								class="authorityFieldError">
@@ -54,15 +55,16 @@
 									name="inputDecisionDate"
 									placeholder="DD-MM-GGGG"
 									datepicker-popup="dd-MM-yyyy"
-									is-open="opened"
+									is-open="inputDecisionDateOpened"
 									min-date="minDate"
 									max-date="maxDate"
 									datepicker-options="dateOptions"
 									show-button-bar="false"
 									ng-model="contestData.decisionDate"
-									required /> <span class="input-group-addon"> <span
+									required
+									ng-disabled="formSaved" /> <span class="input-group-addon"> <span
 									class="glyphicon glyphicon-calendar"
-									ng-click="open($event)"></span>
+									ng-click="openDecisionDate($event)"></span>
 								</span>
 							</div>
 							<div
@@ -84,10 +86,11 @@
 								class="form-control"
 								id="inputContestPlace"
 								name="inputContestPlace"
-								ng-model="contestData.contestPlace"
+								ng-model="contestData.placeOfAnnouncement"
 								placeholder="{{ resources.contestLabels.contestPlace }}"
 								ng-maxlength="200"
-								required />
+								required
+								ng-disabled="formSaved" />
 							<div
 								ng-show="form.inputContestPlace.$dirty && form.inputContestPlace.$invalid"
 								class="contestPlaceFieldError">
@@ -114,15 +117,16 @@
 									name="inputAnnouncingDate"
 									placeholder="DD-MM-GGGG"
 									datepicker-popup="dd-MM-yyyy"
-									is-open="opened"
+									is-open="inputAnnouncingDateOpened"
 									min-date="minDate"
 									max-date="maxDate"
 									datepicker-options="dateOptions"
 									show-button-bar="false"
 									ng-model="contestData.announcingDate"
-									required /> <span class="input-group-addon"> <span
+									required
+									ng-disabled="formSaved" /> <span class="input-group-addon"> <span
 									class="glyphicon glyphicon-calendar"
-									ng-click="open($event)"></span>
+									ng-click="openAnnouncingDate($event)"></span>
 								</span>
 							</div>
 							<div
@@ -144,10 +148,11 @@
 								class="form-control"
 								id="inputTitle"
 								name="inputTitle"
-								ng-model="contestData.title"
+								ng-model="contestData.titleToChoose"
 								placeholder="{{ resources.contestLabels.title }}"
 								ng-maxlength="50"
-								required />
+								required
+								ng-disabled="formSaved" />
 							<div
 								ng-show="form.inputContestPlace.$dirty && form.inputContestPlace.$invalid"
 								class="titleFieldError">
@@ -172,7 +177,8 @@
 								ng-model="contestData.specificScientificArea"
 								placeholder="{{ resources.contestLabels.specificScientificArea }}"
 								ng-maxlength="50"
-								required />
+								required
+								ng-disabled="formSaved" />
 							<div
 								ng-show="form.inputSpecificScientificArea.$dirty && form.inputSpecificScientificArea.$invalid"
 								class="specScientificAreaFieldError">
@@ -190,18 +196,19 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">{{ resources.text.commissionDataTitle }}</div>
 				<div class="panel-body"></div>
-				<div ng-repeat="member in commissionMembers">
+				<div ng-repeat="member in commissionMembersTemp">
 					<div class="row form-group">
 						<label
 							for="inputNewCommisionMemberNameAndSurname"
-							class="col-sm-2 control-label">{{ resources.contestLabels.member }} {{ $index }} </label>
+							class="col-sm-2 control-label">{{ resources.contestLabels.member }} {{ $index + 1 }}</label>
 						<div class="col-sm-3">
 							<input
 								type="text"
 								class="form-control"
 								id="inputNewCommisionMemberNameAndSurname"
 								name="inputNewCommisionMemberNameAndSurname"
-								ng-model="member.nameAndSuname" />
+								ng-model="member.nameAndSurname"
+								ng-disabled="true" />
 						</div>
 						<div class="col-sm-3">
 							<input
@@ -209,15 +216,17 @@
 								class="form-control"
 								id="inputNewCommisionMemberTitle"
 								name="inputNewCommisionMemberTitle"
-								ng-model="member.title" />
+								ng-model="member.title"
+								ng-disabled="true" />
 						</div>
 						<div class="col-sm-3">
 							<input
 								type="text"
 								class="form-control"
-								id="inputNewCommisionMemberFunction"
-								name="inputNewCommisionMemberFunction"
-								ng-model="member.function" />
+								id="inputNewCommisionMemberSpecificScientificArea"
+								name="inputNewCommisionMemberSpecificScientificArea"
+								ng-model="member.specificScientificArea"
+								ng-disabled="true" />
 						</div>
 					</div>
 					<div class="row form-group">
@@ -230,7 +239,8 @@
 								class="form-control"
 								id="inputNewCommisionMemberInstitution"
 								name="inputNewCommisionMemberInstitution"
-								ng-model="member.institution" />
+								ng-model="member.institution"
+								ng-disabled="true" />
 						</div>
 						<div class="col-sm-3">
 							<input
@@ -238,25 +248,41 @@
 								class="form-control"
 								id="inputNewCommisionMemberFunction"
 								name="inputNewCommisionMemberFunction"
-								ng-model="member.title" />
+								ng-model="member.commissionFunction"
+								ng-disabled="true" />
+						</div>
+						<div class="col-sm-1">
+							<button
+								id="remove_button"
+								title="{{ resources.text.removeCommissionMemberTooltip }}"
+								class="btn btn-success btn-sm"
+								ng-click="removeCommissionMember($index)"
+								ng-show="!formSaved">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
 						</div>
 					</div>
 				</div>
 				<!-- New commission member -->
-				<div ng-model="newCommissionMember">
+				<div ng-show="!formSaved">
 					<div class="row form-group">
 						<label
 							for="inputNewCommisionMemberNameAndSurname"
-							class="col-sm-2 control-label">{{ resources.contestLabels.member }} <span class="required">*</span></label>
+							class="col-sm-2 control-label">{{ resources.contestLabels.member }} <span
+							class="required"
+							ng-show="commissionMembersTemp.length == 0">*</span></label>
 						<div class="col-sm-3">
 							<input
 								type="text"
-								class="form-control"
+								class="ng-binding form-control"
 								id="inputNewCommisionMemberNameAndSurname"
 								name="inputNewCommisionMemberNameAndSurname"
-								ng-model="newCommissionMember.nameAndSuname"
+								ng-model="selectedCommissionMember"
+								typeahead="person as person.name + ' ' + person.surname for person in getAllPotentalMembers($viewValue) | limitTo:8"
+								typeahead-on-select="onSelectPerson()"
 								placeholder="{{ resources.contestLabels.memberNameAndSurname }}"
-								ng-maxlength="40"
+								autocomplete="off"
+								ng-disabled="isExistingPerson"
 								required />
 							<div
 								ng-show="form.inputNewCommisionMemberNameAndSurname.$dirty && form.inputNewCommisionMemberNameAndSurname.$invalid"
@@ -277,6 +303,7 @@
 								ng-model="newCommissionMember.title"
 								placeholder="{{ resources.contestLabels.memberTitle }}"
 								ng-maxlength="20"
+								ng-disabled="isExistingPerson"
 								required />
 							<div
 								ng-show="form.inputNewCommisionMemberTitle.$dirty && form.inputNewCommisionMemberTitle.$invalid"
@@ -294,9 +321,10 @@
 								class="form-control"
 								id="inputNewCommisionMemberSpecificScientificArea"
 								name="inputNewCommisionMemberSpecificScientificArea"
-								ng-model="newCommissionMember.function"
+								ng-model="newCommissionMember.specificScientificArea"
 								placeholder="{{ resources.contestLabels.memberSpecificScientificArea }}"
 								ng-maxlength="50"
+								ng-disabled="isExistingPerson"
 								required />
 							<div
 								ng-show="form.inputNewCommisionMemberSpecificScientificArea.$dirty && form.inputNewCommisionMemberSpecificScientificArea.$invalid"
@@ -322,6 +350,7 @@
 								ng-model="newCommissionMember.institution"
 								placeholder="{{ resources.contestLabels.institution }}"
 								ng-maxlength="100"
+								ng-disabled="isExistingPerson"
 								required />
 							<div
 								ng-show="form.inputNewCommisionMemberInstitution.$dirty && form.inputNewCommisionMemberInstitution.$invalid"
@@ -339,7 +368,7 @@
 								class="form-control"
 								id="inputNewCommisionMemberFunction"
 								name="inputNewCommisionMemberFunction"
-								ng-model="newCommissionMember.title"
+								ng-model="newCommissionMember.commissionFunction"
 								placeholder="{{ resources.contestLabels.function }}"
 								ng-maxlength="20"
 								required />
@@ -358,6 +387,7 @@
 								id="submit_button"
 								title="{{ resources.text.addCommissionMemberTooltip }}"
 								class="btn btn-success btn-sm"
+								ng-disabled="validetCommissionMember()"
 								ng-click="addCommissionMember()">
 								<span class="glyphicon glyphicon-plus"></span>
 							</button>
@@ -367,9 +397,8 @@
 			</div>
 		</div>
 		<div class="modal-body container-fluid">
-			<div
-				class="row">
-				<label class="col-sm-4">{{ resources.contestLabels.candidateNameAndSurname }}:</label>
+			<div class="row">
+				<label class="col-sm-2">{{ resources.contestLabels.candidateNameAndSurname }}:</label>
 				<div class="col-sm-8">{{ professor.name }} {{ professor.surname }}</div>
 			</div>
 		</div>
@@ -378,8 +407,10 @@
 				id="submit_button"
 				type="submit"
 				class="btn btn-success btn-sm"
-				ng-disabled="form.$invalid">
-				<span class="glyphicon glyphicon-save"></span> {{ resources.form.register }}
+				ng-disabled="!validateForm()"
+				ng-show="!formSaved"
+				ng-click="saveNewContest()">
+				<span class="glyphicon glyphicon-save"></span> {{ resources.form.save }}
 			</button>
 			<button
 				id="submit_button"

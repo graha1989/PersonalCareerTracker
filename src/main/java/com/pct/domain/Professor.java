@@ -117,6 +117,12 @@ public class Professor extends User {
 	@OneToOne(mappedBy = "professor")
 	private ProjectLeader projectLeader;
 
+	@OneToOne(mappedBy = "professor")
+	private CommissionMember commissionMember;
+
+	@OneToOne(mappedBy = "candidate")
+	private Contest contest;
+
 	public Professor() {
 	}
 
@@ -125,7 +131,7 @@ public class Professor extends User {
 			Set<ProjectExperience> projectExperiences, Set<ProfessorPublication> professorPublications,
 			Set<InternationalPublication> internationalPublications, Set<WorkExperience> workExperiences, Set<Studies> studies,
 			Set<TeachingExperience> teachingExperiences, Set<Survey> surveys, Set<ScientificProfessionalOrgMem> memberships,
-			Set<AcademicCommunityContribution> contributions, ProjectLeader projectLeader) {
+			Set<AcademicCommunityContribution> contributions, ProjectLeader projectLeader, CommissionMember commissionMember, Contest contest) {
 		this.fathersName = fathersName;
 		this.dateOfBirth = dateOfBirth;
 		this.placeOfBirth = placeOfBirth;
@@ -144,8 +150,10 @@ public class Professor extends User {
 		this.teachingExperiences = teachingExperiences;
 		this.surveys = surveys;
 		this.projectLeader = projectLeader;
+		this.commissionMember = commissionMember;
 		this.memberships = memberships;
 		this.contributions = contributions;
+		this.contest = contest;
 	}
 
 	public String getFathersName() {
@@ -362,6 +370,22 @@ public class Professor extends User {
 
 	public void setProjectLeader(ProjectLeader projectLeader) {
 		this.projectLeader = projectLeader;
+	}
+
+	public CommissionMember getCommissionMember() {
+		return commissionMember;
+	}
+
+	public void setCommissionMember(CommissionMember commissionMember) {
+		this.commissionMember = commissionMember;
+	}
+
+	public Contest getContest() {
+		return contest;
+	}
+
+	public void setContest(Contest contest) {
+		this.contest = contest;
 	}
 
 }

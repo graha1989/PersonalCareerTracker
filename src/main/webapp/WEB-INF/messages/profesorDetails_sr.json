@@ -2,6 +2,7 @@
     "text": {
         "professorTitle": "Podaci o profesoru",
         "addCommissionMemberTooltip": "Dodaj člana komisije",
+        "removeCommissionMemberTooltip": "Ukloni člana komisije",
         "professorAccountTitle": "Podaci o nalogu",
         "contestDataTitle": "Podaci o konkursu",
         "commissionDataTitle": "Sastav komisije",

@@ -106,6 +106,9 @@ public final class RequestMappings {
 	public static final String SAVE_SELECTED_ACADEMIC_COMMUNITY_CONTRIBUTION = "saveAcademicCommunityContribution";
 	public static final String DELETE_ACADEMIC_COMMUNITY_CONTRIBUTION = "deleteAcademicCommunityContribution";
 
+	public static final String CONTEST_API = "/api/contest";
+	public static final String LOAD_ALL_PROFESSORS_OR_COMMISSION_MEMBERS_STARTS_WITH = "findAllProfessorsOrCommissionMembersStartsWith";
+
 	public static final String ID = "id";
 
 	/**

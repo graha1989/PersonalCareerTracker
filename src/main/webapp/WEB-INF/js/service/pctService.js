@@ -473,5 +473,23 @@ app.factory("PctService", [
         loadSelectedAcademicCommunityContribution: function(id, callback) {
           $http.get('api/academicCommunityContribution/selectedAcademicCommunityContribution?id=' + id).success(callback).error(callback);
         },
+        
+        findAllProfessorsOrCommissionMembersStartsWith: function(value, professorsWhoAreCommissionMembersOnThisContest,
+                commissionMembersOnThisContestWhoAreNotProfessors) {
+          var deferred = $q.defer();
+          $http.get("api/contest/findAllProfessorsOrCommissionMembersStartsWith", {
+            params: {
+              value: value,
+              professorsWhoAreCommissionMembersOnThisContest: professorsWhoAreCommissionMembersOnThisContest,
+              commissionMembersOnThisContestWhoAreNotProfessors: commissionMembersOnThisContestWhoAreNotProfessors
+            }
+          }).success(function(response) {
+            deferred.resolve(response);
+          }).error(function(response) {
+            deferred.reject(response);
+          });
+          return deferred.promise;
+        },
+        
       };
     }]);
