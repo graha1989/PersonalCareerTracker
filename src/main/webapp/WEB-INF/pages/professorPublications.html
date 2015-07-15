@@ -41,11 +41,12 @@
 					ng-show="publications != []"
 					class="table table-condensed table-striped table-hover"
 					cellspacing="0"
-					cellpadding="0">
+					cellpadding="0"
+					style="word-wrap:break-word; table-layout: fixed; width: 100%">
 					<tbody>
 						<tr class="info ng-binding">
 							<td>{{ resources.professorPublicationsTableLabels.publicationType }}</td>
-							<td>{{ resources.professorPublicationsTableLabels.isbn }}</td>
+							<td>{{ resources.professorPublicationsTableLabels.isbn_issn }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.title }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.journalTitle }}</td>
 							<td>{{ resources.professorPublicationsTableLabels.authors }}</td>
@@ -140,7 +141,7 @@
 							id="inputPublicationIsbn"
 							name="inputPublicationIsbn"
 							ng-model="publication.isbn"
-							placeholder="{{ resources.publicationPopupLabels.publicationIsbn }}"
+							placeholder="{{ resources.publicationPopupLabels.publicationIsbn_issn }}"
 							ng-maxlength="30"
 							required />
 						<div
@@ -580,7 +581,7 @@
 				<div class="form-group">
 					<label
 						for="inputPublicationIsbn"
-						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationIsbn }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationIsbn_issn }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input

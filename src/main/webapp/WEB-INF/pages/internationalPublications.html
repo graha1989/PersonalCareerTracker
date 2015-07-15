@@ -17,11 +17,12 @@
 					ng-show="internationalPublications != []"
 					class="table table-condensed table-striped table-hover"
 					cellspacing="0"
-					cellpadding="0">
+					cellpadding="0"
+					style="word-wrap:break-word; table-layout: fixed; width: 100%">
 					<tbody>
 						<tr class="info ng-binding">
 							<td>{{ resources.internationalPublicationsTableLabels.publicationType }}</td>
-							<td>{{ resources.internationalPublicationsTableLabels.isbn }}</td>
+							<td>{{ resources.internationalPublicationsTableLabels.isbn_issn }}</td>
 							<td>{{ resources.internationalPublicationsTableLabels.title }}</td>
 							<td>{{ resources.internationalPublicationsTableLabels.journalTitle }}</td>
 							<td>{{ resources.internationalPublicationsTableLabels.authors }}</td>
@@ -104,7 +105,7 @@
 				<div class="form-group">
 					<label
 						for="inputPublicationIsbn"
-						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationIsbn }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationIsbn_issn }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input
@@ -526,7 +527,7 @@
 				<div class="form-group">
 					<label
 						for="inputPublicationIsbn"
-						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationIsbn }} <span class="required">*</span>
+						class="col-sm-4 control-label">{{ resources.publicationPopupLabels.publicationIsbn_issn }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
 						<input

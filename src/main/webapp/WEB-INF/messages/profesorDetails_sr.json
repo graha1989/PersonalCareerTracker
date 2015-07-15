@@ -623,7 +623,7 @@
     },
     "professorPublicationsTableLabels": {
         "publicationType": "Tip publikacije",
-        "isbn": "ISBN",
+        "isbn_issn": "ISBN/ISSN",
         "title": "Naslov",
         "journalTitle": "Časopis",
         "authors": "Autori",
@@ -635,7 +635,7 @@
     },
     "internationalPublicationsTableLabels": {
         "publicationType": "Tip publikacije",
-        "isbn": "ISBN",
+        "isbn_issn": "ISBN/ISSN",
         "title": "Naslov",
         "journalTitle": "Časopis",
         "authors": "Autori",
@@ -645,7 +645,7 @@
         "year": "Godina"
     },
     "publicationPopupLabels": {
-    	"publicationIsbn": "ISBN",
+    	"publicationIsbn_issn": "ISBN/ISSN",
     	"publicationTitle": "Naslov",
     	"publicationJournalTitle": "Časopis",
     	"publicationAuthor": "Autor",
