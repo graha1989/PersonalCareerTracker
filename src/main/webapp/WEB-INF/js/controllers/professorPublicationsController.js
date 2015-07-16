@@ -14,7 +14,7 @@ app.controller("ProfessorPublicationsController", function($scope, $routeParams,
   $scope.isSci = false;
 
   $scope.customFilter = function(publication) {
-    return !$scope.isSci || publication && publication.publicationCategoryDto.sci === true;
+    return !$scope.isSci || publication && (publication.publicationCategoryDto == null ? false : publication.publicationCategoryDto.sci === true);
   };
   
   $scope.sortType = '';
