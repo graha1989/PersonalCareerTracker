@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.pct.domain.dto.ValidationErrorDto;
 import com.pct.validation.EmailExistException;
 import com.pct.validation.InstitutionDeleteException;
+import com.pct.validation.SeminarDeleteException;
 import com.pct.validation.SimilarDataAlreadyExistsException;
 import com.pct.validation.StudentDeleteException;
 import com.pct.validation.SubjectDeleteException;
@@ -56,6 +57,10 @@ public class ErrorControllerAdvice {
 	public static String SUBJECT_CAN_NOT_BE_DELETED = "CanNotDeleteSubject.message";
 	public static String SUBJECT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE = "Subject can not be deleted";
 	public static String SUBJECT_CAN_NOT_BE_DELETED_OBJECT_NAME = "subject";
+
+	public static String SEMINAR_CAN_NOT_BE_DELETED = "CanNotDeleteSeminar.message";
+	public static String SEMINAR_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE = "Seminar can not be deleted";
+	public static String SEMINAR_CAN_NOT_BE_DELETED_OBJECT_NAME = "seminar";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -160,6 +165,19 @@ public class ErrorControllerAdvice {
 				codes, null, SUBJECT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE);
 		List<FieldError> fieldErrors = new ArrayList<FieldError>();
 		fieldErrors.add(subjectDeleteError);
+
+		return processFieldErrors(fieldErrors);
+	}
+
+	@ExceptionHandler(SeminarDeleteException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ValidationErrorDto processSeminarDeleteException(SeminarDeleteException ex) {
+		String[] codes = { SEMINAR_CAN_NOT_BE_DELETED };
+		FieldError seminarDeleteError = new FieldError(SEMINAR_CAN_NOT_BE_DELETED_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(), false,
+				codes, null, SEMINAR_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE);
+		List<FieldError> fieldErrors = new ArrayList<FieldError>();
+		fieldErrors.add(seminarDeleteError);
 
 		return processFieldErrors(fieldErrors);
 	}

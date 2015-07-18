@@ -23,6 +23,7 @@ import com.pct.repository.SurveyRepository;
 import com.pct.repository.TeachingExperienceRepository;
 import com.pct.service.SubjectService;
 import com.pct.validation.InstitutionNotFoundException;
+import com.pct.validation.SeminarDeleteException;
 import com.pct.validation.SubjectDeleteException;
 import com.pct.validation.SubjectNotFoundException;
 
@@ -157,20 +158,24 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	@Transactional
-	public void deleteSubject(Long id) throws SubjectNotFoundException, SubjectDeleteException {
+	public void deleteSubject(Long id) throws SubjectNotFoundException, SubjectDeleteException, SeminarDeleteException {
 
 		Subject subject = null;
 		if (id == null || id == 0L || subjectRepository.findOne(id) == null) {
 			throw new SubjectNotFoundException();
 		}
 		subject = subjectRepository.findOne(id);
-		if (teachingExperienceRepository.countBySubject(subject) > 0L) {
+		if (!subject.getSeminarOrTeachingAbroad() && teachingExperienceRepository.countBySubject(subject) > 0L) {
 			throw new SubjectDeleteException("subject", subject.getName());
+		} else if (subject.getSeminarOrTeachingAbroad() && teachingExperienceRepository.countBySubject(subject) > 0L) {
+			throw new SeminarDeleteException("seminar", subject.getName());
 		}
 
 		// Delete all surveys for subject
-		for (Survey survey : surveyRepository.findBySubject(subject)) {
-			surveyRepository.delete(survey);
+		if (!subject.getSeminarOrTeachingAbroad()) {
+			for (Survey survey : surveyRepository.findBySubject(subject)) {
+				surveyRepository.delete(survey);
+			}
 		}
 
 		subjectRepository.delete(id);

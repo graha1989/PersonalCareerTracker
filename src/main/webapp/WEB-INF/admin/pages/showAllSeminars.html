@@ -10,9 +10,16 @@
 		<div class="modal-header">
 			<h3 class="modal-title">{{ resources.text.seminarTitle }}</h3>
 		</div>
+		<div
+			id="warning"
+			class="alert-warning fade in text-center"
+			ng-show="fieldErrors.length">
+			<div ng-repeat="error in fieldErrors">
+				<span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{ error.message }}</strong>
+			</div>
+		</div>
 		<div class="modal-body">
 			<fieldset>
-
 				<table
 					ng-show="allSeminars != []"
 					class="table table-condensed table-striped table-hover"
@@ -25,7 +32,7 @@
 							<td>{{ resources.seminarOrSubjectAbroadTableLabels.universityName }}</td>
 							<td>{{ resources.seminarOrSubjectAbroadTableLabels.facultyCity }}</td>
 							<td>{{ resources.seminarOrSubjectAbroadTableLabels.facultyCountry }}</td>
-							<td colspan="1"></td>
+							<td colspan="2"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
@@ -35,6 +42,11 @@
 							<td>{{ seminar.universityName }}</td>
 							<td>{{ seminar.institutionCity }}</td>
 							<td>{{ seminar.institutionCountry }}</td>
+							<td class="delete"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteSeminar(seminar.id, $index)">
+									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.subjectButtons.delete }}
+								</button></td>
 							<td class="edit"><button
 									class="btn btn-link btn-xs"
 									ng-click="editSeminar(seminar.id)">
@@ -42,7 +54,7 @@
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="6">{{ errorMessages.error.emptyTable }}</td>
+							<td colspan="7">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>

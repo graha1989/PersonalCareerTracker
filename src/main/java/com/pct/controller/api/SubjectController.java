@@ -21,6 +21,7 @@ import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.SubjectDto;
 import com.pct.service.SubjectService;
 import com.pct.validation.InstitutionNotFoundException;
+import com.pct.validation.SeminarDeleteException;
 import com.pct.validation.SubjectDeleteException;
 import com.pct.validation.SubjectNotFoundException;
 
@@ -69,7 +70,7 @@ public class SubjectController {
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public ResponseEntity<SubjectDto> deleteSubject(@RequestParam(value = RequestMappings.ID, required = true) Long id)
-			throws SubjectNotFoundException, SubjectDeleteException {
+			throws SubjectNotFoundException, SubjectDeleteException, SeminarDeleteException {
 		subjectService.deleteSubject(id);
 
 		return new ResponseEntity<SubjectDto>(HttpStatus.OK);

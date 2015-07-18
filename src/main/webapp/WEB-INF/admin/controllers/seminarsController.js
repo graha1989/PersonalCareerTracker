@@ -1,4 +1,4 @@
-app.controller("SeminarsController", function($scope, $routeParams, $http, $location, $modal, PctService) {
+app.controller("SeminarsController", function($scope, $routeParams, $route, $http, $location, $modal, PctService) {
 
   $scope.seminar = {};
   $scope.allSeminars = [];
@@ -53,6 +53,21 @@ app.controller("SeminarsController", function($scope, $routeParams, $http, $loca
 
   $scope.init();
 
+  $scope.deleteSeminar = function(id, index) {
+    PctService.deleteSubject(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.fieldErrors = data.fieldErrors;
+        $scope.errorStatus = "Error!";
+        $("#warning").fadeTo(5000, 500).slideUp(500, function() {
+          $("#warning").alert('close');
+        });
+      } else {
+        $scope.successStatus = "Successfully deleted seminar.";
+        $route.reload();
+      }
+    });
+  };
+
   $scope.editSeminar = function(id) {
     $modal.open({
       templateUrl: 'editSeminarPopup.html',
@@ -74,8 +89,7 @@ app.controller("SeminarsController", function($scope, $routeParams, $http, $loca
 
 });
 
-var editSeminarPopupController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache,
-        seminarId, PctService) {
+var editSeminarPopupController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, seminarId, PctService) {
 
   $scope.seminar = {};
   $scope.master = {};
@@ -154,8 +168,7 @@ var editSeminarPopupController = function($scope, $modalInstance, $routeParams, 
 
 };
 
-var createNewSeminarController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache,
-        PctService) {
+var createNewSeminarController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, PctService) {
 
   $scope.seminar = {};
   $scope.selectedFaculty = [];
