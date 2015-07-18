@@ -58,7 +58,7 @@ public class ProjectController {
 		return new ResponseEntity<List<ProjectType>>(projectTypes, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "selectedProject", method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
+	@RequestMapping(value = RequestMappings.LOAD_SELECTED_PROJECT, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
 	public ResponseEntity<ProjectDto> showProject(@RequestParam(value = RequestMappings.ID, required = true) Long id)
 			throws ProjectNotFoundException {
 		ProjectDto projectDto = projectService.findProjectById(id);

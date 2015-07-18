@@ -49,6 +49,7 @@ public final class RequestMappings {
 
 	public static final String PROJECTS_API = "/api/projects";
 	public static final String LOAD_ALL_PROJECTS = "allProjects";
+	public static final String LOAD_SELECTED_PROJECT = "selectedProject";
 	public static final String LOAD_ALL_PROJECT_TYPES = "allProjectTypes";
 	public static final String LOAD_ALL_PROJECT_PROFESSORS_OR_LEADERS_STARTS_WITH = "findProfessorsOrLeadersStartsWith";
 
