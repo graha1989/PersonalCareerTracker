@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pct.domain.dto.ValidationErrorDto;
 import com.pct.validation.EmailExistException;
+import com.pct.validation.InstitutionDeleteException;
 import com.pct.validation.SimilarDataAlreadyExistsException;
 import com.pct.validation.StudentDeleteException;
 import com.pct.validation.UserNameExistException;
@@ -45,7 +46,11 @@ public class ErrorControllerAdvice {
 
 	public static String STUDENT_CAN_NOT_BE_DELETED = "CanNotDeleteStudent.message";
 	public static String STUDENT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE = "Student can not be deleted";
-	public static String STUDENT_CAN_NOT_BE_DELETED_OBJECT_NAME = "studentId";
+	public static String STUDENT_CAN_NOT_BE_DELETED_OBJECT_NAME = "student";
+	
+	public static String INSTITUTION_CAN_NOT_BE_DELETED = "CanNotDeleteInstitution.message";
+	public static String INSTITUTION_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE = "Institution can not be deleted";
+	public static String INSTITUTION_CAN_NOT_BE_DELETED_OBJECT_NAME = "institution";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -124,6 +129,19 @@ public class ErrorControllerAdvice {
 				false, codes, null, STUDENT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE);
 		List<FieldError> fieldErrors = new ArrayList<FieldError>();
 		fieldErrors.add(studentDeleteError);
+		
+		return processFieldErrors(fieldErrors);
+	}
+	
+	@ExceptionHandler(InstitutionDeleteException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ValidationErrorDto processInstitutionDeleteException(InstitutionDeleteException ex) {
+		String[] codes = { INSTITUTION_CAN_NOT_BE_DELETED };
+		FieldError institutionDeleteError = new FieldError(INSTITUTION_CAN_NOT_BE_DELETED_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(),
+				false, codes, null, INSTITUTION_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE);
+		List<FieldError> fieldErrors = new ArrayList<FieldError>();
+		fieldErrors.add(institutionDeleteError);
 		
 		return processFieldErrors(fieldErrors);
 	}

@@ -20,6 +20,7 @@ import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.InstitutionDto;
 import com.pct.domain.InstitutionType;
 import com.pct.service.InstitutionsService;
+import com.pct.validation.InstitutionDeleteException;
 import com.pct.validation.InstitutionNotFoundException;
 
 @RestController
@@ -71,7 +72,7 @@ public class InstitutionController {
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public ResponseEntity<InstitutionDto> deleteInstitution(
-			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws InstitutionNotFoundException {
+			@RequestParam(value = RequestMappings.ID, required = true) Long id) throws InstitutionNotFoundException, InstitutionDeleteException {
 		institutionsService.deleteInstitution(id);
 
 		return new ResponseEntity<InstitutionDto>(HttpStatus.OK);

@@ -66,13 +66,13 @@ public class StudentServiceImpl implements StudentService {
 	@Transactional
 	public void deleteStudent(Long id) throws StudentNotFoundException, StudentDeleteException {
 
-		Student student = studentRepository.findOne(id);
-		
-		if (id == null || student == null) {
+		Student student = null;
+		if (id == null || id == 0L || studentRepository.findOne(id) == null) {
 			throw new StudentNotFoundException();
 		}
+		student = studentRepository.findOne(id);
 		if (thesisRepository.countByStudent(student) > 0L) {
-			throw new StudentDeleteException("studentId", student.getTranscriptNumber());
+			throw new StudentDeleteException("studentTranscriptNumber", student.getTranscriptNumber());
 		}
 
 		studentRepository.delete(id);

@@ -1,5 +1,4 @@
-app.controller("InstitutionsController", function($scope, $routeParams, $http,
-        $location, $modal, PctService) {
+app.controller("InstitutionsController", function($scope, $routeParams, $http, $location, $modal, PctService) {
 
   $scope.institution = {};
   $scope.allInstitutions = [];
@@ -10,14 +9,12 @@ app.controller("InstitutionsController", function($scope, $routeParams, $http,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadAllInstitutions = function() {
@@ -60,7 +57,11 @@ app.controller("InstitutionsController", function($scope, $routeParams, $http,
   $scope.deleteInstitution = function(id, index) {
     PctService.deleteInstitution(id, function(data) {
       if (angular.isObject(data)) {
-        $scope.errorStatus = data.status;
+        $scope.fieldErrors = data.fieldErrors;
+        $scope.errorStatus = "Error!";
+        $("#warning").fadeTo(5000, 500).slideUp(500, function() {
+          $("#warning").alert('close');
+        });
       } else {
         $scope.successStatus = "Successfully deleted institution.";
         $scope.allInstitutions.splice(index, 1);
@@ -71,8 +72,7 @@ app.controller("InstitutionsController", function($scope, $routeParams, $http,
 
 });
 
-var editInstitutionPopupController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, institutionId, PctService) {
+var editInstitutionPopupController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, institutionId, PctService) {
 
   $scope.institution = {};
   $scope.master = {};
@@ -89,14 +89,12 @@ var editInstitutionPopupController = function($scope, $modalInstance,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadAllInstitutionTypes = function() {
@@ -173,8 +171,7 @@ var editInstitutionPopupController = function($scope, $modalInstance,
 
 };
 
-var createNewInstitutionController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, PctService) {
+var createNewInstitutionController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, PctService) {
 
   $scope.institution = {};
   $scope.allInstitutionTypes = [];
@@ -190,14 +187,12 @@ var createNewInstitutionController = function($scope, $modalInstance,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadAllInstitutionTypes = function() {
@@ -247,11 +242,8 @@ var createNewInstitutionController = function($scope, $modalInstance,
   $scope.validateForm = function() {
     if ($scope.institution.institutionType != null
             && $scope.institution.institutionType != ''
-            && ($scope.institution.institutionType == 'Fakultet'
-                    ? ($scope.institution.university != null && $scope.institution.university != '')
-                    : true) && $scope.institution.city != null
-            && $scope.institution.city != ''
-            && $scope.institution.country != null
+            && ($scope.institution.institutionType == 'Fakultet' ? ($scope.institution.university != null && $scope.institution.university != '')
+                    : true) && $scope.institution.city != null && $scope.institution.city != '' && $scope.institution.country != null
             && $scope.institution.country != '') {
       return true;
     } else {

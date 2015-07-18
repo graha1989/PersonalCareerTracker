@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.pct.domain.Institution;
 import com.pct.domain.WorkExperience;
 
 public interface WorkExperienceRepository extends JpaRepository<WorkExperience, Long> {
@@ -21,5 +22,7 @@ public interface WorkExperienceRepository extends JpaRepository<WorkExperience, 
 			+ "OR IFNULL(e.workEndDate, NOW()) BETWEEN :from AND :to)")
 	int isThereFacultyWorkExperienceWithSimilarPeriod(@Param("institutionId") Long institutionId, @Param("professorId") Long professorId,
 			@Param("title") String title, @Param("from") Date from, @Param("to") Date to);
+
+	Long countByInstitution(Institution institution);
 
 }

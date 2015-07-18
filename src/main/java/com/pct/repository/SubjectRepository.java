@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.pct.domain.Institution;
 import com.pct.domain.Subject;
 
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
@@ -19,5 +20,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
 	@Query("SELECT s FROM Subject s WHERE s.seminarOrTeachingAbroad=:seminarOrTeachingAbroad")
 	List<Subject> findAllSubjectsOrSeminars(@Param("seminarOrTeachingAbroad") Boolean seminarOrTeachingAbroad);
+	
+	Long countByInstitution(Institution institution);
 
 }

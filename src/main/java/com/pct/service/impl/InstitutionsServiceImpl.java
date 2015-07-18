@@ -14,7 +14,12 @@ import com.pct.domain.InstitutionType;
 import com.pct.domain.dto.InstitutionDto;
 import com.pct.repository.InstitutionRepository;
 import com.pct.repository.InstitutionTypeRepository;
+import com.pct.repository.ProfessorSpecializationRepository;
+import com.pct.repository.ProfessorStudiesRepository;
+import com.pct.repository.SubjectRepository;
+import com.pct.repository.WorkExperienceRepository;
 import com.pct.service.InstitutionsService;
+import com.pct.validation.InstitutionDeleteException;
 import com.pct.validation.InstitutionNotFoundException;
 
 @Service
@@ -22,12 +27,21 @@ public class InstitutionsServiceImpl implements InstitutionsService {
 
 	private InstitutionRepository institutionRepository;
 	private InstitutionTypeRepository institutionTypeRepository;
+	private ProfessorStudiesRepository professorStudiesRepository;
+	private SubjectRepository subjectRepository;
+	private ProfessorSpecializationRepository professorSpecializationRepository;
+	private WorkExperienceRepository workExperienceRepository;
 
 	@Autowired
-	public InstitutionsServiceImpl(InstitutionRepository institutionRepository,
-			InstitutionTypeRepository institutionTypeRepository) {
+	public InstitutionsServiceImpl(InstitutionRepository institutionRepository, InstitutionTypeRepository institutionTypeRepository,
+			ProfessorStudiesRepository professorStudiesRepository, SubjectRepository subjectRepository,
+			ProfessorSpecializationRepository professorSpecializationRepository, WorkExperienceRepository workExperienceRepository) {
 		this.institutionRepository = institutionRepository;
 		this.institutionTypeRepository = institutionTypeRepository;
+		this.professorStudiesRepository = professorStudiesRepository;
+		this.subjectRepository = subjectRepository;
+		this.professorSpecializationRepository = professorSpecializationRepository;
+		this.workExperienceRepository = workExperienceRepository;
 	}
 
 	@Override
@@ -113,13 +127,18 @@ public class InstitutionsServiceImpl implements InstitutionsService {
 	 */
 	@Override
 	@Transactional
-	public void deleteInstitution(Long id) throws InstitutionNotFoundException {
+	public void deleteInstitution(Long id) throws InstitutionNotFoundException, InstitutionDeleteException {
 
-		Institution institution = institutionRepository.findOne(id);
-		if (institution == null) {
+		Institution institution = null;
+		if (id == null || id == 0L || institutionRepository.findOne(id) == null) {
 			throw new InstitutionNotFoundException();
+		}
+		institution = institutionRepository.findOne(id);
+		if (professorStudiesRepository.countByInstitution(institution) > 0L || subjectRepository.countByInstitution(institution) > 0L
+				|| professorSpecializationRepository.countByInstitution(institution) > 0L
+				|| workExperienceRepository.countByInstitution(institution) > 0L) {
+			throw new InstitutionDeleteException("institutionName", institution.getName());
 		}
 		institutionRepository.delete(institution);
 	}
-
 }

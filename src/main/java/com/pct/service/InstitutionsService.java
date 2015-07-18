@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pct.domain.dto.InstitutionDto;
 import com.pct.domain.InstitutionType;
+import com.pct.validation.InstitutionDeleteException;
 import com.pct.validation.InstitutionNotFoundException;
 
 public interface InstitutionsService {
@@ -16,6 +17,6 @@ public interface InstitutionsService {
 
 	void saveInstitution(InstitutionDto institutionDto) throws InstitutionNotFoundException;
 
-	void deleteInstitution(Long id) throws InstitutionNotFoundException;
+	void deleteInstitution(Long id) throws InstitutionNotFoundException, InstitutionDeleteException;
 
 }
