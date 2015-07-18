@@ -10,9 +10,16 @@
 		<div class="modal-header">
 			<h3 class="modal-title">{{ resources.text.subjectsTitle }}</h3>
 		</div>
+		<div
+			id="warning"
+			class="alert-warning fade in text-center"
+			ng-show="fieldErrors.length">
+			<div ng-repeat="error in fieldErrors">
+				<span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{ error.message }}</strong>
+			</div>
+		</div>
 		<div class="modal-body">
 			<fieldset>
-
 				<table
 					ng-show="allSubjects != []"
 					class="table table-condensed table-striped table-hover"

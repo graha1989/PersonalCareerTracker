@@ -21,6 +21,7 @@ import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.SubjectDto;
 import com.pct.service.SubjectService;
 import com.pct.validation.InstitutionNotFoundException;
+import com.pct.validation.SubjectDeleteException;
 import com.pct.validation.SubjectNotFoundException;
 
 @RestController
@@ -64,6 +65,14 @@ public class SubjectController {
 		logger.debug("Subject: " + subjectDto.getSubjectName() + " successfully saved.");
 
 		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public ResponseEntity<SubjectDto> deleteSubject(@RequestParam(value = RequestMappings.ID, required = true) Long id)
+			throws SubjectNotFoundException, SubjectDeleteException {
+		subjectService.deleteSubject(id);
+
+		return new ResponseEntity<SubjectDto>(HttpStatus.OK);
 	}
 
 }

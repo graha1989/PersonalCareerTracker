@@ -379,6 +379,12 @@ app.factory("PctService", [
         loadSelectedSubject: function(id, callback) {
           $http.get('api/subjects/selectedSubject?id=' + id).success(callback).error(callback);
         },
+        deleteSubject: function(id, callback) {
+          $http({
+            method: 'DELETE',
+            url: 'api/subjects?id=' + id
+          }).success(callback).error(callback);
+        },
         loadAllProfessors: function(params, callback) {
           $http.get('api/professors/allProfessors').success(callback);
         },

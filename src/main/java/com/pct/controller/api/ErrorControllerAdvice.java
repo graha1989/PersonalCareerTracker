@@ -21,6 +21,7 @@ import com.pct.validation.EmailExistException;
 import com.pct.validation.InstitutionDeleteException;
 import com.pct.validation.SimilarDataAlreadyExistsException;
 import com.pct.validation.StudentDeleteException;
+import com.pct.validation.SubjectDeleteException;
 import com.pct.validation.UserNameExistException;
 
 /**
@@ -47,10 +48,14 @@ public class ErrorControllerAdvice {
 	public static String STUDENT_CAN_NOT_BE_DELETED = "CanNotDeleteStudent.message";
 	public static String STUDENT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE = "Student can not be deleted";
 	public static String STUDENT_CAN_NOT_BE_DELETED_OBJECT_NAME = "student";
-	
+
 	public static String INSTITUTION_CAN_NOT_BE_DELETED = "CanNotDeleteInstitution.message";
 	public static String INSTITUTION_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE = "Institution can not be deleted";
 	public static String INSTITUTION_CAN_NOT_BE_DELETED_OBJECT_NAME = "institution";
+
+	public static String SUBJECT_CAN_NOT_BE_DELETED = "CanNotDeleteSubject.message";
+	public static String SUBJECT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE = "Subject can not be deleted";
+	public static String SUBJECT_CAN_NOT_BE_DELETED_OBJECT_NAME = "subject";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -106,7 +111,7 @@ public class ErrorControllerAdvice {
 
 		return processFieldErrors(fieldErrors);
 	}
-	
+
 	@ExceptionHandler(SimilarDataAlreadyExistsException.class)
 	@ResponseStatus(HttpStatus.CONFLICT)
 	@ResponseBody
@@ -125,14 +130,14 @@ public class ErrorControllerAdvice {
 	@ResponseBody
 	public ValidationErrorDto processDeleteStudentException(StudentDeleteException ex) {
 		String[] codes = { STUDENT_CAN_NOT_BE_DELETED };
-		FieldError studentDeleteError = new FieldError(STUDENT_CAN_NOT_BE_DELETED_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(),
-				false, codes, null, STUDENT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE);
+		FieldError studentDeleteError = new FieldError(STUDENT_CAN_NOT_BE_DELETED_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(), false,
+				codes, null, STUDENT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE);
 		List<FieldError> fieldErrors = new ArrayList<FieldError>();
 		fieldErrors.add(studentDeleteError);
-		
+
 		return processFieldErrors(fieldErrors);
 	}
-	
+
 	@ExceptionHandler(InstitutionDeleteException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
@@ -142,7 +147,20 @@ public class ErrorControllerAdvice {
 				false, codes, null, INSTITUTION_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE);
 		List<FieldError> fieldErrors = new ArrayList<FieldError>();
 		fieldErrors.add(institutionDeleteError);
-		
+
+		return processFieldErrors(fieldErrors);
+	}
+
+	@ExceptionHandler(SubjectDeleteException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ValidationErrorDto processSubjectDeleteException(SubjectDeleteException ex) {
+		String[] codes = { SUBJECT_CAN_NOT_BE_DELETED };
+		FieldError subjectDeleteError = new FieldError(SUBJECT_CAN_NOT_BE_DELETED_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(), false,
+				codes, null, SUBJECT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE);
+		List<FieldError> fieldErrors = new ArrayList<FieldError>();
+		fieldErrors.add(subjectDeleteError);
+
 		return processFieldErrors(fieldErrors);
 	}
 

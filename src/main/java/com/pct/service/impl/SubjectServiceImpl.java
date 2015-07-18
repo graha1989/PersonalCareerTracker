@@ -12,14 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pct.domain.Institution;
 import com.pct.domain.Professor;
 import com.pct.domain.Subject;
+import com.pct.domain.Survey;
 import com.pct.domain.dto.SubjectDto;
 import com.pct.repository.InstitutionRepository;
 import com.pct.repository.InstitutionTypeRepository;
 import com.pct.repository.ProfesorRepository;
 import com.pct.repository.StudyProgramRepository;
 import com.pct.repository.SubjectRepository;
+import com.pct.repository.SurveyRepository;
+import com.pct.repository.TeachingExperienceRepository;
 import com.pct.service.SubjectService;
 import com.pct.validation.InstitutionNotFoundException;
+import com.pct.validation.SubjectDeleteException;
 import com.pct.validation.SubjectNotFoundException;
 
 @Service
@@ -30,15 +34,21 @@ public class SubjectServiceImpl implements SubjectService {
 	private ProfesorRepository professorRepository;
 	private InstitutionTypeRepository institutionTypeRepository;
 	private StudyProgramRepository studyProgramRepository;
+	private SurveyRepository surveyRepository;
+	private TeachingExperienceRepository teachingExperienceRepository;
 
 	@Autowired
 	public SubjectServiceImpl(SubjectRepository subjectRepository, InstitutionRepository institutionRepository,
-			ProfesorRepository professorRepository, InstitutionTypeRepository institutionTypeRepository, StudyProgramRepository studyProgramRepository) {
+			ProfesorRepository professorRepository, InstitutionTypeRepository institutionTypeRepository,
+			StudyProgramRepository studyProgramRepository, SurveyRepository surveyRepository,
+			TeachingExperienceRepository teachingExperienceRepository) {
 		this.subjectRepository = subjectRepository;
 		this.institutionRepository = institutionRepository;
 		this.professorRepository = professorRepository;
 		this.institutionTypeRepository = institutionTypeRepository;
 		this.studyProgramRepository = studyProgramRepository;
+		this.surveyRepository = surveyRepository;
+		this.teachingExperienceRepository = teachingExperienceRepository;
 	}
 
 	@Override
@@ -47,13 +57,6 @@ public class SubjectServiceImpl implements SubjectService {
 
 		List<SubjectDto> subjectDtos = new ArrayList<SubjectDto>();
 		List<Subject> subjects = new ArrayList<Subject>();
-		/*
-		if (subjectIds != null && subjectIds.size() > 0) {
-			subjects = subjectRepository.findByNameLikeAndNotInIds(value, subjectIds, seminarOrTeachingAbroad);
-		} else {
-			subjects = subjectRepository.findByNameLike(value, seminarOrTeachingAbroad);
-		}
-		*/
 		subjects = subjectRepository.findByNameLike(value, seminarOrTeachingAbroad);
 		for (Subject subject : subjects) {
 			subjectDtos.add(new SubjectDto(subject));
@@ -150,6 +153,27 @@ public class SubjectServiceImpl implements SubjectService {
 		subject.setSeminarOrTeachingAbroad(subjectDto.getSeminarOrTeachingAbroad());
 
 		return subject;
+	}
+
+	@Override
+	@Transactional
+	public void deleteSubject(Long id) throws SubjectNotFoundException, SubjectDeleteException {
+
+		Subject subject = null;
+		if (id == null || id == 0L || subjectRepository.findOne(id) == null) {
+			throw new SubjectNotFoundException();
+		}
+		subject = subjectRepository.findOne(id);
+		if (teachingExperienceRepository.countBySubject(subject) > 0L) {
+			throw new SubjectDeleteException("subject", subject.getName());
+		}
+
+		// Delete all surveys for subject
+		for (Survey survey : surveyRepository.findBySubject(subject)) {
+			surveyRepository.delete(survey);
+		}
+
+		subjectRepository.delete(id);
 	}
 
 }

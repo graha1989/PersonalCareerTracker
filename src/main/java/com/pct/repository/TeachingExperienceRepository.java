@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.pct.domain.Subject;
 import com.pct.domain.TeachingExperience;
 
 public interface TeachingExperienceRepository extends JpaRepository<TeachingExperience, Long> {
@@ -20,5 +21,7 @@ public interface TeachingExperienceRepository extends JpaRepository<TeachingExpe
 			+ "OR :to BETWEEN e.teachingStartDate AND IFNULL(e.teachingEndDate, NOW()) OR e.teachingStartDate BETWEEN :from AND :to "
 			+ "OR IFNULL(e.teachingEndDate, NOW()) BETWEEN :from AND :to)")
 	int isThereTeachingExperienceWithSimilarPeriod(@Param("subjectId") Long subjectId, @Param("from") Date from, @Param("to") Date to);
+
+	Long countBySubject(Subject subject);
 
 }

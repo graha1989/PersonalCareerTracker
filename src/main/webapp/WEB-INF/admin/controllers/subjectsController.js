@@ -1,4 +1,4 @@
-app.controller("SubjectsController", function($scope, $routeParams, $http, $location, $modal, PctService) {
+app.controller("SubjectsController", function($scope, $routeParams, $route, $http, $location, $modal, PctService) {
 
   $scope.subject = {};
   $scope.allSubjects = [];
@@ -69,6 +69,21 @@ app.controller("SubjectsController", function($scope, $routeParams, $http, $loca
 
   $scope.init();
 
+  $scope.deleteSubject = function(id, index) {
+    PctService.deleteSubject(id, function(data) {
+      if (angular.isObject(data)) {
+        $scope.fieldErrors = data.fieldErrors;
+        $scope.errorStatus = "Error!";
+        $("#warning").fadeTo(5000, 500).slideUp(500, function() {
+          $("#warning").alert('close');
+        });
+      } else {
+        $scope.successStatus = "Successfully deleted subject and related surveys.";
+        $route.reload();
+      }
+    });
+  };
+
   $scope.editSubject = function(id) {
     $modal.open({
       templateUrl: 'editSubjectPopup.html',
@@ -90,8 +105,7 @@ app.controller("SubjectsController", function($scope, $routeParams, $http, $loca
 
 });
 
-var editSubjectPopupController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache,
-        subjectId, PctService) {
+var editSubjectPopupController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, subjectId, PctService) {
 
   $scope.subject = {};
   $scope.faculty = {};
@@ -256,8 +270,7 @@ var editSubjectPopupController = function($scope, $modalInstance, $routeParams, 
 
 };
 
-var createNewSubjectController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache,
-        PctService) {
+var createNewSubjectController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, PctService) {
 
   $scope.subject = {};
   $scope.faculty = {};
@@ -426,7 +439,8 @@ var createNewSubjectController = function($scope, $modalInstance, $routeParams, 
             && $scope.subject.numberOfTheoreticalLessons != ''
             && $scope.subject.numberOfPracticalLessons != null
             && $scope.subject.numberOfPracticalLessons != ''
-            && $scope.selectedProfessor != null && $scope.selectedProfessor != '') {
+            && $scope.selectedProfessor != null
+            && $scope.selectedProfessor != '') {
       return true;
     } else {
       return false;
