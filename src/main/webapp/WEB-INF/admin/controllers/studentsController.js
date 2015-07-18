@@ -1,5 +1,4 @@
-app.controller("StudentsController", function($scope, $routeParams, $http,
-        $location, $modal, PctService) {
+app.controller("StudentsController", function($scope, $routeParams, $http, $location, $modal, PctService) {
 
   $scope.students = [];
   $scope.student = {};
@@ -34,14 +33,12 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadStudents = function() {
@@ -72,7 +69,11 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
   $scope.deleteStudent = function(id) {
     PctService.deleteStudent(id, function(data) {
       if (angular.isObject(data)) {
-        $scope.errorStatus = data.status;
+        $scope.fieldErrors = data.fieldErrors;
+        $scope.errorStatus = "Error!";
+        $("#warning").fadeTo(5000, 500).slideUp(500, function() {
+          $("#warning").alert('close');
+        });
       } else {
         $scope.successStatus = "Successfully deleted student.";
         $scope.students.splice(index, 1);
@@ -102,8 +103,7 @@ app.controller("StudentsController", function($scope, $routeParams, $http,
 
 });
 
-var editStudentController = function($scope, $modalInstance, $routeParams,
-        $http, $route, studentId, PctService) {
+var editStudentController = function($scope, $modalInstance, $routeParams, $http, $route, studentId, PctService) {
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -112,14 +112,12 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadSelectedStudent = function(id) {
@@ -177,8 +175,7 @@ var editStudentController = function($scope, $modalInstance, $routeParams,
 
 };
 
-var createNewStudentController = function($scope, $modalInstance, $routeParams,
-        $http, $route, PctService) {
+var createNewStudentController = function($scope, $modalInstance, $routeParams, $http, $route, PctService) {
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -187,14 +184,12 @@ var createNewStudentController = function($scope, $modalInstance, $routeParams,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.init = function() {

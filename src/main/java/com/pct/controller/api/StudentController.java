@@ -20,6 +20,7 @@ import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.StudentDto;
 import com.pct.service.StudentService;
+import com.pct.validation.StudentDeleteException;
 import com.pct.validation.StudentNotFoundException;
 
 @RestController
@@ -48,7 +49,7 @@ public class StudentController {
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public ResponseEntity<StudentDto> deleteStudent(@RequestParam(value = RequestMappings.ID, required = true) Long id)
-			throws StudentNotFoundException {
+			throws StudentNotFoundException, StudentDeleteException {
 		studentService.deleteStudent(id);
 
 		return new ResponseEntity<StudentDto>(HttpStatus.OK);

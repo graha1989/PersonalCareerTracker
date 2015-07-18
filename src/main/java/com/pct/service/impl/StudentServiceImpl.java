@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pct.domain.Student;
 import com.pct.domain.dto.StudentDto;
 import com.pct.repository.StudentRepository;
+import com.pct.repository.ThesisRepository;
 import com.pct.service.StudentService;
 import com.pct.service.util.StudentUtil;
+import com.pct.validation.StudentDeleteException;
 import com.pct.validation.StudentNotFoundException;
 
 /**
@@ -25,6 +27,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StudentRepository studentRepository;
+	
+	@Autowired
+	private ThesisRepository thesisRepository;
 
 	@Override
 	@Transactional
@@ -59,10 +64,15 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	@Transactional
-	public void deleteStudent(Long id) throws StudentNotFoundException {
+	public void deleteStudent(Long id) throws StudentNotFoundException, StudentDeleteException {
 
-		if (id == null || studentRepository.findOne(id) == null) {
+		Student student = studentRepository.findOne(id);
+		
+		if (id == null || student == null) {
 			throw new StudentNotFoundException();
+		}
+		if (thesisRepository.countByStudent(student) > 0L) {
+			throw new StudentDeleteException("studentId", student.getTranscriptNumber());
 		}
 
 		studentRepository.delete(id);

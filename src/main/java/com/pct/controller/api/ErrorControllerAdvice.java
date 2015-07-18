@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.pct.domain.dto.ValidationErrorDto;
 import com.pct.validation.EmailExistException;
 import com.pct.validation.SimilarDataAlreadyExistsException;
+import com.pct.validation.StudentDeleteException;
 import com.pct.validation.UserNameExistException;
 
 /**
@@ -41,6 +42,10 @@ public class ErrorControllerAdvice {
 	public static String SIMILAR_TEACHING_EXPERIENCE_EXIST_CODE = "SimilarTeachingExprerienceExist.experience";
 	public static String SIMILAR_TEACHING_EXPERIENCE_EXIST_DEFAULT_MESSAGE = "Teaching experience with similar(same) data already exist";
 	public static String SIMILAR_TEACHING_EXPERIENCE_EXIST_OBJECT_NAME = "teachingExperienceDto";
+
+	public static String STUDENT_CAN_NOT_BE_DELETED = "CanNotDeleteStudent.message";
+	public static String STUDENT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE = "Student can not be deleted";
+	public static String STUDENT_CAN_NOT_BE_DELETED_OBJECT_NAME = "studentId";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -96,6 +101,32 @@ public class ErrorControllerAdvice {
 
 		return processFieldErrors(fieldErrors);
 	}
+	
+	@ExceptionHandler(SimilarDataAlreadyExistsException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	@ResponseBody
+	public ValidationErrorDto processNewTeachingExperienceValidationError(SimilarDataAlreadyExistsException ex) {
+		String[] codes = { SIMILAR_TEACHING_EXPERIENCE_EXIST_CODE };
+		FieldError teachingExperienceError = new FieldError(SIMILAR_TEACHING_EXPERIENCE_EXIST_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(),
+				false, codes, null, SIMILAR_TEACHING_EXPERIENCE_EXIST_DEFAULT_MESSAGE);
+		List<FieldError> fieldErrors = new ArrayList<FieldError>();
+		fieldErrors.add(teachingExperienceError);
+
+		return processFieldErrors(fieldErrors);
+	}
+
+	@ExceptionHandler(StudentDeleteException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ValidationErrorDto processDeleteStudentException(StudentDeleteException ex) {
+		String[] codes = { STUDENT_CAN_NOT_BE_DELETED };
+		FieldError studentDeleteError = new FieldError(STUDENT_CAN_NOT_BE_DELETED_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(),
+				false, codes, null, STUDENT_CAN_NOT_BE_DELETED_DEFAULT_MESSAGE);
+		List<FieldError> fieldErrors = new ArrayList<FieldError>();
+		fieldErrors.add(studentDeleteError);
+		
+		return processFieldErrors(fieldErrors);
+	}
 
 	/**
 	 * Adds field errors to {@link ValidationErrorDto} object.
@@ -130,19 +161,6 @@ public class ErrorControllerAdvice {
 		}
 
 		return localizedErrorMessage;
-	}
-
-	@ExceptionHandler(SimilarDataAlreadyExistsException.class)
-	@ResponseStatus(HttpStatus.CONFLICT)
-	@ResponseBody
-	public ValidationErrorDto processNewTeachingExperienceValidationError(SimilarDataAlreadyExistsException ex) {
-		String[] codes = { SIMILAR_TEACHING_EXPERIENCE_EXIST_CODE };
-		FieldError teachingExperienceError = new FieldError(SIMILAR_TEACHING_EXPERIENCE_EXIST_OBJECT_NAME, ex.getFieldName(), ex.getRejectedValue(),
-				false, codes, null, SIMILAR_TEACHING_EXPERIENCE_EXIST_DEFAULT_MESSAGE);
-		List<FieldError> fieldErrors = new ArrayList<FieldError>();
-		fieldErrors.add(teachingExperienceError);
-
-		return processFieldErrors(fieldErrors);
 	}
 
 }
