@@ -1,5 +1,4 @@
-app.controller("ProjectsController", function($scope, $routeParams, $http,
-        $location, $modal, PctService) {
+app.controller("ProjectsController", function($scope, $routeParams, $http, $location, $modal, PctService) {
 
   $scope.project = {};
   $scope.project.projectLeaderDtos = [];
@@ -12,28 +11,24 @@ app.controller("ProjectsController", function($scope, $routeParams, $http,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.constructLeadersString = function(array) {
     var leadersString = "";
     for (var i = 0; i < array.length; i++) {
-      leadersString = leadersString + ((i > 0 && i < array.length) ? "; " : "")
-              + array[i].name + " " + array[i].surname;
+      leadersString = leadersString + ((i > 0 && i < array.length) ? "; " : "") + array[i].name + " " + array[i].surname;
     }
     return leadersString;
   };
 
   $scope.makeCompleteProjectData = function(element) {
-    var projectLeaders = $scope
-            .constructLeadersString(element.projectLeaderDtos);
+    var projectLeaders = $scope.constructLeadersString(element.projectLeaderDtos);
     $scope.completeProjectData.push({
       "projectType": element.projectType,
       "name": element.name,
@@ -88,7 +83,11 @@ app.controller("ProjectsController", function($scope, $routeParams, $http,
   $scope.deleteProject = function(id, index) {
     PctService.deleteProject(id, function(data) {
       if (angular.isObject(data)) {
-        $scope.errorStatus = data.status;
+        $scope.fieldErrors = data.fieldErrors;
+        $scope.errorStatus = "Error!";
+        $("#warning").fadeTo(5000, 500).slideUp(500, function() {
+          $("#warning").alert('close');
+        });
       } else {
         $scope.successStatus = "Successfully deleted project.";
         $scope.allProjects.splice(index, 1);
@@ -99,8 +98,7 @@ app.controller("ProjectsController", function($scope, $routeParams, $http,
 
 });
 
-var editProjectPopupController = function($scope, $modalInstance, $routeParams,
-        $http, $route, $templateCache, projectId, PctService) {
+var editProjectPopupController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, projectId, PctService) {
 
   $scope.project = {};
   $scope.master = {};
@@ -118,14 +116,12 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadAllProjectTypes = function() {
@@ -142,8 +138,7 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
   $scope.createLeadersArray = function() {
     var array = [];
     for (var i = 0; i < $scope.project.projectLeaderDtos.length; i++) {
-      array.push($scope.project.projectLeaderDtos[i].name + " "
-              + $scope.project.projectLeaderDtos[i].surname);
+      array.push($scope.project.projectLeaderDtos[i].name + " " + $scope.project.projectLeaderDtos[i].surname);
     }
     return array;
   }
@@ -166,14 +161,10 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
     $scope.professorsWhoAreLeadersOnThisProject = [];
     $scope.leadersOnThisProjectWhoAreNotProfessors = [];
     for (var i = 0; i < $scope.project.projectLeaderDtos.length; i++) {
-      if ($scope.project.projectLeaderDtos[i].professorId != null
-              && $scope.project.projectLeaderDtos[i].professorId != '') {
-        $scope.professorsWhoAreLeadersOnThisProject
-                .push($scope.project.projectLeaderDtos[i].professorId);
-      } else if ($scope.project.projectLeaderDtos[i].id != null
-              && $scope.project.projectLeaderDtos[i].id != '') {
-        $scope.leadersOnThisProjectWhoAreNotProfessors
-                .push($scope.project.projectLeaderDtos[i].id);
+      if ($scope.project.projectLeaderDtos[i].professorId != null && $scope.project.projectLeaderDtos[i].professorId != '') {
+        $scope.professorsWhoAreLeadersOnThisProject.push($scope.project.projectLeaderDtos[i].professorId);
+      } else if ($scope.project.projectLeaderDtos[i].id != null && $scope.project.projectLeaderDtos[i].id != '') {
+        $scope.leadersOnThisProjectWhoAreNotProfessors.push($scope.project.projectLeaderDtos[i].id);
       }
     }
   };
@@ -192,16 +183,14 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.getAllPotentalLeaders = function(val) {
-    return PctService.findProfessorsOrLeadersStartsWith(val, $scope.project.id,
-            $scope.professorsWhoAreLeadersOnThisProject,
-            $scope.leadersOnThisProjectWhoAreNotProfessors).then(
-            function(response) {
-              var persons = [];
-              for (var i = 0; i < response.length; i++) {
-                persons.push(response[i]);
-              }
-              return persons;
-            });
+    return PctService.findProfessorsOrLeadersStartsWith(val, $scope.project.id, $scope.professorsWhoAreLeadersOnThisProject,
+            $scope.leadersOnThisProjectWhoAreNotProfessors).then(function(response) {
+      var persons = [];
+      for (var i = 0; i < response.length; i++) {
+        persons.push(response[i]);
+      }
+      return persons;
+    });
   };
 
   $scope.addProjectLeader = function() {
@@ -216,10 +205,8 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
     } else {
       $scope.project.projectLeaderDtos.push({
         "professorId": null,
-        "name": $scope.newProjectLeader.substring(0, $scope.newProjectLeader
-                .indexOf(' ')),
-        "surname": $scope.newProjectLeader.substring($scope.newProjectLeader
-                .indexOf(' ') + 1, $scope.newProjectLeader.length),
+        "name": $scope.newProjectLeader.substring(0, $scope.newProjectLeader.indexOf(' ')),
+        "surname": $scope.newProjectLeader.substring($scope.newProjectLeader.indexOf(' ') + 1, $scope.newProjectLeader.length),
         "projectId": $scope.project.id,
         "id": null
       });
@@ -275,8 +262,7 @@ var editProjectPopupController = function($scope, $modalInstance, $routeParams,
 
 };
 
-var createNewProjectController = function($scope, $modalInstance, $routeParams,
-        $http, $route, $templateCache, PctService) {
+var createNewProjectController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, PctService) {
 
   $scope.project = {};
   $scope.project.projectLeaderDtos = [];
@@ -294,14 +280,12 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadAllProjectTypes = function() {
@@ -318,8 +302,7 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
   $scope.createLeadersArray = function() {
     var array = [];
     for (var i = 0; i < $scope.project.projectLeaderDtos.length; i++) {
-      array.push($scope.project.projectLeaderDtos[i].name + " "
-              + $scope.project.projectLeaderDtos[i].surname);
+      array.push($scope.project.projectLeaderDtos[i].name + " " + $scope.project.projectLeaderDtos[i].surname);
     }
     return array;
   }
@@ -328,14 +311,10 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
     $scope.professorsWhoAreLeadersOnThisProject = [];
     $scope.leadersOnThisProjectWhoAreNotProfessors = [];
     for (var i = 0; i < $scope.project.projectLeaderDtos.length; i++) {
-      if ($scope.project.projectLeaderDtos[i].professorId != null
-              && $scope.project.projectLeaderDtos[i].professorId != '') {
-        $scope.professorsWhoAreLeadersOnThisProject
-                .push($scope.project.projectLeaderDtos[i].professorId);
-      } else if ($scope.project.projectLeaderDtos[i].id != null
-              && $scope.project.projectLeaderDtos[i].id != '') {
-        $scope.leadersOnThisProjectWhoAreNotProfessors
-                .push($scope.project.projectLeaderDtos[i].id);
+      if ($scope.project.projectLeaderDtos[i].professorId != null && $scope.project.projectLeaderDtos[i].professorId != '') {
+        $scope.professorsWhoAreLeadersOnThisProject.push($scope.project.projectLeaderDtos[i].professorId);
+      } else if ($scope.project.projectLeaderDtos[i].id != null && $scope.project.projectLeaderDtos[i].id != '') {
+        $scope.leadersOnThisProjectWhoAreNotProfessors.push($scope.project.projectLeaderDtos[i].id);
       }
     }
   };
@@ -353,16 +332,14 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.getAllPotentalLeaders = function(val) {
-    return PctService.findAllProfessorsOrLeadersStartsWith(val,
-            $scope.professorsWhoAreLeadersOnThisProject,
-            $scope.leadersOnThisProjectWhoAreNotProfessors).then(
-            function(response) {
-              var persons = [];
-              for (var i = 0; i < response.length; i++) {
-                persons.push(response[i]);
-              }
-              return persons;
-            });
+    return PctService.findAllProfessorsOrLeadersStartsWith(val, $scope.professorsWhoAreLeadersOnThisProject,
+            $scope.leadersOnThisProjectWhoAreNotProfessors).then(function(response) {
+      var persons = [];
+      for (var i = 0; i < response.length; i++) {
+        persons.push(response[i]);
+      }
+      return persons;
+    });
   };
 
   $scope.addProjectLeader = function() {
@@ -377,10 +354,8 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
     } else {
       $scope.project.projectLeaderDtos.push({
         "professorId": null,
-        "name": $scope.newProjectLeader.substring(0, $scope.newProjectLeader
-                .indexOf(' ')),
-        "surname": $scope.newProjectLeader.substring($scope.newProjectLeader
-                .indexOf(' ') + 1, $scope.newProjectLeader.length),
+        "name": $scope.newProjectLeader.substring(0, $scope.newProjectLeader.indexOf(' ')),
+        "surname": $scope.newProjectLeader.substring($scope.newProjectLeader.indexOf(' ') + 1, $scope.newProjectLeader.length),
         "projectId": $scope.project.id,
         "id": null
       });
@@ -427,12 +402,8 @@ var createNewProjectController = function($scope, $modalInstance, $routeParams,
   };
 
   $scope.validateForm = function() {
-    if ($scope.project.name != null && $scope.project.name != ''
-            && $scope.project.financedBy != null
-            && $scope.project.financedBy != ''
-            && $scope.project.projectLeaderDtos != null
-            && $scope.project.projectLeaderDtos.length > 0
-            && $scope.project.projectType != null
+    if ($scope.project.name != null && $scope.project.name != '' && $scope.project.financedBy != null && $scope.project.financedBy != ''
+            && $scope.project.projectLeaderDtos != null && $scope.project.projectLeaderDtos.length > 0 && $scope.project.projectType != null
             && $scope.project.projectType != '') {
       return true;
     } else {

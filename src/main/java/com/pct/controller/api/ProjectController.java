@@ -25,6 +25,7 @@ import com.pct.domain.dto.ProjectDto;
 import com.pct.service.ProfessorService;
 import com.pct.service.ProjectLeaderService;
 import com.pct.service.ProjectService;
+import com.pct.validation.ProjectDeleteException;
 import com.pct.validation.ProjectNotFoundException;
 
 @RestController
@@ -59,8 +60,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = RequestMappings.LOAD_SELECTED_PROJECT, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<ProjectDto> showProject(@RequestParam(value = RequestMappings.ID, required = true) Long id)
-			throws ProjectNotFoundException {
+	public ResponseEntity<ProjectDto> showProject(@RequestParam(value = RequestMappings.ID, required = true) Long id) throws ProjectNotFoundException {
 		ProjectDto projectDto = projectService.findProjectById(id);
 
 		return new ResponseEntity<ProjectDto>(projectDto, HttpStatus.OK);
@@ -82,7 +82,7 @@ public class ProjectController {
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public ResponseEntity<ProjectDto> deleteProject(@RequestParam(value = RequestMappings.ID, required = true) Long id)
-			throws ProjectNotFoundException {
+			throws ProjectNotFoundException, ProjectDeleteException {
 		projectService.deleteProject(id);
 
 		return new ResponseEntity<ProjectDto>(HttpStatus.OK);
@@ -97,8 +97,8 @@ public class ProjectController {
 
 		List<PersonDto> personDtos = new ArrayList<PersonDto>();
 		if (value.length() >= 3) {
-			List<PersonDto> leaderDtos = projectLeaderService.findProjectLeaderStartsWith(value, projectId,
-					professorsWhoAreLeadersOnThisProject, leadersOnThisProjectWhoAreNotProfessors);
+			List<PersonDto> leaderDtos = projectLeaderService.findProjectLeaderStartsWith(value, projectId, professorsWhoAreLeadersOnThisProject,
+					leadersOnThisProjectWhoAreNotProfessors);
 			personDtos.addAll(leaderDtos);
 		}
 

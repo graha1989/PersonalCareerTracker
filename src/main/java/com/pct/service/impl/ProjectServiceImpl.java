@@ -19,10 +19,12 @@ import com.pct.domain.ProjectType;
 import com.pct.domain.dto.ProjectDto;
 import com.pct.domain.dto.ProjectLeaderDto;
 import com.pct.repository.ProfesorRepository;
+import com.pct.repository.ProjectExperienceRepository;
 import com.pct.repository.ProjectLeaderRepository;
 import com.pct.repository.ProjectRepository;
 import com.pct.repository.ProjectTypeRepository;
 import com.pct.service.ProjectService;
+import com.pct.validation.ProjectDeleteException;
 import com.pct.validation.ProjectNotFoundException;
 
 @Service
@@ -32,14 +34,17 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProfesorRepository professorRepository;
 	private ProjectLeaderRepository projectLeaderRepository;
 	private ProjectTypeRepository projectTypeRepository;
+	private ProjectExperienceRepository projectExperienceRepository;
 
 	@Autowired
 	public ProjectServiceImpl(ProjectRepository projectRepository, ProfesorRepository professorRepository,
-			ProjectLeaderRepository projectLeaderRepository, ProjectTypeRepository projectTypeRepository) {
+			ProjectLeaderRepository projectLeaderRepository, ProjectTypeRepository projectTypeRepository,
+			ProjectExperienceRepository projectExperienceRepository) {
 		this.projectRepository = projectRepository;
 		this.professorRepository = professorRepository;
 		this.projectLeaderRepository = projectLeaderRepository;
 		this.projectTypeRepository = projectTypeRepository;
+		this.projectExperienceRepository = projectExperienceRepository;
 	}
 
 	@Override
@@ -180,11 +185,15 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	@Transactional
-	public void deleteProject(Long id) throws ProjectNotFoundException {
+	public void deleteProject(Long id) throws ProjectNotFoundException, ProjectDeleteException {
 
-		Project project = projectRepository.findOne(id);
-		if (project == null) {
+		Project project = null;
+		if (id == null || id == 0L || projectRepository.findOne(id) == null) {
 			throw new ProjectNotFoundException();
+		}
+		project = projectRepository.findOne(id);
+		if (projectExperienceRepository.countByProject(project) > 0L) {
+			throw new ProjectDeleteException("project", project.getName());
 		}
 
 		projectRepository.delete(project);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pct.domain.ProjectType;
 import com.pct.domain.dto.ProjectDto;
+import com.pct.validation.ProjectDeleteException;
 import com.pct.validation.ProjectNotFoundException;
 
 public interface ProjectService {
@@ -16,6 +17,6 @@ public interface ProjectService {
 
 	void saveProject(ProjectDto projectDto) throws ProjectNotFoundException;
 
-	void deleteProject(Long id) throws ProjectNotFoundException;
+	void deleteProject(Long id) throws ProjectNotFoundException, ProjectDeleteException;
 
 }
