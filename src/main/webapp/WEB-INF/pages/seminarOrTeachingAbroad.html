@@ -1,14 +1,22 @@
 <div>
 
-	<form name="form" id="showProfessorSeminarsOrTeachingsAbroadForm" novalidate class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form" ng-model="teachingExperience">
+	<form
+		name="form"
+		id="showProfessorSeminarsOrTeachingsAbroadForm"
+		novalidate
+		class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required mediators-search-form"
+		ng-model="teachingExperience">
 
 		<div class="modal-header">
 			<h3 class="modal-title">{{ resources.text.teachingExperiencesTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
-
-				<table ng-show="teachingExperiences != []" class="table table-condensed table-striped table-hover" cellspacing="0" cellpadding="0">
+				<table
+					ng-show="teachingExperiences != []"
+					class="table table-condensed table-striped table-hover"
+					cellspacing="0"
+					cellpadding="0">
 					<tbody>
 						<tr class="info ng-binding">
 							<td>{{ resources.teachingExperienceTableLabels.subjectName }}</td>
@@ -18,9 +26,13 @@
 							<td>{{ resources.teachingExperienceTableLabels.facultyCountry }}</td>
 							<td>{{ resources.teachingExperienceTableLabels.teachingStartDate }}</td>
 							<td>{{ resources.teachingExperienceTableLabels.teachingEndDate }}</td>
-							<td ng-show="isUser" colspan="2"></td>
+							<td
+								ng-show="isUser"
+								colspan="2"></td>
 						</tr>
-						<tr class="active ng-scope" ng-repeat="teachingExperience in teachingExperiences">
+						<tr
+							class="active ng-scope"
+							ng-repeat="teachingExperience in teachingExperiences">
 							<td>{{ teachingExperience.subjectDto.subjectName }}</td>
 							<td>{{ teachingExperience.subjectDto.institutionName }}</td>
 							<td>{{ teachingExperience.subjectDto.universityName }}</td>
@@ -28,32 +40,53 @@
 							<td>{{ teachingExperience.subjectDto.institutionCountry }}</td>
 							<td>{{ teachingExperience.teachingStartDate | date:'dd-MM-yyyy' }}</td>
 							<td>{{ teachingExperience.teachingEndDate === null ? resources.text.now : teachingExperience.teachingEndDate | date:'dd-MM-yyyy' }}</td>
-							<td class="delete" ng-show="isUser"><button class="btn btn-link btn-xs" ng-click="deleteTeachingExperience(teachingExperience.id, $index)">
+							<td
+								class="delete"
+								ng-show="isUser"><button
+									class="btn btn-link btn-xs"
+									ng-click="deleteTeachingExperience(teachingExperience.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.teachingExperienceButtons.delete }}
 								</button></td>
-							<td class="edit" ng-show="isUser"><button class="btn btn-link btn-xs" ng-click="editSeminarOrTeachingExperience(teachingExperience.id)">
+							<td
+								class="edit"
+								ng-show="isUser"><button
+									class="btn btn-link btn-xs"
+									ng-click="editSeminarOrTeachingExperience(teachingExperience.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.teachingExperienceButtons.edit }}
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td ng-show="isUser" colspan="8">{{ errorMessages.error.emptyTable }}</td>
-							<td ng-show="isAdmin" colspan="6">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isUser"
+								colspan="8">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isAdmin"
+								colspan="6">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
 			</fieldset>
 		</div>
 		<div class="modal-footer action">
-			<button id="addNewButton" class="btn btn-success btn-sm" ng-click="createNewTeachingExperience()" ng-show="isUser">
+			<button
+				id="addNewButton"
+				class="btn btn-success btn-sm"
+				ng-click="createNewTeachingExperience()"
+				ng-show="isUser">
 				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.teachingExperienceButtons.add }}
 			</button>
-			<button id="cancel_button" class="btn btn-sm" ng-click="goBack()">
+			<button
+				id="cancel_button"
+				class="btn btn-sm"
+				ng-click="goBack()">
 				<span class="glyphicon glyphicon-arrow-left"></span> {{ resources.form.back }}
 			</button>
 		</div>
 	</form>
-	
-	<script type="text/ng-template" id="editSeminarOrTeachingExperiencePopup.html">
+
+	<script
+		type="text/ng-template"
+		id="editSeminarOrTeachingExperiencePopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
@@ -221,7 +254,9 @@
 		</form>
 	</script>
 
-	<script type="text/ng-template" id="createNewSeminarOrTeachingExperiencePopup.html">
+	<script
+		type="text/ng-template"
+		id="createNewSeminarOrTeachingExperiencePopup.html">
 		<form
 			name="form"
 			class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required"
@@ -231,9 +266,14 @@
 			<div class="modal-header">
 				<h3 class="modal-title">{{ resources.text.createNewTeachingExperiencePopupTitle }}</h3>
 			</div>
-			<div class="alert-warning text-center" ng-show="fieldErrors.length">
-	       	 	<div ng-repeat="error in fieldErrors"> <span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{error.message}}</strong></div>
-	    	</div>
+			<div
+				id="warning"
+				class="alert-warning fade in text-center"
+				ng-show="fieldErrors.length">
+				<div ng-repeat="error in fieldErrors">
+					<span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{ error.message }}</strong>
+				</div>
+			</div>
 			<div class="modal-body">
 				<div class="form-group">
 					<label
@@ -437,5 +477,5 @@
   			</div>
 		</form>
 	</script>
-	
+
 </div>

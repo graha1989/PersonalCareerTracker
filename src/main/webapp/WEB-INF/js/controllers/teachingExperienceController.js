@@ -374,6 +374,9 @@ var createTeachingExperiencePopupController = function($scope, $modalInstance, $
       $("html, body").animate({
         scrollTop: 0
       }, "slow");
+      $("#warning").fadeTo(5000, 500).slideUp(500, function() {
+        $("#warning").alert('close');
+      });
     });
   };
 
