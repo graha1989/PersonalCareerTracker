@@ -402,6 +402,7 @@
             "cancel": "Odustani"
         },
         "allProfessorsButtons": {
+        	"contest": "Konkurs",
             "details": "Detaljnije",
             "studies": "Studije",
             "studyTypes": {

@@ -183,6 +183,10 @@ app.controller("AllProfessorsController", function($scope, $routeParams, $http,
     $location.path('/scientificJournalReviews/professorId/' + id);
   };
   
+  $scope.createProfessorContest = function(id) {
+    $location.path('/contest/professorId/' + id);
+  };
+  
 });
 
 var professorDetailsPopupController = function($scope, $modalInstance,

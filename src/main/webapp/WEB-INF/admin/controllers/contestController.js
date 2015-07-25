@@ -199,7 +199,7 @@ app.controller("ContestController", function($scope, $routeParams, $http, $locat
     }
   };
 
-  $scope.saveNewContest = function() {
+  $scope.saveNewContestAndGenerateReport = function() {
     $scope.contestData.candidateId = $scope.professorId;
     $scope.populateCommissionMembersDtoList();
     $http({
@@ -214,6 +214,7 @@ app.controller("ContestController", function($scope, $routeParams, $http, $locat
         scrollTop: 0
       }, "slow");
       $scope.formSaved = true;
+      window.open('http://localhost:8180/jasperserver/rest_v2/reports/pct_report/PCT_Report.pdf?konkursId=' + data, '_blank');
     }).error(function(data, status) {
       if (angular.isObject(data.fieldErrors)) {
         $scope.fieldErrors = angular.fromJson(data.fieldErrors);

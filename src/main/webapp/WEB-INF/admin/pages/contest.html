@@ -409,20 +409,9 @@
 				class="btn btn-success btn-sm"
 				ng-disabled="!validateForm()"
 				ng-show="!formSaved"
-				ng-click="saveNewContest()">
-				<span class="glyphicon glyphicon-save"></span> {{ resources.form.save }}
-			</button>
-			<button
-				id="submit_button"
-				type="submit"
-				class="btn btn-success btn-sm"
-				ng-disabled="form.$invalid">
+				ng-click="saveNewContestAndGenerateReport()">
 				<span class="glyphicon glyphicon-file"></span> {{ resources.form.generateReport }}
 			</button>
-			<button
-				id="cancel_button"
-				class="btn btn-sm"
-				ng-click="cancel()">{{ resources.form.close }}</button>
 		</div>
 	</form>
 

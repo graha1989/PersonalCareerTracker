@@ -36,7 +36,7 @@
 					<tbody>
 						<tr class="info ng-binding">
 							<td>{{ resources.professorsTableLabels.firstNameAndLastName }}</td>
-							<td colspan="8"></td>
+							<td colspan="10"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
@@ -136,21 +136,18 @@
 									ng-click="openProfessorLanguageExperiences(professor.id)">
 									<span class="glyphicon glyphicon-pencil"></span> {{ resources.buttons.allProfessorsButtons.languages }}
 								</button></td>
+							<td class="contest"><button
+									class="btn btn-link btn-xs"
+									ng-click="createProfessorContest(professor.id)">
+									<span class="glyphicon glyphicon-list-alt"></span> {{ resources.buttons.allProfessorsButtons.contest }}
+								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td colspan="9">{{ errorMessages.error.emptyTable }}</td>
+							<td colspan="10">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
 			</fieldset>
-		</div>
-		<div class="modal-footer action">
-			<button
-				id="addNewButton"
-				class="btn btn-success btn-sm"
-				ng-click="createNewInstitution()">
-				<span class="glyphicon glyphicon-plus"></span> {{ resources.buttons.institutionButtons.add }}
-			</button>
 		</div>
 	</form>
 
