@@ -10,8 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -19,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "contest")
 public class Contest extends AbstractEntity {
 
-	private static final long serialVersionUID = 6891499165999685592L;
+	private static final long serialVersionUID = 79033739458326521L;
 
 	@Column(name = "authority", length = 200)
 	private String authority;
@@ -39,10 +42,11 @@ public class Contest extends AbstractEntity {
 	@Column(name = "specificScientificArea", length = 50)
 	private String specificScientificArea;
 
-	@OneToOne(optional = false)
-	@JoinColumn(name = "candidateId", nullable = false)
-	@JsonBackReference(value = "candidate")
-	private Professor candidate;
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "professorId")
+	@JsonBackReference(value = "professor")
+	private Professor professor;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "contest_commission_member_intersecting_table", joinColumns = @JoinColumn(name = "contestId"), inverseJoinColumns = @JoinColumn(name = "memberId"))
@@ -52,14 +56,14 @@ public class Contest extends AbstractEntity {
 	}
 
 	public Contest(String authority, Date decisionDate, String placeOfAnnouncement, Date announcingDate, String titleToChoose,
-			String specificScientificArea, Professor candidate, Set<CommissionMember> commissionMembers) {
+			String specificScientificArea, Professor professor, Set<CommissionMember> commissionMembers) {
 		this.authority = authority;
 		this.decisionDate = decisionDate;
 		this.placeOfAnnouncement = placeOfAnnouncement;
 		this.announcingDate = announcingDate;
 		this.titleToChoose = titleToChoose;
 		this.specificScientificArea = specificScientificArea;
-		this.candidate = candidate;
+		this.professor = professor;
 		this.commissionMembers = commissionMembers;
 	}
 
@@ -111,12 +115,12 @@ public class Contest extends AbstractEntity {
 		this.specificScientificArea = specificScientificArea;
 	}
 
-	public Professor getCandidate() {
-		return candidate;
+	public Professor getProfessor() {
+		return professor;
 	}
 
-	public void setCandidate(Professor candidate) {
-		this.candidate = candidate;
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
 	}
 
 	public Set<CommissionMember> getCommissionMembers() {

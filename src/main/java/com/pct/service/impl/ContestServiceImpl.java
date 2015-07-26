@@ -32,9 +32,11 @@ public class ContestServiceImpl implements ContestService {
 
 	@Override
 	@Transactional
-	public void saveContest(ContestDto contestDto) {
+	public Long saveContest(ContestDto contestDto) {
 		Contest contest = initializeContest(contestDto);
-		contestRepository.saveAndFlush(contest);
+		// TODO Fix saving (unique constraints exception with candidate)
+		Contest retVal = contestRepository.saveAndFlush(contest);
+		return retVal.getId();
 	}
 
 	private Contest initializeContest(ContestDto contestDto) {
@@ -50,7 +52,7 @@ public class ContestServiceImpl implements ContestService {
 		contest.setDecisionDate(contestDto.getDecisionDate());
 		contest.setTitleToChoose(contestDto.getTitleToChoose());
 		contest.setSpecificScientificArea(contestDto.getSpecificScientificArea());
-		contest.setCandidate(professorRepository.findOne(contestDto.getCandidateId()));
+		contest.setProfessor(professorRepository.findOne(contestDto.getCandidateId()));
 
 		Set<CommissionMember> commissionMembers = new HashSet<CommissionMember>();
 

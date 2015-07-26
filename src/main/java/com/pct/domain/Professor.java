@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @PrimaryKeyJoinColumn(name = "id")
 public class Professor extends User {
 
-	private static final long serialVersionUID = -9169321822436114344L;
+	private static final long serialVersionUID = -3604705023149327325L;
 
 	@Column(name = "fathersName", length = 50)
 	private String fathersName;
@@ -120,8 +120,11 @@ public class Professor extends User {
 	@OneToOne(mappedBy = "professor")
 	private CommissionMember commissionMember;
 
-	@OneToOne(mappedBy = "candidate")
-	private Contest contest;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "professor")
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@JsonManagedReference(value = "professor")
+	@JsonIgnore
+	private Set<Contest> contests = new HashSet<Contest>();
 
 	public Professor() {
 	}
@@ -131,7 +134,7 @@ public class Professor extends User {
 			Set<ProjectExperience> projectExperiences, Set<ProfessorPublication> professorPublications,
 			Set<InternationalPublication> internationalPublications, Set<WorkExperience> workExperiences, Set<Studies> studies,
 			Set<TeachingExperience> teachingExperiences, Set<Survey> surveys, Set<ScientificProfessionalOrgMem> memberships,
-			Set<AcademicCommunityContribution> contributions, ProjectLeader projectLeader, CommissionMember commissionMember, Contest contest) {
+			Set<AcademicCommunityContribution> contributions, ProjectLeader projectLeader, CommissionMember commissionMember, Set<Contest> contests) {
 		this.fathersName = fathersName;
 		this.dateOfBirth = dateOfBirth;
 		this.placeOfBirth = placeOfBirth;
@@ -153,7 +156,7 @@ public class Professor extends User {
 		this.commissionMember = commissionMember;
 		this.memberships = memberships;
 		this.contributions = contributions;
-		this.contest = contest;
+		this.contests = contests;
 	}
 
 	public String getFathersName() {
@@ -380,12 +383,16 @@ public class Professor extends User {
 		this.commissionMember = commissionMember;
 	}
 
-	public Contest getContest() {
-		return contest;
+	public Set<Contest> getContests() {
+		return contests;
 	}
 
-	public void setContest(Contest contest) {
-		this.contest = contest;
+	public void setContests(Set<Contest> contests) {
+		this.contests.clear();
+
+		if (contests != null) {
+			this.contests.addAll(contests);
+		}
 	}
 
 }

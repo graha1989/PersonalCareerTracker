@@ -77,7 +77,7 @@ public class ContestDto implements Serializable {
 		this.announcingDate = contest.getAnnouncingDate();
 		this.titleToChoose = contest.getTitleToChoose();
 		this.specificScientificArea = contest.getSpecificScientificArea();
-		this.candidateId = contest.getCandidate().getId();
+		this.candidateId = contest.getProfessor().getId();
 		this.commissionMemberDtos = createCommissionMembersDtoList(contest.getCommissionMembers());
 		this.id = contest.getId();
 	}

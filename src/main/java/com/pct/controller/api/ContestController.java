@@ -37,11 +37,11 @@ public class ContestController {
 	private static final Logger logger = LoggerFactory.getLogger(ContestController.class);
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<String> persistContest(@Valid @RequestBody ContestDto contestDto) {
-		contestService.saveContest(contestDto);
+	public ResponseEntity<Long> persistContest(@Valid @RequestBody ContestDto contestDto) {
+		Long contestId = contestService.saveContest(contestDto);
 		logger.debug("Contest for candidate with ID {} successfully saved.", contestDto.getCandidateId());
 
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<Long>(contestId, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = RequestMappings.LOAD_ALL_PROFESSORS_OR_COMMISSION_MEMBERS_STARTS_WITH, method = RequestMethod.GET, produces = MimeTypes.APPLICATION_JSON)
