@@ -114,6 +114,7 @@
 							id="inputPublicationIsbn"
 							name="inputPublicationIsbn"
 							ng-model="internationalPublication.isbn"
+							placeholder="{{ resources.publicationPopupLabels.publicationIsbn_issn }}"
 							ng-maxlength="30"
 							required />
 						<div
@@ -139,6 +140,7 @@
 							id="inputPublicationTitle"
 							name="inputPublicationTitle"
 							ng-model="internationalPublication.title"
+							placeholder="{{ resources.publicationPopupLabels.publicationTitle }}"
 							ng-maxlength="100"
 							required />
 						<div
@@ -164,6 +166,7 @@
 							id="inputPublicationJournalTitle"
 							name="inputPublicationJournalTitle"
 							ng-model="internationalPublication.journalTitle"
+							placeholder="{{ resources.publicationPopupLabels.publicationJournalTitle }}"
 							ng-maxlength="100" />
 						<div
 							ng-show="form.inputPublicationJournalTitle.$dirty && form.inputPublicationJournalTitle.$invalid"
@@ -221,6 +224,7 @@
 								id="inputNewPublicationAuthor"
 								name="inputNewPublicationAuthor"
 								ng-model="$parent.newPublicationAuthor"
+								placeholder="{{ resources.publicationPopupLabels.publicationAuthor }}"
 								ng-pattern="patterns.onlyLetters"
 								ng-maxlength="100"
 								ng-required="publicationAuthorsArray.length == 0" /> 
@@ -258,6 +262,7 @@
 							id="inputPublicationPublisher"
 							name="inputPublicationPublisher"
 							ng-model="internationalPublication.publisher"
+							placeholder="{{ resources.publicationPopupLabels.publicationPublisher }}"
 							ng-maxlength="50"
 							required />
 						<div
