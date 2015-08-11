@@ -20,6 +20,7 @@ import com.pct.constants.MimeTypes;
 import com.pct.constants.RequestMappings;
 import com.pct.domain.dto.StudentDto;
 import com.pct.service.StudentService;
+import com.pct.validation.DuplicateDataException;
 import com.pct.validation.StudentDeleteException;
 import com.pct.validation.StudentNotFoundException;
 
@@ -56,7 +57,7 @@ public class StudentController {
 	}
 
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.PUT }, consumes = MimeTypes.APPLICATION_JSON)
-	public ResponseEntity<StudentDto> persistStudent(@Valid @RequestBody StudentDto studentDto) {
+	public ResponseEntity<StudentDto> persistStudent(@Valid @RequestBody StudentDto studentDto) throws DuplicateDataException {
 		studentService.saveStudent(studentDto);
 		StudentDto student = new StudentDto();
 		try {

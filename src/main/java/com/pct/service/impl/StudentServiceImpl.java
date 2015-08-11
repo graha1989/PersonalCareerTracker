@@ -13,6 +13,7 @@ import com.pct.repository.StudentRepository;
 import com.pct.repository.ThesisRepository;
 import com.pct.service.StudentService;
 import com.pct.service.util.StudentUtil;
+import com.pct.validation.DuplicateDataException;
 import com.pct.validation.StudentDeleteException;
 import com.pct.validation.StudentNotFoundException;
 
@@ -80,9 +81,15 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	@Transactional
-	public void saveStudent(StudentDto studentDto) {
+	public void saveStudent(StudentDto studentDto) throws DuplicateDataException {
 		Student student = null;
 
+		Student studentFromDatabase = studentRepository.findByTranscriptNumber(studentDto.getTranscriptNumber());
+		
+		if(studentFromDatabase != null && studentFromDatabase.getId() != studentDto.getId()) {
+			throw new DuplicateDataException("student", "student.transcriptNumber");
+		}
+		
 		if (studentDto.getId() != null) {
 			student = StudentUtil.createStudentInstanceFromStudentDTO(studentDto);
 		} else {

@@ -90,6 +90,14 @@
 		<div class="modal-header">
     		<h3 class="modal-title">{{ resources.text.editStudentPopupTitle }}</h3>
    	 	</div>
+		<div
+			id="warningCreate"
+			class="alert-warning fade in text-center"
+			ng-show="fieldErrors.length">
+			<div ng-repeat="error in fieldErrors">
+				<span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{ error.message }}</strong>
+			</div>
+		</div>
     	<div class="modal-body">
     		<div class="form-group">
     			<label for="inputTranscriptNumber" class="col-sm-4 control-label">{{ resources.studentPopupLabels.transcriptNumberLabel }} 
@@ -161,6 +169,14 @@
 		<div class="modal-header">
     		<h3 class="modal-title">{{ resources.text.newStudentPopupTitle }}</h3>
    	 	</div>
+		<div
+			id="warningCreate"
+			class="alert-warning fade in text-center"
+			ng-show="fieldErrors.length">
+			<div ng-repeat="error in fieldErrors">
+				<span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{ error.message }}</strong>
+			</div>
+		</div>
     	<div class="modal-body">
     		<div class="form-group">
     			<label for="inputTranscriptNumber" class="col-sm-4 control-label">{{ resources.studentPopupLabels.transcriptNumberLabel }} 

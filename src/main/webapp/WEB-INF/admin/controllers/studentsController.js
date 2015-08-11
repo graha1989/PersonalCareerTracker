@@ -162,6 +162,9 @@ var editStudentController = function($scope, $modalInstance, $routeParams, $http
       $("html, body").animate({
         scrollTop: 0
       }, "slow");
+      $("#warningCreate").fadeTo(5000, 500).slideUp(500, function() {
+        $("#warning").alert('close');
+      });
     });
   };
 
@@ -222,6 +225,9 @@ var createNewStudentController = function($scope, $modalInstance, $routeParams, 
       $("html, body").animate({
         scrollTop: 0
       }, "slow");
+      $("#warningCreate").fadeTo(5000, 500).slideUp(500, function() {
+        $("#warning").alert('close');
+      });
     });
   };
 
