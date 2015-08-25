@@ -1,5 +1,4 @@
-app.controller("RegisterUserController", function($scope, $routeParams, $http,
-        $location, $modal, PctService) {
+app.controller("RegisterUserController", function($scope, $routeParams, $http, $location, $modal, PctService) {
 
   $scope.professor;
   $scope.resources = {};
@@ -7,6 +6,36 @@ app.controller("RegisterUserController", function($scope, $routeParams, $http,
   $scope.fieldErrors = [];
   $scope.opened = false;
   $scope.isProfessor = false;
+
+  $scope.countries = [{
+    'name': "Srbija",
+    'cities': [{
+      'name': "Novi Sad"
+    }, {
+      'name': "Beograd"
+    }]
+  }, {
+    'name': "Bosna i Hercegovina",
+    'cities': [{
+      'name': "Banja Luka"
+    }, {
+      'name': "Sarajevo"
+    }]
+  }];
+
+  $scope.scientificAreas = [{
+    'name': "Informatika",
+    'specialScientificAreas': [{
+      'name': "Informacioni sistemi"
+    }, {
+      'name': "Računarske nauke"
+    }]
+  }, {
+    'name': "Matematika",
+    'specialScientificAreas': [{
+      'name': "Primenena matematika"
+    }]
+  }];
 
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
@@ -25,14 +54,12 @@ app.controller("RegisterUserController", function($scope, $routeParams, $http,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   /* Date picker functions */
@@ -86,17 +113,10 @@ app.controller("RegisterUserController", function($scope, $routeParams, $http,
   };
 
   $scope.isOtherDataValid = function() {
-    if ($scope.professor.fathersName != null
-            && $scope.professor.fathersName != ''
-            && $scope.professor.dateOfBirth != null
-            && $scope.professor.dateOfBirth != ''
-            && $scope.professor.placeOfBirth != null
-            && $scope.professor.placeOfBirth != ''
-            && $scope.professor.countryOfBirth != null
-            && $scope.professor.countryOfBirth != ''
-            && $scope.professor.scientificArea != null
-            && $scope.professor.scientificArea != ''
-            && $scope.professor.specialScientificArea != null
+    if ($scope.professor.fathersName != null && $scope.professor.fathersName != '' && $scope.professor.dateOfBirth != null
+            && $scope.professor.dateOfBirth != '' && $scope.professor.placeOfBirth != null && $scope.professor.placeOfBirth != ''
+            && $scope.professor.countryOfBirth != null && $scope.professor.countryOfBirth != '' && $scope.professor.scientificArea != null
+            && $scope.professor.scientificArea != '' && $scope.professor.specialScientificArea != null
             && $scope.professor.specialScientificArea != '') {
       return true;
     } else {
@@ -105,11 +125,8 @@ app.controller("RegisterUserController", function($scope, $routeParams, $http,
   };
 
   $scope.validateForm = function() {
-    if ($scope.professor.userName != null && $scope.professor.userName != ''
-            && $scope.professor.password != null
-            && $scope.professor.password != '' && $scope.professor.name != null
-            && $scope.professor.name != '' && $scope.professor.surname != null
-            && $scope.professor.surname != ''
+    if ($scope.professor.userName != null && $scope.professor.userName != '' && $scope.professor.password != null && $scope.professor.password != ''
+            && $scope.professor.name != null && $scope.professor.name != '' && $scope.professor.surname != null && $scope.professor.surname != ''
             && ($scope.isProfessor ? $scope.isOtherDataValid() : true)) {
       return true;
     } else {

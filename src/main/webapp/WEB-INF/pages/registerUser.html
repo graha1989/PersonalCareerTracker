@@ -6,7 +6,7 @@
 		role="form"
 		novalidate
 		ng-model="professor">
-		
+
 		<div class="modal-header">
 			<div class="row form-controll">
 				<h3 class="modal-title col-sm-4">{{ resources.text.userTitle }}</h3>
@@ -18,9 +18,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="alert-warning" ng-show="fieldErrors.length">
-	        <div ng-repeat="error in fieldErrors"> <span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{error.message}}</strong></div>
-	    </div>
+		<div
+			class="alert-warning"
+			ng-show="fieldErrors.length">
+			<div ng-repeat="error in fieldErrors">
+				<span class="glyphicon glyphicon-exclamation-sign"></span> <strong>{{error.message}}</strong>
+			</div>
+		</div>
 		<div class="modal-body">
 			<div
 				ng-show="error"
@@ -230,47 +234,16 @@
 				</div>
 				<div class="form-group">
 					<label
-						for="inputBirthPlace"
-						class="col-sm-2 control-label">{{ resources.profesorLabels.placeOfBirthLabel }} <span class="required">*</span></label>
-					<div class="col-sm-4">
-						<input
-							type="text"
-							class="form-control"
-							id="inputBirthPlace"
-							name="inputBirthPlace"
-							placeholder="{{ resources.profesorLabels.placeOfBirthLabel }}"
-							ng-model="professor.placeOfBirth"
-							ng-pattern="patterns.onlyLetters"
-							ng-maxlength="50"
-							required />
-						<div
-							ng-show="form.inputBirthPlace.$dirty && form.inputBirthPlace.$invalid"
-							class="birthPlaceFieldError">
-							<span
-								ng-show="form.inputBirthPlace.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputBirthPlace.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
-								ng-show="form.inputBirthPlace.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
 						for="inputBirthCountry"
 						class="col-sm-2 control-label">{{ resources.profesorLabels.countryOfBirthLabel }} <span class="required">*</span></label>
 					<div class="col-sm-4">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputBirthCountry"
 							name="inputBirthCountry"
-							placeholder="{{ resources.profesorLabels.countryOfBirthLabel }}"
 							ng-model="professor.countryOfBirth"
-							ng-pattern="patterns.onlyLetters"
-							ng-maxlength="50"
-							required />
+							ng-change="professor.placeOfBirth = ''"
+							ng-options="country.name as country.name for country in countries"><option value="">{{ resources.profesorLabels.countryOfBirthLabel }}</option></select>
 						<div
 							ng-show="form.inputBirthCountry.$dirty && form.inputBirthCountry.$invalid"
 							class="birthCountryFieldError">
@@ -286,19 +259,43 @@
 				</div>
 				<div class="form-group">
 					<label
+						for="inputBirthPlace"
+						class="col-sm-2 control-label">{{ resources.profesorLabels.placeOfBirthLabel }} <span class="required">*</span></label>
+					<div class="col-sm-4">
+						<select
+							class="ng-binding form-control"
+							id="inputBirthPlace"
+							name="inputBirthPlace"
+							ng-model="professor.placeOfBirth"
+							ng-disabled="!professor.countryOfBirth"
+							ng-options="city.name as city.name for city in ((countries | filter:{'name':professor.countryOfBirth})[0].cities)"><option value="">{{ resources.profesorLabels.placeOfBirthLabel }}</option></select>
+						<div
+							ng-show="form.inputBirthPlace.$dirty && form.inputBirthPlace.$invalid"
+							class="birthPlaceFieldError">
+							<span
+								ng-show="form.inputBirthPlace.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputBirthPlace.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidMaxLength }}</span> <span
+								ng-show="form.inputBirthPlace.$error.pattern"
+								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
 						for="inputScientificArea"
 						class="col-sm-2 control-label">{{ resources.profesorLabels.scientificAreaLabel }} <span class="required">*</span></label>
 					<div class="col-sm-4">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputScientificArea"
 							name="inputScientificArea"
-							placeholder="{{ resources.profesorLabels.scientificAreaLabel }}"
 							ng-model="professor.scientificArea"
-							ng-pattern="patterns.onlyLetters"
-							ng-maxlength="50"
-							required />
+							ng-change="professor.specialScientificArea = ''"
+							ng-options="scientificArea.name as scientificArea.name for scientificArea in scientificAreas">
+							<option value="">{{ resources.profesorLabels.scientificAreaLabel }}</option>
+						</select>
 						<div
 							ng-show="form.inputScientificArea.$dirty && form.inputScientificArea.$invalid"
 							class="scientificAreaFieldError">
@@ -317,16 +314,15 @@
 						for="inputSpecialScientificArea"
 						class="col-sm-2 control-label">{{ resources.profesorLabels.specialScientificAreaLabel }} <span class="required">*</span></label>
 					<div class="col-sm-4">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputSpecialScientificArea"
 							name="inputSpecialScientificArea"
-							placeholder="{{ resources.profesorLabels.specialScientificAreaLabel }}"
 							ng-model="professor.specialScientificArea"
-							ng-pattern="patterns.onlyLetters"
-							ng-maxlength="50"
-							required />
+							ng-disabled="!professor.scientificArea"
+							ng-options="specialScientificArea.name as specialScientificArea.name for specialScientificArea in ((scientificAreas | filter:{'name':professor.scientificArea})[0].specialScientificAreas)">
+							<option value="">{{resources.profesorLabels.specialScientificAreaLabel }}</option>
+						</select>
 						<div
 							ng-show="form.inputSpecialScientificArea.$dirty && form.inputSpecialScientificArea.$invalid"
 							class="specificScientificAreaFieldError">
