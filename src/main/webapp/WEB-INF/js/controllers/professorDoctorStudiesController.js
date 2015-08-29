@@ -1,5 +1,5 @@
 app.controller("ProfessorDoctorStudiesController", function($scope,
-        $routeParams, $http, $location, $modal, PctService) {
+        $routeParams, $http, $route, $location, $modal, PctService) {
 
   $scope.doctorStudies = {};
   $scope.allDoctorStudies = [];
@@ -24,6 +24,75 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
   $scope.dateOptions = {
     "starting-day": "1"
   };
+  
+  $scope.countries = [{
+    'name': "Srbija",
+    'cities': [{
+      'name': "Novi Sad"
+    }, {
+      'name': "Beograd"
+    }]
+  }, {
+    'name': "Bosna i Hercegovina",
+    'cities': [{
+      'name': "Banja Luka"
+    }, {
+      'name': "Sarajevo"
+    }]
+  }];
+
+  $scope.studyPrograms = [{
+    'name': "Matematika i informatika",
+    'studyAreas': [{
+      'name': "Računarske nauke",
+      'title': "Doktor računarskih nauka"
+    }, {
+      'name': "Informacioni sistemi",
+      'title': "Doktor informacionih sistema"
+    }, {
+      'name': "Primenjena matematika",
+      'title': "Doktor primenjene matematike"
+    }, {
+      'name': "Informatika",
+      'title': "Doktor informatike"
+    }, {
+      'name': "Matematika",
+      'title': "Doktor matematike"
+    }]
+  }, {
+    'name': "Biologija i ekologija",
+    'studyAreas': [{
+      'name': "Biologija",
+      'title': "Doktor biologije"
+    }, {
+      'name': "Ekologija",
+      'title': "Doktor ekologije"
+    }]
+  }, {
+    'name': "Hemija, biohemija i zaštita životne sredine",
+    'studyAreas': [{
+      'name': "Hemija",
+      'title': "Doktor hemije"
+    }, {
+      'name': "Biohemija",
+      'title': "Doktor biohemije"
+    }, {
+      'name': "Zaštita životne sredine",
+      'title': "Doktor zaštite životne sredine"
+    }]
+  }, {
+    'name': "Geografija, turizam i hotelijerstvo",
+    'studyAreas': [{
+      'name': "Geografija",
+      'title': "Doktor geografije"
+    }, {
+      'name': "Turizam",
+      'title': "Doktor turizmologije"
+    }, {
+      'name': "Hotelijerstvo",
+      'title': "Doktor hotelijerstva"
+    }]
+  }];
 
   /* Date picker functions for start date */
   $scope.openStudyStartDate = function($event, index) {
@@ -176,6 +245,7 @@ app.controller("ProfessorDoctorStudiesController", function($scope,
         scrollTop: 0
       }, "slow");
       $scope.editMode[index] = false;
+      $route.reload();
     }).error(function(data, status) {
       $scope.error = "Greška!";
       if (angular.isObject(data.fieldErrors)) {
@@ -248,6 +318,75 @@ var createNewDoctorStudiesController = function($scope, $modalInstance,
   $scope.dateOptions = {
     "starting-day": "1"
   };
+  
+  $scope.countries = [{
+    'name': "Srbija",
+    'cities': [{
+      'name': "Novi Sad"
+    }, {
+      'name': "Beograd"
+    }]
+  }, {
+    'name': "Bosna i Hercegovina",
+    'cities': [{
+      'name': "Banja Luka"
+    }, {
+      'name': "Sarajevo"
+    }]
+  }];
+
+  $scope.studyPrograms = [{
+    'name': "Matematika i informatika",
+    'studyAreas': [{
+      'name': "Računarske nauke",
+      'title': "Doktor računarskih nauka"
+    }, {
+      'name': "Informacioni sistemi",
+      'title': "Doktor informacionih sistema"
+    }, {
+      'name': "Primenjena matematika",
+      'title': "Doktor primenjene matematike"
+    }, {
+      'name': "Informatika",
+      'title': "Doktor informatike"
+    }, {
+      'name': "Matematika",
+      'title': "Doktor matematike"
+    }]
+  }, {
+    'name': "Biologija i ekologija",
+    'studyAreas': [{
+      'name': "Biologija",
+      'title': "Doktor biologije"
+    }, {
+      'name': "Ekologija",
+      'title': "Doktor ekologije"
+    }]
+  }, {
+    'name': "Hemija, biohemija i zaštita životne sredine",
+    'studyAreas': [{
+      'name': "Hemija",
+      'title': "Doktor hemije"
+    }, {
+      'name': "Biohemija",
+      'title': "Doktor biohemije"
+    }, {
+      'name': "Zaštita životne sredine",
+      'title': "Doktor zaštite životne sredine"
+    }]
+  }, {
+    'name': "Geografija, turizam i hotelijerstvo",
+    'studyAreas': [{
+      'name': "Geografija",
+      'title': "Doktor geografije"
+    }, {
+      'name': "Turizam",
+      'title': "Doktor turizmologije"
+    }, {
+      'name': "Hotelijerstvo",
+      'title': "Doktor hotelijerstva"
+    }]
+  }];
 
   /* Date picker functions for start date */
   $scope.openStudyStartDate = function($event) {
