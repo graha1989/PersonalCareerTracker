@@ -87,6 +87,22 @@ var editInstitutionPopupController = function($scope, $modalInstance, $routePara
     onlyNumbers: /^[0-9 ]*$/
   };
 
+  $scope.countries = [{
+    'name': "Srbija",
+    'cities': [{
+      'name': "Novi Sad"
+    }, {
+      'name': "Beograd"
+    }]
+  }, {
+    'name': "Bosna i Hercegovina",
+    'cities': [{
+      'name': "Banja Luka"
+    }, {
+      'name': "Sarajevo"
+    }]
+  }];
+
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
     $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
@@ -184,6 +200,22 @@ var createNewInstitutionController = function($scope, $modalInstance, $routePara
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
   };
+
+  $scope.countries = [{
+    'name': "Srbija",
+    'cities': [{
+      'name': "Novi Sad"
+    }, {
+      'name': "Beograd"
+    }]
+  }, {
+    'name': "Bosna i Hercegovina",
+    'cities': [{
+      'name': "Banja Luka"
+    }, {
+      'name': "Sarajevo"
+    }]
+  }];
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');

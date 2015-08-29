@@ -185,6 +185,24 @@ var createNewSeminarController = function($scope, $modalInstance, $routeParams, 
     });
   };
 
+  $scope.countries = [{
+    'name': "Srbija",
+    'cities': [{
+      'name': "Novi Sad"
+    }, {
+      'name': "Beograd"
+    }]
+  }, {
+    'name': "Bosna i Hercegovina",
+    'cities': [{
+      'name': "Banja Luka"
+    }, {
+      'name': "Sarajevo"
+    }, {
+      'name': "Mostar"
+    }]
+  }];
+
   $scope.getFaculties = function(val) {
     return PctService.findInstutionsStartsWith(val, 'Fakultet').then(function(response) {
       var faculties = [];

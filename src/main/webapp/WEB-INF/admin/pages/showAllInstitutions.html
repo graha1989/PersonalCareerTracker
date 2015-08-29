@@ -161,39 +161,11 @@
 				</div>
 				<div class="form-group">
 					<label
-						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionCity }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputInstitutionCity"
-							name="inputInstitutionCity"
-							ng-model="institution.city"
-							placeholder="{{ resources.institutionPopupLabels.institutionCity }}"
-							ng-maxlength="50"
-							ng-pattern="patterns.onlyLetters"
-							required />
-						<div
-							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
-							class="institutionCityFieldError">
-							<span
-								ng-show="form.inputInstitutionCity.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
 						for="inputInstitutionCountry"
 						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
+					<!--
 						<input
 							type="text"
 							class="form-control"
@@ -204,6 +176,18 @@
 							ng-maxlength="50"
 							ng-pattern="patterns.onlyLetters"
 							required />
+					-->
+
+						<select
+							class="ng-binding form-control"
+							id="inputInstitutionCountry"
+							name="inputInstitutionCountry"
+							ng-model="institution.country"
+							ng-change="institution.city = ''"
+							required
+							ng-options="country.name as country.name for country in countries"><option value="">{{ resources.institutionPopupLabels.institutionCountry }}</option></select>
+
+
 						<div
 							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
 							class="institutionCountryFieldError">
@@ -213,6 +197,47 @@
 								ng-show="form.inputInstitutionCountry.$error.maxlength"
 								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span> <span
 								ng-show="form.inputInstitutionCountry.$error.pattern"
+								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionCity"
+						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionCity }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+					<!--
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCity"
+							name="inputInstitutionCity"
+							ng-model="institution.city"
+							placeholder="{{ resources.institutionPopupLabels.institutionCity }}"
+							ng-maxlength="50"
+							ng-pattern="patterns.onlyLetters"
+							required />
+					-->
+
+						<select
+							class="ng-binding form-control"
+							id="inputInstitutionCity"
+							name="inputInstitutionCity"
+							ng-model="institution.city"
+							ng-disabled="!institution.country"
+							required
+							ng-options="city.name as city.name for city in ((countries | filter:{'name':institution.country})[0].cities)"><option value="">{{ resources.institutionPopupLabels.institutionCity }}</option></select>
+
+						<div
+							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
+							class="institutionCityFieldError">
+							<span
+								ng-show="form.inputInstitutionCity.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputInstitutionCity.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span> <span
+								ng-show="form.inputInstitutionCity.$error.pattern"
 								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
 						</div>
 					</div>
@@ -324,49 +349,18 @@
 				</div>
 				<div class="form-group">
 					<label
-						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionCity }} <span class="required">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputInstitutionCity"
-							name="inputInstitutionCity"
-							ng-model="institution.city"
-							placeholder="{{ resources.institutionPopupLabels.institutionCity }}"
-							ng-maxlength="50"
-							ng-pattern="patterns.onlyLetters"
-							required />
-						<div
-							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
-							class="institutionCityFieldError">
-							<span
-								ng-show="form.inputInstitutionCity.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.pattern"
-								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
 						for="inputInstitutionCountry"
 						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputInstitutionCountry"
 							name="inputInstitutionCountry"
 							ng-model="institution.country"
-							placeholder="{{ resources.institutionPopupLabels.institutionCountry }}"
-							ng-maxlength="50"
-							ng-pattern="patterns.onlyLetters"
-							required />
+							ng-change="institution.city = ''"
+							required
+							ng-options="country.name as country.name for country in countries"><option value="">{{ resources.institutionPopupLabels.institutionCountry }}</option></select>
 						<div
 							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
 							class="institutionCountryFieldError">
@@ -376,6 +370,33 @@
 								ng-show="form.inputInstitutionCountry.$error.maxlength"
 								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span> <span
 								ng-show="form.inputInstitutionCountry.$error.pattern"
+								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionCity"
+						class="col-sm-4 control-label">{{ resources.institutionPopupLabels.institutionCity }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputInstitutionCity"
+							name="inputInstitutionCity"
+							ng-model="institution.city"
+							ng-disabled="!institution.country"
+							required
+							ng-options="city.name as city.name for city in ((countries | filter:{'name':institution.country})[0].cities)"><option value="">{{ resources.institutionPopupLabels.institutionCity }}</option></select>
+						<div
+							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
+							class="institutionCityFieldError">
+							<span
+								ng-show="form.inputInstitutionCity.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputInstitutionCity.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span> <span
+								ng-show="form.inputInstitutionCity.$error.pattern"
 								class="ng-binding">{{ errorMessages.error.onlyLetters }}</span>
 						</div>
 					</div>
