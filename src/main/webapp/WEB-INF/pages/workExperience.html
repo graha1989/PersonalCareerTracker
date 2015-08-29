@@ -1,5 +1,4 @@
 <div>
-
 	<form
 		name="form"
 		id="showProfessorWorkExperienceForm"
@@ -158,21 +157,6 @@
 				</div>
 				<div class="form-group" ng-show="allInstitutionDataShown">
 					<label
-						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCity }}
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputInstitutionCity"
-							name="inputInstitutionCity"
-							ng-model="workExperience.institutionCity"
-							ng-disabled="true" />
-					</div>
-				</div>
-				<div class="form-group" ng-show="allInstitutionDataShown">
-					<label
 						for="inputInstitutionCountry"
 						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }}
 					</label>
@@ -183,6 +167,21 @@
 							id="inputInstitutionCountry"
 							name="inputInstitutionCountry"
 							ng-model="workExperience.institutionCountry"
+							ng-disabled="true" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="allInstitutionDataShown">
+					<label
+						for="inputInstitutionCity"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCity }}
+					</label>
+					<div class="col-sm-6">
+						<input
+							type="text"
+							class="form-control"
+							id="inputInstitutionCity"
+							name="inputInstitutionCity"
+							ng-model="workExperience.institutionCity"
 							ng-disabled="true" />
 					</div>
 				</div>
@@ -388,47 +387,19 @@
 				</div>
 				<div class="form-group">
 					<label
-						for="inputInstitutionCity"
-						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCity }} <span class="required" ng-show="!isExistingInstitution">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputInstitutionCity"
-							name="inputInstitutionCity"
-							ng-model="workExperience.institutionCity"
-							placeholder="{{ resources.workExperiencePopupLabels.institutionCity }}"
-							ng-maxlength="50"
-							ng-disabled="isExistingInstitution"
-							ng-required="!isExistingInstitution" />
-						<div
-							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
-							class="institutionCityFieldError">
-							<span
-								ng-show="form.inputInstitutionCity.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputInstitutionCity.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
 						for="inputInstitutionCountry"
 						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCountry }} <span class="required" ng-show="!isExistingInstitution">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputInstitutionCountry"
 							name="inputInstitutionCountry"
 							ng-model="workExperience.institutionCountry"
-							placeholder="{{ resources.workExperiencePopupLabels.institutionCountry }}"
-							ng-maxlength="50"
+							ng-change="workExperience.institutionCity = ''"
 							ng-disabled="isExistingInstitution"
-							ng-required="!isExistingInstitution" />
+							ng-required="!isExistingInstitution"
+							ng-options="country.name as country.name for country in countries"><option value="">{{ resources.workExperiencePopupLabels.institutionCountry }}</option></select>
 						<div
 							ng-show="form.inputInstitutionCountry.$dirty && form.inputInstitutionCountry.$invalid"
 							class="institutionCountryFieldError">
@@ -437,6 +408,31 @@
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
 								ng-show="form.inputInstitutionCountry.$error.maxlength"
 								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputInstitutionCity"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.institutionCity }} <span class="required" ng-show="!isExistingInstitution">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputInstitutionCity"
+							name="inputInstitutionCity"
+							ng-model="workExperience.institutionCity"
+							ng-disabled="!workExperience.institutionCountry || isExistingInstitution"
+							ng-required="!isExistingInstitution"
+							ng-options="city.name as city.name for city in ((countries | filter:{'name':workExperience.institutionCountry})[0].cities)"><option value="">{{ resources.workExperiencePopupLabels.institutionCity }}</option></select>
+						<div
+							ng-show="form.inputInstitutionCity.$dirty && form.inputInstitutionCity.$invalid"
+							class="institutionCityFieldError">
+							<span
+								ng-show="form.inputInstitutionCity.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputInstitutionCity.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span>
 						</div>
 					</div>
 				</div>

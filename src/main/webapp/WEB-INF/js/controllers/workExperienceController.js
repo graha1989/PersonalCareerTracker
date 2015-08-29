@@ -125,6 +125,22 @@ var editWorkExperiencePopupController = function($scope, $modalInstance, $routeP
     "starting-day": "1"
   };
 
+  $scope.countries = [{
+    'name': "Srbija",
+    'cities': [{
+      'name': "Novi Sad"
+    }, {
+      'name': "Beograd"
+    }]
+  }, {
+    'name': "Bosna i Hercegovina",
+    'cities': [{
+      'name': "Banja Luka"
+    }, {
+      'name': "Sarajevo"
+    }]
+  }];
+
   /* Date picker functions for start date */
   $scope.openWorkStartDate = function($event) {
     $event.preventDefault();
@@ -239,6 +255,22 @@ var createNewWorkExperienceController = function($scope, $modalInstance, $routeP
   $scope.dateOptions = {
     "starting-day": "1"
   };
+
+  $scope.countries = [{
+    'name': "Srbija",
+    'cities': [{
+      'name': "Novi Sad"
+    }, {
+      'name': "Beograd"
+    }]
+  }, {
+    'name': "Bosna i Hercegovina",
+    'cities': [{
+      'name': "Banja Luka"
+    }, {
+      'name': "Sarajevo"
+    }]
+  }];
 
   /* Date picker functions for start date */
   $scope.openWorkStartDate = function($event) {

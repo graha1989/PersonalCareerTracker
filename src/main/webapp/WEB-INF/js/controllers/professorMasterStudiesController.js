@@ -288,6 +288,22 @@ var createNewMasterStudiesController = function($scope, $modalInstance, $routePa
     "starting-day": "1"
   };
 
+  $scope.countries = [{
+    'name': "Srbija",
+    'cities': [{
+      'name': "Novi Sad"
+    }, {
+      'name': "Beograd"
+    }]
+  }, {
+    'name': "Bosna i Hercegovina",
+    'cities': [{
+      'name': "Banja Luka"
+    }, {
+      'name': "Sarajevo"
+    }]
+  }];
+
   $scope.studyPrograms = [{
     'name': "Matematika i informatika",
     'studyAreas': [{
