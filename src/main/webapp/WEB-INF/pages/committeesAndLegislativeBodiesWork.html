@@ -119,15 +119,14 @@
 						class="col-sm-4 control-label">{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.workType }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputWorkType"
 							name="inputWorkType"
 							ng-model="work.functionInOrganizationConferenceOrCommittee"
-							placeholder="{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.workType }}"
-							ng-maxlength="40"
-							required />
+							required
+							ng-options="function.name as function.name for function in functions"><option value="">{{
+								resources.committeeAndLegislativeBodiesWorkPopupLabels.workType }}</option></select>
 						<div
 							ng-show="form.inputWorkType.$dirty && form.inputWorkType.$invalid"
 							class="workTypeFieldError">
@@ -259,15 +258,14 @@
 						class="col-sm-4 control-label">{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.workType }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputWorkType"
 							name="inputWorkType"
 							ng-model="work.functionInOrganizationConferenceOrCommittee"
-							placeholder="{{ resources.committeeAndLegislativeBodiesWorkPopupLabels.workType }}"
-							ng-maxlength="200"
-							required />
+							required
+							ng-options="function.name as function.name for function in functions"><option value="">{{
+								resources.committeeAndLegislativeBodiesWorkPopupLabels.workType }}</option></select>
 						<div
 							ng-show="form.inputWorkType.$dirty && form.inputWorkType.$invalid"
 							class="workTypeFieldError">

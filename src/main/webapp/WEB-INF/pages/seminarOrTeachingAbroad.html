@@ -8,7 +8,7 @@
 		ng-model="teachingExperience">
 
 		<div class="modal-header">
-			<h3 class="modal-title">{{ resources.text.teachingExperiencesTitle }}</h3>
+			<h3 class="modal-title">{{ resources.text.teachingExperiencesAbroadTitle }}</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
@@ -354,47 +354,19 @@
 				</div>
 				<div class="form-group">
 					<label
-						for="inputFacultyCity"
-						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyCity }} <span class="required" ng-show="!isExistingSubject">*</span>
-					</label>
-					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
-							id="inputFacultyCity"
-							name="inputFacultyCity"
-							ng-model="teachingExperience.subjectDto.institutionCity"
-							placeholder="{{ resources.teachingExperiencePopupLabels.facultyCity }}"
-							ng-maxlength="50"
-							ng-disabled="isExistingSubject"
-							ng-required="!isExistingSubject" />
-						<div
-							ng-show="form.inputFacultyCity.$dirty && form.inputFacultyCity.$invalid"
-							class="facultyCityFieldError">
-							<span
-								ng-show="form.inputFacultyCity.$error.required"
-								class="ng-binding">{{ errorMessages.error.required }}</span> <span
-								ng-show="form.inputFacultyCity.$error.maxlength"
-								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label
 						for="inputFacultyCountry"
 						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyCountry }} <span class="required" ng-show="!isExistingSubject">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputFacultyCountry"
 							name="inputFacultyCountry"
 							ng-model="teachingExperience.subjectDto.institutionCountry"
-							placeholder="{{ resources.teachingExperiencePopupLabels.facultyCountry }}"
-							ng-maxlength="50"
+							ng-change="teachingExperience.subjectDto.institutionCity = ''"
 							ng-disabled="isExistingSubject"
-							ng-required="!isExistingSubject" />
+							ng-required="!isExistingSubject"
+							ng-options="country.name as country.name for country in countries"><option value="">{{ resources.teachingExperiencePopupLabels.facultyCountry }}</option></select>
 						<div
 							ng-show="form.inputFacultyCountry.$dirty && form.inputFacultyCountry.$invalid"
 							class="facultyCountryFieldError">
@@ -403,6 +375,31 @@
 								class="ng-binding">{{ errorMessages.error.required }}</span> <span
 								ng-show="form.inputFacultyCountry.$error.maxlength"
 								class="ng-binding">{{ errorMessages.error.invalidInstitutionCountryMaxLength }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label
+						for="inputFacultyCity"
+						class="col-sm-4 control-label">{{ resources.teachingExperiencePopupLabels.facultyCity }} <span class="required" ng-show="!isExistingSubject">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputFacultyCity"
+							name="inputFacultyCity"
+							ng-model="teachingExperience.subjectDto.institutionCity"
+							ng-disabled="!teachingExperience.subjectDto.institutionCountry || isExistingSubject"
+							ng-required="!isExistingSubject"
+							ng-options="city.name as city.name for city in ((countries | filter:{'name':teachingExperience.subjectDto.institutionCountry})[0].cities)"><option value="">{{ resources.teachingExperiencePopupLabels.facultyCity }}</option></select>
+						<div
+							ng-show="form.inputFacultyCity.$dirty && form.inputFacultyCity.$invalid"
+							class="facultyCityFieldError">
+							<span
+								ng-show="form.inputFacultyCity.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> <span
+								ng-show="form.inputFacultyCity.$error.maxlength"
+								class="ng-binding">{{ errorMessages.error.invalidInstitutionCityMaxLength }}</span>
 						</div>
 					</div>
 				</div>

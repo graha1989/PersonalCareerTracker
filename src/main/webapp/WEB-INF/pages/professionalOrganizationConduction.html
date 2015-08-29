@@ -119,15 +119,14 @@
 						class="col-sm-4 control-label">{{ resources.professionalOrganizationConductionPopupLabels.function }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputFunction"
 							name="inputFunction"
 							ng-model="conduction.functionInOrganizationConferenceOrCommittee"
-							placeholder="{{ resources.professionalOrganizationConductionPopupLabels.function }}"
-							ng-maxlength="200"
-							required />
+							required
+							ng-options="function.name as function.name for function in functions"><option value="">{{
+								resources.professionalOrganizationConductionPopupLabels.function }}</option></select>
 						<div
 							ng-show="form.inputFunction.$dirty && form.inputFunction.$invalid"
 							class="functionFieldError">
@@ -259,15 +258,14 @@
 						class="col-sm-4 control-label">{{ resources.professionalOrganizationConductionPopupLabels.function }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputFunction"
 							name="inputFunction"
 							ng-model="conduction.functionInOrganizationConferenceOrCommittee"
-							placeholder="{{ resources.professionalOrganizationConductionPopupLabels.function }}"
-							ng-maxlength="200"
-							required />
+							required
+							ng-options="function.name as function.name for function in functions"><option value="">{{
+								resources.professionalOrganizationConductionPopupLabels.function }}</option></select>
 						<div
 							ng-show="form.inputFunction.$dirty && form.inputFunction.$invalid"
 							class="functionFieldError">

@@ -239,6 +239,20 @@ var createNewSeminarOrTeachingExperiencePopupController = function($scope, $moda
     "starting-day": "1"
   };
 
+  $scope.countries = [{
+    'name': "Thailand",
+    'cities': [{
+      'name': "Hat Yai"
+    }]
+  }, {
+    'name': "Bosna i Hercegovina",
+    'cities': [{
+      'name': "Banja Luka"
+    }, {
+      'name': "Sarajevo"
+    }]
+  }];
+
   /* Date picker functions for start date */
   $scope.openTeachingStartDate = function($event) {
     $event.preventDefault();

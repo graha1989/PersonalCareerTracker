@@ -113,6 +113,14 @@ var editCommitteeAndLegislativeBodiesWorkController = function($scope, $modalIns
   $scope.dateOptions = {
     "starting-day": "1"
   };
+  
+  $scope.functions = [{
+    "name": "Predsednik"
+  }, {
+    "name": "Član"
+  }, {
+    "name": "Drugo"
+  }];
 
   /* Date picker functions for start date */
   $scope.openStartDate = function($event) {
@@ -211,6 +219,14 @@ var createNewCommitteeAndLegislativeBodiesWorkController = function($scope, $mod
   $scope.dateOptions = {
     "starting-day": "1"
   };
+  
+  $scope.functions = [{
+    "name": "Predsednik"
+  }, {
+    "name": "Član"
+  }, {
+    "name": "Drugo"
+  }];
 
   /* Date picker functions for start date */
   $scope.openStartDate = function($event) {

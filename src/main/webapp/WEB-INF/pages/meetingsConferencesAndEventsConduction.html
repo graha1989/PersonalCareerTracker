@@ -117,15 +117,14 @@
 						class="col-sm-4 control-label">{{ resources.meetingConferenceAndEventConductionPopupLabels.function }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputFunction"
 							name="inputFunction"
 							ng-model="conduction.functionInOrganizationConferenceOrCommittee"
-							placeholder="{{ resources.meetingConferenceAndEventConductionPopupLabels.function }}"
-							ng-maxlength="40"
-							required />
+							required
+							ng-options="function.name as function.name for function in functions"><option value="">{{
+								resources.meetingConferenceAndEventConductionPopupLabels.function }}</option></select>
 						<div
 							ng-show="form.inputFunction.$dirty && form.inputFunction.$invalid"
 							class="functionFieldError">
@@ -217,15 +216,14 @@
 						class="col-sm-4 control-label">{{ resources.meetingConferenceAndEventConductionPopupLabels.function }} <span class="required">*</span>
 					</label>
 					<div class="col-sm-6">
-						<input
-							type="text"
-							class="form-control"
+						<select
+							class="ng-binding form-control"
 							id="inputFunction"
 							name="inputFunction"
 							ng-model="conduction.functionInOrganizationConferenceOrCommittee"
-							placeholder="{{ resources.meetingConferenceAndEventConductionPopupLabels.function }}"
-							ng-maxlength="40"
-							required />
+							required
+							ng-options="function.name as function.name for function in functions"><option value="">{{
+								resources.meetingConferenceAndEventConductionPopupLabels.function }}</option></select>
 						<div
 							ng-show="form.inputFunction.$dirty && form.inputFunction.$invalid"
 							class="functionFieldError">

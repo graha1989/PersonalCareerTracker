@@ -1,5 +1,4 @@
-app.controller("ProfessionalOrganizationConductingController", function($scope, $routeParams, $http, $route, $modal,
-        PctService) {
+app.controller("ProfessionalOrganizationConductingController", function($scope, $routeParams, $http, $route, $modal, PctService) {
 
   $scope.conductings = [];
   $scope.conduction = {};
@@ -104,8 +103,8 @@ app.controller("ProfessionalOrganizationConductingController", function($scope, 
 
 });
 
-var editProfessionalOrganizationConductionController = function($scope, $modalInstance, $routeParams, $http, $route,
-        conductionId, PctService, professorId) {
+var editProfessionalOrganizationConductionController = function($scope, $modalInstance, $routeParams, $http, $route, conductionId, PctService,
+        professorId) {
 
   $scope.conduction = {};
   $scope.master = {};
@@ -113,6 +112,16 @@ var editProfessionalOrganizationConductionController = function($scope, $modalIn
   $scope.dateOptions = {
     "starting-day": "1"
   };
+
+  $scope.functions = [{
+    "name": "Predsednik"
+  }, {
+    "name": "Organizator"
+  }, {
+    "name": "Član"
+  }, {
+    "name": "Drugo"
+  }];
 
   /* Date picker functions for start date */
   $scope.openStartDate = function($event) {
@@ -203,14 +212,23 @@ var editProfessionalOrganizationConductionController = function($scope, $modalIn
 
 };
 
-var createNewProfessionalOrganizationConductionController = function($scope, $modalInstance, $routeParams, $http,
-        $route, PctService, professorId) {
+var createNewProfessionalOrganizationConductionController = function($scope, $modalInstance, $routeParams, $http, $route, PctService, professorId) {
 
   $scope.conduction = {};
 
   $scope.dateOptions = {
     "starting-day": "1"
   };
+
+  $scope.functions = [{
+    "name": "Predsednik"
+  }, {
+    "name": "Organizator"
+  }, {
+    "name": "Član"
+  }, {
+    "name": "Drugo"
+  }];
 
   /* Date picker functions for start date */
   $scope.openStartDate = function($event) {
@@ -282,13 +300,10 @@ var createNewProfessionalOrganizationConductionController = function($scope, $mo
   };
 
   $scope.validateForm = function() {
-    if ($scope.conduction.authorityOrganizationOrJournal != null
-            && $scope.conduction.authorityOrganizationOrJournal != ''
+    if ($scope.conduction.authorityOrganizationOrJournal != null && $scope.conduction.authorityOrganizationOrJournal != ''
             && $scope.conduction.functionInOrganizationConferenceOrCommittee != null
-            && $scope.conduction.functionInOrganizationConferenceOrCommittee != ''
-            && $scope.conduction.authorityOrOrganizationWorkStartDate != null
-            && $scope.conduction.authorityOrOrganizationWorkStartDate != ''
-            && $scope.conduction.authorityOrOrganizationWorkEndDate != null
+            && $scope.conduction.functionInOrganizationConferenceOrCommittee != '' && $scope.conduction.authorityOrOrganizationWorkStartDate != null
+            && $scope.conduction.authorityOrOrganizationWorkStartDate != '' && $scope.conduction.authorityOrOrganizationWorkEndDate != null
             && $scope.conduction.authorityOrOrganizationWorkEndDate != '') {
       return true;
     } else {

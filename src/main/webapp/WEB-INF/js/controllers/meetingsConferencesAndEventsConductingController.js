@@ -1,5 +1,4 @@
-app.controller("MeetingsConferencesAndEventsConductingController", function($scope, $routeParams, $http, $route,
-        $modal, PctService) {
+app.controller("MeetingsConferencesAndEventsConductingController", function($scope, $routeParams, $http, $route, $modal, PctService) {
 
   $scope.conductings = [];
   $scope.conduction = {};
@@ -104,8 +103,8 @@ app.controller("MeetingsConferencesAndEventsConductingController", function($sco
 
 });
 
-var editMeetingsConferencesAndEventsConductionController = function($scope, $modalInstance, $routeParams, $http,
-        $route, conductionId, PctService, professorId) {
+var editMeetingsConferencesAndEventsConductionController = function($scope, $modalInstance, $routeParams, $http, $route, conductionId, PctService,
+        professorId) {
 
   $scope.conduction = {};
   $scope.master = {};
@@ -118,6 +117,14 @@ var editMeetingsConferencesAndEventsConductionController = function($scope, $mod
   $scope.dateOptions = {
     "starting-day": "1"
   };
+
+  $scope.functions = [{
+    "name": "Organizator"
+  }, {
+    "name": "Član"
+  }, {
+    "name": "Drugo"
+  }];
 
   /* Date picker functions for start date */
   $scope.openStartDate = function($event) {
@@ -208,8 +215,7 @@ var editMeetingsConferencesAndEventsConductionController = function($scope, $mod
 
 };
 
-var createNewMeetingsConferencesAndEventsConductionController = function($scope, $modalInstance, $routeParams, $http,
-        $route, PctService, professorId) {
+var createNewMeetingsConferencesAndEventsConductionController = function($scope, $modalInstance, $routeParams, $http, $route, PctService, professorId) {
 
   $scope.conduction = {};
 
@@ -221,6 +227,14 @@ var createNewMeetingsConferencesAndEventsConductionController = function($scope,
   $scope.dateOptions = {
     "starting-day": "1"
   };
+  
+  $scope.functions = [{
+    "name": "Organizator"
+  }, {
+    "name": "Član"
+  }, {
+    "name": "Drugo"
+  }];
 
   /* Date picker functions for start date */
   $scope.openStartDate = function($event) {
@@ -292,11 +306,9 @@ var createNewMeetingsConferencesAndEventsConductionController = function($scope,
   };
 
   $scope.validateForm = function() {
-    if ($scope.conduction.authorityOrganizationOrJournal != null
-            && $scope.conduction.authorityOrganizationOrJournal != ''
+    if ($scope.conduction.authorityOrganizationOrJournal != null && $scope.conduction.authorityOrganizationOrJournal != ''
             && $scope.conduction.functionInOrganizationConferenceOrCommittee != null
-            && $scope.conduction.functionInOrganizationConferenceOrCommittee != ''
-            && $scope.conduction.meetingConferenceOrEventYear != null
+            && $scope.conduction.functionInOrganizationConferenceOrCommittee != '' && $scope.conduction.meetingConferenceOrEventYear != null
             && $scope.conduction.meetingConferenceOrEventYear != '') {
       return true;
     } else {
