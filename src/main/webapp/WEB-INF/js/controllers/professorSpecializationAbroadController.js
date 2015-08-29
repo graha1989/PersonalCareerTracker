@@ -1,5 +1,4 @@
-app.controller("ProfessorSpecializationAbroadController", function($scope,
-        $routeParams, $http, $location, $modal, PctService) {
+app.controller("ProfessorSpecializationAbroadController", function($scope, $routeParams, $http, $route, $location, $modal, PctService) {
 
   $scope.specialization = {};
   $scope.allSpecializations = [];
@@ -10,11 +9,11 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
   $scope.editMode = [];
   $scope.inputStartDateOpened = [];
   $scope.inputEndDateOpened = [];
-  
+
   $scope.isUser = false;
   $scope.isAdmin = false;
   $scope.professorId = '';
-  
+
   $scope.patterns = {
     onlyLetters: /^[a-zA-ZčČćĆšŠđĐžŽ ]*$/,
     onlyNumbers: /^[0-9 ]*$/
@@ -23,6 +22,20 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
   $scope.dateOptions = {
     "starting-day": "1"
   };
+  
+  $scope.countries = [{
+    'name': "Mađarska",
+    'cities': [{
+      'name': "Budimpešta"
+    }]
+  }, {
+    'name': "Grčka",
+    'cities': [{
+      'name': "Atina"
+    }, {
+      'name': "Solun"
+    }]
+  }];
 
   /* Date picker functions for start date */
   $scope.openStartDate = function($event, index) {
@@ -42,14 +55,12 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.convertTimeToDate = function(time) {
@@ -57,41 +68,35 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
   };
 
   $scope.loadProfessorsSpecializationsAbroad = function(professorId) {
-    return PctService.loadProfessorsSpecializationsAbroad(professorId).then(
-            function(response) {
-              if (angular.isObject(response) && response.length > 0) {
-                $scope.allSpecializations = response;
+    return PctService.loadProfessorsSpecializationsAbroad(professorId).then(function(response) {
+      if (angular.isObject(response) && response.length > 0) {
+        $scope.allSpecializations = response;
 
-                for (var i = 0; i < $scope.allSpecializations.length; i++) {
-                  $scope.allSpecializations[i].startDate = $scope
-                          .convertTimeToDate(response[i].startDate);
-                  $scope.allSpecializations[i].endDate = $scope
-                          .convertTimeToDate(response[i].endDate);
-                }
+        for (var i = 0; i < $scope.allSpecializations.length; i++) {
+          $scope.allSpecializations[i].startDate = $scope.convertTimeToDate(response[i].startDate);
+          $scope.allSpecializations[i].endDate = $scope.convertTimeToDate(response[i].endDate);
+        }
 
-                $scope.editMode = new Array($scope.allSpecializations.length);
-                for (var i = 0; i < $scope.allSpecializations.length; i++) {
-                  $scope.editMode.splice(i, 1, false);
-                }
+        $scope.editMode = new Array($scope.allSpecializations.length);
+        for (var i = 0; i < $scope.allSpecializations.length; i++) {
+          $scope.editMode.splice(i, 1, false);
+        }
 
-                $scope.inputStartDateOpened = new Array(
-                        $scope.allSpecializations.length);
-                for (var i = 0; i < $scope.allSpecializations.length; i++) {
-                  $scope.inputStartDateOpened.splice(i, 1, false);
-                }
+        $scope.inputStartDateOpened = new Array($scope.allSpecializations.length);
+        for (var i = 0; i < $scope.allSpecializations.length; i++) {
+          $scope.inputStartDateOpened.splice(i, 1, false);
+        }
 
-                $scope.inputEndDateOpened = new Array(
-                        $scope.allSpecializations.length);
-                for (var i = 0; i < $scope.allSpecializations.length; i++) {
-                  $scope.inputEndDateOpened.splice(i, 1, false);
-                }
-                $scope.allSpecializationsMaster = angular
-                        .copy($scope.allSpecializations);
-                $scope.noResultsFound = false;
-              } else {
-                $scope.noResultsFound = true;
-              }
-            });
+        $scope.inputEndDateOpened = new Array($scope.allSpecializations.length);
+        for (var i = 0; i < $scope.allSpecializations.length; i++) {
+          $scope.inputEndDateOpened.splice(i, 1, false);
+        }
+        $scope.allSpecializationsMaster = angular.copy($scope.allSpecializations);
+        $scope.noResultsFound = false;
+      } else {
+        $scope.noResultsFound = true;
+      }
+    });
   };
 
   $scope.setMaxDate = function() {
@@ -99,7 +104,7 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
   };
 
   $scope.setMaxDate();
-  
+
   $scope.getCurrentUserRole = function() {
     if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
       $scope.isUser = true;
@@ -107,7 +112,7 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
       $scope.isAdmin = true;
     }
   };
-  
+
   $scope.initUserId = function() {
     if ($routeParams.professorId != null && $routeParams.professorId != '') {
       $scope.professorId = $routeParams.professorId;
@@ -129,16 +134,14 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
     $scope.editMode.splice(index, 1, true);
     for (var i = 0; i < $scope.editMode.length; i++) {
       if (i != index) {
-        $scope.allSpecializations[i] = angular
-                .copy($scope.allSpecializationsMaster[i]);
+        $scope.allSpecializations[i] = angular.copy($scope.allSpecializationsMaster[i]);
         $scope.editMode.splice(i, 1, false);
       }
     }
   };
 
   $scope.close = function(index) {
-    $scope.allSpecializations[index] = angular
-            .copy($scope.allSpecializationsMaster[index]);
+    $scope.allSpecializations[index] = angular.copy($scope.allSpecializationsMaster[index]);
     $scope.editMode.splice(index, 1, false);
   };
 
@@ -162,6 +165,7 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
         scrollTop: 0
       }, "slow");
       $scope.editMode[index] = false;
+      $route.reload();
     }).error(function(data, status) {
       $scope.error = "Greška!";
       if (angular.isObject(data.fieldErrors)) {
@@ -175,8 +179,7 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
   };
 
   $scope.isUnchanged = function(index) {
-    return angular.equals($scope.allSpecializations[index],
-            $scope.allSpecializationsMaster[index]);
+    return angular.equals($scope.allSpecializations[index], $scope.allSpecializationsMaster[index]);
   };
 
   $scope.goBack = function() {
@@ -206,15 +209,14 @@ app.controller("ProfessorSpecializationAbroadController", function($scope,
       }
     });
   };
-  
+
   $scope.goBack = function() {
     window.history.back();
   };
 
 });
 
-var createNewSpecializationController = function($scope, $modalInstance,
-        $routeParams, $http, $route, $templateCache, PctService, professorId) {
+var createNewSpecializationController = function($scope, $modalInstance, $routeParams, $http, $route, $templateCache, PctService, professorId) {
 
   $scope.specialization = {};
   $scope.noResultsFound = true;
@@ -232,6 +234,20 @@ var createNewSpecializationController = function($scope, $modalInstance,
   $scope.dateOptions = {
     "starting-day": "1"
   };
+  
+  $scope.countries = [{
+    'name': "Mađarska",
+    'cities': [{
+      'name': "Budimpešta"
+    }]
+  }, {
+    'name': "Grčka",
+    'cities': [{
+      'name': "Atina"
+    }, {
+      'name': "Solun"
+    }]
+  }];
 
   /* Date picker functions for start date */
   $scope.openStartDate = function($event) {
@@ -251,14 +267,12 @@ var createNewSpecializationController = function($scope, $modalInstance,
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.convertTimeToDate = function(time) {
@@ -279,20 +293,17 @@ var createNewSpecializationController = function($scope, $modalInstance,
   $scope.init();
 
   $scope.getInstitutions = function(val) {
-    return PctService.findInstutionsStartsWith(val, 'Ostale ustanove').then(
-            function(response) {
-              var institutions = [];
-              for (var i = 0; i < response.length; i++) {
-                institutions.push(response[i]);
-              }
-              return institutions;
-            });
+    return PctService.findInstutionsStartsWith(val, 'Ostale ustanove').then(function(response) {
+      var institutions = [];
+      for (var i = 0; i < response.length; i++) {
+        institutions.push(response[i]);
+      }
+      return institutions;
+    });
   };
 
   $scope.$watch('selectedFaculty', function() {
-    if ($scope.isExistingInstitution
-            && !angular.equals($scope.selectedInstitution,
-                    $scope.masterSelectedInstitution)) {
+    if ($scope.isExistingInstitution && !angular.equals($scope.selectedInstitution, $scope.masterSelectedInstitution)) {
       $scope.resetInstitutionData();
     }
   });
@@ -350,18 +361,12 @@ var createNewSpecializationController = function($scope, $modalInstance,
 
   $scope.validateForm = function() {
     if ((($scope.specialization.institutionName != null && $scope.specialization.institutionName != '') || ($scope.selectedInstitution != null && $scope.selectedInstitution != ''))
-            && (!$scope.isExistingInstitution
-                    ? ($scope.specialization.city != null && $scope.specialization.city != '')
-                    : true)
-            && (!$scope.isExistingInstitution
-                    ? ($scope.specialization.country != null && $scope.specialization.country != '')
-                    : true)
+            && (!$scope.isExistingInstitution ? ($scope.specialization.city != null && $scope.specialization.city != '') : true)
+            && (!$scope.isExistingInstitution ? ($scope.specialization.country != null && $scope.specialization.country != '') : true)
             && $scope.specialization.startDate != null
             && $scope.specialization.startDate != ''
             && $scope.specialization.endDate != null
-            && $scope.specialization.endDate != ''
-            && $scope.specialization.purpose != null
-            && $scope.specialization.purpose != '') {
+            && $scope.specialization.endDate != '' && $scope.specialization.purpose != null && $scope.specialization.purpose != '') {
       return true;
     } else {
       return false;

@@ -26,7 +26,9 @@
 							<td>{{ resources.mentoringTableLabels.thesisPaperScientificArea }}</td>
 							<td>{{ resources.mentoringTableLabels.thesisDateOfGraduation }}</td>
 							<td>{{ resources.mentoringTableLabels.thesisUniversityName }}</td>
-							<td ng-show="isUser" colspan="2"></td>
+							<td
+								ng-show="isUser"
+								colspan="2"></td>
 						</tr>
 						<tr
 							class="active ng-scope"
@@ -38,13 +40,15 @@
 							<td>{{ thesis.paperScientificArea }}</td>
 							<td>{{ thesis.dateOfGraduation | date:'dd-MM-yyyy' }}</td>
 							<td>{{ thesis.universityName }}</td>
-							<td class="delete"
+							<td
+								class="delete"
 								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="deleteThesis(thesis.id, $index)">
 									<span class="glyphicon glyphicon-trash"></span> {{ resources.buttons.mentorThesisButtons.delete }}
 								</button></td>
-							<td class="edit"
+							<td
+								class="edit"
 								ng-show="isUser"><button
 									class="btn btn-link btn-xs"
 									ng-click="editThesis(thesis.id)">
@@ -52,8 +56,12 @@
 								</button></td>
 						</tr>
 						<tr ng-show="noResultsFound">
-							<td ng-show="isUser" colspan="9">{{ errorMessages.error.emptyTable }}</td>
-							<td ng-show="isAdmin" colspan="7">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isUser"
+								colspan="9">{{ errorMessages.error.emptyTable }}</td>
+							<td
+								ng-show="isAdmin"
+								colspan="7">{{ errorMessages.error.emptyTable }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -211,15 +219,14 @@
 					class="col-sm-4 control-label">{{ resources.thesisPopupLabels.thesisScientificArea }} <span class="required">*</span>
 				</label>
 				<div class="col-sm-6">
-					<input
-						type="text"
+					<select
 						class="ng-binding form-control"
 						id="inputPaperScientificArea"
 						name="inputPaperScientificArea"
 						ng-model="thesis.paperScientificArea"
-						ng-pattern="patterns.onlyLetters"
-						ng-maxlength="50"
-						required />
+						required
+						ng-options="area.name as area.name for area in studyAreas"><option value="">{{
+							resources.thesisPopupLabels.thesisScientificArea }}</option></select>
 					<div
 						ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
 						class="paperScientificAreaFieldError">
@@ -452,16 +459,14 @@
 					class="col-sm-4 control-label">{{ resources.thesisPopupLabels.thesisScientificArea }} <span class="required">*</span>
 				</label>
 				<div class="col-sm-6">
-					<input
-						type="text"
+					<select
 						class="ng-binding form-control"
 						id="inputPaperScientificArea"
 						name="inputPaperScientificArea"
 						ng-model="thesis.paperScientificArea"
-						placeholder="{{ resources.thesisPopupLabels.thesisScientificArea }}"
-						ng-pattern="patterns.onlyLetters"
-						ng-maxlength="50"
-						required />
+						required
+						ng-options="area.name as area.name for area in studyAreas"><option value="">{{
+							resources.thesisPopupLabels.thesisScientificArea }}</option></select>
 					<div
 						ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
 						class="paperScientificAreaFieldError">

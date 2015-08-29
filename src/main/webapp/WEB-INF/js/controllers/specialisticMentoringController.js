@@ -1,12 +1,11 @@
-app.controller("SpecialisticMentoringController", function($scope,
-        $routeParams, $http, $location, $modal, PctService) {
+app.controller("SpecialisticMentoringController", function($scope, $routeParams, $http, $location, $modal, PctService) {
 
   $scope.thesis = {};
   $scope.allSpecialisticThesis = [];
   $scope.resources = {};
   $scope.errorMessages = {};
   $scope.noResultsFound = true;
-  
+
   $scope.isUser = false;
   $scope.isAdmin = false;
   $scope.mentorId = '';
@@ -19,14 +18,12 @@ app.controller("SpecialisticMentoringController", function($scope,
   /* Load resources from .json properties file */
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   $scope.loadThesis = function(mentorId, thesisTypeId) {
@@ -39,7 +36,7 @@ app.controller("SpecialisticMentoringController", function($scope,
       }
     });
   };
-  
+
   $scope.getCurrentUserRole = function() {
     if (document.getElementById('currentUserRole').value === 'ROLE_USER') {
       $scope.isUser = true;
@@ -47,7 +44,7 @@ app.controller("SpecialisticMentoringController", function($scope,
       $scope.isAdmin = true;
     }
   };
-  
+
   $scope.initUserId = function() {
     if ($routeParams.mentorId != null && $routeParams.mentorId != '') {
       $scope.mentorId = $routeParams.mentorId;
@@ -108,15 +105,14 @@ app.controller("SpecialisticMentoringController", function($scope,
       }
     });
   };
-  
+
   $scope.goBack = function() {
     window.history.back();
   };
 
 });
 
-var editSpecialisticThesisController = function($scope, $modalInstance,
-        $routeParams, $http, $route, thesisId, PctService, mentorId) {
+var editSpecialisticThesisController = function($scope, $modalInstance, $routeParams, $http, $route, thesisId, PctService, mentorId) {
 
   $scope.thesis = {};
   $scope.thesis.mentorId;
@@ -153,17 +149,43 @@ var editSpecialisticThesisController = function($scope, $modalInstance,
     "starting-day": "1"
   };
 
+  $scope.studyAreas = [{
+    "name": "Računarske nauke"
+  }, {
+    "name": "Informacioni sistemi"
+  }, {
+    "name": "Primenjena matematika"
+  }, {
+    "name": "Informatika"
+  }, {
+    "name": "Matematika"
+  }, {
+    "name": "Biologija"
+  }, {
+    "name": "Ekologija"
+  }, {
+    "name": "Hemija"
+  }, {
+    "name": "Biohemija"
+  }, {
+    "name": "Zaštita životne sredine"
+  }, {
+    "name": "Geografija"
+  }, {
+    "name": "Turizam"
+  }, {
+    "name": "Hotelijerstvo"
+  }];
+
   /* Load resources from .json properties file */
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   /* Date picker functions */
@@ -203,10 +225,8 @@ var editSpecialisticThesisController = function($scope, $modalInstance,
 
         $scope.master = angular.copy($scope.thesis);
         $scope.masterSelectedStudent = angular.copy($scope.selectedStudent);
-        $scope.masterSelectedPresident = angular
-                .copy($scope.selectedCommissionPresident);
-        $scope.masterSelectedMember = angular
-                .copy($scope.selectedCommissionMember);
+        $scope.masterSelectedPresident = angular.copy($scope.selectedCommissionPresident);
+        $scope.masterSelectedMember = angular.copy($scope.selectedCommissionMember);
         $scope.noResultsFound = false;
       } else {
         $scope.noResultsFound = true;
@@ -251,19 +271,17 @@ var editSpecialisticThesisController = function($scope, $modalInstance,
     var inputLabel = this.form.inputCommissionPresident;
 
     inputLabel.$setValidity("commissionPresidentInvalid", true);
-    return PctService.findProfessorsStartsWith(val,
-            $scope.selectedCommissionMember.id, mentorId).then(
-            function(response) {
-              var professors = [];
-              for (var i = 0; i < response.length; i++) {
-                professors.push(response[i]);
-                inputLabel.$setValidity("commissionPresidentInvalid", true);
-              }
-              if (val.length >= 3 && professors.length == 0) {
-                inputLabel.$setValidity("commissionPresidentInvalid", false);
-              }
-              return professors;
-            });
+    return PctService.findProfessorsStartsWith(val, $scope.selectedCommissionMember.id, mentorId).then(function(response) {
+      var professors = [];
+      for (var i = 0; i < response.length; i++) {
+        professors.push(response[i]);
+        inputLabel.$setValidity("commissionPresidentInvalid", true);
+      }
+      if (val.length >= 3 && professors.length == 0) {
+        inputLabel.$setValidity("commissionPresidentInvalid", false);
+      }
+      return professors;
+    });
   };
 
   $scope.getCommissionMember = function(val) {
@@ -271,19 +289,17 @@ var editSpecialisticThesisController = function($scope, $modalInstance,
     var inputLabel = this.form.inputCommissionMember;
 
     inputLabel.$setValidity("commissionMemberInvalid", true);
-    return PctService.findProfessorsStartsWith(val,
-            $scope.selectedCommissionPresident.id, mentorId).then(
-            function(response) {
-              var professors = [];
-              for (var i = 0; i < response.length; i++) {
-                professors.push(response[i]);
-                inputLabel.$setValidity("commissionMemberInvalid", true);
-              }
-              if (val.length >= 3 && professors.length == 0) {
-                inputLabel.$setValidity("commissionMemberInvalid", false);
-              }
-              return professors;
-            });
+    return PctService.findProfessorsStartsWith(val, $scope.selectedCommissionPresident.id, mentorId).then(function(response) {
+      var professors = [];
+      for (var i = 0; i < response.length; i++) {
+        professors.push(response[i]);
+        inputLabel.$setValidity("commissionMemberInvalid", true);
+      }
+      if (val.length >= 3 && professors.length == 0) {
+        inputLabel.$setValidity("commissionMemberInvalid", false);
+      }
+      return professors;
+    });
   };
 
   $scope.refreshStudentData = function() {
@@ -377,16 +393,11 @@ var editSpecialisticThesisController = function($scope, $modalInstance,
   }
 
   $scope.isUnchanged = function(thesis) {
-    if ($scope.studentSelected && $scope.commissionPresidentSelected
-            && $scope.commissionMemberSelected) {
+    if ($scope.studentSelected && $scope.commissionPresidentSelected && $scope.commissionMemberSelected) {
       thesis.dateOfGraduation = new Date(thesis.dateOfGraduation).getTime();
-      return angular.equals(thesis, $scope.master)
-              && angular.equals($scope.selectedStudent,
-                      $scope.masterSelectedStudent)
-              && angular.equals($scope.selectedCommissionPresident,
-                      $scope.masterSelectedPresident)
-              && angular.equals($scope.selectedCommissionMember,
-                      $scope.masterSelectedMember);
+      return angular.equals(thesis, $scope.master) && angular.equals($scope.selectedStudent, $scope.masterSelectedStudent)
+              && angular.equals($scope.selectedCommissionPresident, $scope.masterSelectedPresident)
+              && angular.equals($scope.selectedCommissionMember, $scope.masterSelectedMember);
     } else {
       return true;
     }
@@ -398,8 +409,7 @@ var editSpecialisticThesisController = function($scope, $modalInstance,
 
 };
 
-var createNewSpecialisticThesisController = function($scope, $modalInstance,
-        $routeParams, $http, $route, PctService, mentorId) {
+var createNewSpecialisticThesisController = function($scope, $modalInstance, $routeParams, $http, $route, PctService, mentorId) {
 
   $scope.thesis = {};
   $scope.thesis.mentorId;
@@ -429,17 +439,43 @@ var createNewSpecialisticThesisController = function($scope, $modalInstance,
     "starting-day": "1"
   };
 
+  $scope.studyAreas = [{
+    "name": "Računarske nauke"
+  }, {
+    "name": "Informacioni sistemi"
+  }, {
+    "name": "Primenjena matematika"
+  }, {
+    "name": "Informatika"
+  }, {
+    "name": "Matematika"
+  }, {
+    "name": "Biologija"
+  }, {
+    "name": "Ekologija"
+  }, {
+    "name": "Hemija"
+  }, {
+    "name": "Biohemija"
+  }, {
+    "name": "Zaštita životne sredine"
+  }, {
+    "name": "Geografija"
+  }, {
+    "name": "Turizam"
+  }, {
+    "name": "Hotelijerstvo"
+  }];
+
   /* Load resources from .json properties file */
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
-    $http.get('messages/profesorDetails_' + locale.value + '.json').success(
-            function(response) {
-              $scope.resources = angular.fromJson(response);
-            });
-    $http.get('messages/errors_' + locale.value + '.json').success(
-            function(response) {
-              $scope.errorMessages = angular.fromJson(response);
-            });
+    $http.get('messages/profesorDetails_' + locale.value + '.json').success(function(response) {
+      $scope.resources = angular.fromJson(response);
+    });
+    $http.get('messages/errors_' + locale.value + '.json').success(function(response) {
+      $scope.errorMessages = angular.fromJson(response);
+    });
   };
 
   /* Date picker functions */
@@ -486,19 +522,17 @@ var createNewSpecialisticThesisController = function($scope, $modalInstance,
     var inputLabel = this.form.inputCommissionPresident;
 
     inputLabel.$setValidity("commissionPresidentInvalid", true);
-    return PctService.findProfessorsStartsWith(val,
-            $scope.selectedCommissionMember.id, mentorId).then(
-            function(response) {
-              var professors = [];
-              for (var i = 0; i < response.length; i++) {
-                professors.push(response[i]);
-                inputLabel.$setValidity("commissionPresidentInvalid", true);
-              }
-              if (val.length >= 3 && professors.length == 0) {
-                inputLabel.$setValidity("commissionPresidentInvalid", false);
-              }
-              return professors;
-            });
+    return PctService.findProfessorsStartsWith(val, $scope.selectedCommissionMember.id, mentorId).then(function(response) {
+      var professors = [];
+      for (var i = 0; i < response.length; i++) {
+        professors.push(response[i]);
+        inputLabel.$setValidity("commissionPresidentInvalid", true);
+      }
+      if (val.length >= 3 && professors.length == 0) {
+        inputLabel.$setValidity("commissionPresidentInvalid", false);
+      }
+      return professors;
+    });
   };
 
   $scope.getCommissionMember = function(val) {
@@ -506,19 +540,17 @@ var createNewSpecialisticThesisController = function($scope, $modalInstance,
     var inputLabel = this.form.inputCommissionMember;
 
     inputLabel.$setValidity("commissionMemberInvalid", true);
-    return PctService.findProfessorsStartsWith(val,
-            $scope.selectedCommissionPresident.id, mentorId).then(
-            function(response) {
-              var professors = [];
-              for (var i = 0; i < response.length; i++) {
-                professors.push(response[i]);
-                inputLabel.$setValidity("commissionMemberInvalid", true);
-              }
-              if (val.length >= 3 && professors.length == 0) {
-                inputLabel.$setValidity("commissionMemberInvalid", false);
-              }
-              return professors;
-            });
+    return PctService.findProfessorsStartsWith(val, $scope.selectedCommissionPresident.id, mentorId).then(function(response) {
+      var professors = [];
+      for (var i = 0; i < response.length; i++) {
+        professors.push(response[i]);
+        inputLabel.$setValidity("commissionMemberInvalid", true);
+      }
+      if (val.length >= 3 && professors.length == 0) {
+        inputLabel.$setValidity("commissionMemberInvalid", false);
+      }
+      return professors;
+    });
   };
 
   $scope.saveNewThesis = function() {
