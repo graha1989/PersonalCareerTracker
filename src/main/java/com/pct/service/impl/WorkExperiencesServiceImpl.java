@@ -146,11 +146,14 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 	@Override
 	@Transactional
 	public void deleteWorkExperience(@Nonnull Long id) throws WorkExperienceNotFoundException {
-
 		WorkExperience workExperience = workExperienceRepository.findOne(id);
 		if (workExperience == null) {
 			throw new WorkExperienceNotFoundException();
 		}
+		Professor professor = professorRepository.findOne(workExperience.getProfessor().getId());
+		professor.setTitle(null);
+		professor.setInstitution(null);
+		professorRepository.save(professor);
 		workExperienceRepository.delete(workExperience);
 	}
 

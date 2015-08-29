@@ -143,16 +143,14 @@
 							for="inputTitle"
 							class="col-sm-5 control-label">{{ resources.contestLabels.title }} <span class="required">*</span></label>
 						<div class="col-sm-7">
-							<input
-								type="text"
-								class="form-control"
+							<select
+								class="ng-binding form-control"
 								id="inputTitle"
 								name="inputTitle"
 								ng-model="contestData.titleToChoose"
-								placeholder="{{ resources.contestLabels.title }}"
-								ng-maxlength="50"
 								required
-								ng-disabled="formSaved" />
+								ng-disabled="formSaved"
+								ng-options="title.name as title.name for title in titles"><option value="">{{ resources.contestLabels.title }}</option></select>
 							<div
 								ng-show="form.inputContestPlace.$dirty && form.inputContestPlace.$invalid"
 								class="titleFieldError">
@@ -169,16 +167,14 @@
 							for="inputSpecificScientificArea"
 							class="col-sm-5 control-label">{{ resources.contestLabels.specificScientificArea }} <span class="required">*</span></label>
 						<div class="col-sm-7">
-							<input
-								type="text"
-								class="form-control"
+							<select
+								class="ng-binding form-control"
 								id="inputSpecificScientificArea"
 								name="inputSpecificScientificArea"
 								ng-model="contestData.specificScientificArea"
-								placeholder="{{ resources.contestLabels.specificScientificArea }}"
-								ng-maxlength="50"
 								required
-								ng-disabled="formSaved" />
+								ng-disabled="formSaved"
+								ng-options="area.name as area.name for area in studyAreas"><option value="">{{ resources.contestLabels.specificScientificArea }}</option></select>
 							<div
 								ng-show="form.inputSpecificScientificArea.$dirty && form.inputSpecificScientificArea.$invalid"
 								class="specScientificAreaFieldError">
@@ -363,15 +359,13 @@
 							</div>
 						</div>
 						<div class="col-sm-3">
-							<input
-								type="text"
-								class="form-control"
+							<select
+								class="ng-binding form-control"
 								id="inputNewCommisionMemberFunction"
 								name="inputNewCommisionMemberFunction"
 								ng-model="newCommissionMember.commissionFunction"
-								placeholder="{{ resources.contestLabels.function }}"
-								ng-maxlength="20"
-								required />
+								required
+								ng-options="function.name as function.name for function in functions"><option value="">{{ resources.contestLabels.function }}</option></select>
 							<div
 								ng-show="form.inputNewCommisionMemberFunction.$dirty && form.inputNewCommisionMemberFunction.$invalid"
 								class="functionFieldError">

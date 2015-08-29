@@ -25,6 +25,28 @@ app.controller("ContestController", function($scope, $routeParams, $http, $locat
     "starting-day": "1"
   };
 
+  $scope.titles = [{
+    "name": "Docent"
+  }, {
+    "name": "Redovni profesor"
+  }, {
+    "name": "Vanredni profesor"
+  }];
+
+  $scope.studyAreas = [{
+    "name": "Računarske nauke"
+  }, {
+    "name": "Informacioni sistemi"
+  }, {
+    "name": "Primenjena matematika"
+  }];
+
+  $scope.functions = [{
+    "name": "Predsednik"
+  }, {
+    "name": "Član"
+  }];
+
   /* Date picker functions for decision date */
   $scope.openDecisionDate = function($event) {
     $event.preventDefault();
