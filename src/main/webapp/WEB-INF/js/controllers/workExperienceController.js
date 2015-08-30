@@ -140,6 +140,28 @@ var editWorkExperiencePopupController = function($scope, $modalInstance, $routeP
       'name': "Sarajevo"
     }]
   }];
+  
+  $scope.facultyTitles = [{
+    "name": "Docent"
+  }, {
+    "name": "Redovni profesor"
+  }, {
+    "name": "Vanredni profesor"
+  }];
+  
+  $scope.companyTitles = [{
+    "name": "Programer"
+  }, {
+    "name": "Menadžer"
+  }];
+  
+  $scope.schoolTitles = [{
+    "name": "Nastavnik"
+  }];
+  
+  $scope.universityTitles = [{
+    "name": "Član Veća Univerziteta"
+  }];
 
   /* Date picker functions for start date */
   $scope.openWorkStartDate = function($event) {
@@ -270,6 +292,28 @@ var createNewWorkExperienceController = function($scope, $modalInstance, $routeP
     }, {
       'name': "Sarajevo"
     }]
+  }];
+  
+  $scope.facultyTitles = [{
+    "name": "Docent"
+  }, {
+    "name": "Redovni profesor"
+  }, {
+    "name": "Vanredni profesor"
+  }];
+  
+  $scope.companyTitles = [{
+    "name": "Programer"
+  }, {
+    "name": "Menadžer"
+  }];
+  
+  $scope.schoolTitles = [{
+    "name": "Nastavnik"
+  }];
+  
+  $scope.universityTitles = [{
+    "name": "Član Veća Univerziteta"
   }];
 
   /* Date picker functions for start date */

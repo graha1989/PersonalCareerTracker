@@ -249,7 +249,104 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<!-- Faculty -->
+				<div class="form-group" ng-show="workExperience.institutionType == 'Fakultet'">
+					<label
+						for="inputTitle"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputTitle"
+							name="inputTitle"
+							ng-model="workExperience.title"
+							required
+							ng-options="title.name as title.name for title in facultyTitles"><option value="">{{
+								resources.workExperiencePopupLabels.title }}</option></select>
+						<div
+							ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
+							class="paperScientificAreaFieldError">
+							<span
+								ng-show="form.inputTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> 
+						</div>
+					</div>
+				</div>
+				<!-- University -->
+				<div class="form-group" ng-show="workExperience.institutionType == 'Univerzitet'">
+					<label
+						for="inputTitle"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputTitle"
+							name="inputTitle"
+							ng-model="workExperience.title"
+							required
+							ng-options="title.name as title.name for title in universityTitles"><option value="">{{
+								resources.workExperiencePopupLabels.title }}</option></select>
+						<div
+							ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
+							class="paperScientificAreaFieldError">
+							<span
+								ng-show="form.inputTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> 
+						</div>
+					</div>
+				</div>
+				<!-- Company -->
+				<div class="form-group" ng-show="workExperience.institutionType == 'Firma'">
+					<label
+						for="inputTitle"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputTitle"
+							name="inputTitle"
+							ng-model="workExperience.title"
+							required
+							ng-options="title.name as title.name for title in companyTitles"><option value="">{{
+								resources.workExperiencePopupLabels.title }}</option></select>
+						<div
+							ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
+							class="paperScientificAreaFieldError">
+							<span
+								ng-show="form.inputTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> 
+						</div>
+					</div>
+				</div>
+				<!-- School -->
+				<div class="form-group" ng-show="workExperience.institutionType == 'Škola'">
+					<label
+						for="inputTitle"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputTitle"
+							name="inputTitle"
+							ng-model="workExperience.title"
+							required
+							ng-options="title.name as title.name for title in schoolTitles"><option value="">{{
+								resources.workExperiencePopupLabels.title }}</option></select>
+						<div
+							ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
+							class="paperScientificAreaFieldError">
+							<span
+								ng-show="form.inputTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> 
+						</div>
+					</div>
+				</div>
+				<!-- Other institutions -->
+				<div class="form-group" ng-show="workExperience.institutionType == 'Ostale ustanove'">
 					<label
 						for="inputTitle"
 						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
@@ -296,7 +393,7 @@
 	<script
 		type="text/ng-template"
 		id="createNewWorkExperiencePopup.html">
-		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" ng-model="workExperience">
+		<form name="form" class="form-horizontal css-form ng-dirty ng-invalid ng-invalid-required" role="form" novalidate ng-model="workExperience">
 			<div class="modal-header">
     			<h3 class="modal-title">{{ resources.text.addNewWorkExperiencePopupTitle }}</h3>
    	 		</div>
@@ -500,7 +597,104 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<!-- Faculty -->
+				<div class="form-group" ng-show="workExperience.institutionType == 'Fakultet'">
+					<label
+						for="inputTitle"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputTitle"
+							name="inputTitle"
+							ng-model="workExperience.title"
+							required
+							ng-options="title.name as title.name for title in facultyTitles"><option value="">{{
+								resources.workExperiencePopupLabels.title }}</option></select>
+						<div
+							ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
+							class="paperScientificAreaFieldError">
+							<span
+								ng-show="form.inputTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> 
+						</div>
+					</div>
+				</div>
+				<!-- University -->
+				<div class="form-group" ng-show="workExperience.institutionType == 'Univerzitet'">
+					<label
+						for="inputTitle"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputTitle"
+							name="inputTitle"
+							ng-model="workExperience.title"
+							required
+							ng-options="title.name as title.name for title in universityTitles"><option value="">{{
+								resources.workExperiencePopupLabels.title }}</option></select>
+						<div
+							ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
+							class="paperScientificAreaFieldError">
+							<span
+								ng-show="form.inputTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> 
+						</div>
+					</div>
+				</div>
+				<!-- Company -->
+				<div class="form-group" ng-show="workExperience.institutionType == 'Firma'">
+					<label
+						for="inputTitle"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputTitle"
+							name="inputTitle"
+							ng-model="workExperience.title"
+							required
+							ng-options="title.name as title.name for title in companyTitles"><option value="">{{
+								resources.workExperiencePopupLabels.title }}</option></select>
+						<div
+							ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
+							class="paperScientificAreaFieldError">
+							<span
+								ng-show="form.inputTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> 
+						</div>
+					</div>
+				</div>
+				<!-- School -->
+				<div class="form-group" ng-show="workExperience.institutionType == 'Škola'">
+					<label
+						for="inputTitle"
+						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
+					</label>
+					<div class="col-sm-6">
+						<select
+							class="ng-binding form-control"
+							id="inputTitle"
+							name="inputTitle"
+							ng-model="workExperience.title"
+							required
+							ng-options="title.name as title.name for title in schoolTitles"><option value="">{{
+								resources.workExperiencePopupLabels.title }}</option></select>
+						<div
+							ng-show="form.inputPaperScientificArea.$dirty && form.inputPaperScientificArea.$invalid"
+							class="paperScientificAreaFieldError">
+							<span
+								ng-show="form.inputTitle.$error.required"
+								class="ng-binding">{{ errorMessages.error.required }}</span> 
+						</div>
+					</div>
+				</div>
+				<!-- Other institutions -->
+				<div class="form-group" ng-show="workExperience.institutionType == 'Ostale ustanove'">
 					<label
 						for="inputTitle"
 						class="col-sm-4 control-label">{{ resources.workExperiencePopupLabels.title }} <span class="required">*</span>
