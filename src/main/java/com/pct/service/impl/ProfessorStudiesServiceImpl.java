@@ -57,7 +57,7 @@ public class ProfessorStudiesServiceImpl implements ProfessorStudiesService {
 
 		List<StudiesDto> studiesDtos = new ArrayList<StudiesDto>();
 		try {
-			List<Studies> studiesList = professorStudiesRepository.findAllPublications(professorId, thesisTypeId);
+			List<Studies> studiesList = professorStudiesRepository.findAllStudies(professorId, thesisTypeId);
 			for (Studies s : studiesList) {
 				StudiesDto studiesDto = new StudiesDto(s);
 				studiesDtos.add(studiesDto);

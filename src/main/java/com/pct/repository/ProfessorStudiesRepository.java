@@ -12,7 +12,7 @@ import com.pct.domain.Studies;
 public interface ProfessorStudiesRepository extends JpaRepository<Studies, Long> {
 	
 	@Query("SELECT s FROM Studies s JOIN s.professor p JOIN s.studiesThesisType tType WHERE tType.id=:thesisTypeId AND p.id=:professorId")
-	List<Studies> findAllPublications(@Param("professorId") Long professorId, @Param("thesisTypeId") Long thesisTypeId);
+	List<Studies> findAllStudies(@Param("professorId") Long professorId, @Param("thesisTypeId") Long thesisTypeId);
 	
 	Long countByInstitution(Institution institution);
 	
