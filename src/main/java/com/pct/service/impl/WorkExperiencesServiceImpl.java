@@ -88,8 +88,9 @@ public class WorkExperiencesServiceImpl implements WorkExperienceService {
 			throw new ProfessorNotFoundException();
 		}
 
-		if (workExperienceRepository.isThereFacultyWorkExperienceWithSimilarPeriod(workExperienceDto.getInstitutionId(), workExperienceDto
-				.getProfessorId(), workExperienceDto.getTitle(), workExperienceDto.getWorkStartDate(),
+		if (workExperienceRepository.isThereFacultyWorkExperienceWithSimilarPeriod(
+				(workExperienceDto.getId() != null ? workExperienceDto.getId() : new Integer("0")), workExperienceDto.getInstitutionId(),
+				workExperienceDto.getProfessorId(), workExperienceDto.getTitle(), workExperienceDto.getWorkStartDate(),
 				(workExperienceDto.getWorkEndDate() != null ? workExperienceDto.getWorkEndDate() : new Date())) == 0) {
 			Institution institution = initializeInstitution(workExperienceDto);
 			institutionRepository.save(institution);

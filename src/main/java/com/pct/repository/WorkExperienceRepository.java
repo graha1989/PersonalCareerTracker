@@ -16,12 +16,12 @@ public interface WorkExperienceRepository extends JpaRepository<WorkExperience, 
 	List<WorkExperience> findAllWorkExperiences(@Param("professorId") Long professorId);
 
 	@Query("SELECT COUNT(e.id) FROM WorkExperience e JOIN e.professor p JOIN e.institution i JOIN i.institutionType it "
-			+ "WHERE p.id=:professorId AND i.id=:institutionId AND (it.typeName='Fakultet' OR (it.typeName != 'Fakultet' AND e.title=:title))  "
+			+ "WHERE e.id != :id AND p.id=:professorId AND i.id=:institutionId AND (it.typeName='Fakultet' OR (it.typeName != 'Fakultet' AND e.title=:title))  "
 			+ "AND (:from BETWEEN e.workStartDate AND IFNULL(e.workEndDate, NOW()) "
 			+ "OR :to BETWEEN e.workStartDate AND IFNULL(e.workEndDate, NOW()) " + "OR e.workStartDate BETWEEN :from AND :to "
 			+ "OR IFNULL(e.workEndDate, NOW()) BETWEEN :from AND :to)")
-	int isThereFacultyWorkExperienceWithSimilarPeriod(@Param("institutionId") Long institutionId, @Param("professorId") Long professorId,
-			@Param("title") String title, @Param("from") Date from, @Param("to") Date to);
+	int isThereFacultyWorkExperienceWithSimilarPeriod(@Param("id") Long id, @Param("institutionId") Long institutionId,
+			@Param("professorId") Long professorId, @Param("title") String title, @Param("from") Date from, @Param("to") Date to);
 
 	Long countByInstitution(Institution institution);
 
