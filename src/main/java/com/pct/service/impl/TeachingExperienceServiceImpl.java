@@ -86,8 +86,9 @@ public class TeachingExperienceServiceImpl implements TeachingExperienceService 
 	public void saveTeachingExperience(TeachingExperienceDto teachingExperienceDto) throws TeachingExperienceNotFoundException,
 			ProfessorNotFoundException, SubjectNotFoundException, SimilarDataAlreadyExistsException {
 
-		if (teachingExperienceRepository.isThereTeachingExperienceWithSimilarPeriod(teachingExperienceDto.getSubjectDto().getId(),
-				teachingExperienceDto.getTeachingStartDate(),
+		if (teachingExperienceRepository.isThereTeachingExperienceWithSimilarPeriod(
+				(teachingExperienceDto.getId() != null ? teachingExperienceDto.getId() : new Integer("0")), teachingExperienceDto.getSubjectDto()
+						.getId(), teachingExperienceDto.getTeachingStartDate(),
 				(teachingExperienceDto.getTeachingEndDate() != null ? teachingExperienceDto.getTeachingEndDate() : new Date())) == 0) {
 
 			Professor professor = professorRepository.findOne(teachingExperienceDto.getProfessorId());
