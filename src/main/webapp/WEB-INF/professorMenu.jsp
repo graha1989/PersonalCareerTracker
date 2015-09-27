@@ -33,9 +33,11 @@
 							<li><a
 								href=""
 								ng-click="openProfessorMasterStudies()">{{ resources.professorMenuLabels.studyTypes.masterStudies }}</a></li>
+							<!-- 
 							<li><a
 								href=""
 								ng-click="openProfessorSpecialisticStudies()">{{ resources.professorMenuLabels.studyTypes.specialisticStudies }}</a></li>
+							 -->
 							<li><a
 								href=""
 								ng-click="openProfessorDoctorStudies()">{{ resources.professorMenuLabels.studyTypes.doctorStudies }}</a></li>
