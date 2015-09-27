@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum AcademicCommunityContributionType {
 
-	WORK_IN_THE_INSTITUTIONS_AND_AUTHORITIES_OF_THE_FACULTY_AND_UNIVERSITY("Učešće u radu organa i tela fakulteta i Univerziteta"),
+	WORK_IN_THE_INSTITUTIONS_AND_AUTHORITIES_OF_THE_FACULTY_AND_UNIVERSITY("Ucesce u radu organa i tela fakulteta i Univerziteta"),
 
-	PROFESSIONAL_ORGANIZATIONS_CONDUCTION("Vođenje profesionalnih i strukovnih organizacija"),
+	PROFESSIONAL_ORGANIZATIONS_CONDUCTION("Vodjenje profesionalnih i strukovnih organizacija"),
 
-	MEETINGS_CONFERENCES_AND_EVENTS_CONDUCTION("Učešće u organizaciji i vođenju skupova, konferencija i manifestacija"),
+	MEETINGS_CONFERENCES_AND_EVENTS_CONDUCTION("Ucesce u organizaciji i vodjenju skupova, konferencija i manifestacija"),
 
-	WORK_IN_COMMITTEES_AND_LEGISLATIVE_BODIES("Učešće u radu odbora i zakonodavnih tela"),
+	WORK_IN_COMMITTEES_AND_LEGISLATIVE_BODIES("Ucesce u radu odbora i zakonodavnih tela"),
 
-	REVIEWS_IN_SCIENTIFIC_JOURNALS("Recenzije u naučnim časopisima");
+	REVIEWS_IN_SCIENTIFIC_JOURNALS("Recenzije u naucnim casopisima");
 
 	private final String title;
 

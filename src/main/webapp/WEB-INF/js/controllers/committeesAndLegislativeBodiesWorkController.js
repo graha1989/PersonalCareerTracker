@@ -11,7 +11,7 @@ app.controller("CommitteesAndLegislativeBodiesWorkController", function($scope, 
   $scope.isAdmin = false;
   $scope.professorId = '';
 
-  $scope.type = "Učešće u radu odbora i zakonodavnih tela";
+  $scope.type = "Ucesce u radu odbora i zakonodavnih tela";
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -264,7 +264,7 @@ var createNewCommitteeAndLegislativeBodiesWorkController = function($scope, $mod
     $scope.work.professorId = professorId;
     $scope.work.type = {
       name: "WORK_IN_COMMITTEES_AND_LEGISLATIVE_BODIES",
-      title: "Učešće u radu odbora i zakonodavnih tela"
+      title: "Ucesce u radu odbora i zakonodavnih tela"
     };
     $scope.status = $routeParams.status;
     $scope.loadResources();

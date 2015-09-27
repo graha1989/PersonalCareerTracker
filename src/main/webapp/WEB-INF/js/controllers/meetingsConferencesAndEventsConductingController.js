@@ -10,7 +10,7 @@ app.controller("MeetingsConferencesAndEventsConductingController", function($sco
   $scope.isAdmin = false;
   $scope.professorId = '';
 
-  $scope.type = "Učešće u organizaciji i vođenju skupova, konferencija i manifestacija";
+  $scope.type = "Ucesce u organizaciji i vodjenju skupova, konferencija i manifestacija";
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -272,7 +272,7 @@ var createNewMeetingsConferencesAndEventsConductionController = function($scope,
     $scope.conduction.professorId = professorId;
     $scope.conduction.type = {
       name: "MEETINGS_CONFERENCES_AND_EVENTS_CONDUCTION",
-      title: "Učešće u organizaciji i vođenju skupova, konferencija i manifestacija"
+      title: "Ucesce u organizaciji i vodjenju skupova, konferencija i manifestacija"
     };
     $scope.status = $routeParams.status;
     $scope.loadResources();

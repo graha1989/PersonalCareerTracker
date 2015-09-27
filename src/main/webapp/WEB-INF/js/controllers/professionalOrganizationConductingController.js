@@ -10,7 +10,7 @@ app.controller("ProfessionalOrganizationConductingController", function($scope, 
   $scope.isAdmin = false;
   $scope.professorId = '';
 
-  $scope.type = "Vođenje profesionalnih i strukovnih organizacija";
+  $scope.type = "Vodjenje profesionalnih i strukovnih organizacija";
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -266,7 +266,7 @@ var createNewProfessionalOrganizationConductionController = function($scope, $mo
     $scope.conduction.professorId = professorId;
     $scope.conduction.type = {
       name: "PROFESSIONAL_ORGANIZATIONS_CONDUCTION",
-      title: "Vođenje profesionalnih i strukovnih organizacija"
+      title: "Vodjenje profesionalnih i strukovnih organizacija"
     };
     $scope.status = $routeParams.status;
     $scope.loadResources();

@@ -11,7 +11,7 @@ app.controller("ScientificJournalReviewsController", function($scope, $routePara
   $scope.isAdmin = false;
   $scope.professorId = '';
 
-  $scope.type = "Recenzije u naučnim časopisima";
+  $scope.type = "Recenzije u naucnim casopisima";
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -219,7 +219,7 @@ var createNewScientificJournalReviewsController = function($scope, $modalInstanc
     $scope.review.professorId = professorId;
     $scope.review.type = {
       name: "REVIEWS_IN_SCIENTIFIC_JOURNALS",
-      title: "Recenzije u naučnim časopisima"
+      title: "Recenzije u naucnim casopisima"
     };
     $scope.loadAllCategories();
     $scope.status = $routeParams.status;

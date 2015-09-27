@@ -11,7 +11,7 @@ app.controller("FacultyOrUniversityAuthoritiesWorkController", function($scope, 
   $scope.isAdmin = false;
   $scope.professorId = '';
 
-  $scope.type = "Učešće u radu organa i tela fakulteta i Univerziteta";
+  $scope.type = "Ucesce u radu organa i tela fakulteta i Univerziteta";
 
   $scope.loadResources = function() {
     var locale = document.getElementById('localeCode');
@@ -250,7 +250,7 @@ var createNewFacultyOrUniversityAuthoritiesWorkController = function($scope, $mo
     $scope.work.professorId = professorId;
     $scope.work.type = {
       name: "WORK_IN_THE_INSTITUTIONS_AND_AUTHORITIES_OF_THE_FACULTY_AND_UNIVERSITY",
-      title: "Učešće u radu organa i tela fakulteta i Univerziteta"
+      title: "Ucesce u radu organa i tela fakulteta i Univerziteta"
     };
     $scope.status = $routeParams.status;
     $scope.loadResources();
